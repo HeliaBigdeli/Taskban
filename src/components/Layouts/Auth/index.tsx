@@ -5,9 +5,10 @@ interface Props extends React.PropsWithChildren{}
 
 const AuthLayout = ({children}: Props) => {
   return (
-      <div className={styles.container}>
+      <div className={styles.background}>
+        <span className={styles.skewBackground}></span>
         <Header/>
-        <div>
+        <div className={styles.container}>
           {children}
         </div>
       </div>

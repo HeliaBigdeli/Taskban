@@ -3,7 +3,7 @@ import AuthLayout from "../../Layouts/Auth";
 const Login = () => {
     return (
           <AuthLayout>
-                Login Card Here
+                  login
           </AuthLayout>
     );
 }

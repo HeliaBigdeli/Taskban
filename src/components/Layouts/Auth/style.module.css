@@ -1,7 +1,23 @@
-.container {
+.background {
+    position: relative;
+    z-index: -1;
+    background-image: linear-gradient(270deg, #06846F 0.35%, #54BEE8 103.4%);
+}
+
+.skewBackground {  
+    position: absolute;
+    z-index: -1;
+    top: -45%;
+    width: 100%;
+    height: 100%;
+    transform: skewY(-10deg);
+    background-color: white;
+}
+
+.container {   
+    z-index: 1;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    flex-direction: column;
 }

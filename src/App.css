@@ -2,6 +2,26 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: IRANYekan;
+  src: url("../src/assets/fonts/BYekan.ttf");
+}
+
+@font-face {
+  font-family: IRANYekan;
+  src: url("../src/assets/fonts/BYekan-Bold.ttf");
+  font-weight: bold;
+}
+
+:root {
+  --brand-primary: #208D8E;
+  --XL: 40px;
+}
+
+*{
+  font-family: IRANYekan;
+}
+
 .App {
   display: flex;
   align-items: center;

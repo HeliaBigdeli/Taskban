@@ -1,0 +1,56 @@
+
+.navbar {
+    position: fixed;
+    width: 100%;
+}
+
+.navbarItems {
+    padding: 80px 80px 0px 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row-reverse;
+}
+
+.navbarTitle {
+    text-align: right;
+    font-family: IRANYekan;
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;
+    background: linear-gradient(90deg, #118C80 0%, #4AB7D8 120%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.navbarButtons {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 7px;
+}
+
+.navbarRegisterBtn {
+    color: #fff;
+    display: flex;
+    width: 95px;
+    height: var(--XL, 40px);
+    padding: 10px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 6px;
+    background: var(--brand-primary, #208D8E);
+}
+
+@media (max-width: 768px) {
+    .navbarItems {
+        padding: 10px;
+        flex-direction: column;
+        gap: 5px;
+    }
+    .navbarTitle {
+        font-size: 22px;    
+    }
+}

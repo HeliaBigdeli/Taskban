@@ -1,4 +1,4 @@
-const ForgetPassword = () => {
+const ForgetPassword:React.FC = ():JSX.Element => {
   return (
     <div>
       ForgetPassword

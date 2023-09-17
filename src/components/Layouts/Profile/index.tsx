@@ -1,4 +1,4 @@
-const ProfileLayout = () => {
+const ProfileLayout :React.FC = ():JSX.Element => {
   return (
     <div>
       ProfileLayout

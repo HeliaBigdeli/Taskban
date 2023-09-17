@@ -1,4 +1,4 @@
-const Setting = () => {
+const Setting: React.FC = ():JSX.Element => {
     return (
       <div>
         Setting

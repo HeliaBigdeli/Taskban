@@ -1,6 +1,6 @@
 import styles from './style.module.css';
 
-const Header = () => {
+const Header:React.FC = ():JSX.Element => {
     return (
       <nav className={styles.navbar}>
           <div className={styles.navbarItems}>

@@ -1,9 +1,9 @@
 import AuthLayout from "../../Layouts/Auth";
 
-const Login = () => {
+const Login:React.FC = ():JSX.Element => {
     return (
           <AuthLayout>
-                  login
+                login
           </AuthLayout>
     );
 }

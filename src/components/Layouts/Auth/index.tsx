@@ -3,7 +3,7 @@ import styles from './style.module.css';
 
 interface Props extends React.PropsWithChildren{}
 
-const AuthLayout = ({children}: Props) => {
+const AuthLayout = ({children}: Props):JSX.Element => {
   return (
       <div className={styles.background}>
         <span className={styles.skewBackground}></span>

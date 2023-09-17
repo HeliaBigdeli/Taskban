@@ -1,7 +1,7 @@
-const Reset = () => {
+const Reset:React.FC = ():JSX.Element => {
     return (
         <p>
-          test
+          reset
         </p>
     );
   }

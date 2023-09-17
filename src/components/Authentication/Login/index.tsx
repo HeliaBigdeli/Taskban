@@ -1,7 +1,7 @@
 import AuthLayout from "../../Layouts/Auth";
 import styles from "./style.module.css";
 
-const Login = () => {
+const Login:React.FC = ():JSX.Element => {
   return (
     <AuthLayout>
       <div className={styles.cardContainer}>

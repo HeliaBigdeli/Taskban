@@ -1,4 +1,4 @@
-const Information = () => {
+const Information: React.FC = ():JSX.Element => {
     return (
       <div>
         Information

@@ -1,4 +1,4 @@
-const DashboardLayout = () => {
+const DashboardLayout :React.FC = ():JSX.Element => {
     return (
       <div>
         DashboardLayout

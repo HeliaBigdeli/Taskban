@@ -1,9 +1,11 @@
 import Header from "./Header";
 import styles from './style.module.css';
 
-interface Props extends React.PropsWithChildren{}
+interface IProps extends React.PropsWithChildren{}
 
-const AuthLayout = ({children}: Props):JSX.Element => {
+const AuthLayout: React.FC<React.PropsWithChildren<IProps>> = ({
+  children
+}):JSX.Element => {
   return (
       <div className={styles.background}>
         <span className={styles.skewBackground}></span>

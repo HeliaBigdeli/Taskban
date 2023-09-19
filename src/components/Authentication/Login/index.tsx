@@ -1,13 +1,12 @@
+import { Link } from "react-router-dom";
 import AuthLayout from "../../Layouts/Auth";
+import Card from "../../Layouts/Auth/Card";
 import styles from "./style.module.css";
 
-const Login:React.FC = ():JSX.Element => {
+const Login: React.FC = (): JSX.Element => {
   return (
     <AuthLayout>
-      <div className={styles.cardContainer}>
-        <h2 className={styles.cardHeading}>
-          {"(: به کوئرا تسک منیجر خوش برگشتی"}
-        </h2>
+      <Card page={"login"}>
         <section className={styles.inputContainer}>
           <div className={styles.inputs}>
             <div className={styles.inputFiled}>
@@ -27,14 +26,17 @@ const Login:React.FC = ():JSX.Element => {
               <span className={styles.buttonText}>ورود</span>
             </button>
             <div className={styles.goRegister}>
-              <span className={styles.goRegisterText}>ثبت‌نام</span>
+              <button type="button" className={styles.goRegisterText}>
+                <Link to={`/register`}>ثبت‌نام</Link>
+              </button>
+
               <span className={styles.goRegisterQuestion}>
                 ثبت‌نام نکرده‌ای؟
               </span>
             </div>
           </div>
         </section>
-      </div>
+      </Card>
     </AuthLayout>
   );
 };

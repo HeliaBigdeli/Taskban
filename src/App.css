@@ -14,11 +14,14 @@
 }
 
 :root {
-  --brand-primary: #208D8E;
+  --brand-primary: #208d8e;
   --XL: 40px;
+  --M: 24px;
+  --L: 32px;
+  --XS: 8px;
 }
 
-*{
+* {
   font-family: IRANYekan;
 }
 

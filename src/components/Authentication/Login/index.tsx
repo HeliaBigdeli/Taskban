@@ -9,19 +9,23 @@ const Login: React.FC = (): JSX.Element => {
         <form className="flex flex-col items-center gap-L self-stretch">
           <div className="flex flex-col items-end gap-M self-stretch">
             <div className="flex flex-col items-end gap-XS self-stretch">
-              <h4 className="text-Black text-sm font-normal leading-normal">
+              <label className="text-black text-sm font-normal leading-normal" htmlFor="email">
                 ایمیل
-              </h4>
+              </label>
               <input
+                name = "email"
+                id="email"
                 className="h-XL self-stretch rounded-md bg-white border border-lightgray"
                 type="email"
               />
             </div>
             <div className="flex flex-col items-end gap-XS self-stretch">
-              <h4 className="text-Black text-sm font-normal leading-normal">
+              <label className="text-black text-sm font-normal leading-normal" htmlFor="password">
                 رمز عبور
-              </h4>
+              </label>
               <input
+                name="password"
+                id="password"
                 className="h-XL self-stretch rounded-md bg-white border border-lightgray"
                 type="password"
               />
@@ -35,7 +39,7 @@ const Login: React.FC = (): JSX.Element => {
           </div>
           <div className="flex flex-col items-center gap-M self-stretch">
             <button
-              className="text-center text-white text-sm font-extrabold leading-normal h-XL p-[10px] self-stretch rounded-md bg-brand-primary"
+              className="text-white text-sm font-extrabold leading-normal h-XL p-[10px] self-stretch rounded-md bg-brand-primary"
               type="submit"
             >ورود
             </button>

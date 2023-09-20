@@ -15,9 +15,11 @@
 
 :root {
   --brand-primary: #208d8e;
+  --Black: #1e1e1e;
   --XL: 40px;
-  --M: 24px;
   --L: 32px;
+  --M: 24px;
+  --S: 16px;
   --XS: 8px;
 }
 

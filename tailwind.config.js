@@ -8,7 +8,9 @@ module.exports = {
       white: "#ffffff",
       lightgray: "#aaaaaa"
     },
-    fontFamily: {},
+    fontFamily: {
+      yekan: ['IRANYekan'],
+    },
     extend: {
       spacing: {
         XL: "40px",

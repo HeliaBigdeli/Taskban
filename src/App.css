@@ -15,7 +15,7 @@
 
 :root {
   --brand-primary: #208d8e;
-  --Black: #1e1e1e;
+  --black: #1e1e1e;
   --XL: 40px;
   --L: 32px;
   --M: 24px;
@@ -24,8 +24,7 @@
 }
 
 * {
-  font-family: IRANYekan;
-   font-style: normal;
+  @apply font-yekan
 }
 
 .App {

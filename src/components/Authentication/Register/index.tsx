@@ -5,28 +5,28 @@ const Register: React.FC = (): JSX.Element => {
   return (
     <AuthLayout>
       <Card page={"register"}>
-        <section className={styles.inputContainer}>
-          <div className={styles.inputs}>
-            <div className={styles.inputFiled}>
-              <h4 className={styles.inputHeader}>نام کامل</h4>
-              <input className={styles.input} type="text" />
+        <section className={styles.register}>
+          <div className={styles.register__inputs}>
+            <div className={styles.filed}>
+              <h4 className={styles.field__header}>نام کامل</h4>
+              <input className={styles.field__input} type="text" />
             </div>
-            <div className={styles.inputFiled}>
-              <h4 className={styles.inputHeader}>ایمیل</h4>
-              <input className={styles.input} type="email" />
+            <div className={styles.filed}>
+              <h4 className={styles.field__header}>ایمیل</h4>
+              <input className={styles.field__input} type="email" />
             </div>
-            <div className={styles.inputFiled}>
-              <h4 className={styles.inputHeader}>رمز عبور</h4>
-              <input className={styles.input} type="password" />
+            <div className={styles.filed}>
+              <h4 className={styles.field__header}>رمز عبور</h4>
+              <input className={styles.field__input} type="password" />
             </div>
-            <div className={styles.checkboxContainer}>
-              <span className={styles.checkboxText}>
+            <div className={styles.accept}>
+              <span className={styles.accept__text}>
                 .قوانین و مقررات را می‌پذیرم
               </span>
-              <input className={styles.checkbox} type="checkbox" />
+              <input className={styles.accept__checkbox} type="checkbox" />
             </div>
-            <button className={styles.buttonContainer}>
-              <span className={styles.buttonText}>ثبت‌نام</span>
+            <button className={styles.button}>
+              <span className={styles.button__text}>ثبت‌نام</span>
             </button>
           </div>
         </section>

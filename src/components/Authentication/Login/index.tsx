@@ -7,7 +7,7 @@ const Login: React.FC = (): JSX.Element => {
   return (
     <AuthLayout>
       <Card page={"login"}>
-        <section className={styles.login}>
+        <form className={styles.login}>
           <div className={styles.login__inputs}>
             <div className={styles.filed}>
               <h4 className={styles.field__header}>ایمیل</h4>
@@ -16,13 +16,13 @@ const Login: React.FC = (): JSX.Element => {
             <div className={styles.filed}>
               <h4 className={styles.field__header}>رمز عبور</h4>
               <input className={styles.field__input} type="password" />
-              <span className={styles.field__input__reminder}>
-                رمز عبور را فراموش کرده‌ای؟
-              </span>
+              <button type="button" className={styles.field__reminder}>
+                <Link to={`/forgot`}>رمز عبور را فراموش کرده‌ای؟</Link>
+              </button>
             </div>
           </div>
           <div className={styles.login__buttons}>
-            <button className={styles.login__buttons__button} type="submit">
+            <button className={styles.login__button} type="submit">
               <span className={styles.button__text}>ورود</span>
             </button>
             <div className={styles.goregister}>
@@ -35,7 +35,7 @@ const Login: React.FC = (): JSX.Element => {
               </span>
             </div>
           </div>
-        </section>
+        </form>
       </Card>
     </AuthLayout>
   );

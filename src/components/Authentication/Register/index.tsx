@@ -6,7 +6,7 @@ const Register: React.FC = (): JSX.Element => {
     <AuthLayout>
       <Card page={"register"}>
         <section className={styles.register}>
-          <div className={styles.register__inputs}>
+          <form className={styles.register__inputs}>
             <div className={styles.filed}>
               <h4 className={styles.field__header}>نام کامل</h4>
               <input className={styles.field__input} type="text" />
@@ -25,10 +25,10 @@ const Register: React.FC = (): JSX.Element => {
               </span>
               <input className={styles.accept__checkbox} type="checkbox" />
             </div>
-            <button className={styles.button}>
+            <button type="submit" className={styles.button}>
               <span className={styles.button__text}>ثبت‌نام</span>
             </button>
-          </div>
+          </form>
         </section>
       </Card>
     </AuthLayout>

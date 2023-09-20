@@ -8,7 +8,7 @@ const Card: React.FC<React.PropsWithChildren<ICardProps>> = ({
   children,
 }): JSX.Element => {
   return (
-    <div className={styles.card}>
+    <div className={`${styles.card} ${page === "forgot"&&styles.forgot}`}>
       <h2 className={styles.card__heading}>
       {page === "login"
           ? "(: به کوئرا تسک منیجر خوش برگشتی"

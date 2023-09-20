@@ -10,7 +10,7 @@ const AuthLayout: React.FC<React.PropsWithChildren<IProps>> = ({
       <div className={styles.background}>
         <span className={styles.skewBackground}></span>
         <Header/>
-        <div className={styles.container}>
+        <div className="flex justify-center items-center h-screen relative">
           {children}
         </div>
       </div>

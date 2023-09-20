@@ -9,48 +9,44 @@ const Login: React.FC = (): JSX.Element => {
         <form className="flex flex-col items-center gap-L self-stretch">
           <div className="flex flex-col items-end gap-M self-stretch">
             <div className="flex flex-col items-end gap-XS self-stretch">
-              <h4 className="text-Black text-right text-sm font-normal leading-normal capitalize">
+              <h4 className="text-Black text-sm font-normal leading-normal">
                 ایمیل
               </h4>
               <input
-                className="h-XL self-stretch rounded-md bg-[#fff] border border-[#aaa] "
+                className="h-XL self-stretch rounded-md bg-white border border-lightgray"
                 type="email"
               />
             </div>
             <div className="flex flex-col items-end gap-XS self-stretch">
-              <h4 className="text-Black text-right text-sm font-normal leading-normal capitalize">
+              <h4 className="text-Black text-sm font-normal leading-normal">
                 رمز عبور
               </h4>
               <input
-                className="h-XL self-stretch rounded-md bg-[#fff] border border-[#aaa] "
+                className="h-XL self-stretch rounded-md bg-white border border-lightgray"
                 type="password"
               />
               <button
                 type="button"
-                className="text-brand-primary text-right text-xs leading-normal font-extrabold capitalize"
+                className="text-brand-primary text-xs leading-normal font-extrabold"
               >
-                <Link to={`/forgot`}>رمز عبور را فراموش کرده‌ای؟</Link>
+                <Link to="/forgot">رمز عبور را فراموش کرده‌ای؟</Link>
               </button>
             </div>
           </div>
           <div className="flex flex-col items-center gap-M self-stretch">
             <button
-              className="flex h-XL p-[10px] justify-center items-center gap-[10px] self-stretch rounded-md bg-brand-primary"
+              className="text-center text-white text-sm font-extrabold leading-normal h-XL p-[10px] self-stretch rounded-md bg-brand-primary"
               type="submit"
-            >
-              <span className="text-[#fff] text-right text-sm font-extrabold leading-normal capitalize">
-                ورود
-              </span>
+            >ورود
             </button>
-            <div className="flex flex-end items-center gap-[7px]">
+            <div className="flex flex-end items-center gap-XS">
               <button
                 type="button"
-                className="text-brand-primary text-right text-base leading-normal font-extrabold capitalize"
+                className="text-brand-primary text-base font-extrabold"
               >
-                <Link to={`/register`}>ثبت‌نام</Link>
+                <Link to="/register">ثبت‌نام</Link>
               </button>
-
-              <span className="text-Black text-right text-base leading-normal font-medium capitalize">
+              <span className="text-black text-base font-medium">
                 ثبت‌نام نکرده‌ای؟
               </span>
             </div>

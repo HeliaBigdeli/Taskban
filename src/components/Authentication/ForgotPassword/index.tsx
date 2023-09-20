@@ -1,6 +1,7 @@
 import AuthLayout from "../../Layouts/Auth";
 import Card from "../../Layouts/Auth/Card";
-const ForgotPassword: React.FC = (): JSX.Element => {
+
+const ForgotPassword :React.FC = () :JSX.Element => {
   return (
     <AuthLayout>
       <Card page={"forgot"}>

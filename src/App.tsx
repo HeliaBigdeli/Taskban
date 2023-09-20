@@ -14,6 +14,7 @@ function App() {
         <li>Typescript</li>
         <li>react router</li>
         <li>css modules</li>
+        <li>formik</li>
         <li>--- all routes are in routes folder</li>
         <li>--- to start project use "yarn start" and localhost:3000</li>
       </ul>

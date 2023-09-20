@@ -1,4 +1,5 @@
 import styles from './style.module.css';
+import { Link } from "react-router-dom";
 
 const Header:React.FC = ():JSX.Element => {
     return (
@@ -8,8 +9,8 @@ const Header:React.FC = ():JSX.Element => {
               کوئرا تسک منیجر
             </div>
             <div className={styles.navbarButtons}>
-              <button className={styles.navbarRegisterBtn}>ثبت نام</button>
-              <span>ثبت نام نکرده‌ای؟</span>
+            <Link to="/register" className={styles.navbarRegisterBtn}>ثبت نام</Link>
+            <span>ثبت نام نکرده‌ای؟</span>
             </div>
           </div>
       </nav>

@@ -8,11 +8,15 @@ const Card: React.FC<React.PropsWithChildren<ICardProps>> = ({
   children,
 }): JSX.Element => {
   return (
-    <div className={styles.cardContainer}>
-      <h2 className={styles.cardHeading}>
-        {page === "login"
+    <div className={styles.card}>
+      <h2 className={styles.card__heading}>
+      {page === "login"
           ? "(: به کوئرا تسک منیجر خوش برگشتی"
-          : "ثبت‌نام در کوئرا تسک منیجر"}
+          : page === "register"
+          ? "ثبت‌نام در کوئرا تسک منیجر"
+          : page === "forgot"
+          ? "فراموشی رمز عبور"
+          : null}
       </h2>
       {children}
     </div>

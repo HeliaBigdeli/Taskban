@@ -15,4 +15,8 @@ export const routes = [
     path: "register",
     element: <Register />,
   },
+  {
+    path: "forgot",
+    element: <Register />,
+  },
 ];

@@ -1,36 +1,56 @@
 import { Link } from "react-router-dom";
 import AuthLayout from "../../Layouts/Auth";
 import Card from "../../Layouts/Auth/Card";
-import styles from "./style.module.css";
 
 const Login: React.FC = (): JSX.Element => {
   return (
     <AuthLayout>
       <Card page={"login"}>
-        <form className={styles.login}>
-          <div className={styles.login__inputs}>
-            <div className={styles.filed}>
-              <h4 className={styles.field__header}>ایمیل</h4>
-              <input className={styles.field__input} type="email" />
+        <form className="flex flex-col items-center gap-L self-stretch">
+          <div className="flex flex-col items-end gap-M self-stretch">
+            <div className="flex flex-col items-end gap-XS self-stretch">
+              <h4 className="text-Black text-right text-sm font-normal leading-normal capitalize">
+                ایمیل
+              </h4>
+              <input
+                className="h-XL self-stretch rounded-md bg-[#fff] border border-[#aaa] "
+                type="email"
+              />
             </div>
-            <div className={styles.filed}>
-              <h4 className={styles.field__header}>رمز عبور</h4>
-              <input className={styles.field__input} type="password" />
-              <button type="button" className={styles.field__reminder}>
+            <div className="flex flex-col items-end gap-XS self-stretch">
+              <h4 className="text-Black text-right text-sm font-normal leading-normal capitalize">
+                رمز عبور
+              </h4>
+              <input
+                className="h-XL self-stretch rounded-md bg-[#fff] border border-[#aaa] "
+                type="password"
+              />
+              <button
+                type="button"
+                className="text-brand-primary text-right text-xs leading-normal font-extrabold capitalize"
+              >
                 <Link to={`/forgot`}>رمز عبور را فراموش کرده‌ای؟</Link>
               </button>
             </div>
           </div>
-          <div className={styles.login__buttons}>
-            <button className={styles.login__button} type="submit">
-              <span className={styles.button__text}>ورود</span>
+          <div className="flex flex-col items-center gap-M self-stretch">
+            <button
+              className="flex h-XL p-[10px] justify-center items-center gap-[10px] self-stretch rounded-md bg-brand-primary"
+              type="submit"
+            >
+              <span className="text-[#fff] text-right text-sm font-extrabold leading-normal capitalize">
+                ورود
+              </span>
             </button>
-            <div className={styles.goregister}>
-              <button type="button" className={styles.goRegister__text}>
+            <div className="flex flex-end items-center gap-[7px]">
+              <button
+                type="button"
+                className="text-brand-primary text-right text-base leading-normal font-extrabold capitalize"
+              >
                 <Link to={`/register`}>ثبت‌نام</Link>
               </button>
 
-              <span className={styles.goregister__question}>
+              <span className="text-Black text-right text-base leading-normal font-medium capitalize">
                 ثبت‌نام نکرده‌ای؟
               </span>
             </div>

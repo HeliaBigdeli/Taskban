@@ -7,7 +7,7 @@ const Card: React.FC<React.PropsWithChildren<ICardProps>> = ({
 }): JSX.Element => {
   return (
     <div className="flex w-[640px] p-M flex-col items-center gap-L rounded-[20px] bg-white shadow-card">
-      <h2 className="text-black text-[32px] font-extrabold">
+      <h2 className="text-black text-[32px] font-extrabold text-center">
         {page === "login"
           ? "(: به کوئرا تسک منیجر خوش برگشتی"
           : page === "register"

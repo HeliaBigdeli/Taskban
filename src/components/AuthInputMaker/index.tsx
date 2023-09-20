@@ -26,7 +26,7 @@ interface ICardProps {
 
 // const validate = values => {
   // console.log(values)
-  const errors = {};
+  // const errors = {};
   // if (!values.fullName) {
   //   errors.fullName = 'Required';
   // } else if (values.fullName.length > 15) {

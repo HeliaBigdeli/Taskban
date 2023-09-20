@@ -3,15 +3,15 @@ import { Link } from "react-router-dom";
 
 const Header:React.FC = ():JSX.Element => {
     return (
-      <nav className={styles.navbar}>
-          <div className={styles.navbarItems}>
-            <div className={styles.navbarTitle}>
-              کوئرا تسک منیجر
+      <nav className="fixed w-full z-10">
+          <div className="flex items-center justify-between xs:p-[10px] md:p-[20px] lg:p-[80px]">
+            <div className="flex gap-XS items-center">
+              <Link to="/register" className="flex justify-center items-center bg-brand-primary p-[10px] w-[95px] text-white h-XL rounded-md"
+              >ثبت نام
+              </Link>
+              <span>ثبت نام نکرده‌ای؟</span>
             </div>
-            <div className={styles.navbarButtons}>
-            <Link to="/register" className={styles.navbarRegisterBtn}>ثبت نام</Link>
-            <span>ثبت نام نکرده‌ای؟</span>
-            </div>
+            <Link className={styles.navbarTitle} to="/login">کوئرا تسک منیجر</Link>             
           </div>
       </nav>
     );

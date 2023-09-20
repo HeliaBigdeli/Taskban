@@ -1,4 +1,3 @@
-import styles from "./style.module.css";
 
 interface ICardProps {
   page: string;
@@ -8,8 +7,8 @@ const Card: React.FC<React.PropsWithChildren<ICardProps>> = ({
   children,
 }): JSX.Element => {
   return (
-    <div className={`${styles.card} ${page === "forgot"&&styles.forgot}`}>
-      <h2 className={styles.card__heading}>
+    <div className="flex w-[640px] p-M flex-col items-center gap-L rounded-[20px] bg-[#fff] shadow-card">
+      <h2 className="text-Black text-right text-[32px] font-extrabold  capitalize">
       {page === "login"
           ? "(: به کوئرا تسک منیجر خوش برگشتی"
           : page === "register"

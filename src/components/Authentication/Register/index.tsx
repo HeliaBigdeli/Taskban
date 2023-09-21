@@ -1,44 +1,17 @@
 import AuthLayout from "../../Layouts/Auth";
 import Card from "../../Layouts/Auth/Card";
+import Input from "../../Form/Input/Index";
+import Button from "../../Form/Button";
+
 const Register: React.FC = (): JSX.Element => {
   return (
     <AuthLayout>
       <Card page={"register"}>
         <section className="flex flex-col items-end gap-L self-stretch">
-          <form className="flex flex-col items-end gap-[20px] self-stretch">
-            <div className="flex flex-col items-end gap-XS self-stretch">
-              <label className="text-black text-right text-sm font-normal leading-normal" htmlFor="fullName">
-                نام کامل
-              </label>
-              <input
-                name="fullName"
-                id="fullName"
-                className="h-XL self-stretch rounded-md bg-white border border-lightgray"
-                type="text"
-              />
-            </div>
-            <div className="flex flex-col items-end gap-XS self-stretch">
-              <label className="text-black text-sm font-normal leading-normal" htmlFor="email">
-                ایمیل
-              </label>
-              <input
-                name="email"
-                id="email"
-                className="h-XL self-stretch rounded-md bg-white border border-lightgray"
-                type="email"
-              />
-            </div>
-            <div className="flex flex-col items-end gap-XS self-stretch">
-              <label className="text-black text-sm font-normal leading-normal" htmlFor="password">
-                رمز عبور
-              </label>
-              <input
-                name="password"
-                id="password"
-                className="h-XL self-stretch rounded-md bg-white border border-lightgray"
-                type="password"
-              />
-            </div>
+          <form className="flex flex-col items-end gap-[20px] self-stretch">           
+            <Input name="fullName" id="fullName" type="text" labelText="نام کامل" hasLabel={true}/>           
+            <Input name="email" id="email" type="email" labelText="ایمیل" hasLabel={true}/>        
+            <Input name="password" id="password" type="password" labelText="رمز عبور" hasLabel={true}/>                    
             <div className="flex justify-end items-center gap-XS">
               <label className="text-black text-base font-medium" htmlFor="rules">
                 .قوانین و مقررات را می‌پذیرم
@@ -50,12 +23,7 @@ const Register: React.FC = (): JSX.Element => {
                 type="checkbox"
               />
             </div>
-            <button
-              type="submit"
-              className="text-white text-sm font-extrabold h-12 self-stretch rounded-md bg-brand-primary"
-            >
-                ثبت‌نام
-            </button>
+            <Button text="ثبت‌نام" type="submit"/>      
           </form>
         </section>
       </Card>

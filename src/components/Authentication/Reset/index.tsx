@@ -1,29 +1,16 @@
 import AuthLayout from "../../Layouts/Auth";
 import Card from "../../Layouts/Auth/Card";
+import Input from "../../Form/Input/Index";
+import Button from "../../Form/Button";
 
 const Reset: React.FC = (): JSX.Element => {
   return (
     <AuthLayout>
       <Card page={"reset"}>
         <section className="flex flex-col items-end gap-L self-stretch">
-          <form className="flex flex-col items-end gap-5 self-stretch">
-            <div className="flex flex-col items-end gap-XS self-stretch">
-              <label className="text-black text-sm font-normal leading-normal" htmlFor="password">
-                رمز عبور جدید را وارد کنید
-              </label>
-              <input
-                name="password"
-                id="password"
-                className="h-XL self-stretch rounded-md bg-white border border-lightgray"
-                type="password"
-              />
-            </div>
-            <button
-              type="submit"
-              className="text-white text-sm leading-normal font-extrabold h-12 self-stretch rounded-md bg-brand-primary"
-            >
-                تغییر رمز عبور
-            </button>
+          <form className="flex flex-col items-end gap-5 self-stretch">          
+            <Input name="password" id="password" type="password" labelText="رمز عبور جدید را وارد کنید" hasLabel={true}/>
+            <Button text="تغییر رمز عبور" type="submit"/>           
           </form>
         </section>
       </Card>

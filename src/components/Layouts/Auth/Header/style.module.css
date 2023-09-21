@@ -7,3 +7,9 @@
     background-clip: text;
     -webkit-text-fill-color: transparent;
 }
+
+@media (max-width: 475px) {
+    .navbarTitle {
+        font-size: 24px;      
+    }
+}

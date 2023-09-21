@@ -8,7 +8,7 @@ import NotFound from "../components/NotFound";
 export const routes = [
   {
     path: "/",
-    element: <App />,
+    element: <Login />,
   },
   {
     path: "login",

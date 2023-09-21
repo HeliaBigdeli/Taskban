@@ -1,6 +1,6 @@
 import AuthLayout from "../../Layouts/Auth";
 import Card from "../../Layouts/Auth/Card";
-import Input from "../../Form/Input/Index";
+import Input from "../../Form/Input";
 import Button from "../../Form/Button";
 
 const Register: React.FC = (): JSX.Element => {

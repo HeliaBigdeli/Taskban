@@ -1,8 +1,8 @@
 import { useState } from "react";
 import AuthLayout from "../../Layouts/Auth";
 import Card from "../../Layouts/Auth/Card";
-import Input from "../../Form/Input/Index";
 import Button from "../../Form/Button";
+import Input from "../../Form/Input";
 
 const ForgotPassword: React.FC = (): JSX.Element => {
   const [isSent, setIsSent] = useState<boolean>(false);

@@ -8,7 +8,7 @@ const Login: React.FC = (): JSX.Element => {
   return (
     <AuthLayout>
       <Card page={"login"}>
-        <section className="flex flex-col items-center gap-L self-stretch">
+        <form className="flex flex-col items-center gap-L self-stretch">
           <div className="flex flex-col gap-M self-stretch">
             <Input name="email" id="email" type="email" label="ایمیل" hasLabel={true} onChange={() => {}}/>             
             <Input 
@@ -33,7 +33,7 @@ const Login: React.FC = (): JSX.Element => {
               </span>
             </div>
           </div>
-        </section>
+        </form>
       </Card>
     </AuthLayout>
   );

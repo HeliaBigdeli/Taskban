@@ -8,9 +8,8 @@ interface IProps {
     hasLabel: boolean,
     placeholder? :string,
     subText?: {
-        text: string,
-        link: string,
-        isSet: boolean
+        text?: string,
+        link?: string,
     },
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
@@ -34,14 +33,21 @@ const Input:React.FC<IProps> = ({name, id, type, label, hasLabel, subText, place
                 onChange={onChange}
                 className="h-XL self-stretch rounded-md bg-white border border-lightgray px-2"
             />
-            {subText?.isSet &&
-                <Link 
-                    className="text-brand-primary text-xs leading-normal font-extrabold"
-                    to={subText.link}
-                >
-                    {subText.text}
-                </Link>
-             }
+            {subText?.text?.trim() &&
+                <>
+                    {subText.link 
+                        ? <Link 
+                            className="text-brand-primary text-xs leading-normal font-extrabold"
+                            to={subText.link}
+                        >
+                            {subText.text}
+                        </Link>
+                        : <p className="text-xs leading-normal font-extrabold">
+                            {subText?.text}
+                        </p>   
+                    }
+                </>
+            }
       </div>
     )
 }

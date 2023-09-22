@@ -15,20 +15,18 @@ const ForgotPassword: React.FC = (): JSX.Element => {
   return (
     <AuthLayout>
       <Card page={"forgot"}>
-        <section className="flex flex-col items-center isSent justify-center gap-L self-stretch">
           <form className="flex flex-col items-center gap-5 self-stretch">
-          {!isSent 
-            ? <>
-                <Input name="email" id="email" type="email" label="ایمیل خود را وارد کنید" hasLabel={true} onChange={() => {}}/>          
-                <Button text="دریافت ایمیل بازیابی رمز عبور" type="submit" onClick={handleClick}/>        
-              </>
-            : <p className="text-black text-sm font-normal leading-normal">
-                .لینک بازیابی رمز عبور برای شما ایمیل شد. لطفا ایمیل خود را بررسی
-                کنید
-              </p>
-           } 
+            {!isSent 
+              ? <>
+                  <Input name="email" id="email" type="email" label="ایمیل خود را وارد کنید" hasLabel={true} onChange={() => {}}/>          
+                  <Button text="دریافت ایمیل بازیابی رمز عبور" type="submit" onClick={handleClick}/>        
+                </>
+              : <p className="text-black text-sm font-normal leading-normal">
+                  .لینک بازیابی رمز عبور برای شما ایمیل شد. لطفا ایمیل خود را بررسی
+                  کنید
+                </p>
+            } 
           </form>
-        </section>
       </Card>
     </AuthLayout>
   );

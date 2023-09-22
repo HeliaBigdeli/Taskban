@@ -17,16 +17,16 @@ const Login: React.FC = (): JSX.Element => {
               type="password" 
               label="رمز عبور" 
               hasLabel={true}
-              subText={{text: "رمز عبور را فراموش کرده‌ای؟",
-                link: "/forgot",
-                isSet: true
-               }}
+              subText={{
+                text: "رمز عبور را فراموش کرده‌ای؟",
+                link: "/forgot"
+              }}
               onChange={(e) => {console.log(e.target.value)}}  
             />           
           </div>
           <div className="flex flex-col items-center gap-M self-stretch">
             <Button text="ورود" type="submit" onClick={() => {}}/>              
-            <div className="flex flex-end items-center gap-XS">             
+            <div className="flex gap-XS">             
               <Link className="text-brand-primary text-base font-extrabold" to="/register">ثبت‌نام</Link>
               <span className="text-black text-base font-medium">
                 ثبت‌نام نکرده‌ای؟

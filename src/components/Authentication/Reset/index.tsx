@@ -7,8 +7,7 @@ const Reset: React.FC = (): JSX.Element => {
   return (
     <AuthLayout>
       <Card page={"reset"}>
-        <section className="flex flex-col items-end gap-L self-stretch">
-          <form className="flex flex-col items-end gap-5 self-stretch">          
+          <form className="flex flex-col gap-5 self-stretch">          
             <Input
               name="password"
               id="password" 
@@ -19,7 +18,6 @@ const Reset: React.FC = (): JSX.Element => {
              />
             <Button text="تغییر رمز عبور" type="submit" onClick={() => {}}/>           
           </form>
-        </section>
       </Card>
     </AuthLayout>
   );

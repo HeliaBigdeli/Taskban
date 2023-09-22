@@ -1,7 +1,7 @@
 interface IProps {
     text: string,
     type: "submit" | "button" | "reset",
-    onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void
+    onClick: (e: React.MouseEvent<HTMLButtonElement>) => void
 }
 
 const Button:React.FC<IProps> = ({text, type, onClick}) :JSX.Element => {

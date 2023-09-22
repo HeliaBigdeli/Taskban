@@ -8,23 +8,24 @@ const Login: React.FC = (): JSX.Element => {
   return (
     <AuthLayout>
       <Card page={"login"}>
-        <form className="flex flex-col items-center gap-L self-stretch">
+        <section className="flex flex-col items-center gap-L self-stretch">
           <div className="flex flex-col gap-M self-stretch">
-            <Input name="email" id="email" type="email" labelText="ایمیل" hasLabel={true}/>           
+            <Input name="email" id="email" type="email" label="ایمیل" hasLabel={true} onChange={() => {}}/>             
             <Input 
               name="password"
               id="password" 
               type="password" 
-              labelText="رمز عبور" 
+              label="رمز عبور" 
               hasLabel={true}
               subText={{text: "رمز عبور را فراموش کرده‌ای؟",
                 link: "/forgot",
                 isSet: true
                }}
+              onChange={(e) => {console.log(e.target.value)}}  
             />           
           </div>
           <div className="flex flex-col items-center gap-M self-stretch">
-            <Button text="ورود" type="submit"/>               
+            <Button text="ورود" type="submit" onClick={() => {}}/>              
             <div className="flex flex-end items-center gap-XS">             
               <Link className="text-brand-primary text-base font-extrabold" to="/register">ثبت‌نام</Link>
               <span className="text-black text-base font-medium">
@@ -32,7 +33,7 @@ const Login: React.FC = (): JSX.Element => {
               </span>
             </div>
           </div>
-        </form>
+        </section>
       </Card>
     </AuthLayout>
   );

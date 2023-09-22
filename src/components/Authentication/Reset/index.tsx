@@ -9,8 +9,15 @@ const Reset: React.FC = (): JSX.Element => {
       <Card page={"reset"}>
         <section className="flex flex-col items-end gap-L self-stretch">
           <form className="flex flex-col items-end gap-5 self-stretch">          
-            <Input name="password" id="password" type="password" labelText="رمز عبور جدید را وارد کنید" hasLabel={true}/>
-            <Button text="تغییر رمز عبور" type="submit"/>           
+            <Input
+              name="password"
+              id="password" 
+              type="password" 
+              label="رمز عبور جدید را وارد کنید" 
+              hasLabel={true}
+              onChange={() => {}}
+             />
+            <Button text="تغییر رمز عبور" type="submit" onClick={() => {}}/>           
           </form>
         </section>
       </Card>

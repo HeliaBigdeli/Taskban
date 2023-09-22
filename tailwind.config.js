@@ -14,7 +14,8 @@ module.exports = {
       "brand-primary": "#208d8e",
       black: "#1e1e1e",
       white: "#ffffff",
-      lightgray: "#aaaaaa"
+      lightgray: "#aaaaaa",
+      darkred: '#B91C1C'
     },
     fontFamily: {
       yekan: ['IRANYekan'],

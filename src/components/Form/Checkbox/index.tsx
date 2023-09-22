@@ -4,10 +4,15 @@ interface IProps {
     type: 'checkbox'
     label?: string,
     hasLabel: boolean,    
-    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+    onChange: (name: string, value: boolean) => void
 }
 
 const Checkbox:React.FC<IProps> = ({name, id, type, label, hasLabel, onChange}) :JSX.Element => {
+
+    const changeHandler = (e: any) => {
+        onChange(e.target.name, e.target.checked)
+    }
+
     return (   
         <div className="flex justify-end items-center gap-XS">
             {hasLabel && 
@@ -19,7 +24,7 @@ const Checkbox:React.FC<IProps> = ({name, id, type, label, hasLabel, onChange}) 
                 name={name}
                 id={id}
                 type={type}
-                onChange={onChange}
+                onChange={changeHandler}
                 className="w-5 h-5 rounded border border-[#999]"
             />
       </div>

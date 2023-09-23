@@ -1,4 +1,7 @@
-import Svg from "./svg";
+import Description from "./Svgs/Description";
+import Checkmark from "./Svgs/Checkmark";
+import Flag from "./Svgs/Flag";
+import Tag from "../Tag";
 
 const Task: React.FC = (): JSX.Element => {
   return (
@@ -14,7 +17,7 @@ const Task: React.FC = (): JSX.Element => {
           <span className="text-[#0E0E0E] text-xs leading-normal font-normal">
             این یک تیتر برای این تسک است.
           </span>
-          <Svg />
+          <Description />
         </div>
       </section>
       <section className="flex items-start gap-XS">
@@ -22,9 +25,19 @@ const Task: React.FC = (): JSX.Element => {
           <span className="color-[#BDC0C6] text-xs leading-normal font-normal">
             ۲ / ۱۲
           </span>
+          <Checkmark />
+        </div>
+        <div className="flex justify-end items-center gap-0.5">
+          <span className="text-[#343434] text-xs leading-normal font-normal">
+            ۵ مهر - فردا
+          </span>
+          <Flag />
         </div>
       </section>
-      <section></section>
+      <section className="flex items-start gap-XS">
+        <Tag color="blue" text="درس" />
+        <Tag color="gape" text="پروژه" />
+      </section>
     </article>
   );
 };

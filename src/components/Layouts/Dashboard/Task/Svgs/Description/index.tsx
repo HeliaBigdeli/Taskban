@@ -1,4 +1,4 @@
-const Svg: React.FC = (): JSX.Element => {
+const Description: React.FC = (): JSX.Element => {
   return (
     <div className="flex w-3 h-3 justify-center items-center">
       <svg
@@ -47,4 +47,4 @@ const Svg: React.FC = (): JSX.Element => {
     </div>
   );
 };
-export default Svg
+export default Description;

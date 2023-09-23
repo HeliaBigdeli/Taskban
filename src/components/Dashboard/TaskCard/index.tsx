@@ -1,9 +1,9 @@
-import Description from "./Svgs/Description";
-import Checkmark from "./Svgs/Checkmark";
-import Flag from "./Svgs/Flag";
+import Description from "./components/Description";
+import Checkmark from "./components/Checkmark";
+import Flag from "./components/Flag";
 import Tag from "../Tag";
 
-const Task: React.FC = (): JSX.Element => {
+const TaskCard: React.FC = (): JSX.Element => {
   return (
     <article className="flex w-[249px] p-S flex-col items-end gap-S rounded-2xl bg-white shadow-task">
       <div
@@ -41,4 +41,4 @@ const Task: React.FC = (): JSX.Element => {
     </article>
   );
 };
-export default Task;
+export default TaskCard;

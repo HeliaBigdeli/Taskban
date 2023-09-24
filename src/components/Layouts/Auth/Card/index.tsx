@@ -1,10 +1,10 @@
 import { useEffect } from "react";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-  
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 interface ICardProps {
   page: string;
-  errors?: string[]
+  errors?: string[];
 }
 
 const Card: React.FC<React.PropsWithChildren<ICardProps>> = ({
@@ -12,22 +12,18 @@ const Card: React.FC<React.PropsWithChildren<ICardProps>> = ({
   children,
   errors,
 }): JSX.Element => {
-
-  useEffect(() => {  
-      errors?.map((error) => {
-        toast.error(
-          error,
-          {
-            position: "bottom-left",
-            autoClose: 3000,
-          }
-        );
-      })
-  }, [errors])
+  useEffect(() => {
+    errors?.map((error) => {
+      toast.error(error, {
+        position: "bottom-left",
+        autoClose: 3000,
+      });
+    });
+  }, [errors]);
 
   return (
     <>
-      <div className="flex w-[640px] p-M flex-col items-center gap-L rounded-[20px] bg-white shadow-card">      
+      <div className="flex w-[640px] p-M flex-col items-center gap-L rounded-[20px] bg-white shadow-authCard">
         <h2 className="text-black text-[32px] font-extrabold text-center">
           {page === "login"
             ? "(: به کوئرا تسک منیجر خوش برگشتی"
@@ -37,13 +33,12 @@ const Card: React.FC<React.PropsWithChildren<ICardProps>> = ({
             ? "فراموشی رمز عبور"
             : page === "reset"
             ? "بازیابی رمز عبور"
-            : null
-          }
+            : null}
         </h2>
         {children}
       </div>
-          <ToastContainer style={{ width: "380px"}} />
-      </> 
+      <ToastContainer style={{ width: "380px" }} />
+    </>
   );
 };
 

@@ -9,7 +9,7 @@ function App() {
       <img src={logo} alt="logo" width="260"/>
       <p className='bg-red-100 rounded-full px-6 py-2'>quera bootcamp task manager project</p>
       <ul>
-        <li>Creat React App (CRA)</li>
+        <li>Creat React App Mahsa (CRA)</li>
         <li>Tailwind</li>
         <li>Typescript</li>
         <li>react router</li>

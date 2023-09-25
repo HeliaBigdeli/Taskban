@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import AuthLayout from "..";
 
 interface ICardProps {
   page: string;
@@ -22,7 +23,7 @@ const Card: React.FC<React.PropsWithChildren<ICardProps>> = ({
   }, [errors]);
 
   return (
-    <>
+    <AuthLayout page={page}>
       <div className="flex w-[640px] p-M flex-col items-center gap-L rounded-[20px] bg-white shadow-authCard">
         <h2 className="text-black text-[32px] font-extrabold text-center">
           {page === "login"
@@ -38,7 +39,7 @@ const Card: React.FC<React.PropsWithChildren<ICardProps>> = ({
         {children}
       </div>
       <ToastContainer style={{ width: "380px" }} />
-    </>
+    </AuthLayout>
   );
 };
 

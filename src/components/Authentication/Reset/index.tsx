@@ -25,7 +25,6 @@ const Reset: React.FC = (): JSX.Element => {
   };
 
   return (
-    <AuthLayout>
       <Card page={"reset"} errors={errors}>
         <form className="flex flex-col gap-5 self-stretch">
           <Input
@@ -45,7 +44,6 @@ const Reset: React.FC = (): JSX.Element => {
           />
         </form>
       </Card>
-    </AuthLayout>
   );
 };
 

@@ -29,7 +29,6 @@ const ForgotPassword: React.FC = (): JSX.Element => {
   };
 
   return (
-    <AuthLayout>
       <Card page={"forgot"} errors={errors}>
         {!isSent ? (
           <form className="flex flex-col items-center gap-5 self-stretch">
@@ -56,7 +55,6 @@ const ForgotPassword: React.FC = (): JSX.Element => {
           </p>
         )}
       </Card>
-    </AuthLayout>
   );
 };
 

@@ -43,7 +43,6 @@ const Register: React.FC = (): JSX.Element => {
   };
 
   return (
-    <AuthLayout>
       <Card page={"register"} errors={errors}>
         <form className="flex flex-col gap-5 self-stretch">
           <Input
@@ -87,7 +86,6 @@ const Register: React.FC = (): JSX.Element => {
           />
         </form>
       </Card>
-    </AuthLayout>
   );
 };
 

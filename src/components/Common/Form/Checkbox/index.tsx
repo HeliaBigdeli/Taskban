@@ -1,3 +1,5 @@
+import React from "react"
+
 interface IProps {
     name: string,
     id: string,
@@ -9,7 +11,7 @@ interface IProps {
 
 const Checkbox:React.FC<IProps> = ({name, id, type, label, hasLabel, onChange}) :JSX.Element => {
 
-    const changeHandler = (e: any) => {
+    const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
         onChange(e.target.name, e.target.checked)
     }
 

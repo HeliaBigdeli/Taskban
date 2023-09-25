@@ -32,7 +32,6 @@ const Login: React.FC = (): JSX.Element => {
   };
 
   return (
-    <AuthLayout>
       <Card page={"login"} errors={errors}>
         <form className="flex flex-col items-center gap-L self-stretch">
           <div className="flex flex-col gap-M self-stretch">
@@ -79,7 +78,6 @@ const Login: React.FC = (): JSX.Element => {
           </div>
         </form>
       </Card>
-    </AuthLayout>
   );
 };
 

@@ -1,7 +1,7 @@
 import AuthLayout from "../../Layouts/Auth";
 import Card from "../../Layouts/Auth/Card";
-import Input from "../../Form/Input";
-import Button from "../../Form/Button";
+import Input from "../../Common/Form/Input";
+import Button from "../../Common/Form/Button";
 import {useState} from 'react'
 import {required, strong, validate} from '../../../Utils/validator'
 

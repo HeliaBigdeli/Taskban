@@ -1,8 +1,8 @@
 import AuthLayout from "../../Layouts/Auth";
 import Card from "../../Layouts/Auth/Card";
-import Input from "../../Form/Input";
-import Button from "../../Form/Button";
-import Checkbox from "../../Form/Checkbox";
+import Input from "../../Common/Form/Input";
+import Button from "../../Common/Form/Button";
+import Checkbox from "../../Common/Form/Checkbox";
 import {useState} from 'react'
 import {required,
         minLength,

@@ -16,7 +16,7 @@ interface IProps {
     onChange: (name: string, value: string) => void
 }
 
-const Input:React.FC<IProps> = ({name, id, type, label, hasLabel, subText, placeholder, onChange, showError = false}) :JSX.Element => {
+const Input:React.FC<IProps> = ({name, id, type, label, hasLabel, subText, placeholder, onChange}) :JSX.Element => {
     const [value, setValue] = useState("")
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -43,7 +43,6 @@ const Input:React.FC<IProps> = ({name, id, type, label, hasLabel, subText, place
             onChange={handleChange}
             className="h-XL self-stretch rounded-md bg-white border border-lightgray px-2"
         />
-        {showError && <p>error</p>}
         {subText?.text?.trim() &&
             <>
                 {subText.link 

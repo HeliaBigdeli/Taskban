@@ -33,9 +33,10 @@ module.exports = {
         XS: "8px",
       },
       boxShadow: {
-        card: `0px 50px 100px -20px rgba(50, 50, 93, 0.25),
+        authCard: `0px 50px 100px -20px rgba(50, 50, 93, 0.25),
         0px 30px 60px -30px rgba(0, 0, 0, 0.3)`,
-        task: `0px 2px 4px 0px rgba(0, 0, 0, 0.40), 0px 7px 6px -3px rgba(0, 0, 0, 0.30), 0px -3px 0px 0px rgba(0, 0, 0, 0.20) inset;`,
+        taskCard: `0px 2px 4px 0px rgba(0, 0, 0, 0.40), 0px 7px 6px -3px rgba(0, 0, 0, 0.30), 0px -3px 0px 0px rgba(0, 0, 0, 0.20) inset;`,
+        taskColumn: `0px 3px 4px 0px rgba(0, 0, 0, 0.20)`,
       },
     },
   },

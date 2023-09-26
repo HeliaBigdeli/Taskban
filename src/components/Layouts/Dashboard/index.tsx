@@ -23,9 +23,9 @@ const DashboardLayout: React.FC<IProps> = ({
   const handleClick = () => {};
 
   return (
-    <div className="flex">
+    <div className="flex px-2XL mt">
       <div className="flex-grow">
-        {hasHeader && <Header title={title} />}
+        {hasHeader && <Header title={title}/>}
         {children}
       </div> 
       <SideBar>
@@ -58,27 +58,7 @@ const DashboardLayout: React.FC<IProps> = ({
             color: "black",
             className: "ml-1"
           }}        
-        />
-            <ul className="text-right py-S">
-                <li>درس مدیریت پروژه</li>
-                <li>کارهای شخصی
-                    <ul>
-                        <li>پروژه اول</li>
-                        <li>پروژه دوم</li>
-                    </ul>
-                </li>
-                <li>درس مدیریت پروژه</li>
-            </ul>      
-            <ul className="text-right py-S">
-                <li>درس مدیریت پروژه</li>
-                <li>کارهای شخصی
-                    <ul>
-                        <li>پروژه اول</li>
-                        <li>پروژه دوم</li>
-                    </ul>
-                </li>
-                <li>درس مدیریت پروژه</li>
-            </ul>      
+        />          
             <ul className="text-right py-S">
                 <li>درس مدیریت پروژه</li>
                 <li>کارهای شخصی
@@ -89,6 +69,7 @@ const DashboardLayout: React.FC<IProps> = ({
                 </li>
                 <li>درس مدیریت پروژه</li>
             </ul>     
+
         <Button
           text="ساختن پروژه جدید"
           onClick={handleClick}

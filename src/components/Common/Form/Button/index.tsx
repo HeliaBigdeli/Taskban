@@ -4,8 +4,8 @@ interface IProps {
   text: string;
   type: "submit" | "button" | "reset";
   onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
-  hasIcon: boolean;
-  className: string;
+  hasIcon?: boolean;
+  className?: string;
   icon?: string | undefined;
   iconColor?: string;
   iconSize?: number;
@@ -18,8 +18,9 @@ const Button: React.FC<IProps> = (props: IProps): JSX.Element => {
     <button
       onClick={props.onClick}
       type={props.type}
-      className={`text-white text-sm leading-normal font-extrabold h-12 self-stretch rounded-md bg-brand-primary ${props.className} `}
+      className={`flex items-center justify-center ${props.className} `}
     >
+      {props.text}
       {props.hasIcon && (
         <Icon
           icon={props.icon}
@@ -29,7 +30,6 @@ const Button: React.FC<IProps> = (props: IProps): JSX.Element => {
           className={props.iconClassName}
         />
       )}
-      {props.text}
     </button>
   );
 };

@@ -1,4 +1,3 @@
-import AuthLayout from "../../Layouts/Auth";
 import Card from "../../Layouts/Auth/Card";
 import Input from "../../Common/Form/Input";
 import { Link } from "react-router-dom";

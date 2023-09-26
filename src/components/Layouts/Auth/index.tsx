@@ -5,7 +5,7 @@ interface IProps extends React.PropsWithChildren{
   page: string
 }
 
-const AuthLayout: React.FC<React.PropsWithChildren<IProps>> = ({
+const AuthLayout: React.FC<IProps> = ({
   children,
   page
 }):JSX.Element => {

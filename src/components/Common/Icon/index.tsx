@@ -11,8 +11,8 @@ interface IProps {
 
 const Icon: React.FC<IProps> = ({
   icon,
-  color = "#C1C1C1",
-  size = 30,
+  color = "#323232",
+  size = 24,
   style,
   className,
 }) => {

@@ -15,7 +15,11 @@ module.exports = {
       black: "#1e1e1e",
       white: "#ffffff",
       lightgray: "#aaaaaa",
+      lightgray_300: "#D3D3D3",
+      lightgray_100: "#F6F7F9",
       darkred: "#B91C1C",
+      indigo_primary: "#4C6EF5",
+      indigo_secondary: "#DBE4FF",
     },
     fontFamily: {
       yekan: ["IRANYekan"],

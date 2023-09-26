@@ -3,12 +3,12 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AuthLayout from "..";
 
-interface ICardProps {
+interface ICardProps extends React.PropsWithChildren {
   page: string;
   errors?: string[];
 }
 
-const Card: React.FC<React.PropsWithChildren<ICardProps>> = ({
+const Card: React.FC<ICardProps> = ({
   page,
   children,
   errors,

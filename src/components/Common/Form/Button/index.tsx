@@ -1,4 +1,11 @@
 import Icon from "../../Icon/";
+interface IIcon {
+  icon: string;
+  color?: string;
+  size?: number;
+  className?: string,
+  style?: {}
+}
 
 interface IProps {
   text: string;
@@ -6,28 +13,24 @@ interface IProps {
   onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
   hasIcon?: boolean;
   className?: string;
-  icon?: string | undefined;
-  iconColor?: string;
-  iconSize?: number;
-  iconStyle?: {};
-  iconClassName?: string;
+  icon?: IIcon; 
 }
 
-const Button: React.FC<IProps> = (props: IProps): JSX.Element => {
+const Button: React.FC<IProps> = ({type, text, hasIcon, className, icon, onClick}): JSX.Element => {
   return (
     <button
-      onClick={props.onClick}
-      type={props.type}
-      className={`flex items-center justify-center ${props.className} `}
+      onClick={onClick}
+      type={type}
+      className={`flex items-center justify-center ${className}`}
     >
-      {props.text}
-      {props.hasIcon && (
+      {text}
+      {hasIcon && (
         <Icon
-          icon={props.icon}
-          color={props.iconColor}
-          size={props.iconSize}
-          style={props.iconStyle}
-          className={props.iconClassName}
+          icon={icon?.icon}
+          color={icon?.color}
+          size={icon?.size}
+          style={icon?.style}
+          className={icon?.className}
         />
       )}
     </button>

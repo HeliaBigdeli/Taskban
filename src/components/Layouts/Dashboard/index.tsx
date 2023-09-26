@@ -1,6 +1,7 @@
 import Button from "../../Common/Form/Button";
 import Input from "../../Common/Form/Input";
 import Icon from "../../Common/Icon";
+import DarkMode from "../../Theme/DarkMode";
 import Header from "./Header";
 import SideBar from "./SideBar";
 import styles from "./style.module.css";
@@ -28,13 +29,13 @@ const DashboardLayout: React.FC<IProps> = ({
         {children}
       </div> 
       <SideBar>
-        <h2 className={`${styles.navbarTitle} mb-[27px] mt-[40px]`}>کوئرا تسک منیجر</h2>
+        <h2 className={`${styles.navbarTitle} mb-[27px] mt-XL`}>کوئرا تسک منیجر</h2>
         <div className="flex justify-between">
           <Icon icon="chevron_down" />
           <span className="font-bold font-base">ورک‌ اسپیس‌ها</span>
         </div>
         <Input
-          className="pr-8 my-5 bg-lightgray_100 border-none"
+          className="pr-L my-5 bg-lightgray_100 border-none"
           placeholder="جستجو کنید"
           name="search"
           id="search"
@@ -42,7 +43,7 @@ const DashboardLayout: React.FC<IProps> = ({
           hasLabel={false}
           hasIcon={true}
           icon={{
-            icon: "search",
+            icon: "search"
           }}
           onChange={(name, value) => handleChange(name, value)}
         />
@@ -52,11 +53,12 @@ const DashboardLayout: React.FC<IProps> = ({
           type="button"
           className="bg-lightgray_300 text-black h-L text-sm leading-normal self-stretch rounded-md"
           hasIcon={true}
-          icon="plus_square"
-          iconColor="black"
-          iconClassName="ml-1"
+          icon={{
+            icon: "plus_square",
+            color: "black",
+            className: "ml-1"
+          }}        
         />
-
             <ul className="text-right py-S">
                 <li>درس مدیریت پروژه</li>
                 <li>کارهای شخصی
@@ -66,22 +68,40 @@ const DashboardLayout: React.FC<IProps> = ({
                     </ul>
                 </li>
                 <li>درس مدیریت پروژه</li>
-            </ul>       
-
+            </ul>      
+            <ul className="text-right py-S">
+                <li>درس مدیریت پروژه</li>
+                <li>کارهای شخصی
+                    <ul>
+                        <li>پروژه اول</li>
+                        <li>پروژه دوم</li>
+                    </ul>
+                </li>
+                <li>درس مدیریت پروژه</li>
+            </ul>      
+            <ul className="text-right py-S">
+                <li>درس مدیریت پروژه</li>
+                <li>کارهای شخصی
+                    <ul>
+                        <li>پروژه اول</li>
+                        <li>پروژه دوم</li>
+                    </ul>
+                </li>
+                <li>درس مدیریت پروژه</li>
+            </ul>     
         <Button
           text="ساختن پروژه جدید"
           onClick={handleClick}
           type="button"
-          className="text-brand-primary h-L text-sm font-bold leading-normal self-stretch rounded-md border border-brand-primary"
+          className="text-brand-primary h-L text-sm font-bold leading-normal self-stretch rounded-md border border-brand-primary mb-L"
         />
         <div className="mt-auto mb-L flex flex-col gap-S">
-            <div className="text-right font-bold">
-                
+            <div className="text-right font-bold">                
             نیلوفر موجودی
             <span className="w-[30px] h-[30px] bg-indigo_secondary rounded-full p-1 ml-1 text-indigo_primary">NM</span>
             </div>
             <div className="flex justify-between items-center">
-              <span className="flex items-center"><Icon icon="sun" color="#818181"/></span>
+              <DarkMode />
               <span className="flex items-center">خروج<Icon icon="door" color="#818181"/></span>
             </div>
         </div>

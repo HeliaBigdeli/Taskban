@@ -16,6 +16,7 @@ module.exports = {
       white: "#ffffff",
       lightgray: "#aaaaaa",
       lightgray_300: "#D3D3D3",
+      lightgray_200: "#F1F3F5",
       lightgray_100: "#F6F7F9",
       darkred: "#B91C1C",
       indigo_primary: "#4C6EF5",
@@ -33,6 +34,7 @@ module.exports = {
     },
     extend: {
       spacing: {
+        "2XL": "50px",
         XL: "40px",
         L: "32px",
         M: "24px",

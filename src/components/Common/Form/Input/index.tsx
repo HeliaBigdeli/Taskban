@@ -6,6 +6,8 @@ interface IIcon {
   icon: string;
   color?: string;
   size?: number;
+  className?: string,
+  style?: {}
 }
 
 interface IProps {
@@ -37,7 +39,7 @@ const Input: React.FC<IProps> = ({
   onChange,
   hasIcon = false,
   className,
-  icon = {icon: '', size: 0, color: ''},
+  icon,
 }): JSX.Element => {
   const [value, setValue] = useState("");
 
@@ -66,7 +68,7 @@ const Input: React.FC<IProps> = ({
                 onChange={handleChange}
                 className={`h-XL self-stretch rounded-md bg-white border border-lightgray px-2 text-right w-full ${className}`}
             />
-            {hasIcon && <Icon icon={icon.icon} size={icon.size} color={icon.color} className="absolute pr-2" />}
+            {hasIcon && <Icon icon={icon?.icon} size={icon?.size} color={icon?.color} style={icon?.style} className={`${icon?.className} absolute pr-2`}/>}
        </div>
        {subText?.text?.trim() && (
         <>

@@ -4,6 +4,7 @@ import Register from "../components/Authentication/Register";
 import Reset from "../components/Authentication/Reset";
 import NotFound from "../components/NotFound";
 import Board from "../components/Dashboard/Board";
+import ColorPicker from "../components/Common/ColorPicker";
 
 export const routes = [
   {

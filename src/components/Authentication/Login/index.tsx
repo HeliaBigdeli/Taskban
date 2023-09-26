@@ -32,7 +32,7 @@ const Login: React.FC = (): JSX.Element => {
 
   return (
       <Card page={"login"} errors={errors}>
-        <form className="flex flex-col items-center gap-L self-stretch">
+        <form className="flex flex-col gap-L self-stretch">
           <div className="flex flex-col gap-M self-stretch">
             <Input
               name="email"
@@ -40,6 +40,7 @@ const Login: React.FC = (): JSX.Element => {
               type="email"
               label="ایمیل"
               hasLabel={true}
+              className="h-XL"
               onChange={(name, value) => handleChange(name, value)}
             />
             <Input
@@ -47,6 +48,7 @@ const Login: React.FC = (): JSX.Element => {
               id="password"
               type="password"
               label="رمز عبور"
+              className="h-XL"
               hasLabel={true}
               subText={{
                 text: "رمز عبور را فراموش کرده‌ای؟",

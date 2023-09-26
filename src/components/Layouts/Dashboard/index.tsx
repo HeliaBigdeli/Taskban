@@ -1,3 +1,4 @@
+import ColorPicker from "../../Common/ColorPicker";
 import Button from "../../Common/Form/Button";
 import Input from "../../Common/Form/Input";
 import Icon from "../../Common/Icon";
@@ -5,6 +6,10 @@ import DarkMode from "../../Theme/DarkMode";
 import Header from "./Header";
 import SideBar from "./SideBar";
 import styles from "./style.module.css";
+
+interface IColor {
+  [key: string] : string | undefined
+}
 
 interface IProps extends React.PropsWithChildren {
   hasHeader: boolean;
@@ -20,12 +25,15 @@ const DashboardLayout: React.FC<IProps> = ({
     console.log(name, value);
   };
 
-  const handleClick = () => {};
+  const handleClick = (color: {}) => {
+    console.log(color)
+  };
 
   return (
-    <div className="flex">
+    <div className="flex px-2XL mt">
       <div className="flex-grow  flex-col w-full overflow-hidden">
-        {hasHeader && <Header title={title} />}
+        {hasHeader && <Header title={title}/>}
+        <ColorPicker onClick={(color) => handleClick(color)} />
         {children}
       </div>
       <SideBar>
@@ -37,7 +45,7 @@ const DashboardLayout: React.FC<IProps> = ({
           <span className="font-bold font-base">ورک‌ اسپیس‌ها</span>
         </div>
         <Input
-          className="pr-L my-5 bg-lightgray_100 border-none"
+          className="pr-L my-5 border-none bg-lightgray_100 h-XL text-xs"
           placeholder="جستجو کنید"
           name="search"
           id="search"
@@ -58,42 +66,20 @@ const DashboardLayout: React.FC<IProps> = ({
           icon={{
             icon: "plus_square",
             color: "black",
-            className: "ml-1",
-          }}
-        />
-        <ul className="text-right py-S">
-          <li>درس مدیریت پروژه</li>
-          <li>
-            کارهای شخصی
-            <ul>
-              <li>پروژه اول</li>
-              <li>پروژه دوم</li>
-            </ul>
-          </li>
-          <li>درس مدیریت پروژه</li>
-        </ul>
-        <ul className="text-right py-S">
-          <li>درس مدیریت پروژه</li>
-          <li>
-            کارهای شخصی
-            <ul>
-              <li>پروژه اول</li>
-              <li>پروژه دوم</li>
-            </ul>
-          </li>
-          <li>درس مدیریت پروژه</li>
-        </ul>
-        <ul className="text-right py-S">
-          <li>درس مدیریت پروژه</li>
-          <li>
-            کارهای شخصی
-            <ul>
-              <li>پروژه اول</li>
-              <li>پروژه دوم</li>
-            </ul>
-          </li>
-          <li>درس مدیریت پروژه</li>
-        </ul>
+            className: "ml-1"
+          }}        
+        />          
+            <ul className="text-right py-S">
+                <li>درس مدیریت پروژه</li>
+                <li>کارهای شخصی
+                    <ul>
+                        <li>پروژه اول</li>
+                        <li>پروژه دوم</li>
+                    </ul>
+                </li>
+                <li>درس مدیریت پروژه</li>
+            </ul>     
+
         <Button
           text="ساختن پروژه جدید"
           onClick={handleClick}
@@ -116,6 +102,18 @@ const DashboardLayout: React.FC<IProps> = ({
           </div>
         </div>
       </SideBar>
+        <Button
+            text="تسک جدید"
+            onClick={handleClick}
+            type="button"
+            className="bg-brand-primary text-white h-L text-sm leading-normal self-stretch rounded-md fixed bottom-[30px] p-S"
+            hasIcon={true}
+            icon={{
+              icon: "plus_square",
+              color: "white",
+              className: "ml-1"
+          }}        
+        />
     </div>
   );
 };

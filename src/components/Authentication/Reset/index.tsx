@@ -31,6 +31,7 @@ const Reset: React.FC = (): JSX.Element => {
             id="password"
             type="password"
             label="رمز عبور جدید را وارد کنید"
+            className="h-XL"
             hasLabel={true}
             onChange={(name, value) => handleChange(name, value)}
           />

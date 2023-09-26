@@ -43,12 +43,13 @@ const Register: React.FC = (): JSX.Element => {
 
   return (
       <Card page={"register"} errors={errors}>
-        <form className="flex flex-col gap-5 self-stretch">
+        <form className="flex flex-col gap-[20px] self-stretch">
           <Input
             name="fullName"
             id="fullName"
             type="text"
             label="نام کامل"
+            className="h-XL"
             hasLabel={true}
             onChange={(name, value) => handleChange(name, value)}
           />
@@ -57,6 +58,7 @@ const Register: React.FC = (): JSX.Element => {
             id="email"
             type="email"
             label="ایمیل"
+            className="h-XL"
             hasLabel={true}
             onChange={(name, value) => handleChange(name, value)}
           />
@@ -65,6 +67,7 @@ const Register: React.FC = (): JSX.Element => {
             id="password"
             type="password"
             label="رمز عبور"
+            className="h-XL"
             hasLabel={true}
             onChange={(name, value) => handleChange(name, value)}
           />

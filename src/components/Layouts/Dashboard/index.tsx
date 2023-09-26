@@ -1,3 +1,4 @@
+import ColorPicker from "../../Common/ColorPicker";
 import Button from "../../Common/Form/Button";
 import Input from "../../Common/Form/Input";
 import Icon from "../../Common/Icon";
@@ -5,6 +6,10 @@ import DarkMode from "../../Theme/DarkMode";
 import Header from "./Header";
 import SideBar from "./SideBar";
 import styles from "./style.module.css";
+
+interface IColor {
+  [key: string] : string | undefined
+}
 
 interface IProps extends React.PropsWithChildren {
   hasHeader: boolean;
@@ -20,12 +25,15 @@ const DashboardLayout: React.FC<IProps> = ({
     console.log(name, value);
   };
 
-  const handleClick = () => {};
+  const handleClick = (color: {}) => {
+    console.log(color)
+  };
 
   return (
     <div className="flex px-2XL mt">
       <div className="flex-grow">
         {hasHeader && <Header title={title}/>}
+        <ColorPicker onClick={(color) => handleClick(color)} />
         {children}
       </div> 
       <SideBar>
@@ -35,7 +43,7 @@ const DashboardLayout: React.FC<IProps> = ({
           <span className="font-bold font-base">ورک‌ اسپیس‌ها</span>
         </div>
         <Input
-          className="pr-L my-5 border-none bg-lightgray_100 h-XL"
+          className="pr-L my-5 border-none bg-lightgray_100 h-XL text-xs"
           placeholder="جستجو کنید"
           name="search"
           id="search"

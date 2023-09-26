@@ -24,12 +24,14 @@ const DashboardLayout: React.FC<IProps> = ({
 
   return (
     <div className="flex">
-      <div className="flex-grow">
+      <div className="flex-grow  flex-col w-full overflow-hidden">
         {hasHeader && <Header title={title} />}
         {children}
-      </div> 
+      </div>
       <SideBar>
-        <h2 className={`${styles.navbarTitle} mb-[27px] mt-XL`}>کوئرا تسک منیجر</h2>
+        <h2 className={`${styles.navbarTitle} mb-[27px] mt-XL`}>
+          کوئرا تسک منیجر
+        </h2>
         <div className="flex justify-between">
           <Icon icon="chevron_down" />
           <span className="font-bold font-base">ورک‌ اسپیس‌ها</span>
@@ -43,7 +45,7 @@ const DashboardLayout: React.FC<IProps> = ({
           hasLabel={false}
           hasIcon={true}
           icon={{
-            icon: "search"
+            icon: "search",
           }}
           onChange={(name, value) => handleChange(name, value)}
         />
@@ -56,39 +58,42 @@ const DashboardLayout: React.FC<IProps> = ({
           icon={{
             icon: "plus_square",
             color: "black",
-            className: "ml-1"
-          }}        
+            className: "ml-1",
+          }}
         />
-            <ul className="text-right py-S">
-                <li>درس مدیریت پروژه</li>
-                <li>کارهای شخصی
-                    <ul>
-                        <li>پروژه اول</li>
-                        <li>پروژه دوم</li>
-                    </ul>
-                </li>
-                <li>درس مدیریت پروژه</li>
-            </ul>      
-            <ul className="text-right py-S">
-                <li>درس مدیریت پروژه</li>
-                <li>کارهای شخصی
-                    <ul>
-                        <li>پروژه اول</li>
-                        <li>پروژه دوم</li>
-                    </ul>
-                </li>
-                <li>درس مدیریت پروژه</li>
-            </ul>      
-            <ul className="text-right py-S">
-                <li>درس مدیریت پروژه</li>
-                <li>کارهای شخصی
-                    <ul>
-                        <li>پروژه اول</li>
-                        <li>پروژه دوم</li>
-                    </ul>
-                </li>
-                <li>درس مدیریت پروژه</li>
-            </ul>     
+        <ul className="text-right py-S">
+          <li>درس مدیریت پروژه</li>
+          <li>
+            کارهای شخصی
+            <ul>
+              <li>پروژه اول</li>
+              <li>پروژه دوم</li>
+            </ul>
+          </li>
+          <li>درس مدیریت پروژه</li>
+        </ul>
+        <ul className="text-right py-S">
+          <li>درس مدیریت پروژه</li>
+          <li>
+            کارهای شخصی
+            <ul>
+              <li>پروژه اول</li>
+              <li>پروژه دوم</li>
+            </ul>
+          </li>
+          <li>درس مدیریت پروژه</li>
+        </ul>
+        <ul className="text-right py-S">
+          <li>درس مدیریت پروژه</li>
+          <li>
+            کارهای شخصی
+            <ul>
+              <li>پروژه اول</li>
+              <li>پروژه دوم</li>
+            </ul>
+          </li>
+          <li>درس مدیریت پروژه</li>
+        </ul>
         <Button
           text="ساختن پروژه جدید"
           onClick={handleClick}
@@ -96,16 +101,21 @@ const DashboardLayout: React.FC<IProps> = ({
           className="text-brand-primary h-L text-sm font-bold leading-normal self-stretch rounded-md border border-brand-primary mb-L"
         />
         <div className="mt-auto mb-L flex flex-col gap-S">
-            <div className="text-right font-bold">                
+          <div className="text-right font-bold">
             نیلوفر موجودی
-            <span className="w-[30px] h-[30px] bg-indigo_secondary rounded-full p-1 ml-1 text-indigo_primary">NM</span>
-            </div>
-            <div className="flex justify-between items-center">
-              <DarkMode />
-              <span className="flex items-center">خروج<Icon icon="door" color="#818181"/></span>
-            </div>
+            <span className="w-[30px] h-[30px] bg-indigo_secondary rounded-full p-1 ml-1 text-indigo_primary">
+              NM
+            </span>
+          </div>
+          <div className="flex justify-between items-center">
+            <DarkMode />
+            <span className="flex items-center">
+              خروج
+              <Icon icon="door" color="#818181" />
+            </span>
+          </div>
         </div>
-        </SideBar>
+      </SideBar>
     </div>
   );
 };

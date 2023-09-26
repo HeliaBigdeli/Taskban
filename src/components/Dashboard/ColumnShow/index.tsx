@@ -11,7 +11,8 @@ const ColumnShow: React.FC = (): JSX.Element => {
     <div
       ref={ref}
       {...events}
-      className={`flex  gap-S overflow-auto h-full  ${style.scrool}`}
+      className={`flex  gap-S overflow-auto h-full mr-S ${style.scrool}`}
+      style={{ direction: "rtl" }}
     >
       <ColumnContainer />
       <ColumnContainer />

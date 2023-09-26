@@ -1,0 +1,40 @@
+import Icon from "../../Icon/";
+interface IIcon {
+  icon: string;
+  color?: string;
+  size?: number;
+  className?: string,
+  style?: {}
+}
+
+interface IProps {
+  text: string;
+  type: "submit" | "button" | "reset";
+  onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  hasIcon?: boolean;
+  className?: string;
+  icon?: IIcon; 
+}
+
+const Button: React.FC<IProps> = ({type, text, hasIcon, className, icon, onClick}): JSX.Element => {
+  return (
+    <button
+      onClick={onClick}
+      type={type}
+      className={`flex items-center justify-center ${className}`}
+    >
+      {text}
+      {hasIcon && (
+        <Icon
+          icon={icon?.icon}
+          color={icon?.color}
+          size={icon?.size}
+          style={icon?.style}
+          className={icon?.className}
+        />
+      )}
+    </button>
+  );
+};
+
+export default Button;

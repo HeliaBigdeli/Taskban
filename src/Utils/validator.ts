@@ -8,14 +8,15 @@ import {
     strongMessage,
   } from "../consts/messages";
   
-  import Translator from './translator'
+import Translator from './translator'
   
-  const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/
+const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/
 
 export type Validation = (fieldName: string) => {
   check: (input: string) => boolean;
   message: string;
 };
+
 type Rules = {
   [key: string]: any[]
 }

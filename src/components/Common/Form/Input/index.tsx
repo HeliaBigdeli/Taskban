@@ -49,32 +49,33 @@ const Input: React.FC<IProps> = ({
   };
 
   return (
-    <div className="flex flex-col items-end gap-XS self-stretch">
-      {hasLabel && (
-        <label
-          className="text-black text-sm font-normal leading-normal"
-          htmlFor={id}
-        >
-          {label}
-        </label>
-      )}
-       <div className="relative w-full flex items-center justify-end">        
-            <input
-                value={value}
-                placeholder={placeholder}
-                name={name}
-                id={id}
-                type={type}
-                onChange={handleChange}
-                className={`h-XL self-stretch rounded-md bg-white border border-lightgray px-2 text-right w-full ${className}`}
-            />
-            {hasIcon && <Icon icon={icon?.icon} size={icon?.size} color={icon?.color} style={icon?.style} className={`${icon?.className} absolute pr-2`}/>}
-       </div>
-       {subText?.text?.trim() && (
+    <>
+      <div className="text-right flex flex-col gap-XS">
+        {hasLabel && (
+          <label
+            className="text-black text-sm font-normal leading-normal"
+            htmlFor={id}
+          >
+            {label}
+          </label>
+        )}
+        <div className="relative flex items-center justify-end">        
+              <input
+                  value={value}
+                  placeholder={placeholder}
+                  name={name}
+                  id={id}
+                  type={type}
+                  onChange={handleChange}
+                  className={`rounded-md border border-lightgray px-2 text-right w-full ${className}`}
+              />
+              {hasIcon && <Icon icon={icon?.icon} size={icon?.size} color={icon?.color} style={icon?.style} className={`${icon?.className} absolute pr-2`}/>}
+        </div>
+        {subText?.text?.trim() && (
         <>
           {subText.link ? (
             <Link
-              className="text-brand-primary text-xs leading-normal font-extrabold"
+              className="text-brand-primary text-xs leading-normal font-extrabold text-right"
               to={subText.link}
             >
               {subText.text}
@@ -86,7 +87,8 @@ const Input: React.FC<IProps> = ({
           )}
         </>
       )}
-    </div>
+       </div>
+    </>
   );
 };
 

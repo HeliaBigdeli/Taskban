@@ -35,7 +35,7 @@ const DashboardLayout: React.FC<IProps> = ({
           <span className="font-bold font-base">ورک‌ اسپیس‌ها</span>
         </div>
         <Input
-          className="pr-L my-5 bg-lightgray_100 border-none"
+          className="pr-L my-5 border-none bg-lightgray_100 h-XL"
           placeholder="جستجو کنید"
           name="search"
           id="search"
@@ -87,6 +87,18 @@ const DashboardLayout: React.FC<IProps> = ({
             </div>
         </div>
         </SideBar>
+        <Button
+            text="تسک جدید"
+            onClick={handleClick}
+            type="button"
+            className="bg-brand-primary text-white h-L text-sm leading-normal self-stretch rounded-md fixed bottom-[30px] p-S"
+            hasIcon={true}
+            icon={{
+              icon: "plus_square",
+              color: "white",
+              className: "ml-1"
+          }}        
+        />
     </div>
   );
 };

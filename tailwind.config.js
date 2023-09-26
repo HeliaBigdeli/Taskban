@@ -21,7 +21,10 @@ module.exports = {
       darkred: "#B91C1C",
       indigo_primary: "#4C6EF5",
       indigo_secondary: "#DBE4FF",
+      blue_secondary: "#D0EBFF",
+      blue_primary: "#228BE6"
     },
+    
     fontFamily: {
       yekan: ["IRANYekan"],
     },

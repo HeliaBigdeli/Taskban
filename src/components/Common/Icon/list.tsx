@@ -1302,7 +1302,7 @@ const icons: ListType = {
       </svg>
     );
   },
-  calende_full: (color: string, size: number) => {
+  calender_full: (color: string, size: number) => {
     return (
       <svg
         width={size}

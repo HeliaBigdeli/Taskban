@@ -31,11 +31,12 @@ const ForgotPassword: React.FC = (): JSX.Element => {
   return (
       <Card page={"forgot"} errors={errors}>
         {!isSent ? (
-          <form className="flex flex-col items-center gap-5 self-stretch">
+          <form className="flex flex-col gap-5 self-stretch">
             <Input
               name="email"
               id="email"
               type="email"
+              className="h-XL"
               label="ایمیل خود را وارد کنید"
               hasLabel={true}
               onChange={(name, value) => handleChange(name, value)}

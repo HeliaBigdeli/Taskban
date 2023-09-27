@@ -31,7 +31,7 @@ const DashboardLayout: React.FC<IProps> = ({
 
   return (
     <div className="flex px-2XL mt">
-      <div className="flex-grow  flex-col w-full overflow-hidden">
+      <div className="flex-grow flex-col w-full overflow-hidden">
         {hasHeader && <Header title={title}/>}
         <ColorPicker onClick={(color) => handleClick(color)} />
         {children}

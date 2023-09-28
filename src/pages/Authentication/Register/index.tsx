@@ -1,7 +1,7 @@
-import Card from "../../Layouts/Auth/Card";
-import Input from "../../Common/Form/Input";
-import Button from "../../Common/Form/Button";
-import Checkbox from "../../Common/Form/Checkbox";
+import Card from "../../../components/Layouts/Auth/Card";
+import Input from "../../../components/Common/Form/Input";
+import Button from "../../../components/Common/Form/Button";
+import Checkbox from "../../../components/Common/Form/Checkbox";
 import { useState } from "react";
 import {
   required,

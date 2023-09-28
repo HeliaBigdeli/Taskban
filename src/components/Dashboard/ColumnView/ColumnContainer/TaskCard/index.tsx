@@ -1,8 +1,9 @@
-import Checkmark from "./components/Checkmark";
-import Tag from "../Tag";
+import Checkmark from "./Checkmark";
+import Tag from "../../../../Dashboard/Tag";
 import { useState } from "react";
-import More from "./components/More";
-import Icon from "../../Common/Icon";
+import More from "./More";
+import Icon from "../../../../Common/Icon";
+
 interface ITaskCardProps {
   // image?: string;
   // projectName: string;

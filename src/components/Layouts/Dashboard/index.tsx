@@ -6,6 +6,7 @@ import DarkMode from "../../Theme/DarkMode";
 import Header from "./Header";
 import SideBar from "./SideBar";
 import styles from "./style.module.css";
+import ColorPicker from "../../Common/ColorPicker";
 
 const DashboardLayout: React.FC = (): JSX.Element => {
   const handleChange = (name: string, value: string) => {

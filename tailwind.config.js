@@ -12,6 +12,11 @@ module.exports = {
     },
     colors: {
       "brand-primary": "#208d8e",
+      "red-primary": "#FA5252",
+      "blue-primary": "#228BE6",
+      "blue-secondary": "#D0EBFF",
+      "grape-primary": "#BE4BDB",
+      "grape-secondary": "#F3D9FA",
       black: "#1e1e1e",
       white: "#ffffff",
       lightgray: "#aaaaaa",
@@ -22,7 +27,8 @@ module.exports = {
       indigo_primary: "#4C6EF5",
       indigo_secondary: "#DBE4FF",
       blue_secondary: "#D0EBFF",
-      blue_primary: "#228BE6"
+      blue_primary: "#228BE6",
+      modalOverlay: '#000000ab',
     },
     
     fontFamily: {
@@ -47,6 +53,8 @@ module.exports = {
       boxShadow: {
         authCard: `0px 50px 100px -20px rgba(50, 50, 93, 0.25),
         0px 30px 60px -30px rgba(0, 0, 0, 0.3)`,
+        taskCard: `0px 2px 4px 0px rgba(0, 0, 0, 0.40), 0px 7px 6px -3px rgba(0, 0, 0, 0.30), 0px -3px 0px 0px rgba(0, 0, 0, 0.20) inset;`,
+        taskColumn: `0px 3px 4px 0px rgba(0, 0, 0, 0.20)`,
       },
     },
   },

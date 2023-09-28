@@ -20,21 +20,21 @@ const Header: React.FC<IProps> = ({ title }): JSX.Element => {
             className="px-S flex justify-center text-base items-center"
             to="/"
           >
-            نمایش لیستی
+            تقویم 
             <Icon icon="calender_full" />
           </Link>
           <Link
             className={`px-S flex justify-center text-base items-center ${style.active}`}
             to="/"
           >
-            نمایش لیستی
+            نمایش ستونی
             <Icon icon="grid" color="#208D8E" />
           </Link>
           <Link
             className="px-S flex justify-center text-base items-center"
             to="/"
           >
-            نمایش لیستی
+            نمایش لیستی 
             <Icon icon="list" />
           </Link>
           <span className="font-bold pl-S justify-end text-xl">{title}</span>

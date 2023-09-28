@@ -3,7 +3,7 @@ import AuthLayout from "../../Layouts/Auth";
 import Card from "../../Layouts/Auth/Card";
 import Button from "../../Common/Form/Button";
 import Input from "../../Common/Form/Input";
-import { email, required, validate } from "../../../Utils/validator";
+import { email, required, validate } from "../../../utils/validator";
 
 const rules = {
   email: [required, email],

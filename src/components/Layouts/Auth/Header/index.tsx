@@ -1,15 +1,14 @@
 import styles from "./style.module.css";
-import { Link } from "react-router-dom";
-interface IProps {
-  page: string;
-}
+import { Link, useLocation  } from "react-router-dom";
 
-const Header: React.FC<IProps> = ({ page }): JSX.Element => {
+const Header: React.FC = (): JSX.Element => {
+  const {pathname} = useLocation();
+
   return (
     <nav className="fixed w-full z-10">
       <div className="flex items-center justify-between xs:p-[10px] md:p-[20px] lg:px-[80px] lg:pt-[80px]">
         <div className="flex gap-XS items-center">
-          {page === "login" ? (
+          {pathname === "/login" ? (
             <>
               <Link
                 to="/register"

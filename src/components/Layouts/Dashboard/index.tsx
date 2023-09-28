@@ -1,4 +1,4 @@
-import ColorPicker from "../../Common/ColorPicker";
+import { Outlet } from "react-router-dom";
 import Button from "../../Common/Form/Button";
 import Input from "../../Common/Form/Input";
 import Icon from "../../Common/Icon";
@@ -7,16 +7,7 @@ import Header from "./Header";
 import SideBar from "./SideBar";
 import styles from "./style.module.css";
 
-interface IProps extends React.PropsWithChildren {
-  hasHeader: boolean;
-  title: string;
-}
-
-const DashboardLayout: React.FC<IProps> = ({
-  children,
-  hasHeader,
-  title,
-}): JSX.Element => {
+const DashboardLayout: React.FC = (): JSX.Element => {
   const handleChange = (name: string, value: string) => {
     console.log(name, value);
   };
@@ -28,8 +19,8 @@ const DashboardLayout: React.FC<IProps> = ({
   return (
     <div className="flex px-2XL mt">
       <div className="flex-grow flex-col w-full overflow-hidden">
-        {hasHeader && <Header title={title}/>}
-        {children}
+        <Header />
+        <Outlet />
       </div>
       <SideBar>
         <h2 className={`${styles.navbarTitle} mb-[27px] mt-XL`}>

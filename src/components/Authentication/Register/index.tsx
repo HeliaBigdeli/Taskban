@@ -10,7 +10,7 @@ import {
   validate,
   checked,
   strong,
-} from "../../../Utils/validator";
+} from "../../../utils/validator";
 
 type Values = {
   [key: string]: string | boolean | number;

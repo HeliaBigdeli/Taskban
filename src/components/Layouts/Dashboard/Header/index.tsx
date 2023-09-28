@@ -4,7 +4,7 @@ import Icon from "../../../Common/Icon";
 import style from "./style.module.css";
 
 interface IProps {
-  title: string;
+  title?: string;
 }
 
 const Header: React.FC<IProps> = ({ title }): JSX.Element => {
@@ -37,7 +37,7 @@ const Header: React.FC<IProps> = ({ title }): JSX.Element => {
             نمایش لیستی
             <Icon icon="list" />
           </Link>
-          <span className="font-bold pl-S justify-end text-xl">{title}</span>
+          <span className="font-bold pl-S justify-end text-xl">پروژ</span>
         </div>
         <Link
           className="mr-auto font-bold flex justify-center text-base items-center"

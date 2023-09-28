@@ -3,7 +3,7 @@ import Input from "../../Common/Form/Input";
 import { Link } from "react-router-dom";
 import Button from "../../Common/Form/Button";
 import { useState } from "react";
-import { required, validate } from "../../../Utils/validator";
+import { required, validate } from "../../../utils/validator";
 
 const rules = {
   email: [required],
@@ -64,11 +64,7 @@ const Login: React.FC = (): JSX.Element => {
             onClick={handleClick}
             hasIcon={false}
             className="text-white text-sm leading-normal font-extrabold h-12 self-stretch rounded-md bg-brand-primary"
-<<<<<<< HEAD
-          />         
-=======
           />
->>>>>>> 6c8c4cf055b8f9f812a8768279506aaa4cbbd278
           <div className="flex gap-XS">
             <Link
               className="text-brand-primary text-base font-extrabold"

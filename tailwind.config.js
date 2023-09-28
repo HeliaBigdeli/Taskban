@@ -27,7 +27,8 @@ module.exports = {
       indigo_primary: "#4C6EF5",
       indigo_secondary: "#DBE4FF",
       blue_secondary: "#D0EBFF",
-      blue_primary: "#228BE6"
+      blue_primary: "#228BE6",
+      modalOverlay: '#000000ab',
     },
     
     fontFamily: {

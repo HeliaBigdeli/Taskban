@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import Button from "../../Common/Form/Button";
 import { useState } from "react";
 import { required, validate } from "../../../Utils/validator";
-import Modal from "../../Common/Modal";
 
 const rules = {
   email: [required],
@@ -21,14 +20,12 @@ const Login: React.FC = (): JSX.Element => {
     email: "",
     password: "",
   });
-  const [isOpen, setIsOpen] = useState(false);
 
   const handleChange = (name: string, value: string) => {
     setValues({ ...values, [name]: value });
   };
 
   const handleClick = () => {
-    setIsOpen(true);
     const resultErrors = validate(values, rules);
     setErrors(resultErrors);
   };
@@ -67,17 +64,6 @@ const Login: React.FC = (): JSX.Element => {
             onClick={handleClick}
             hasIcon={false}
             className="text-white text-sm leading-normal font-extrabold h-12 self-stretch rounded-md bg-brand-primary"
-          />
-          <Modal
-            modal={isOpen}
-            setModal={setIsOpen}
-            hasHeader={true}
-            header={{ text: "Test", order: 3 }}
-            hasCloseIcon={true}
-            closeIcon={{ order: 2 }}
-            hasBackIcon={true}
-            backIcon={{ order: 1 }}
-            hasColor={false}
           />
           <div className="flex gap-XS">
             <Link

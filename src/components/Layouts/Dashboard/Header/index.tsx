@@ -20,7 +20,7 @@ const Header: React.FC<IProps> = ({ title }): JSX.Element => {
             className="px-S flex justify-center text-base items-center"
             to="/"
           >
-            تقویم 
+            تقویم
             <Icon icon="calender_full" />
           </Link>
           <Link
@@ -34,7 +34,7 @@ const Header: React.FC<IProps> = ({ title }): JSX.Element => {
             className="px-S flex justify-center text-base items-center"
             to="/"
           >
-            نمایش لیستی 
+            نمایش لیستی
             <Icon icon="list" />
           </Link>
           <span className="font-bold pl-S justify-end text-xl">{title}</span>
@@ -47,7 +47,7 @@ const Header: React.FC<IProps> = ({ title }): JSX.Element => {
           <Icon icon="share" />
         </Link>
       </div>
-      <div className="border-b-2 border-lightgray_300 py-S flex divide-x justify-end items-center divide-lightgray_300">
+      <div className="border-b-2 border-lightgray_300 py-S mb-S flex divide-x justify-end items-center divide-lightgray_300">
         <div className="flex">
           <p className="text-xs bg-blue_secondary p-1 px-S text-blue_primary">
             دسته بندی شده با : وضعیت

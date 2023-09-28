@@ -7,10 +7,6 @@ import Header from "./Header";
 import SideBar from "./SideBar";
 import styles from "./style.module.css";
 
-interface IColor {
-  [key: string] : string | undefined
-}
-
 interface IProps extends React.PropsWithChildren {
   hasHeader: boolean;
   title: string;
@@ -33,7 +29,6 @@ const DashboardLayout: React.FC<IProps> = ({
     <div className="flex px-2XL mt">
       <div className="flex-grow flex-col w-full overflow-hidden">
         {hasHeader && <Header title={title}/>}
-        <ColorPicker onClick={(color) => handleClick(color)} />
         {children}
       </div>
       <SideBar>

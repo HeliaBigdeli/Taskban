@@ -6,7 +6,7 @@ import DarkMode from "../../Theme/DarkMode";
 import Header from "./Header";
 import SideBar from "./SideBar";
 import styles from "./style.module.css";
-
+import List from "./List";
 interface IColor {
   [key: string] : string | undefined
 }
@@ -29,6 +29,12 @@ const DashboardLayout: React.FC<IProps> = ({
     console.log(color)
   };
 
+  const data = [
+    {id: 1, text: 'درس مدیریت پروژه',hasProject:true,color:'indigo_secondary'},
+    {id: 2, text: 'کارهای شخصی',hasProject:false,color:'indigo_secondary'},
+    {id: 3, text: 'درس کامپایلر',hasProject:true,color:'lightgray_300'},
+    {id: 4, text: 'پروژه کوئرا',hasProject:false,color:'blue_secondary'}
+  ]
   return (
     <div className="flex px-2XL mt">
       <div className="flex-grow">
@@ -67,16 +73,8 @@ const DashboardLayout: React.FC<IProps> = ({
             className: "ml-1"
           }}        
         />          
-            <ul className="text-right py-S">
-                <li>درس مدیریت پروژه</li>
-                <li>کارهای شخصی
-                    <ul>
-                        <li>پروژه اول</li>
-                        <li>پروژه دوم</li>
-                    </ul>
-                </li>
-                <li>درس مدیریت پروژه</li>
-            </ul>     
+
+      <List data={data}></List> 
 
         <Button
           text="ساختن پروژه جدید"

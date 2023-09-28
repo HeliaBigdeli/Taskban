@@ -20,14 +20,12 @@ const Login: React.FC = (): JSX.Element => {
     email: "",
     password: "",
   });
-  const [isOpen, setIsOpen] = useState(false);
 
   const handleChange = (name: string, value: string) => {
     setValues({ ...values, [name]: value });
   };
 
   const handleClick = () => {
-    setIsOpen(true);
     const resultErrors = validate(values, rules);
     setErrors(resultErrors);
   };
@@ -66,7 +64,11 @@ const Login: React.FC = (): JSX.Element => {
             onClick={handleClick}
             hasIcon={false}
             className="text-white text-sm leading-normal font-extrabold h-12 self-stretch rounded-md bg-brand-primary"
+<<<<<<< HEAD
           />         
+=======
+          />
+>>>>>>> 6c8c4cf055b8f9f812a8768279506aaa4cbbd278
           <div className="flex gap-XS">
             <Link
               className="text-brand-primary text-base font-extrabold"

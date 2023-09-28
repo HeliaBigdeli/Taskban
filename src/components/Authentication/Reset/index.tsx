@@ -2,7 +2,7 @@ import Card from "../../Layouts/Auth/Card";
 import Input from "../../Common/Form/Input";
 import Button from "../../Common/Form/Button";
 import { useState } from "react";
-import { required, strong, validate } from "../../../Utils/validator";
+import { required, strong, validate } from "../../../utils/validator";
 
 const rules = {
   password: [required, strong],

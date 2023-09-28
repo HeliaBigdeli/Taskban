@@ -6,7 +6,7 @@ import {
     emailMessage,
     checkedMessage,
     strongMessage,
-  } from "../consts/messages";
+  } from "./messages";
   
 import Translator from './translator'
   

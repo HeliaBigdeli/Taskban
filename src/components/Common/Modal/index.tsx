@@ -18,11 +18,11 @@ interface IBackIcon {
 interface IProps extends React.PropsWithChildren {
   modal: boolean;
   setModal: (value: boolean | ((prevVar: boolean) => boolean)) => void;
-  hasHeader: boolean;
+  hasHeader?: boolean;
   header?: IHeader;
-  hasCloseIcon: boolean;
+  hasCloseIcon?: boolean;
   closeIcon?: ICloseIcon;
-  hasBackIcon: boolean;
+  hasBackIcon?: boolean;
   backIcon?: IBackIcon;
   hasColor?: boolean;
   coloredSquare?: string;
@@ -100,7 +100,7 @@ const Modal: React.FC<IProps> = ({
                 <Icon icon="close" color="#1e1e1ec4" size={32} />
               </button>
             </div>
-            <div className="flex w-auto bg-grape-primary gap-[28px]">
+            <div className="flex w-auto gap-[28px]">
               {children}
             </div>
           </div>

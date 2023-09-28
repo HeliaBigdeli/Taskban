@@ -3,7 +3,7 @@ import Input from "../../Common/Form/Input";
 import { Link } from "react-router-dom";
 import Button from "../../Common/Form/Button";
 import { useState } from "react";
-import { required, validate } from "../../../Utils/validator";
+import { required, validate } from "../../../utils/validator";
 
 const rules = {
   email: [required],
@@ -76,7 +76,7 @@ const Login: React.FC = (): JSX.Element => {
               ثبت‌نام نکرده‌ای؟
             </span>
           </div>
-        </div>
+        </div>       
       </form>
     </Card>
   );

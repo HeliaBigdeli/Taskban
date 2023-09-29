@@ -6,22 +6,22 @@ import DarkMode from "../../Theme/DarkMode";
 import Header from "./Header";
 import SideBar from "./SideBar";
 import styles from "./style.module.css";
-import ColorPicker from "../../Common/ColorPicker";
+import List from "./../../Common/List";
 
 const DashboardLayout: React.FC = (): JSX.Element => {
   const handleChange = (name: string, value: string) => {
     console.log(name, value);
   };
 
-  const handleClick = (color: {}) => {
-    console.log(color)
+  const handleClick = () => {
+
   };
 
   const data = [
-    {id: 1, text: 'درس مدیریت پروژه',hasProject:true,color:'indigo_secondary'},
-    {id: 2, text: 'کارهای شخصی',hasProject:false,color:'indigo_secondary'},
-    {id: 3, text: 'درس کامپایلر',hasProject:true,color:'lightgray_300'},
-    {id: 4, text: 'پروژه کوئرا',hasProject:false,color:'blue_secondary'}
+    {id: 1, text: 'درس مدیریت پروژه', hasProject:true, color:'indigo_secondary'},
+    {id: 2, text: 'کارهای شخصی', hasProject:false, color:'indigo_secondary'},
+    {id: 3, text: 'درس کامپایلر', hasProject:true, color:'lightgray_300'},
+    {id: 4, text: 'پروژه کوئرا', hasProject:false, color:'blue_secondary'}
   ]
   return (
     <div className="flex px-2XL mt">
@@ -62,8 +62,7 @@ const DashboardLayout: React.FC = (): JSX.Element => {
             className: "ml-1"
           }}        
         />          
-
-
+        <List data={data}></List> 
         <Button
           text="ساختن پروژه جدید"
           onClick={handleClick}

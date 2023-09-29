@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import ListItem from "../ListItem";
+import Item from "./Item";
 interface IData {
   text: string;
   id: number;
@@ -12,10 +11,13 @@ interface IProps {
 
 const List: React.FC<IProps> = ({ data }): JSX.Element => {
   return (
-    <ul>
-      {
-         data.map((item) => (
-            <ListItem text={item.text} color={item.color} hasProject={item.hasProject}></ListItem>
+    <ul> 
+      {data.map((item) => (
+        <Item
+          text={item.text}
+          color={item.color}
+          hasProject={item.hasProject}
+        ></Item>
       ))}
     </ul>
   );

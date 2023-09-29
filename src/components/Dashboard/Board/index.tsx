@@ -1,14 +1,15 @@
 import DashboardLayout from "../../Layouts/Dashboard";
-import ColumnShow from "../ColumnShow";
+import ColumnView from "../ColumnView";
 import ListShow from "../ListShow";
 
 const Board: React.FC = (): JSX.Element => {
   return (
-    <DashboardLayout title="پروژه" hasHeader={true}>
-      <ColumnShow />
+    <DashboardLayout >
+      <ColumnView />
       {/* <ListShow/> */}
     </DashboardLayout>
   );
 };
 
 export default Board;
+

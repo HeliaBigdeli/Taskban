@@ -1,4 +1,4 @@
-import ColorPicker from "../../Common/ColorPicker";
+import { Outlet } from "react-router-dom";
 import Button from "../../Common/Form/Button";
 import Input from "../../Common/Form/Input";
 import Icon from "../../Common/Icon";
@@ -6,35 +6,28 @@ import DarkMode from "../../Theme/DarkMode";
 import Header from "./Header";
 import SideBar from "./SideBar";
 import styles from "./style.module.css";
+import List from "./../../Common/List";
 
-interface IColor {
-  [key: string] : string | undefined
-}
-
-interface IProps extends React.PropsWithChildren {
-  hasHeader: boolean;
-  title: string;
-}
-
-const DashboardLayout: React.FC<IProps> = ({
-  children,
-  hasHeader,
-  title,
-}): JSX.Element => {
+const DashboardLayout: React.FC = (): JSX.Element => {
   const handleChange = (name: string, value: string) => {
     console.log(name, value);
   };
 
-  const handleClick = (color: {}) => {
-    console.log(color)
+  const handleClick = () => {
+
   };
 
+  const data = [
+    {id: 1, text: 'درس مدیریت پروژه', hasProject:true, color:'indigo_secondary'},
+    {id: 2, text: 'کارهای شخصی', hasProject:false, color:'indigo_secondary'},
+    {id: 3, text: 'درس کامپایلر', hasProject:true, color:'lightgray_300'},
+    {id: 4, text: 'پروژه کوئرا', hasProject:false, color:'blue_secondary'}
+  ]
   return (
     <div className="flex px-2XL mt">
-      <div className="flex-grow  flex-col w-full overflow-hidden">
-        {hasHeader && <Header title={title}/>}
-        <ColorPicker onClick={(color) => handleClick(color)} />
-        {children}
+      <div className="flex-grow flex-col w-full overflow-hidden">
+        <Header />
+        <Outlet />
       </div>
       <SideBar>
         <h2 className={`${styles.navbarTitle} mb-[27px] mt-XL`}>
@@ -69,17 +62,7 @@ const DashboardLayout: React.FC<IProps> = ({
             className: "ml-1"
           }}        
         />          
-            <ul className="text-right py-S">
-                <li>درس مدیریت پروژه</li>
-                <li>کارهای شخصی
-                    <ul>
-                        <li>پروژه اول</li>
-                        <li>پروژه دوم</li>
-                    </ul>
-                </li>
-                <li>درس مدیریت پروژه</li>
-            </ul>     
-
+        <List data={data}></List> 
         <Button
           text="ساختن پروژه جدید"
           onClick={handleClick}

@@ -1,20 +1,14 @@
+import { Outlet } from "react-router-dom";
 import Header from "./Header";
 import styles from './style.module.css';
 
-interface IProps extends React.PropsWithChildren{
-  page: string
-}
-
-const AuthLayout: React.FC<IProps> = ({
-  children,
-  page
-}):JSX.Element => {
+const AuthLayout: React.FC = ():JSX.Element => {
   return (
       <div className={styles.background}>
         <span className={styles.skewBackground}></span>
-        <Header page={page} />
+        <Header />
         <div className="flex justify-center items-center h-screen relative">
-          {children}
+          <Outlet />
         </div>
       </div>
   );

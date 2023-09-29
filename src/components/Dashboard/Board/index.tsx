@@ -1,13 +1,13 @@
 import DashboardLayout from "../../Layouts/Dashboard";
 import ColumnView from "../ColumnView";
-import ListShow from "../ListShow";
+import ListView from "../ListView";
 
 const Board: React.FC = (): JSX.Element => {
   return (
-    <DashboardLayout >
+    <>
       <ColumnView />
-      {/* <ListShow/> */}
-    </DashboardLayout>
+      {/* <ListView/> */}
+    </>
   );
 };
 

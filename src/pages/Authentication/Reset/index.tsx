@@ -1,6 +1,6 @@
-import Card from "../../Layouts/Auth/Card";
-import Input from "../../Common/Form/Input";
-import Button from "../../Common/Form/Button";
+import Card from "../../../components/Layouts/Auth/Card";
+import Input from "../../../components/Common/Form/Input";
+import Button from "../../../components/Common/Form/Button";
 import { useState } from "react";
 import { required, strong, validate } from "../../../utils/validator";
 

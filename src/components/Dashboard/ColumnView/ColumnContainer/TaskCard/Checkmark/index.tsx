@@ -1,4 +1,4 @@
-import Icon from "../../../../Common/Icon";
+import Icon from "../../../../../Common/Icon";
 
 const Checkmark: React.FC = (): JSX.Element => {
   return (

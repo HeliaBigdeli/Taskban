@@ -1,4 +1,4 @@
-import Icon from "../../../../Common/Icon";
+import Icon from "../../../../../Common/Icon";
 
 interface IMoreProps {
   isShown: boolean;

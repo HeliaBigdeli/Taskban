@@ -1,7 +1,7 @@
-import Card from "../../Layouts/Auth/Card";
-import Input from "../../Common/Form/Input";
+import Card from "../../../components/Layouts/Auth/Card";
+import Input from "../../../components/Common/Form/Input";
 import { Link } from "react-router-dom";
-import Button from "../../Common/Form/Button";
+import Button from "../../../components/Common/Form/Button";
 import { useState } from "react";
 import { required, validate } from "../../../utils/validator";
 

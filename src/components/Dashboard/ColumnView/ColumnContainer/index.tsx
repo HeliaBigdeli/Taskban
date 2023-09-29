@@ -1,5 +1,5 @@
-import TaskCard from "../../TaskCard";
-import TaskColumn from "../../TaskColumn";
+import TaskCard from "./TaskCard";
+import TaskColumn from "./TaskColumn";
 
 const ColumnContainer: React.FC = (): JSX.Element => {
   return (

@@ -1,8 +1,7 @@
 import { useState } from "react";
-import AuthLayout from "../../Layouts/Auth";
-import Card from "../../Layouts/Auth/Card";
-import Button from "../../Common/Form/Button";
-import Input from "../../Common/Form/Input";
+import Card from "../../../components/Layouts/Auth/Card";
+import Button from "../../../components/Common/Form/Button";
+import Input from "../../../components/Common/Form/Input";
 import { email, required, validate } from "../../../utils/validator";
 
 const rules = {

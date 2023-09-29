@@ -3,7 +3,7 @@ import ColumnContainer from "./ColumnContainer";
 import { useDraggable } from "react-use-draggable-scroll";
 import style from "./style.module.css";
 
-const ColumnShow: React.FC = (): JSX.Element => {
+const ColumnView: React.FC = (): JSX.Element => {
   const ref = useRef<any>();
   const { events } = useDraggable(ref);
 
@@ -23,4 +23,4 @@ const ColumnShow: React.FC = (): JSX.Element => {
   );
 };
 
-export default ColumnShow;
+export default ColumnView;

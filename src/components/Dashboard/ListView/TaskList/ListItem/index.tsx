@@ -26,7 +26,7 @@ const ListItem: React.FC<IListItemProps> = ({ color }): JSX.Element => {
       <section className="flex items-center gap-[70px]">
         <div className="flex w-[70px] justify-center items-center relative ">
           <UserIcon left={0} />
-          <UserIcon left={24} />
+          <UserIcon left={30} />
         </div>
 
         <ListItemTitle title={"۶ آبان"} />

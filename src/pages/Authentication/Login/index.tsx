@@ -28,10 +28,7 @@ const Login: React.FC = (): JSX.Element => {
   const handleClick = () => {
     const resultErrors = validate(values, rules);
     setErrors(resultErrors);
-    setIsOpen(true);
   };
-
-  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <Card page={"login"} errors={errors}>

@@ -76,7 +76,7 @@ const Login: React.FC = (): JSX.Element => {
               ثبت‌نام نکرده‌ای؟
             </span>
           </div>
-        </div>       
+        </div>
       </form>
     </Card>
   );

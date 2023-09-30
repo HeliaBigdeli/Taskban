@@ -19,21 +19,25 @@ const ListItem: React.FC<IProps> = ({
   color,
   hasProject,
 }): JSX.Element => {
-  
   const [isOpen, setIsOpen] = useState(false);
   const toggleAccordion = () => {
     setIsOpen(!isOpen);
   };
   return (
-    <li className="cursor-pointer">
+    <li>
       <div className="flex justify-between items-center flex-row-reverse p-[4px] h-[36px] mt-S">
-        <div className="flex justify-between items-center" onClick={toggleAccordion}>
+        <div
+          className="flex justify-between items-center cursor-pointer"
+          onClick={toggleAccordion}
+        >
           <div> {text}</div>
           <span
             className={`w-[20px] h-[20px] bg-${color} rounded-md ml-XS inline-block`}
           ></span>
         </div>
-        {hasProject && <Icon icon="dots" size={20}/>}
+        {hasProject && (
+          <Icon icon="dots" size={20} className="cursor-pointer" />
+        )}
       </div>
       {hasProject && (
         <ul className={`${isOpen ? "block" : "hidden"}`}>
@@ -42,10 +46,12 @@ const ListItem: React.FC<IProps> = ({
               key={project.id}
               className="flex justify-between items-center flex-row-reverse p-[4px] h-[36px] pr-[30px] my-S"
             >
-              <div className="flex justify-between items-center">
+              <div className="flex justify-between items-center cursor-pointer">
                 {project.text}
               </div>
-              <Icon icon="dots" size={20} />
+              {hasProject && (
+                <Icon icon="dots" size={20} className="cursor-pointer" />
+              )}
             </li>
           ))}
         </ul>

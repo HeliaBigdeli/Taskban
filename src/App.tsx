@@ -8,11 +8,12 @@ import NotFound from "./pages/NotFound";
 import Board from "./pages/Dashboard/Board";
 import DashboardLayout from "./components/Layouts/Dashboard";
 import AuthLayout from "./components/Layouts/Auth";
+import List from "./pages/Dashboard/List";
+import Calender from "./pages/Dashboard/Calender";
 import ProfileLayout from "./components/Layouts/Profile";
-import Account from "./pages/Profile/Account";
-import Information from "./pages/Profile/Information";
-import Setting from "./pages/Profile/Setting";
-
+import Account from "./components/Profile/Account";
+import Information from "./components/Profile/Information";
+import Setting from "./components/Profile/Setting";
 
 function App() {
   return (
@@ -27,6 +28,8 @@ function App() {
         </Route>
         <Route path="/" element={<DashboardLayout/>}>
           <Route path="/board" element={<Board />}/>
+          <Route path="/list" element={<List />}/>
+          <Route path="/calender" element={<Calender />}/>
         </Route>
         <Route path="/" element={<ProfileLayout/>}>
           <Route path="/account" element={<Account/>}/>

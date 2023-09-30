@@ -2,28 +2,28 @@ import Icon from "../Icon/";
 
 interface IHeader {
   text?: string;
-  order?: number;
+  order: number;
 }
 
 interface ICloseIcon {
   color?: string;
-  order?: number;
+  order: number;
 }
 
 interface IBackIcon {
   color?: string;
-  order?: number;
+  order: number;
 }
 
 interface IProps extends React.PropsWithChildren {
   modal: boolean;
   setModal: (value: boolean | ((prevVar: boolean) => boolean)) => void;
-  hasHeader?: boolean;
-  header?: IHeader;
-  hasCloseIcon?: boolean;
-  closeIcon?: ICloseIcon;
-  hasBackIcon?: boolean;
-  backIcon?: IBackIcon;
+  hasHeader: boolean;
+  header: IHeader;
+  hasCloseIcon: boolean;
+  closeIcon: ICloseIcon;
+  hasBackIcon: boolean;
+  backIcon: IBackIcon;
   hasColor?: boolean;
   coloredSquare?: string;
 }
@@ -35,9 +35,9 @@ const Modal: React.FC<IProps> = ({
   header,
   children,
   hasBackIcon,
-  backIcon = { name: "back" },
+  backIcon,
   hasCloseIcon,
-  closeIcon = { name: "close" },
+  closeIcon,
   hasColor,
   coloredSquare,
 }): JSX.Element => {
@@ -59,12 +59,12 @@ const Modal: React.FC<IProps> = ({
     <>
       {modal && (
         <div
-          className="flex items-center justify-center bg-modalOverlay fixed top-0 right-0 left-0 bottom-0 z-10"
+          className="flex items-center justify-center bg-modalOverlay fixed top-0 right-0 left-0 bottom-0 z-20"
           onClick={handleClick}
         >
-          <div className="flex w-auto max-w-[80%] min-w-[20%] rounded-[12px] p-[20px] flex-col items-center gap-XL bg-white">
+          <div className="flex w-auto min-w-[20%] rounded-[12px] p-[20px] flex-col items-center gap-XL bg-white">
             <div
-              className={`flex justify-between items-center w-[430px] h-L ${
+              className={`flex justify-between items-center w-full h-L ${
                 hasHeader === false &&
                 hasBackIcon === false &&
                 hasCloseIcon === false
@@ -73,26 +73,29 @@ const Modal: React.FC<IProps> = ({
               }`}
             >
               <button
-                className={`order-1 w-auto h-M order-${backIcon.order} ${
+                className={`flex items-center w-auto h-M ${
                   hasBackIcon ? "" : "invisible"
                 }`}
+                style={{ order: backIcon.order }}
                 onClick={handleBack}
               >
                 <Icon icon="back" color="#1e1e1ec4" size={32} />
               </button>
               <h2
-                className={`flex items-center gap-[13px] order-3 font-extrabold text-xl text-black order-${
-                  header?.order
-                } ${hasHeader ? "" : "invisible"}
+                style={{ order: header.order }}
+                className={`flex items-center gap-[13px] font-extrabold text-xl text-black order-$ ${
+                  hasHeader ? "" : "invisible"
+                }
                 `}
               >
-                {header?.text}
+                {hasHeader ? header?.text : ""}
                 {hasColor && (
                   <div className={`w-XS h-XS bg-${coloredSquare}`}></div>
                 )}
               </h2>
               <button
-                className={`order-2 w-auto h-M order-${closeIcon.order} ${
+                style={{ order: closeIcon.order }}
+                className={`flex items-center w-auto h-M ${
                   hasCloseIcon ? "" : "invisible"
                 }`}
                 onClick={handleClose}
@@ -100,9 +103,7 @@ const Modal: React.FC<IProps> = ({
                 <Icon icon="close" color="#1e1e1ec4" size={32} />
               </button>
             </div>
-            <div className="flex w-auto gap-[28px]">
-              {children}
-            </div>
+            <div className="flex w-auto gap-[28px]">{children}</div>
           </div>
         </div>
       )}

@@ -3,8 +3,8 @@ interface IIcon {
   icon: string;
   color?: string;
   size?: number;
-  className?: string,
-  style?: {}
+  className?: string;
+  style?: {};
 }
 
 interface IProps {
@@ -13,10 +13,17 @@ interface IProps {
   onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
   hasIcon?: boolean;
   className?: string;
-  icon?: IIcon; 
+  icon?: IIcon;
 }
 
-const Button: React.FC<IProps> = ({type, text, hasIcon, className, icon, onClick}): JSX.Element => {
+const Button: React.FC<IProps> = ({
+  type,
+  text,
+  hasIcon,
+  className,
+  icon,
+  onClick,
+}): JSX.Element => {
   return (
     <button
       onClick={onClick}

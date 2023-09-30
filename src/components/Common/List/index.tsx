@@ -14,6 +14,7 @@ const List: React.FC<IProps> = ({ data }): JSX.Element => {
     <ul> 
       {data.map((item) => (
         <Item
+          key={item.id}
           text={item.text}
           color={item.color}
           hasProject={item.hasProject}

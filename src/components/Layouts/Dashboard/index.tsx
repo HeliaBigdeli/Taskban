@@ -7,22 +7,27 @@ import Header from "./Header";
 import SideBar from "./SideBar";
 import styles from "./style.module.css";
 import List from "./../../Common/List";
+import Modal from "../../Common/Modal";
+import { useState } from "react";
+import Select from "../../Common/Form/Select";
+
+const data = [
+  {
+    id: 1,
+    text: "درس مدیریت پروژه",
+    hasProject: true,
+    color: "indigo_secondary",
+  },
+  { id: 2, text: "کارهای شخصی", hasProject: false, color: "indigo_secondary" },
+  { id: 3, text: "درس کامپایلر", hasProject: true, color: "lightgray_300" },
+  { id: 4, text: "پروژه کوئرا", hasProject: false, color: "blue_secondary" },
+];
 
 const DashboardLayout: React.FC = (): JSX.Element => {
   const handleChange = (name: string, value: string) => {
     console.log(name, value);
   };
 
-  const handleClick = () => {
-
-  };
-
-  const data = [
-    {id: 1, text: 'درس مدیریت پروژه', hasProject:true, color:'indigo_secondary'},
-    {id: 2, text: 'کارهای شخصی', hasProject:false, color:'indigo_secondary'},
-    {id: 3, text: 'درس کامپایلر', hasProject:true, color:'lightgray_300'},
-    {id: 4, text: 'پروژه کوئرا', hasProject:false, color:'blue_secondary'}
-  ]
   return (
     <div className="flex px-2XL mt">
       <div className="flex-grow flex-col w-full overflow-hidden">
@@ -52,20 +57,20 @@ const DashboardLayout: React.FC = (): JSX.Element => {
         />
         <Button
           text="ساختن اسپیس جدید"
-          onClick={handleClick}
+          onClick={() => {}}
           type="button"
           className="bg-lightgray_300 text-black h-L text-sm leading-normal self-stretch rounded-md"
           hasIcon={true}
           icon={{
             icon: "plus_square",
             color: "black",
-            className: "ml-1"
-          }}        
-        />          
-        <List data={data}></List> 
+            className: "ml-1",
+          }}
+        />
+        <List data={data}></List>
         <Button
           text="ساختن پروژه جدید"
-          onClick={handleClick}
+          onClick={() => {}}
           type="button"
           className="text-brand-primary h-L text-sm font-bold leading-normal self-stretch rounded-md border border-brand-primary mb-L"
         />
@@ -85,18 +90,18 @@ const DashboardLayout: React.FC = (): JSX.Element => {
           </div>
         </div>
       </SideBar>
-        <Button
-            text="تسک جدید"
-            onClick={handleClick}
-            type="button"
-            className="bg-brand-primary text-white h-L text-sm leading-normal self-stretch rounded-md fixed bottom-[30px] p-S"
-            hasIcon={true}
-            icon={{
-              icon: "plus_square",
-              color: "white",
-              className: "ml-1"
-          }}        
-        />
+      <Button
+        text="تسک جدید"
+        onClick={() => {}}
+        type="button"
+        className="bg-brand-primary text-white h-L text-sm leading-normal self-stretch rounded-md fixed bottom-[30px] p-S"
+        hasIcon={true}
+        icon={{
+          icon: "plus_square",
+          color: "white",
+          className: "ml-1",
+        }}
+      />
     </div>
   );
 };

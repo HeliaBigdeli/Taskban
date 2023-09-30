@@ -1,11 +1,11 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
-import Login from "./components/Authentication/Login";
-import Register from "./components/Authentication/Register";
-import ForgotPassword from "./components/Authentication/ForgotPassword";
-import Reset from "./components/Authentication/Reset";
-import NotFound from "./components/NotFound";
-import Board from "./components/Dashboard/Board";
+import Login from "./pages/Authentication/Login";
+import Register from "./pages/Authentication/Register";
+import ForgotPassword from "./pages/Authentication/ForgotPassword";
+import Reset from "./pages/Authentication/Reset";
+import NotFound from "./pages/NotFound";
+import Board from "./pages/Dashboard/Board";
 import DashboardLayout from "./components/Layouts/Dashboard";
 import AuthLayout from "./components/Layouts/Auth";
 

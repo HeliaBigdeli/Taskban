@@ -17,6 +17,10 @@ module.exports = {
       "blue-secondary": "#D0EBFF",
       "grape-primary": "#BE4BDB",
       "grape-secondary": "#F3D9FA",
+      "orange-primary": "#FD7E14",
+      "orange-secondary": "#FFE8CC",
+      "green-primary": "#40C057",
+      "green-secondary": "#D3F9D8",
       black: "#1e1e1e",
       white: "#ffffff",
       lightgray: "#aaaaaa",
@@ -30,7 +34,7 @@ module.exports = {
       blue_primary: "#228BE6",
       modalOverlay: '#000000ab',
     },
-    
+
     fontFamily: {
       yekan: ["IRANYekan"],
     },

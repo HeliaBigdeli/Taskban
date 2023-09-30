@@ -12,7 +12,7 @@ const Tag: React.FC<ITagProps> = ({ color, text }): JSX.Element => {
     <div
       className={`inline-flex h-M px-XS justify-center items-center rounded-[14px] text-xs leading-normal font-extrabold  ${
         colorVariants[color as keyof typeof colorVariants]
-      } text-red`}
+      } `}
     >
       {text}
     </div>

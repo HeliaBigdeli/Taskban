@@ -35,9 +35,9 @@ const Modal: React.FC<IProps> = ({
   header,
   children,
   hasBackIcon,
-  backIcon = { name: "back" },
+  backIcon,
   hasCloseIcon,
-  closeIcon = { name: "close" },
+  closeIcon,
   hasColor,
   coloredSquare,
 }): JSX.Element => {
@@ -73,7 +73,7 @@ const Modal: React.FC<IProps> = ({
               }`}
             >
               <button
-                className={`order-1 w-auto h-M order-${backIcon.order} ${
+                className={`order-02w-auto h-M order-${backIcon?.order} ${
                   hasBackIcon ? "" : "invisible"
                 }`}
                 onClick={handleBack}
@@ -81,18 +81,18 @@ const Modal: React.FC<IProps> = ({
                 <Icon icon="back" color="#1e1e1ec4" size={32} />
               </button>
               <h2
-                className={`flex items-center gap-[13px] order-3 font-extrabold text-xl text-black order-${
+                className={`flex items-center gap-[13px] font-extrabold text-xl text-black order-${
                   header?.order
                 } ${hasHeader ? "" : "invisible"}
                 `}
               >
-                {header?.text}
+                {hasHeader ? header?.text : ""}
                 {hasColor && (
                   <div className={`w-XS h-XS bg-${coloredSquare}`}></div>
                 )}
               </h2>
               <button
-                className={`order-2 w-auto h-M order-${closeIcon.order} ${
+                className={`w-auto h-M order-${closeIcon?.order} ${
                   hasCloseIcon ? "" : "invisible"
                 }`}
                 onClick={handleClose}
@@ -100,9 +100,7 @@ const Modal: React.FC<IProps> = ({
                 <Icon icon="close" color="#1e1e1ec4" size={32} />
               </button>
             </div>
-            <div className="flex w-auto gap-[28px]">
-              {children}
-            </div>
+            <div className="flex w-auto gap-[28px]">{children}</div>
           </div>
         </div>
       )}

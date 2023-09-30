@@ -73,9 +73,9 @@ const Modal: React.FC<IProps> = ({
               }`}
             >
               <button
-                className={`order-02w-auto h-M order-${backIcon?.order} ${
-                  hasBackIcon ? "" : "invisible"
-                }`}
+                className={`flex items-center w-auto h-M order-${
+                  backIcon?.order
+                } ${hasBackIcon ? "" : "invisible"}`}
                 onClick={handleBack}
               >
                 <Icon icon="back" color="#1e1e1ec4" size={32} />
@@ -92,9 +92,9 @@ const Modal: React.FC<IProps> = ({
                 )}
               </h2>
               <button
-                className={`w-auto h-M order-${closeIcon?.order} ${
-                  hasCloseIcon ? "" : "invisible"
-                }`}
+                className={`flex items-center w-auto h-M order-${
+                  closeIcon?.order
+                } ${hasCloseIcon ? "" : "invisible"}`}
                 onClick={handleClose}
               >
                 <Icon icon="close" color="#1e1e1ec4" size={32} />

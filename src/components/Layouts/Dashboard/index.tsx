@@ -94,7 +94,7 @@ const DashboardLayout: React.FC = (): JSX.Element => {
         text="تسک جدید"
         onClick={() => {}}
         type="button"
-        className="bg-brand-primary text-white h-L text-sm leading-normal self-stretch rounded-md fixed bottom-[30px] p-S"
+        className="z-20 bg-brand-primary text-white h-L text-sm leading-normal self-stretch rounded-md fixed bottom-[30px] p-S"
         hasIcon={true}
         icon={{
           icon: "plus_square",

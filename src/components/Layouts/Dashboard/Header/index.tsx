@@ -1,7 +1,6 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Input from "../../../Common/Form/Input";
 import Icon from "../../../Common/Icon";
-import style from "./style.module.css";
 import Select from "../../../Common/Form/Select";
 import { useState } from "react";
 import Modal from "../../../Common/Modal";
@@ -19,7 +18,7 @@ const where = [
 const tag = [
   { id: 1, title: "درس", color: 'indigo_secondary' },
   { id: 2, title: "کار", color: 'blue_secondary' },
-  { id: 3, title: "پروژ", color: 'indigo_secondary' },
+  { id: 3, title: "پروژه", color: 'indigo_secondary' },
 ];
 const existance = [
   { id: 1, title: "است" },
@@ -27,6 +26,7 @@ const existance = [
 ];
 
 const Header: React.FC<IProps> = ({ title }): JSX.Element => {
+  const { pathname } = useLocation();
   const [modal, setModal] = useState<boolean>(false);
 
   const handleChange = (name: string, value: string) => {
@@ -42,25 +42,25 @@ const Header: React.FC<IProps> = ({ title }): JSX.Element => {
       <div className="flex flex-between flex-row-reverse border-b-2 border-lightgray_300 py-S gap-S">
         <div className="flex divide-x divide-lightgray_300 font-bold">
           <Link
-            className="px-S flex justify-center text-base items-center"
-            to="/"
+            className={`px-S flex justify-center text-base items-center  ${pathname === '/calender' ? "text-brand-primary" : ""}`}
+            to="/calender"
           >
             تقویم
-            <Icon icon="calender_full" />
+            <Icon icon="calender_full" color={`${pathname === '/calender' ? "#208d8e" : "#323232"}`} />
           </Link>
           <Link
-            className={`px-S flex justify-center text-base items-center ${style.active}`}
-            to="/"
+            className={`px-S flex justify-center text-base items-center ${pathname === '/board' ? "text-brand-primary" : ""}`}
+            to="/board"
           >
             نمایش ستونی
-            <Icon icon="grid" color="#208D8E" />
+            <Icon icon="grid" color={`${pathname === '/board' ? "#208d8e" : "#323232"}`} />
           </Link>
           <Link
-            className="px-S flex justify-center text-base items-center"
-            to="/"
+            className={`px-S flex justify-center text-base items-center ${pathname === '/list' ? "text-brand-primary" : ""}`}
+            to="/list"
           >
             نمایش لیستی
-            <Icon icon="list" />
+            <Icon icon="list" color={`${pathname === '/list' ? "#208d8e" : "#323232"}`} />
           </Link>
           <span className="font-bold pl-S justify-end text-xl">پروژ</span>
         </div>
@@ -99,24 +99,33 @@ const Header: React.FC<IProps> = ({ title }): JSX.Element => {
           onChange={(name, value) => handleChange(name, value)}
         />
       </div>
-      <Modal modal={modal} setModal={handleShowModal}>
+      <Modal
+        modal={modal}
+        setModal={handleShowModal}
+        hasCloseIcon={true}
+        closeIcon={{ alignment: 'left' }}
+        hasTitle={true}
+        backIcon={{ alignment: 'center' }}
+        hasBackIcon={false}
+        title={{ alignment: 'right', text: 'فیلترها' }}
+      >
         <div className="flex flex-col gap-S">
           <div className="flex flex-row-reverse items-center gap-3">
             <span>تسک هایی که</span>
             <Select
-              onChange={() => {}}
+              onChange={() => { }}
               items={where}
               className="w-[182px]"
             />
             <span>آن ها</span>
             <Select
-              onChange={() => {}}
+              onChange={() => { }}
               items={tag}
               className="w-[142px]"
               searchPlaceholder="جستجو"
             />
             <Select
-              onChange={() => {}}
+              onChange={() => { }}
               items={existance}
               className="w-[107px]"
               hasSearch={false}
@@ -126,19 +135,19 @@ const Header: React.FC<IProps> = ({ title }): JSX.Element => {
           <div className="flex flex-row-reverse items-center gap-3">
             <span>تسک هایی که</span>
             <Select
-              onChange={() => {}}
+              onChange={() => { }}
               items={where}
               className="w-[182px]"
             />
             <span>آن ها</span>
             <Select
-              onChange={() => {}}
+              onChange={() => { }}
               items={tag}
               className="w-[142px]"
               searchPlaceholder="جستجو"
             />
             <Select
-              onChange={() => {}}
+              onChange={() => { }}
               items={existance}
               className="w-[107px]"
               hasSearch={false}

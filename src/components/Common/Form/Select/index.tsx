@@ -1,6 +1,7 @@
+import { setServers } from "dns";
 import Icon from "../../Icon";
 import Input from "../Input";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 interface IItem {
   id: number;
   title: string;
@@ -22,31 +23,43 @@ const Select: React.FC<IProps> = ({
   hasSearch = true,
   searchPlaceholder = "جستجو بین فیلترها",
 }): JSX.Element => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [value, setValue] = useState<string | null>("")
+  const [open, setOpen] = useState(false);
+  const [data, setData] = useState(items)
 
-  const toggleAccordion = (e: React.MouseEvent<HTMLElement>) => {
-    setIsOpen(!isOpen);
+  const toggleList = (e: React.MouseEvent<HTMLElement>) => {
+    setData(items)
+    setOpen(!open)
   };
 
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
-    onChange(e.currentTarget.dataset.value);
+    onChange(e.currentTarget.dataset.value)
+    setValue(e.currentTarget.textContent)
+    setOpen(!open)
   };
+
+  const handleSearch = (name: string, value: string) => {
+    const data = items.filter((item) => {
+      return item.title.includes(value)
+    })
+    setData(data)
+  }
 
   return (
     <button
       type="button"
       className={`border border-solid border-lightgray_300 rounded-md relative text-right p-XS ${className}`}
+      onClick={toggleList}
     >
       <div
         className="flex items-center justify-between flex-row-reverse"
-        onClick={toggleAccordion}
       >
-        <span className="text-sm text-lightgray font-b">انتخاب کنید</span>
+        <span className={`text-sm ${value ? 'black' : 'text-lightgray'} font-b`}>{value || 'انتخاب کنید'}</span>
         <Icon icon="chevron_down" className="mr-auto" />
       </div>
-      <div
-        className={`bg-white rounded-lg gap-XS absolute w-full top-11 left-0 shadow-select border border-lightgray_300
-            ${isOpen ? "block z-10" : "hidden"}`}
+      {open && <div
+        onClick={(e) => {e.stopPropagation()}}
+        className="bg-white rounded-lg gap-XS absolute w-full top-11 left-0 shadow-select border border-lightgray_300 z-10"
       >
         {hasSearch && (
           <div className="border-b-2 mb-XS border-lightgray_300">
@@ -62,13 +75,14 @@ const Select: React.FC<IProps> = ({
                 icon: "search",
                 color: "#208D8E",
               }}
-              onChange={(name, value) => console.log(name, value)}
+              onChange={handleSearch}
             />
           </div>
         )}
-        <div className="max-h-[180px] overflow-auto">
-          {items?.map((item) => (
+        <div className="max-h-[200px] overflow-auto">
+          {data?.map((item) => (
             <div
+              data-name="filter"
               data-value={item.id}
               className="p-XS hover:bg-lightgray_100 rounded-md"
               onClick={handleClick}
@@ -87,6 +101,7 @@ const Select: React.FC<IProps> = ({
           ))}
         </div>
       </div>
+      }
     </button>
   );
 };

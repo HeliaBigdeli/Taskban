@@ -2,28 +2,28 @@ import Icon from "../Icon/";
 
 interface IHeader {
   text?: string;
-  order?: number;
+  order: number;
 }
 
 interface ICloseIcon {
   color?: string;
-  order?: number;
+  order: number;
 }
 
 interface IBackIcon {
   color?: string;
-  order?: number;
+  order: number;
 }
 
 interface IProps extends React.PropsWithChildren {
   modal: boolean;
   setModal: (value: boolean | ((prevVar: boolean) => boolean)) => void;
-  hasHeader?: boolean;
-  header?: IHeader;
-  hasCloseIcon?: boolean;
-  closeIcon?: ICloseIcon;
-  hasBackIcon?: boolean;
-  backIcon?: IBackIcon;
+  hasHeader: boolean;
+  header: IHeader;
+  hasCloseIcon: boolean;
+  closeIcon: ICloseIcon;
+  hasBackIcon: boolean;
+  backIcon: IBackIcon;
   hasColor?: boolean;
   coloredSquare?: string;
 }
@@ -73,17 +73,19 @@ const Modal: React.FC<IProps> = ({
               }`}
             >
               <button
-                className={`flex items-center w-auto h-M order-${
-                  backIcon?.order
-                } ${hasBackIcon ? "" : "invisible"}`}
+                className={`flex items-center w-auto h-M ${
+                  hasBackIcon ? "" : "invisible"
+                }`}
+                style={{ order: backIcon.order }}
                 onClick={handleBack}
               >
                 <Icon icon="back" color="#1e1e1ec4" size={32} />
               </button>
               <h2
-                className={`flex items-center gap-[13px] font-extrabold text-xl text-black order-${
-                  header?.order
-                } ${hasHeader ? "" : "invisible"}
+                style={{ order: header.order }}
+                className={`flex items-center gap-[13px] font-extrabold text-xl text-black order-$ ${
+                  hasHeader ? "" : "invisible"
+                }
                 `}
               >
                 {hasHeader ? header?.text : ""}
@@ -92,9 +94,10 @@ const Modal: React.FC<IProps> = ({
                 )}
               </h2>
               <button
-                className={`flex items-center w-auto h-M order-${
-                  closeIcon?.order
-                } ${hasCloseIcon ? "" : "invisible"}`}
+                style={{ order: closeIcon.order }}
+                className={`flex items-center w-auto h-M ${
+                  hasCloseIcon ? "" : "invisible"
+                }`}
                 onClick={handleClose}
               >
                 <Icon icon="close" color="#1e1e1ec4" size={32} />

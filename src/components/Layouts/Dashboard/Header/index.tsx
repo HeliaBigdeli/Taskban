@@ -4,10 +4,12 @@ import Icon from "../../../Common/Icon";
 import Select from "../../../Common/Form/Select";
 import { useState } from "react";
 import Modal from "../../../Common/Modal";
+import { createPortal } from 'react-dom';
 
 interface IProps {
   title?: string;
 }
+const portals = document.getElementById('portals') as Element;
 
 const where = [
   { id: 1, title: "تاریخ" },
@@ -99,64 +101,67 @@ const Header: React.FC<IProps> = ({ title }): JSX.Element => {
           onChange={(name, value) => handleChange(name, value)}
         />
       </div>
-      <Modal
-        modal={modal}
-        setModal={handleShowModal}
-        hasCloseIcon={true}
-        closeIcon={{ order: 1 }}
-        hasHeader={true}
-        backIcon={{ order: 2 }}
-        hasBackIcon={false}
-        header={{ order: 3, text: 'فیلترها' }}
-      >
-        <div className="flex flex-col gap-S">
-          <div className="flex flex-row-reverse items-center gap-3">
-            <span>تسک هایی که</span>
-            <Select
-              onChange={() => { }}
-              items={where}
-              className="w-[182px]"
-            />
-            <span>آن ها</span>
-            <Select
-              onChange={() => { }}
-              items={tag}
-              className="w-[142px]"
-              searchPlaceholder="جستجو"
-            />
-            <Select
-              onChange={() => { }}
-              items={existance}
-              className="w-[107px]"
-              hasSearch={false}
-            />
-            <Icon icon="trash" color="#FA5252" className="cursor-pointer mr-2XL" />
+      {createPortal(
+        <Modal
+          modal={modal}
+          setModal={handleShowModal}
+          hasCloseIcon={true}
+          closeIcon={{ order: 1 }}
+          hasHeader={true}
+          backIcon={{ order: 2 }}
+          hasBackIcon={false}
+          header={{ order: 3, text: 'فیلترها' }}
+        >
+          <div className="flex flex-col gap-S">
+            <div className="flex flex-row-reverse items-center gap-3">
+              <span>تسک هایی که</span>
+              <Select
+                onChange={() => { }}
+                items={where}
+                className="w-[182px]"
+              />
+              <span>آن ها</span>
+              <Select
+                onChange={() => { }}
+                items={tag}
+                className="w-[142px]"
+                searchPlaceholder="جستجو"
+              />
+              <Select
+                onChange={() => { }}
+                items={existance}
+                className="w-[107px]"
+                hasSearch={false}
+              />
+              <Icon icon="trash" color="#FA5252" className="cursor-pointer mr-2XL" />
+            </div>
+            <div className="flex flex-row-reverse items-center gap-3">
+              <span>تسک هایی که</span>
+              <Select
+                onChange={() => { }}
+                items={where}
+                className="w-[182px]"
+              />
+              <span>آن ها</span>
+              <Select
+                onChange={() => { }}
+                items={tag}
+                className="w-[142px]"
+                searchPlaceholder="جستجو"
+              />
+              <Select
+                onChange={() => { }}
+                items={existance}
+                className="w-[107px]"
+                hasSearch={false}
+              />
+              <Icon icon="trash" color="#FA5252" className="cursor-pointer mr-2XL" />
+            </div>
+            <span className="text-brand-primary text-right  cursor-pointer mt-M font-bold">افزودن فیلتر جدید</span>
           </div>
-          <div className="flex flex-row-reverse items-center gap-3">
-            <span>تسک هایی که</span>
-            <Select
-              onChange={() => { }}
-              items={where}
-              className="w-[182px]"
-            />
-            <span>آن ها</span>
-            <Select
-              onChange={() => { }}
-              items={tag}
-              className="w-[142px]"
-              searchPlaceholder="جستجو"
-            />
-            <Select
-              onChange={() => { }}
-              items={existance}
-              className="w-[107px]"
-              hasSearch={false}
-            />
-            <Icon icon="trash" color="#FA5252" className="cursor-pointer mr-2XL" />
-          </div>
-          <span className="text-brand-primary text-right  cursor-pointer mt-M font-bold">افزودن فیلتر جدید</span>
-        </div>
-      </Modal>
+        </Modal>,
+        portals
+      )}
     </div>
   );
 };

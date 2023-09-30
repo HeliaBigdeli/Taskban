@@ -1,29 +1,29 @@
 import Icon from "../Icon/";
 
-interface ITitle {
+interface IHeader {
   text?: string;
-  alignment?: string;
+  order: number;
 }
 
 interface ICloseIcon {
   color?: string;
-  alignment?: string;
+  order: number;
 }
 
 interface IBackIcon {
   color?: string;
-  alignment?: string;
+  order: number;
 }
 
 interface IProps extends React.PropsWithChildren {
   modal: boolean;
   setModal: (value: boolean | ((prevVar: boolean) => boolean)) => void;
-  hasTitle?: boolean;
-  title?: ITitle;
-  hasCloseIcon?: boolean;
-  closeIcon?: ICloseIcon;
-  hasBackIcon?: boolean;
-  backIcon?: IBackIcon;
+  hasHeader: boolean;
+  header: IHeader;
+  hasCloseIcon: boolean;
+  closeIcon: ICloseIcon;
+  hasBackIcon: boolean;
+  backIcon: IBackIcon;
   hasColor?: boolean;
   coloredSquare?: string;
 }
@@ -31,8 +31,8 @@ interface IProps extends React.PropsWithChildren {
 const Modal: React.FC<IProps> = ({
   modal,
   setModal,
-  hasTitle,
-  title,
+  hasHeader,
+  header,
   children,
   hasBackIcon,
   backIcon,
@@ -62,45 +62,48 @@ const Modal: React.FC<IProps> = ({
           className="flex items-center justify-center bg-modalOverlay fixed top-0 right-0 left-0 bottom-0 z-20"
           onClick={handleClick}
         >
-          <div className="flex w-auto min-w-[20%] rounded-xl p-[20px] flex-col items-center gap-XL bg-white">
+          <div className="flex w-auto min-w-[20%] rounded-[12px] p-[20px] flex-col items-center gap-XL bg-white">
             <div
-              className={`flex justify-between items-center w-full h-L ${hasTitle === false &&
+              className={`flex justify-between items-center w-full h-L ${
+                hasHeader === false &&
                 hasBackIcon === false &&
                 hasCloseIcon === false
-                ? "hidden"
-                : ""
-                }`}
+                  ? "hidden"
+                  : ""
+              }`}
             >
               <button
-                className={`flex items-center w-auto h-M ${backIcon?.alignment === 'right' ? 'order-3' : backIcon?.alignment === 'left' ? 'order-1' : 'order-2'} 
-                ${hasBackIcon ? "" : "invisible"
-                  }`}
+                className={`flex items-center w-auto h-M ${
+                  hasBackIcon ? "" : "invisible"
+                }`}
+                style={{ order: backIcon.order }}
                 onClick={handleBack}
               >
                 <Icon icon="back" color="#1e1e1ec4" size={32} />
               </button>
               <h2
-                className={`flex items-center gap-[13px] font-extrabold text-xl text-black ${title?.alignment === 'right' ? 'order-3' : title?.alignment === 'left' ? 'order-1' : 'order-2'} 
-                  ${hasTitle ? "" : "invisible"}
+                style={{ order: header.order }}
+                className={`flex items-center gap-[13px] font-extrabold text-xl text-black order-$ ${
+                  hasHeader ? "" : "invisible"
+                }
                 `}
               >
-                {title?.text}
+                {hasHeader ? header?.text : ""}
                 {hasColor && (
                   <div className={`w-XS h-XS bg-${coloredSquare}`}></div>
                 )}
               </h2>
               <button
-                className={`flex items-center w-auto h-M ${closeIcon?.alignment === 'right' ? 'order-3' : closeIcon?.alignment === 'left' ? 'order-1' : 'order-2'}
-                 ${hasCloseIcon ? "" : "invisible"
-                  }`}
+                style={{ order: closeIcon.order }}
+                className={`flex items-center w-auto h-M ${
+                  hasCloseIcon ? "" : "invisible"
+                }`}
                 onClick={handleClose}
               >
                 <Icon icon="close" color="#1e1e1ec4" size={32} />
               </button>
             </div>
-            <div className="flex w-auto gap-[28px]">
-              {children}
-            </div>
+            <div className="flex w-auto gap-[28px]">{children}</div>
           </div>
         </div>
       )}

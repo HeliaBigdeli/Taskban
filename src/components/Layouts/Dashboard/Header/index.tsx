@@ -103,11 +103,11 @@ const Header: React.FC<IProps> = ({ title }): JSX.Element => {
         modal={modal}
         setModal={handleShowModal}
         hasCloseIcon={true}
-        closeIcon={{ alignment: 'left' }}
-        hasTitle={true}
-        backIcon={{ alignment: 'center' }}
+        closeIcon={{ order: 1 }}
+        hasHeader={true}
+        backIcon={{ order: 2 }}
         hasBackIcon={false}
-        title={{ alignment: 'right', text: 'فیلترها' }}
+        header={{ order: 3, text: 'فیلترها' }}
       >
         <div className="flex flex-col gap-S">
           <div className="flex flex-row-reverse items-center gap-3">

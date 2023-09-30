@@ -8,6 +8,7 @@ import NotFound from "./pages/NotFound";
 import Board from "./pages/Dashboard/Board";
 import DashboardLayout from "./components/Layouts/Dashboard";
 import AuthLayout from "./components/Layouts/Auth";
+import List from "./pages/Dashboard/List";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         </Route>
         <Route path="/" element={<DashboardLayout/>}>
           <Route path="/board" element={<Board />}/>
+          <Route path="/list" element={<List />}/>
         </Route>
         <Route path='*' element={<NotFound />} />
       </Routes>

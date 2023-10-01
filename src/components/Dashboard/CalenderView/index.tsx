@@ -3,19 +3,32 @@ import { dayOfWeek } from "../../../constants/dayOfWeek";
 import moment from "moment-jalaali";
 
 const CalenderView = () => {
-  const [dates, setDates] = useState<number[]>(Array(42).fill(0));
+  const [dates, setDates] = useState<number[]>([]);
+  const [currentMonth, setCurrentMonth] = useState<number>(0)
+  const [monthName, setMonthName] = useState<string>("")
+
+  const handleChangeMonth = () => {
+    
+  }
 
   useEffect(() => {
-    let m = moment(new Date().toLocaleDateString(), 'M/D/YYYY').format('jYYYY/jMM/jDD')
-    let mm = moment(m, 'jYYYY/jM/jD')
-    console.log(mm.startOf('jMonth'))
-
     const date = new Date();
+    date.setMonth(date.getMonth() + currentMonth);
+
+    // get full persian date
+    const jajaliDate = new Intl.DateTimeFormat('fa-IR-u-nu-latn').format(date).split('/');
+    // set month Name
+    const monthName = new Intl.DateTimeFormat('fa-IR-u-nu-latn', {month: 'short'}).format(date);
+    setMonthName(monthName)
+
+    console.log(moment.jDaysInMonth(jajaliDate[0], jajaliDate[1]))
+
     const firstDayIndex = new Date(
       date.getFullYear(),
       date.getMonth(),
       1
     ).getDay();
+
     const lastDay = new Date(
       date.getFullYear(),
       date.getMonth() + 1,
@@ -27,10 +40,9 @@ const CalenderView = () => {
       dates[index] = i;
       index += 1;
     }
-    
-    console.log(dates)
-    setDates(dates);
-  });
+
+    setDates([...dates]);
+  }, [currentMonth]);
 
   return (
     <div

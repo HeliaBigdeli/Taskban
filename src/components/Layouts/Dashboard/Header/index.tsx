@@ -2,12 +2,22 @@ import { Link } from "react-router-dom";
 import Input from "../../../Common/Form/Input";
 import Icon from "../../../Common/Icon";
 import style from "./style.module.css";
+import { useState } from "react";
+import Modal from "../../../Common/Modal";
 
 interface IProps {
   title?: string;
 }
 
 const Header: React.FC<IProps> = ({ title }): JSX.Element => {
+  //------------------------------------------------- Share Modal Section starts ------------------------------------------//
+  const [isShareModalOpen, setIsShareModalOpen] = useState(false);
+
+  const handleShareClick = () => {
+    setIsShareModalOpen(true);
+  };
+  //------------------------------------------------- Share Modal Section ends ------------------------------------------//
+
   const handleChange = (name: string, value: string) => {
     console.log(name, value);
   };
@@ -39,13 +49,25 @@ const Header: React.FC<IProps> = ({ title }): JSX.Element => {
           </Link>
           <span className="font-bold pl-S justify-end text-xl">پروژ</span>
         </div>
-        <Link
-          className="mr-auto font-bold flex justify-center text-base items-center"
-          to="/"
+        <div
+          onClick={handleShareClick}
+          className="mr-auto font-bold flex justify-center text-base items-center cursor-pointer"
         >
           اشتراک گذاری
           <Icon icon="share" />
-        </Link>
+        </div>
+        <Modal
+          modal={isShareModalOpen}
+          setModal={setIsShareModalOpen}
+          hasHeader={true}
+          header={{ text: "به اشتراک‌گذاری پروژه‌", order: 2 }}
+          hasBackIcon={false}
+          backIcon={{ order: 1 }}
+          hasCloseIcon={true}
+          closeIcon={{ order: 3 }}
+        >
+          <div></div>
+        </Modal>
       </div>
       <div className="border-b-2 border-lightgray_300 py-S mb-S flex divide-x justify-end items-center divide-lightgray_300">
         <div className="flex">

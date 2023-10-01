@@ -7,8 +7,9 @@ import CalenderTable from "./CalenderTable";
 
 type DateList = {
   key: string;
-  date: string;
+  day: string;
   showBtn: boolean;
+  value: string;
 };
 
 const CalenderView: React.FC = (): JSX.Element => {
@@ -55,11 +56,11 @@ const CalenderView: React.FC = (): JSX.Element => {
     setYear(jajaliDate[0]);
     setToday(jajaliDate[2]);
 
-    return [year, month];
+    return { year, month };
   };
 
-  useEffect(() => {
-    const [year, month] = datevalues();
+  const creaetDatetable = () => {
+    const { year, month } = datevalues();
 
     let dayIndex = new persianDate([year, month, 1]).day() - 1;
 
@@ -68,19 +69,34 @@ const CalenderView: React.FC = (): JSX.Element => {
     // get previous month length
     const prevMothLenth = moment.jDaysInMonth(year, month - 2);
     let prevMothDates = prevMothLenth - (dayIndex - 1);
+    let prevMonth = month - 1 === 0 ? 12 : month - 1;
 
     // create table of date
     let index = dayIndex;
     for (let i = 0; i < monthLength; i++) {
       if (i < dayIndex) {
-        dates[i] = { key: uuid(), date: String(prevMothDates), showBtn: false };
+        dates[i] = {
+          key: uuid(),
+          day: String(prevMothDates),
+          value: `${year}/${prevMonth}/${prevMothDates}`,
+          showBtn: false,
+        };
         prevMothDates += 1;
       }
-      dates[index] = { key: uuid(), date: String(i + 1), showBtn: false };
+      dates[index] = {
+        key: uuid(),
+        day: String(i + 1),
+        value: `${year}/${month}/${i + 1}`,
+        showBtn: false,
+      };
       index += 1;
     }
 
     setDates([...dates]);
+  };
+
+  useEffect(() => {
+    creaetDatetable();
   }, [currentMonth]);
 
   return (
@@ -101,6 +117,10 @@ const CalenderView: React.FC = (): JSX.Element => {
         </div>
       </div>
       <CalenderTable
+        month={month}
+        onclick={(date) => {
+          console.log(date);
+        }}
         today={today}
         dates={dates}
         currentMonth={currentMonth}

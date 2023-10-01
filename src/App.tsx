@@ -11,9 +11,10 @@ import AuthLayout from "./components/Layouts/Auth";
 import List from "./pages/Dashboard/List";
 import Calender from "./pages/Dashboard/Calender";
 import ProfileLayout from "./components/Layouts/Profile";
-import Account from "./components/Profile/Account";
-import Information from "./components/Profile/Information";
-import Setting from "./components/Profile/Setting";
+import Account from "./pages/Profile/Account";
+import Information from "./pages/Profile/Information";
+import Setting from "./pages/Profile/Setting";
+
 
 function App() {
   return (

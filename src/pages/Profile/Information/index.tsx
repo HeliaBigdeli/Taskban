@@ -1,6 +1,5 @@
 import Button from "../../../components/Common/Form/Button";
 import Input from "../../../components/Common/Form/Input";
-import Card from "../../../components/Layouts/Auth/Card";
 import {useState} from 'react'
 import { required, validate } from "../../../utils/validator";
 const rules = {

@@ -6,8 +6,8 @@ interface IIcon {
   icon: string;
   color?: string;
   size?: number;
-  className?: string,
-  style?: {}
+  className?: string;
+  style?: {};
 }
 
 interface IProps {
@@ -25,7 +25,7 @@ interface IProps {
   onChange: (name: string, value: string) => void;
   hasIcon?: boolean;
   icon?: IIcon;
-  className? :string
+  className?: string;
 }
 
 const Input: React.FC<IProps> = ({
@@ -59,35 +59,43 @@ const Input: React.FC<IProps> = ({
             {label}
           </label>
         )}
-        <div className="relative flex items-center justify-end">        
-              <input
-                  value={value}
-                  placeholder={placeholder}
-                  name={name}
-                  id={id}
-                  type={type}
-                  onChange={handleChange}
-                  className={`rounded-md border border-lightgray px-2 text-right w-full ${className}`}
-              />
-              {hasIcon && <Icon icon={icon?.icon} size={icon?.size} color={icon?.color} style={icon?.style} className={`${icon?.className} absolute pr-2`}/>}
+        <div className="relative flex items-center justify-end">
+          <input
+            value={value}
+            placeholder={placeholder}
+            name={name}
+            id={id}
+            type={type}
+            onChange={handleChange}
+            className={`rounded-md border border-lightgray px-2 text-right w-full ${className}`}
+          />
+          {hasIcon && (
+            <Icon
+              icon={icon?.icon}
+              size={icon?.size}
+              color={icon?.color}
+              style={icon?.style}
+              className={`${icon?.className} absolute pr-2`}
+            />
+          )}
         </div>
         {subText?.text?.trim() && (
-        <>
-          {subText.link ? (
-            <Link
-              className="text-brand-primary text-xs leading-normal font-extrabold text-right"
-              to={subText.link}
-            >
-              {subText.text}
-            </Link>
-          ) : (
-            <p className="text-xs leading-normal font-extrabold">
-              {subText?.text}
-            </p>
-          )}
-        </>
-      )}
-       </div>
+          <>
+            {subText.link ? (
+              <Link
+                className="text-brand-primary text-xs leading-normal font-extrabold text-right"
+                to={subText.link}
+              >
+                {subText.text}
+              </Link>
+            ) : (
+              <p className="text-xs leading-normal font-extrabold">
+                {subText?.text}
+              </p>
+            )}
+          </>
+        )}
+      </div>
     </>
   );
 };

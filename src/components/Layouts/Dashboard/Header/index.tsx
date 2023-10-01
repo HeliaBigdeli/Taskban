@@ -1,25 +1,58 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Input from "../../../Common/Form/Input";
 import Icon from "../../../Common/Icon";
-import style from "./style.module.css";
+import Select from "../../../Common/Form/Select";
 import { useState } from "react";
 import Modal from "../../../Common/Modal";
+import { createPortal } from "react-dom";
+import Button from "../../../Common/Form/Button";
+import CopyLink from "../../../Common/CopyLink";
+import MemberList from "../../../Common/MemberList/MemberList";
 
 interface IProps {
   title?: string;
 }
+const portals = document.getElementById("portals") as Element;
+
+const where = [
+  { id: 1, title: "تاریخ" },
+  { id: 2, title: "تگ" },
+  { id: 3, title: "اعضا" },
+  { id: 4, title: "اولویت" },
+];
+const tag = [
+  { id: 1, title: "درس", color: "indigo_secondary" },
+  { id: 2, title: "کار", color: "blue_secondary" },
+  { id: 3, title: "پروژه", color: "indigo_secondary" },
+];
+const existance = [
+  { id: 1, title: "است" },
+  { id: 2, title: "نیست" },
+];
 
 const Header: React.FC<IProps> = ({ title }): JSX.Element => {
   //------------------------------------------------- Share Modal Section starts ------------------------------------------//
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
+  const [shareEmail, setShareEmail] = useState("");
 
   const handleShareClick = () => {
     setIsShareModalOpen(true);
   };
+
+  const handleShareWithEmail = () => {
+    alert("Functionality is not assigned yet!");
+  };
   //------------------------------------------------- Share Modal Section ends ------------------------------------------//
+
+  const { pathname } = useLocation();
+  const [modal, setModal] = useState<boolean>(false);
 
   const handleChange = (name: string, value: string) => {
     console.log(name, value);
+  };
+
+  const handleShowModal = () => {
+    setModal(!modal);
   };
 
   return (
@@ -27,60 +60,100 @@ const Header: React.FC<IProps> = ({ title }): JSX.Element => {
       <div className="flex flex-between flex-row-reverse border-b-2 border-lightgray_300 py-S gap-S">
         <div className="flex divide-x divide-lightgray_300 font-bold">
           <Link
-            className="px-S flex justify-center text-base items-center"
-            to="/"
+            className={`px-S flex justify-center text-base items-center  ${
+              pathname === "/calender" ? "text-brand-primary" : ""
+            }`}
+            to="/calender"
           >
             تقویم
-            <Icon icon="calender_full" />
+            <Icon
+              icon="calender_full"
+              color={`${pathname === "/calender" ? "#208d8e" : "#323232"}`}
+            />
           </Link>
           <Link
-            className={`px-S flex justify-center text-base items-center ${style.active}`}
-            to="/"
+            className={`px-S flex justify-center text-base items-center ${
+              pathname === "/board" ? "text-brand-primary" : ""
+            }`}
+            to="/board"
           >
             نمایش ستونی
-            <Icon icon="grid" color="#208D8E" />
+            <Icon
+              icon="grid"
+              color={`${pathname === "/board" ? "#208d8e" : "#323232"}`}
+            />
           </Link>
           <Link
-            className="px-S flex justify-center text-base items-center"
-            to="/"
+            className={`px-S flex justify-center text-base items-center ${
+              pathname === "/list" ? "text-brand-primary" : ""
+            }`}
+            to="/list"
           >
             نمایش لیستی
-            <Icon icon="list" />
+            <Icon
+              icon="list"
+              color={`${pathname === "/list" ? "#208d8e" : "#323232"}`}
+            />
           </Link>
           <span className="font-bold pl-S justify-end text-xl">پروژ</span>
         </div>
-        <div
+        <button
           onClick={handleShareClick}
-          className="mr-auto font-bold flex justify-center text-base items-center cursor-pointer"
+          className="mr-auto font-bold flex justify-center text-base items-center"
         >
           اشتراک گذاری
           <Icon icon="share" />
-        </div>
-        <Modal
-          modal={isShareModalOpen}
-          setModal={setIsShareModalOpen}
-          hasHeader={true}
-          header={{ text: "به اشتراک‌گذاری پروژه‌", order: 2 }}
-          hasBackIcon={false}
-          backIcon={{ order: 1 }}
-          hasCloseIcon={true}
-          closeIcon={{ order: 3 }}
-        >
-          <div></div>
-        </Modal>
+        </button>
+        {createPortal(
+          <Modal
+            modal={isShareModalOpen}
+            setModal={setIsShareModalOpen}
+            hasHeader={true}
+            header={{ text: "به اشتراک‌گذاری پروژه‌", order: 2 }}
+            hasBackIcon={false}
+            backIcon={{ order: 1 }}
+            hasCloseIcon={true}
+            closeIcon={{ order: 3 }}
+          >
+            <form className="flex w-[430px]">
+              <Button
+                text="ارسال"
+                type="submit"
+                onClick={handleShareWithEmail}
+                className="h-XL bg-brand-primary rounded-l-lg text-white text-sm px-[29.5px]"
+              />
+              <Input
+                name="shareWithEmail"
+                id="shareWithEmail"
+                type="email"
+                showError={true}
+                onChange={(name, value) => setShareEmail(value)}
+                placeholder="دعوت با ایمیل"
+                className="h-XL rounded-l-none rounded-r-lg border-none bg-[#F0F1F3] text-sm outline-none pl-[255px]"
+              />
+            </form>
+            <div className="flex justify-between w-[430px]">
+              <CopyLink privateLink="hell@gmail.com" />
+            </div>
+            <div className="flex flex-col w-[430px] gap-S">
+              <MemberList />
+            </div>
+          </Modal>,
+          portals
+        )}
       </div>
       <div className="border-b-2 border-lightgray_300 py-S mb-S flex divide-x justify-end items-center divide-lightgray_300">
         <div className="flex">
           <p className="text-xs bg-blue_secondary p-1 px-S text-blue_primary">
             دسته بندی شده با : وضعیت
           </p>
-          <Link
+          <button
+            onClick={handleShowModal}
             className="px-S flex justify-center items-center text-xs"
-            to="/"
           >
             فیلترها
             <Icon icon="filter" />
-          </Link>
+          </button>
         </div>
         <Input
           className="pr-L border-none w-[200px] bg-white text-xs"
@@ -96,6 +169,69 @@ const Header: React.FC<IProps> = ({ title }): JSX.Element => {
           onChange={(name, value) => handleChange(name, value)}
         />
       </div>
+      {createPortal(
+        <Modal
+          modal={modal}
+          setModal={handleShowModal}
+          hasCloseIcon={true}
+          closeIcon={{ order: 1 }}
+          hasHeader={true}
+          backIcon={{ order: 2 }}
+          hasBackIcon={false}
+          header={{ order: 3, text: "فیلترها" }}
+        >
+          <div className="flex flex-col gap-S">
+            <div className="flex flex-row-reverse items-center gap-3">
+              <span>تسک هایی که</span>
+              <Select onChange={() => {}} items={where} className="w-[182px]" />
+              <span>آن ها</span>
+              <Select
+                onChange={() => {}}
+                items={tag}
+                className="w-[142px]"
+                searchPlaceholder="جستجو"
+              />
+              <Select
+                onChange={() => {}}
+                items={existance}
+                className="w-[107px]"
+                hasSearch={false}
+              />
+              <Icon
+                icon="trash"
+                color="#FA5252"
+                className="cursor-pointer mr-2XL"
+              />
+            </div>
+            <div className="flex flex-row-reverse items-center gap-3">
+              <span>تسک هایی که</span>
+              <Select onChange={() => {}} items={where} className="w-[182px]" />
+              <span>آن ها</span>
+              <Select
+                onChange={() => {}}
+                items={tag}
+                className="w-[142px]"
+                searchPlaceholder="جستجو"
+              />
+              <Select
+                onChange={() => {}}
+                items={existance}
+                className="w-[107px]"
+                hasSearch={false}
+              />
+              <Icon
+                icon="trash"
+                color="#FA5252"
+                className="cursor-pointer mr-2XL"
+              />
+            </div>
+            <span className="text-brand-primary text-right  cursor-pointer mt-M font-bold">
+              افزودن فیلتر جدید
+            </span>
+          </div>
+        </Modal>,
+        portals
+      )}
     </div>
   );
 };

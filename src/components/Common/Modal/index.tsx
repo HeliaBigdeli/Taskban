@@ -62,9 +62,9 @@ const Modal: React.FC<IProps> = ({
           className="flex items-center justify-center bg-modalOverlay fixed top-0 right-0 left-0 bottom-0 z-50"
           onClick={handleClick}
         >
-          <div className="flex w-auto max-w-[80%] min-w-[20%] rounded-[12px] p-[20px] flex-col items-center gap-XL bg-white">
+          <div className="flex w-auto min-w-[20%] rounded-[12px] p-[20px] flex-col items-center gap-XL bg-white">
             <div
-              className={`flex justify-between items-center w-[430px] h-L ${
+              className={`flex justify-between items-center w-full h-L ${
                 hasHeader === false &&
                 hasBackIcon === false &&
                 hasCloseIcon === false
@@ -103,7 +103,7 @@ const Modal: React.FC<IProps> = ({
                 <Icon icon="close" color="#1e1e1ec4" size={32} />
               </button>
             </div>
-            <div className="flex w-auto gap-[28px]">{children}</div>
+            <div className="flex flex-col w-auto gap-[28px]">{children}</div>
           </div>
         </div>
       )}

@@ -89,19 +89,7 @@ const DashboardLayout: React.FC = (): JSX.Element => {
             </span>
           </div>
         </div>
-      </SideBar>
-      <Button
-        text="تسک جدید"
-        onClick={() => {}}
-        type="button"
-        className="z-20 bg-brand-primary text-white h-L text-sm leading-normal self-stretch rounded-md fixed bottom-[30px] p-S"
-        hasIcon={true}
-        icon={{
-          icon: "plus_square",
-          color: "white",
-          className: "ml-1",
-        }}
-      />
+      </SideBar>    
     </div>
   );
 };

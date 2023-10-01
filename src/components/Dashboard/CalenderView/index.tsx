@@ -1,43 +1,82 @@
 import { useEffect, useState } from "react";
-import { dayOfWeek } from "../../../constants/dayOfWeek";
 import moment from "moment-jalaali";
+import Icon from "../../Common/Icon";
+import persianDate from "persian-date";
+import uuid from "react-uuid";
+import CalenderTable from "./CalenderTable";
 
-const CalenderView = () => {
-  const [dates, setDates] = useState<number[]>([]);
-  const [currentMonth, setCurrentMonth] = useState<number>(0)
-  const [monthName, setMonthName] = useState<string>("")
+type DateList = {
+  key: string;
+  date: string;
+  showBtn: boolean;
+};
 
-  const handleChangeMonth = () => {
-    
-  }
+const CalenderView: React.FC = (): JSX.Element => {
+  const [dates, setDates] = useState<DateList[]>([]);
+  const [currentMonth, setCurrentMonth] = useState<number>(0);
+  const [month, setMonth] = useState<string>("");
+  const [year, setYear] = useState<number>(0);
+  const [today, setToday] = useState<number>(0);
 
-  useEffect(() => {
+  const handleChangeMonth = (e) => {
+    setDates([]);
+    if (e.currentTarget.name === "next") {
+      setCurrentMonth(currentMonth + 1);
+    } else {
+      setCurrentMonth(currentMonth - 1);
+    }
+  };
+
+  const handleToday = () => {
+    setCurrentMonth(0);
+  };
+
+  const handleShowBtn = (key, staus) => {
+    const dateIndex = dates.findIndex((x) => x.key === key);
+    dates[dateIndex].showBtn = staus === "show" ? true : false;
+    setDates([...dates]);
+  };
+
+  const datevalues = () => {
     const date = new Date();
     date.setMonth(date.getMonth() + currentMonth);
 
-    // get full persian date
-    const jajaliDate = new Intl.DateTimeFormat('fa-IR-u-nu-latn').format(date).split('/');
-    // set month Name
-    const monthName = new Intl.DateTimeFormat('fa-IR-u-nu-latn', {month: 'short'}).format(date);
-    setMonthName(monthName)
+    // get full persian date, it return array [0] = year, [1] = month , [2] = day
+    const jajaliDate = date
+      .toLocaleDateString("fa-IR-u-nu-latn")
+      .split("/")
+      .map(Number);
 
-    console.log(moment.jDaysInMonth(jajaliDate[0], jajaliDate[1]))
+    // set month and year and day
+    setMonth(date.toLocaleDateString("fa-IR", { month: "short" }));
+    let year = jajaliDate[0];
+    let month = jajaliDate[1];
 
-    const firstDayIndex = new Date(
-      date.getFullYear(),
-      date.getMonth(),
-      1
-    ).getDay();
+    setYear(jajaliDate[0]);
+    setToday(jajaliDate[2]);
 
-    const lastDay = new Date(
-      date.getFullYear(),
-      date.getMonth() + 1,
-      0
-    ).getDate();
+    return [year, month];
+  };
 
-    let index = firstDayIndex;
-    for (let i = 1; i <= lastDay; i++) {
-      dates[index] = i;
+  useEffect(() => {
+    const [year, month] = datevalues();
+
+    let dayIndex = new persianDate([year, month, 1]).day() - 1;
+
+    // get month length to use in loop create array of dates
+    const monthLength = moment.jDaysInMonth(year, month - 1);
+    // get previous month length
+    const prevMothLenth = moment.jDaysInMonth(year, month - 2);
+    let prevMothDates = prevMothLenth - (dayIndex - 1);
+
+    // create table of date
+    let index = dayIndex;
+    for (let i = 0; i < monthLength; i++) {
+      if (i < dayIndex) {
+        dates[i] = { key: uuid(), date: String(prevMothDates), showBtn: false };
+        prevMothDates += 1;
+      }
+      dates[index] = { key: uuid(), date: String(i + 1), showBtn: false };
       index += 1;
     }
 
@@ -45,24 +84,30 @@ const CalenderView = () => {
   }, [currentMonth]);
 
   return (
-    <div
-      className="grid grid-cols-7 place-content-stretch h-screen mr-S mb-S"
-      dir="rtl"
-    >
-      {dates?.map((date, index) => {
-        return (
-          <div
-            key={index}
-            className="flex items-center justify-center border border-lightgray_300 relative"
-          >
-            {index <= 6 ? (
-              <span className="absolute top-1 right-2">{dayOfWeek[index]}</span>
-            ) : null}
-            <span className="absolute bottom-1 left-2">{date}</span>
-          </div>
-        );
-      })}
-    </div>
+    <>
+      <div className="flex justify-center">
+        <div className="flex gap-2">
+          <span>{year}</span>
+          <span>{month}</span>
+          <button name="next" onClick={handleChangeMonth}>
+            <Icon icon="chevron_left" />
+          </button>
+          <button name="prev" onClick={handleChangeMonth}>
+            <Icon icon="chevron_right" />
+          </button>
+          <span onClick={handleToday} className="cursor-pointer">
+            امروز
+          </span>
+        </div>
+      </div>
+      <CalenderTable
+        today={today}
+        dates={dates}
+        currentMonth={currentMonth}
+        onMouseEnter={(key, status) => handleShowBtn(key, status)}
+        onMouseLeave={(key, status) => handleShowBtn(key, status)}
+      />
+    </>
   );
 };
 

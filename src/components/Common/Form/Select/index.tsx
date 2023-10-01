@@ -1,7 +1,6 @@
-import { setServers } from "dns";
 import Icon from "../../Icon";
 import Input from "../Input";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 interface IItem {
   id: number;
   title: string;

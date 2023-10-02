@@ -98,7 +98,7 @@ const CalenderTable: React.FC<IProps> = ({
               name="email"
               id="email"
               type="email"
-              className="h-XL w-[440px]"
+              className="h-XL w-[400px]"
               placeholder="نام تسک را وارد کنید"
               hasLabel={false}
               onChange={() => {}}

@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import moment from "moment-jalaali";
 import Icon from "../../Common/Icon";
-import persianDate from "persian-date";
 import uuid from "react-uuid";
 import CalenderTable from "./CalenderTable";
 
@@ -62,7 +61,9 @@ const CalenderView: React.FC = (): JSX.Element => {
   const creaetDateTable = () => {
     const { year, month } = dateValues();
 
-    let firstDayIndex = new persianDate([year, month, 1]).day() - 1;
+    let dd =  moment(`${year}/${month}/1`, "jYYYY/jM/jD").format("YYYY-M-D");
+    let firstDayIndex = new Date(dd).getDay()  
+    firstDayIndex = firstDayIndex === 6 ? 0 : firstDayIndex + 1
 
     // get month length to use in loop create array of dates
     const monthLength = moment.jDaysInMonth(year, month - 1);

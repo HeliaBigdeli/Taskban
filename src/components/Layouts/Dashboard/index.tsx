@@ -7,9 +7,6 @@ import Header from "./Header";
 import SideBar from "./SideBar";
 import styles from "./style.module.css";
 import List from "./../../Common/List";
-import Modal from "../../Common/Modal";
-import { useState } from "react";
-import Select from "../../Common/Form/Select";
 
 const data = [
   {

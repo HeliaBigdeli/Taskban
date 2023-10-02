@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import moment from "moment-jalaali";
-import Icon from "../../Common/Icon";
 import uuid from "react-uuid";
-import CalenderTable from "./CalenderTable";
+import CalenderTable from "./Table";
+import { AppContext } from "../../../context/store";
 
 type DateList = {
   key: string;
@@ -13,23 +13,7 @@ type DateList = {
 
 const CalenderView: React.FC = (): JSX.Element => {
   const [dates, setDates] = useState<DateList[]>([]);
-  const [currentMonth, setCurrentMonth] = useState<number>(0);
-  const [month, setMonth] = useState<string>("");
-  const [year, setYear] = useState<number>(0);
-  const [today, setToday] = useState<number>(0);
-
-  const handleChangeMonth = (e) => {
-    setDates([]);
-    if (e.currentTarget.name === "next") {
-      setCurrentMonth(currentMonth + 1);
-    } else {
-      setCurrentMonth(currentMonth - 1);
-    }
-  };
-
-  const handleToday = () => {
-    setCurrentMonth(0);
-  };
+  const { dateValues, setDateValues } = useContext(AppContext);
 
   const handleShowBtn = (key, staus) => {
     const dateIndex = dates.findIndex((x) => x.key === key);
@@ -37,9 +21,9 @@ const CalenderView: React.FC = (): JSX.Element => {
     setDates([...dates]);
   };
 
-  const dateValues = () => {
+  const dateParams = () => {
     const date = new Date();
-    date.setMonth(date.getMonth() + currentMonth);
+    date.setMonth(date.getMonth() + dateValues.currentMonth);
 
     // get full persian date, it return array [0] = year, [1] = month , [2] = day
     const jajaliDate = date
@@ -48,34 +32,42 @@ const CalenderView: React.FC = (): JSX.Element => {
       .map(Number);
 
     // set month and year and day
-    setMonth(date.toLocaleDateString("fa-IR", { month: "short" }));
     let year = jajaliDate[0];
     let month = jajaliDate[1];
 
-    setYear(jajaliDate[0]);
-    setToday(jajaliDate[2]);
+    setDateValues({
+      ...dateValues,
+      year: jajaliDate[0],
+      month: jajaliDate[1],
+      today: jajaliDate[2],
+      monthName: date.toLocaleDateString("fa-IR", { month: "short" }),
+    });
 
     return { year, month };
   };
 
   const creaetDateTable = () => {
-    const { year, month } = dateValues();
+    const { year, month } = dateParams();
 
-    let dd =  moment(`${year}/${month}/1`, "jYYYY/jM/jD").format("YYYY-M-D");
-    let firstDayIndex = new Date(dd).getDay()  
-    firstDayIndex = firstDayIndex === 6 ? 0 : firstDayIndex + 1
+    // get first day of week to start array from there
+    let firstDayOfMonth = moment(`${year}/${month}/1`, "jYYYY/jM/jD").format(
+      "YYYY-M-D"
+    );
+    let firstDayOfWeekIndex = new Date(firstDayOfMonth).getDay();
+    firstDayOfWeekIndex =
+      firstDayOfWeekIndex === 6 ? 0 : firstDayOfWeekIndex + 1;
 
     // get month length to use in loop create array of dates
     const monthLength = moment.jDaysInMonth(year, month - 1);
     // get previous month length
     const prevMothLenth = moment.jDaysInMonth(year, month - 2);
-    let prevMothDates = prevMothLenth - (firstDayIndex - 1);
+    let prevMothDates = prevMothLenth - (firstDayOfWeekIndex - 1);
     let prevMonth = month - 1 === 0 ? 12 : month - 1;
 
     // create table of date
-    let index = firstDayIndex;
+    let index = firstDayOfWeekIndex;
     for (let i = 0; i < monthLength; i++) {
-      if (i < firstDayIndex) {
+      if (i < firstDayOfWeekIndex) {
         dates[i] = {
           key: uuid(),
           day: String(prevMothDates),
@@ -98,37 +90,20 @@ const CalenderView: React.FC = (): JSX.Element => {
 
   useEffect(() => {
     creaetDateTable();
-  }, [currentMonth]);
+  }, [dateValues.currentMonth]);
 
   return (
-    <>
-      <div className="flex justify-center">
-        <div className="flex gap-2">
-          <span>{year}</span>
-          <span>{month}</span>
-          <button name="next" onClick={handleChangeMonth}>
-            <Icon icon="chevron_left" />
-          </button>
-          <button name="prev" onClick={handleChangeMonth}>
-            <Icon icon="chevron_right" />
-          </button>
-          <span onClick={handleToday} className="cursor-pointer">
-            امروز
-          </span>
-        </div>
-      </div>
-      <CalenderTable
-        month={month}
-        onclick={(date) => {
-          console.log(date);
-        }}
-        today={today}
-        dates={dates}
-        currentMonth={currentMonth}
-        onMouseEnter={(key, status) => handleShowBtn(key, status)}
-        onMouseLeave={(key, status) => handleShowBtn(key, status)}
-      />
-    </>
+    <CalenderTable
+      month={dateValues.monthName}
+      onclick={(date) => {
+        console.log(date);
+      }}
+      today={dateValues.today}
+      dates={dates}
+      currentMonth={dateValues.currentMonth}
+      onMouseEnter={(key, status) => handleShowBtn(key, status)}
+      onMouseLeave={(key, status) => handleShowBtn(key, status)}
+    />
   );
 };
 

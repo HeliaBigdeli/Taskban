@@ -62,7 +62,7 @@ const Modal: React.FC<IProps> = ({
           className="flex items-center justify-center bg-modalOverlay fixed top-0 right-0 left-0 bottom-0 z-50"
           onClick={handleClick}
         >
-          <div className="flex w-auto min-w-[20%] rounded-[12px] p-[20px] flex-col items-center gap-XL bg-white">
+          <div className="flex w-auto min-w-[40%] rounded-[12px] p-[20px] flex-col items-center gap-XL bg-white">
             <div
               className={`flex justify-between items-center w-full h-L ${
                 hasHeader === false &&

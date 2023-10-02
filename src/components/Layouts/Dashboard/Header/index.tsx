@@ -8,7 +8,8 @@ import { createPortal } from "react-dom";
 import Button from "../../../Common/Form/Button";
 import CopyLink from "../../../Common/CopyLink";
 import MemberList from "../../../Common/MemberList/MemberList";
-import uuid from 'react-uuid';
+import uuid from "react-uuid";
+import Navigator from '../../../Dashboard/CalenderView/Navigator'
 
 interface IProps {
   title?: string;
@@ -47,9 +48,14 @@ const Header: React.FC<IProps> = ({ title }): JSX.Element => {
 
   const [modal, setModal] = useState<boolean>(false);
   const { pathname } = useLocation();
-  const [filters, setFilters] = useState([{
-    key: uuid(), where: 0, tag: 0, existance: false
-  }])
+  const [filters, setFilters] = useState([
+    {
+      key: uuid(),
+      where: 0,
+      tag: 0,
+      existance: false,
+    },
+  ]);
 
   const handleChange = (name: string, value: string) => {
     console.log(name, value);
@@ -61,38 +67,39 @@ const Header: React.FC<IProps> = ({ title }): JSX.Element => {
 
   const handleFilter = (e, key) => {
     const target = e.target.dataset;
-    const currentFilter = filters.findIndex(x => x.key === key)
+    const currentFilter = filters.findIndex((x) => x.key === key);
 
-    filters[currentFilter][target.name] = target.value
+    filters[currentFilter][target.name] = target.value;
 
-    setFilters(filters)
-  }
+    setFilters(filters);
+  };
 
   const handleAddNewFilter = () => {
     if (filters.length === 4) {
-      return false
+      return false;
     }
-    const newFilter = { key: uuid(), where: 0, tag: 0, existance: false }
-    setFilters([...filters, newFilter])
-  }
+    const newFilter = { key: uuid(), where: 0, tag: 0, existance: false };
+    setFilters([...filters, newFilter]);
+  };
 
   const handleRemoveFilter = (key) => {
     if (filters.length === 1) {
-      return false
+      return false;
     }
     const filtered = filters.filter((filter) => {
-      return filter.key !== key
-    })
-    setFilters(filtered)
-  }
+      return filter.key !== key;
+    });
+    setFilters(filtered);
+  };
 
   return (
     <div className="mt-XL mr-S">
       <div className="flex flex-between flex-row-reverse border-b-2 border-lightgray_300 py-S gap-S">
         <div className="flex divide-x divide-lightgray_300 font-bold">
           <Link
-            className={`px-S flex justify-center text-base items-center  ${pathname === "/calender" ? "text-brand-primary" : ""
-              }`}
+            className={`px-S flex justify-center text-base items-center  ${
+              pathname === "/calender" ? "text-brand-primary" : ""
+            }`}
             to="/calender"
           >
             تقویم
@@ -102,8 +109,9 @@ const Header: React.FC<IProps> = ({ title }): JSX.Element => {
             />
           </Link>
           <Link
-            className={`px-S flex justify-center text-base items-center ${pathname === "/board" ? "text-brand-primary" : ""
-              }`}
+            className={`px-S flex justify-center text-base items-center ${
+              pathname === "/board" ? "text-brand-primary" : ""
+            }`}
             to="/board"
           >
             نمایش ستونی
@@ -113,8 +121,9 @@ const Header: React.FC<IProps> = ({ title }): JSX.Element => {
             />
           </Link>
           <Link
-            className={`px-S flex justify-center text-base items-center ${pathname === "/list" ? "text-brand-primary" : ""
-              }`}
+            className={`px-S flex justify-center text-base items-center ${
+              pathname === "/list" ? "text-brand-primary" : ""
+            }`}
             to="/list"
           >
             نمایش لیستی
@@ -134,18 +143,24 @@ const Header: React.FC<IProps> = ({ title }): JSX.Element => {
         </button>
       </div>
       <div className="border-b-2 border-lightgray_300 py-S mb-S flex divide-x justify-end items-center divide-lightgray_300">
-        <div className="flex">
-          <p className="text-xs bg-blue_secondary p-1 px-S text-blue_primary">
-            دسته بندی شده با : وضعیت
-          </p>
-          <button
-            onClick={handleShowModal}
-            className="px-S flex justify-center items-center text-xs"
-          >
-            فیلترها
-            <Icon icon="filter" />
-          </button>
-        </div>
+        {pathname === "/calender" ? (
+          <div className="px-S">
+            <Navigator />
+          </div>
+        ) : (
+          <div className="flex">
+            <p className="text-xs bg-blue_secondary p-1 px-S text-blue_primary">
+              دسته بندی شده با : وضعیت
+            </p>
+            <button
+              onClick={handleShowModal}
+              className="px-S flex justify-center items-center text-xs"
+            >
+              فیلترها
+              <Icon icon="filter" />
+            </button>
+          </div>
+        )}
         <Input
           className="pr-L border-none w-[200px] bg-white text-xs"
           placeholder="جستجو بین تسک‌ها"
@@ -206,12 +221,15 @@ const Header: React.FC<IProps> = ({ title }): JSX.Element => {
           hasHeader={true}
           backIcon={{ order: 2 }}
           hasBackIcon={false}
-          header={{ order: 3, text: 'فیلترها' }}
+          header={{ order: 3, text: "فیلترها" }}
         >
           <div className="flex flex-col gap-S">
             {filters?.map((filter) => {
               return (
-                <div key={filter.key} className="flex flex-row-reverse items-center gap-3">
+                <div
+                  key={filter.key}
+                  className="flex flex-row-reverse items-center gap-3"
+                >
                   <span>تسک هایی که</span>
                   <Select
                     name="where"
@@ -235,11 +253,21 @@ const Header: React.FC<IProps> = ({ title }): JSX.Element => {
                     hasSearch={false}
                   />
                   <span onClick={() => handleRemoveFilter(filter.key)}>
-                    <Icon icon="trash" color="#FA5252" className="cursor-pointer mr-2XL" />
+                    <Icon
+                      icon="trash"
+                      color="#FA5252"
+                      className="cursor-pointer mr-2XL"
+                    />
                   </span>
-                </div>)
+                </div>
+              );
             })}
-            <span onClick={handleAddNewFilter} className="text-brand-primary text-right  cursor-pointer mt-M font-bold">افزودن فیلتر جدید</span>
+            <span
+              onClick={handleAddNewFilter}
+              className="text-brand-primary text-right  cursor-pointer mt-M font-bold"
+            >
+              افزودن فیلتر جدید
+            </span>
           </div>
         </Modal>,
         portals

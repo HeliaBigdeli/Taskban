@@ -27,6 +27,7 @@ const MemberList: React.FC = (): JSX.Element => {
       <ul className="flex flex-col gap-XS">
         {members.map((item) => (
           <MemberRow
+            key={item.email}
             role={item.role}
             email={item.email}
             img={item.img}

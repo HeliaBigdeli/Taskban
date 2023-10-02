@@ -103,7 +103,7 @@ const Modal: React.FC<IProps> = ({
                 <Icon icon="close" color="#1e1e1ec4" size={32} />
               </button>
             </div>
-            <div className="flex flex-col w-auto gap-[28px]">{children}</div>
+            <div className="flex flex-col w-full gap-[28px]">{children}</div>
           </div>
         </div>
       )}

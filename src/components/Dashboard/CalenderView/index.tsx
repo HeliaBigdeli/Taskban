@@ -38,7 +38,7 @@ const CalenderView: React.FC = (): JSX.Element => {
     setDates([...dates]);
   };
 
-  const datevalues = () => {
+  const dateValues = () => {
     const date = new Date();
     date.setMonth(date.getMonth() + currentMonth);
 
@@ -59,22 +59,22 @@ const CalenderView: React.FC = (): JSX.Element => {
     return { year, month };
   };
 
-  const creaetDatetable = () => {
-    const { year, month } = datevalues();
+  const creaetDateTable = () => {
+    const { year, month } = dateValues();
 
-    let dayIndex = new persianDate([year, month, 1]).day() - 1;
+    let firstDayIndex = new persianDate([year, month, 1]).day() - 1;
 
     // get month length to use in loop create array of dates
     const monthLength = moment.jDaysInMonth(year, month - 1);
     // get previous month length
     const prevMothLenth = moment.jDaysInMonth(year, month - 2);
-    let prevMothDates = prevMothLenth - (dayIndex - 1);
+    let prevMothDates = prevMothLenth - (firstDayIndex - 1);
     let prevMonth = month - 1 === 0 ? 12 : month - 1;
 
     // create table of date
-    let index = dayIndex;
+    let index = firstDayIndex;
     for (let i = 0; i < monthLength; i++) {
-      if (i < dayIndex) {
+      if (i < firstDayIndex) {
         dates[i] = {
           key: uuid(),
           day: String(prevMothDates),
@@ -96,7 +96,7 @@ const CalenderView: React.FC = (): JSX.Element => {
   };
 
   useEffect(() => {
-    creaetDatetable();
+    creaetDateTable();
   }, [currentMonth]);
 
   return (

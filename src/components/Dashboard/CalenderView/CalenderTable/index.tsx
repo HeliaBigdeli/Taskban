@@ -35,8 +35,10 @@ const CalenderTable: React.FC<IProps> = ({
   month,
 }): JSX.Element => {
   const [modal, setModal] = useState<boolean>(false);
+  const [currentDay, setCurrentDay] = useState<number>(today)
 
-  const handleShowModal = () => {
+  const handleShowModal = (day) => {
+    setCurrentDay(day)
     setModal(!modal);
   };
 
@@ -70,7 +72,7 @@ const CalenderTable: React.FC<IProps> = ({
               <span className="absolute top-1 right-2">{dayOfWeek[index]}</span>
             ) : null}
             {date.showBtn && (
-              <span onClick={handleShowModal}>
+              <span onClick={() => handleShowModal(date.day)}>
                 <Icon
                   icon="plus_square"
                   color="#ffffff"
@@ -98,7 +100,7 @@ const CalenderTable: React.FC<IProps> = ({
               name="email"
               id="email"
               type="email"
-              className="h-XL w-[400px]"
+              className="h-XL w-[420px]"
               placeholder="نام تسک را وارد کنید"
               hasLabel={false}
               onChange={() => {}}
@@ -107,7 +109,7 @@ const CalenderTable: React.FC<IProps> = ({
               <div className="flex justify-center items-center gap-3">
                 <span className="text-brand-primary text-xl gap-1 flex">
                   <span>{month}</span>
-                  <span> {today.toLocaleString("fa-IR")}</span>
+                  <span> {currentDay.toLocaleString("fa-IR")}</span>
                 </span>
                 <Icon icon="flag" color="#c1c1c1" />
               </div>

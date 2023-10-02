@@ -69,21 +69,21 @@ const Header: React.FC<IProps> = ({ title }): JSX.Element => {
   }
 
   const handleAddNewFilter = () => {
-    if(filters.length === 4) {
+    if (filters.length === 4) {
       return false
     }
-    const newFilter = {key: uuid(), where: 0, tag: 0, existance: false}
+    const newFilter = { key: uuid(), where: 0, tag: 0, existance: false }
     setFilters([...filters, newFilter])
   }
 
   const handleRemoveFilter = (key) => {
-    if(filters.length === 1) {
+    if (filters.length === 1) {
       return false
     }
     const filtered = filters.filter((filter) => {
       return filter.key !== key
-    })    
-    setFilters(filtered)    
+    })
+    setFilters(filtered)
   }
 
   return (
@@ -91,9 +91,8 @@ const Header: React.FC<IProps> = ({ title }): JSX.Element => {
       <div className="flex flex-between flex-row-reverse border-b-2 border-lightgray_300 py-S gap-S">
         <div className="flex divide-x divide-lightgray_300 font-bold">
           <Link
-            className={`px-S flex justify-center text-base items-center  ${
-              pathname === "/calender" ? "text-brand-primary" : ""
-            }`}
+            className={`px-S flex justify-center text-base items-center  ${pathname === "/calender" ? "text-brand-primary" : ""
+              }`}
             to="/calender"
           >
             تقویم
@@ -103,9 +102,8 @@ const Header: React.FC<IProps> = ({ title }): JSX.Element => {
             />
           </Link>
           <Link
-            className={`px-S flex justify-center text-base items-center ${
-              pathname === "/board" ? "text-brand-primary" : ""
-            }`}
+            className={`px-S flex justify-center text-base items-center ${pathname === "/board" ? "text-brand-primary" : ""
+              }`}
             to="/board"
           >
             نمایش ستونی
@@ -115,9 +113,8 @@ const Header: React.FC<IProps> = ({ title }): JSX.Element => {
             />
           </Link>
           <Link
-            className={`px-S flex justify-center text-base items-center ${
-              pathname === "/list" ? "text-brand-primary" : ""
-            }`}
+            className={`px-S flex justify-center text-base items-center ${pathname === "/list" ? "text-brand-primary" : ""
+              }`}
             to="/list"
           >
             نمایش لیستی
@@ -135,43 +132,6 @@ const Header: React.FC<IProps> = ({ title }): JSX.Element => {
           اشتراک گذاری
           <Icon icon="share" />
         </button>
-        {createPortal(
-          <Modal
-            modal={isShareModalOpen}
-            setModal={setIsShareModalOpen}
-            hasHeader={true}
-            header={{ text: "به اشتراک‌گذاری پروژه‌", order: 2 }}
-            hasBackIcon={false}
-            backIcon={{ order: 1 }}
-            hasCloseIcon={true}
-            closeIcon={{ order: 3 }}
-          >
-            <form className="flex w-[430px]">
-              <Button
-                text="ارسال"
-                type="submit"
-                onClick={handleShareWithEmail}
-                className="h-XL bg-brand-primary rounded-l-lg text-white text-sm px-[29.5px]"
-              />
-              <Input
-                name="shareWithEmail"
-                id="shareWithEmail"
-                type="email"
-                showError={true}
-                onChange={(name, value) => setShareEmail(value)}
-                placeholder="دعوت با ایمیل"
-                className="h-XL rounded-l-none rounded-r-lg border-none bg-[#F0F1F3] text-sm outline-none pl-[255px]"
-              />
-            </form>
-            <div className="flex justify-between w-[430px]">
-              <CopyLink privateLink="hell@gmail.com" />
-            </div>
-            <div className="flex flex-col w-[430px] gap-S">
-              <MemberList />
-            </div>
-          </Modal>,
-          portals
-        )}
       </div>
       <div className="border-b-2 border-lightgray_300 py-S mb-S flex divide-x justify-end items-center divide-lightgray_300">
         <div className="flex">
@@ -190,7 +150,7 @@ const Header: React.FC<IProps> = ({ title }): JSX.Element => {
           className="pr-L border-none w-[200px] bg-white text-xs"
           placeholder="جستجو بین تسک‌ها"
           name="search"
-          id="search"
+          id="task_search"
           type="text"
           hasLabel={false}
           hasIcon={true}
@@ -200,7 +160,44 @@ const Header: React.FC<IProps> = ({ title }): JSX.Element => {
           onChange={(name, value) => handleChange(name, value)}
         />
       </div>
-   {createPortal(
+      {createPortal(
+        <Modal
+          modal={isShareModalOpen}
+          setModal={setIsShareModalOpen}
+          hasHeader={true}
+          header={{ text: "به اشتراک‌گذاری پروژه‌", order: 2 }}
+          hasBackIcon={false}
+          backIcon={{ order: 1 }}
+          hasCloseIcon={true}
+          closeIcon={{ order: 3 }}
+        >
+          <form className="flex w-[430px]">
+            <Button
+              text="ارسال"
+              type="submit"
+              onClick={handleShareWithEmail}
+              className="h-XL bg-brand-primary rounded-l-lg text-white text-sm px-[29.5px]"
+            />
+            <Input
+              name="shareWithEmail"
+              id="shareWithEmail"
+              type="email"
+              showError={true}
+              onChange={(name, value) => setShareEmail(value)}
+              placeholder="دعوت با ایمیل"
+              className="h-XL rounded-l-none rounded-r-lg border-none bg-[#F0F1F3] text-sm outline-none pl-[255px]"
+            />
+          </form>
+          <div className="flex justify-between w-[430px]">
+            <CopyLink privateLink="hell@gmail.com" />
+          </div>
+          <div className="flex flex-col w-[430px] gap-S">
+            <MemberList />
+          </div>
+        </Modal>,
+        portals
+      )}
+      {createPortal(
         <Modal
           modal={modal}
           setModal={handleShowModal}
@@ -212,9 +209,9 @@ const Header: React.FC<IProps> = ({ title }): JSX.Element => {
           header={{ order: 3, text: 'فیلترها' }}
         >
           <div className="flex flex-col gap-S">
-              {filters?.map((filter) => {
-                return (
-                  <div key={filter.key} className="flex flex-row-reverse items-center gap-3">
+            {filters?.map((filter) => {
+              return (
+                <div key={filter.key} className="flex flex-row-reverse items-center gap-3">
                   <span>تسک هایی که</span>
                   <Select
                     name="where"
@@ -241,7 +238,7 @@ const Header: React.FC<IProps> = ({ title }): JSX.Element => {
                     <Icon icon="trash" color="#FA5252" className="cursor-pointer mr-2XL" />
                   </span>
                 </div>)
-              })}
+            })}
             <span onClick={handleAddNewFilter} className="text-brand-primary text-right  cursor-pointer mt-M font-bold">افزودن فیلتر جدید</span>
           </div>
         </Modal>,

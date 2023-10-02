@@ -14,7 +14,7 @@ const CalenderView: React.FC = (): JSX.Element => {
   };
 
   const handleToday = () => {
-    setDateValues({...dateValues, currenymonth : 0});
+    setDateValues({...dateValues, currentMonth : 0});
   };
 
   return (

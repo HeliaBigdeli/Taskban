@@ -9,7 +9,7 @@ const dictionary:Values = {
     username:'نام کاربری',
     currentPassword:'رمز عبور فعلی',
     newPassword:'رمز عبور جدید',
-    commitNewPassword:'تکرار رمز عبور جدید'
+    confirmNewPassword:'تکرار رمز عبور جدید'
 }
 
 const Translator = (input: string): string => {

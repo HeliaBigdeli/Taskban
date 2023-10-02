@@ -31,33 +31,33 @@ const Account: React.FC = (): JSX.Element => {
   };
   return (
     <div className="flex flex-row-reverse">
-      <div className="w-[354px] mt-[170px] mr-[58px]">
-        <h2 className="text-[31px] text-bold text-right mb-[32px]">
+      <div className="mt-[160px] mr-[58px]">
+        <h2 className="text-[31px] text-bold text-right mb-L">
           اطلاعات فردی
         </h2>
-        <div className="flex flex-row-reverse justify-start">
-          <span className="rounded-full w-[100px] h-[104px] bg-[#FFF3BF] ml-S"></span>
+        <div className="flex flex-row-reverse justify-start items-center">
+          <span className="rounded-full w-[100px] h-[100px] bg-[#FFF3BF] ml-S"></span>
           <div className="py-[6px]">
             <Button
               text="ویرایش تصویر پروفایل"
               type="button"
               onClick={handleClick}
               hasIcon={false}
-              className="text-brand-primary text-xl font-medium border border-brand-primary h-[55px] rounded-[8px] w-[212px] p-[10px] gap-10 mb-S"
+              className="text-brand-primary text-xl font-medium border border-brand-primary h-[55px] rounded-lg w-[212px] p-[10px] mb-S"
             />
-            <p className="text-[#8A8989] text-xs text-center font-normal w-[199px]">
+            <p className="text-lightgray text-xs text-center font-normal">
               این تصویر برای عموم قابل نمایش است
             </p>
           </div>
         </div>
-        <form>
+        <form className="flex flex-col gap-S">
           <Input
             name="firstname"
             id="firstname"
             type="text"
             label="نام"
             hasLabel={true}
-            className="h-XL mb-S"
+            className="h-XL"
             onChange={(name, value) => handleChange(name, value)}
           />
           <Input
@@ -66,7 +66,7 @@ const Account: React.FC = (): JSX.Element => {
             type="text"
             label="نام خانوادگی"
             hasLabel={true}
-            className="h-XL mb-S"
+            className="h-XL"
             onChange={(name, value) => handleChange(name, value)}
           />
 
@@ -75,7 +75,7 @@ const Account: React.FC = (): JSX.Element => {
             id="telNumber"
             type="number"
             label="شماره موبایل"
-            className="h-XL mb-S"
+            className="h-XL"
             hasLabel={true}
             onChange={(name, value) => handleChange(name, value)}
           />

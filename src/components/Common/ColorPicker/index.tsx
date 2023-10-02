@@ -4,12 +4,12 @@ import colors from "./colors";
 interface IColor {
   [key: string]: string | undefined;
 }
-
 interface IProps {
   onClick: (color: IColor) => void;
+  hasDisableIcon:boolean,
 }
 
-const ColorPicker: React.FC<IProps> = ({ onClick }) => {
+const ColorPicker: React.FC<IProps> = ({ onClick ,hasDisableIcon}) => {
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
     onClick({
       name: e.currentTarget.dataset.name,
@@ -38,7 +38,8 @@ const ColorPicker: React.FC<IProps> = ({ onClick }) => {
           ></div>
         );
       })}
-      <Icon icon="disable" size={20} style={{ margin: 4, cursor: "pointer" }} data-code="" data-name=""/>
+      {hasDisableIcon&&
+      <Icon icon="disable" size={20} style={{ margin: 4, cursor: "pointer" }} data-code="" data-name=""/>}
     </>
   );
 };

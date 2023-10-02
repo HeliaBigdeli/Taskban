@@ -1,12 +1,20 @@
 import Button from "../../../components/Common/Form/Button";
 import Input from "../../../components/Common/Form/Input";
-import {useState} from 'react'
-import { required, validate } from "../../../utils/validator";
+import {useState,useEffect} from 'react'
+import {
+  required,
+  email,
+  validate,
+  strong,
+  minLength,
+} from "../../../utils/validator/index";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const rules = {
-  email: [required],
+  email: [required,email],
   username: [required],
-  password: [required],
-  newPassword:[required],
+  currentPassword: [required],
+  newPassword:[required,strong, minLength(8)],
   commitNewPassword:[required]
 };
 
@@ -18,11 +26,19 @@ const Information: React.FC = ():JSX.Element => {
   const [errors, setErrors] = useState<string[]>([]);
   const [values, setValues] = useState<Values>({
     email: "",
-    password: "",
+    currentPassword: "",
     username:"",
     newPassword:"",
     commitNewPassword:""
   });
+  useEffect(() => {
+    errors?.map((error) => {
+      toast.error(error, {
+        position: "bottom-left",
+        autoClose: 3000,
+      });
+    });
+  }, [errors]);
   const handleChange = (name: string, value: string) => {
     setValues({ ...values, [name]: value });
   };
@@ -30,6 +46,12 @@ const Information: React.FC = ():JSX.Element => {
   const handleClick = () => {
     const resultErrors = validate(values, rules);
     setErrors(resultErrors);
+    if(values.newPassword!=values.commitNewPassword){
+      toast.error("تکرار رمز عبور جدید با رمز عبور جدید مطابقت ندارد", {
+        position: "bottom-left",
+        autoClose: 3000,
+      });
+    }
   };
 
     return (
@@ -57,8 +79,8 @@ const Information: React.FC = ():JSX.Element => {
           />
 
            <Input
-            name="password"
-            id="password"
+            name="currentPassword"
+            id="currentPassword"
             type="password"
             label="رمز عبور فعلی"
             className="h-XL mb-S"
@@ -92,8 +114,11 @@ const Information: React.FC = ():JSX.Element => {
           />
         </form>
         </div>
+        <ToastContainer style={{ width: "380px" }} />
       </div>
     );
   }
   
 export default Information;
+
+

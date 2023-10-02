@@ -1,16 +1,15 @@
 import Button from "../../Common/Form/Button";
 import SideBar from "../Dashboard/SideBar";
-import styles from "../Auth/Header/style.module.css"
-import { Link, Outlet } from "react-router-dom";
+import styles from "../Auth/Header/style.module.css";
+import { Outlet } from "react-router-dom";
+import Icon from "../../Common/Icon";
 import IconItem from "../../Common/IconItem";
-const ProfileLayout :React.FC = ():JSX.Element => {
-  const handleClick = () => {
-
-  };
+const ProfileLayout: React.FC = (): JSX.Element => {
+  const handleClick = () => {};
   return (
     <div className="flex px-2XL flex-row-reverse">
-      <SideBar >
-      <h2 className={`${styles.navbarTitle} mb-[75px] mt-XL`}>
+      <SideBar>
+        <h2 className={`${styles.navbarTitle} mb-[75px] mt-XL`}>
           کوئرا تسک منیجر
         </h2>
         <div className="flex flex-col items-end ">
@@ -31,10 +30,10 @@ const ProfileLayout :React.FC = ():JSX.Element => {
           
       </SideBar>
       <div>
-        <Outlet/>
+        <Outlet />
       </div>
     </div>
   );
-}
+};
 
 export default ProfileLayout;

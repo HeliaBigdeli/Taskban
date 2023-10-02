@@ -15,7 +15,6 @@ import Account from "./pages/Profile/Account";
 import Information from "./pages/Profile/Information";
 import Setting from "./pages/Profile/Setting";
 
-
 function App() {
   return (
     <BrowserRouter>

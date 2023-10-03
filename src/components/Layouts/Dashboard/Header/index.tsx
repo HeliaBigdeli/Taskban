@@ -9,6 +9,8 @@ import Button from "../../../Common/Form/Button";
 import CopyLink from "../../../Common/CopyLink";
 import MemberList from "../../../Common/MemberList/MemberList";
 import uuid from "react-uuid";
+import { email, validate } from "../../../../utils/validator/";
+import { ToastContainer, toast } from "react-toastify";
 import Navigator from '../../../Dashboard/CalenderView/Navigator'
 
 interface IProps {
@@ -34,15 +36,33 @@ const existance = [
 
 const Header: React.FC<IProps> = ({ title }): JSX.Element => {
   //------------------------------------------------- Share Modal Section starts ------------------------------------------//
+
+  const rules = {
+    shareWithEmail: [email],
+  };
+
+  const [shareEmail, setShareEmail] = useState<{}>({
+    shareWithEmail: "",
+  });
+
+  const handleChange = (name: string, value: string) => {
+    setShareEmail({ ...shareEmail, [name]: value });
+  };
+
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
-  const [shareEmail, setShareEmail] = useState("");
 
   const handleShareClick = () => {
     setIsShareModalOpen(true);
   };
 
   const handleShareWithEmail = () => {
-    alert("Functionality is not assigned yet!");
+    const resultErrors = validate(shareEmail, rules);
+    resultErrors.forEach((error) => {
+      toast.error(error, {
+        position: "bottom-left",
+        autoClose: 3000,
+      });
+    });
   };
   //------------------------------------------------- Share Modal Section ends ------------------------------------------//
 
@@ -56,10 +76,6 @@ const Header: React.FC<IProps> = ({ title }): JSX.Element => {
       existance: false,
     },
   ]);
-
-  const handleChange = (name: string, value: string) => {
-    console.log(name, value);
-  };
 
   const handleShowModal = () => {
     setModal(!modal);
@@ -175,6 +191,7 @@ const Header: React.FC<IProps> = ({ title }): JSX.Element => {
           onChange={(name, value) => handleChange(name, value)}
         />
       </div>
+      {/*----------------------------------------------- Sharing Modal --------------------------------------------- */}
       {createPortal(
         <Modal
           modal={isShareModalOpen}
@@ -186,7 +203,7 @@ const Header: React.FC<IProps> = ({ title }): JSX.Element => {
           hasCloseIcon={true}
           closeIcon={{ order: 3 }}
         >
-          <form className="flex w-[430px]">
+          <div className="flex w-[430px]">
             <Button
               text="ارسال"
               type="submit"
@@ -197,12 +214,11 @@ const Header: React.FC<IProps> = ({ title }): JSX.Element => {
               name="shareWithEmail"
               id="shareWithEmail"
               type="email"
-              showError={true}
-              onChange={(name, value) => setShareEmail(value)}
+              onChange={(name, value) => handleChange(name, value)}
               placeholder="دعوت با ایمیل"
               className="h-XL rounded-l-none rounded-r-lg border-none bg-[#F0F1F3] text-sm outline-none pl-[255px]"
             />
-          </form>
+          </div>
           <div className="flex justify-between w-[430px]">
             <CopyLink privateLink="hell@gmail.com" />
           </div>
@@ -212,6 +228,8 @@ const Header: React.FC<IProps> = ({ title }): JSX.Element => {
         </Modal>,
         portals
       )}
+
+      {/*----------------------------------------------- Filters Modal --------------------------------------------- */}
       {createPortal(
         <Modal
           modal={modal}
@@ -272,6 +290,7 @@ const Header: React.FC<IProps> = ({ title }): JSX.Element => {
         </Modal>,
         portals
       )}
+      <ToastContainer style={{ width: "400px" }} />
     </div>
   );
 };

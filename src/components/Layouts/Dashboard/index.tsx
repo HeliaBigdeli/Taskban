@@ -7,6 +7,9 @@ import Header from "./Header";
 import SideBar from "./SideBar";
 import styles from "./style.module.css";
 import List from "./../../Common/List";
+import { useState } from "react";
+import { createPortal } from "react-dom";
+import NestedModals from "./NestedModals";
 
 const data = [
   {
@@ -21,6 +24,9 @@ const data = [
 ];
 
 const DashboardLayout: React.FC = (): JSX.Element => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const portals = document.getElementById("portals") as Element;
+
   const handleChange = (name: string, value: string) => {
     console.log(name, value);
   };
@@ -54,7 +60,9 @@ const DashboardLayout: React.FC = (): JSX.Element => {
         />
         <Button
           text="ساختن اسپیس جدید"
-          onClick={() => {}}
+          onClick={() => {
+            setIsModalOpen(true);
+          }}
           type="button"
           className="bg-lightgray_300 text-black h-L text-sm leading-normal self-stretch rounded-md"
           hasIcon={true}
@@ -86,7 +94,14 @@ const DashboardLayout: React.FC = (): JSX.Element => {
             </span>
           </div>
         </div>
-      </SideBar>    
+      </SideBar>
+      {createPortal(
+        <NestedModals
+          isModalOpen={isModalOpen}
+          setIsModalOpen={setIsModalOpen}
+        />,
+        portals
+      )}
     </div>
   );
 };

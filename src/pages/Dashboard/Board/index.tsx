@@ -6,7 +6,6 @@ const Board: React.FC = (): JSX.Element => {
       <ColumnView />
     </>
   );
-
 };
 
 export default Board;

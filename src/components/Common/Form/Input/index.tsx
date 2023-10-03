@@ -13,7 +13,7 @@ interface IIcon {
 interface IProps {
   name: string;
   id: string;
-  type: "text" | "number" | "email" | "password";
+  type: "text" | "number" | "email" | "password"|"tel";
   label?: string;
   hasLabel?: boolean;
   placeholder?: string;

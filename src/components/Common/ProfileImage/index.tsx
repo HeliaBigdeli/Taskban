@@ -44,6 +44,7 @@ const ProfileImage: React.FC<IProps> = ({
             width: size + "px",
             height: size + "px",
             color: nameColor ? colorDetails.mainColor : "black",
+            fontSize:size/3+"px",
           }}
         >
           {firstLettersOfName}

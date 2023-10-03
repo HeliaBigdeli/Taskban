@@ -48,7 +48,12 @@ const MemberRow: React.FC<IProps> = ({
           <span className="text-sm text-black mt-[5px]">
             {role === "workspace owner" ? "من" : email}
           </span>
-          <ProfileImage img={img} firstName={firstName} lastName={lastName} />
+          <ProfileImage
+            img={img}
+            firstName={firstName}
+            lastName={lastName}
+            size={35}
+          />
         </div>
       </div>
     </>

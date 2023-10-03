@@ -20,7 +20,7 @@ const CalenderView: React.FC = (): JSX.Element => {
     // dateMaker get month index (0 is current ,1 and more are next monthes and -1 and more are previous monthew)
     // dateMaker use for both gregorian and jalali dates
     // example : to get next moth set first param of dateMaker to 1 and to get prev month dates set it to -1
-    const result = datesMaker(dateValues.currentMonth, 'jalali');
+    const result = datesMaker(dateValues.currentMonth, dateValues.type);
 
     setDateValues({
       ...dateValues,
@@ -33,7 +33,7 @@ const CalenderView: React.FC = (): JSX.Element => {
 
     setDates(result.dates);
 
-  }, [dateValues.currentMonth]);
+  }, [dateValues.currentMonth, dateValues.type]);
 
   return (
     <CalenderTable

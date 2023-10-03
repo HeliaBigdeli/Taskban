@@ -25,7 +25,7 @@ function App() {
     month: "",
     today: 0,
     monthName: "",
-    type: "",
+    type: "jalali",
   });
 
   return (

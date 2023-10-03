@@ -15,9 +15,9 @@ const CalenderView: React.FC = (): JSX.Element => {
   const [dates, setDates] = useState<DateList[]>([]);
   const { dateValues, setDateValues } = useContext(AppContext);
 
-  const handleShowBtn = (key, staus) => {
+  const handleAddButton = (key, status) => {
     const dateIndex = dates.findIndex((x) => x.key === key);
-    dates[dateIndex].showBtn = staus === "show" ? true : false;
+    dates[dateIndex].showBtn = status === "show" ? true : false;
     setDates([...dates]);
   };
 
@@ -31,41 +31,41 @@ const CalenderView: React.FC = (): JSX.Element => {
       .split("/")
       .map(Number);
 
-    // set month and year and day
+    // set year, month and currentDay
     let year = jajaliDate[0];
     let month = jajaliDate[1];
+    let today = jajaliDate[2];
 
     setDateValues({
       ...dateValues,
-      year: jajaliDate[0],
-      month: jajaliDate[1],
-      today: jajaliDate[2],
+      year,
+      month,
+      today,
       monthName: date.toLocaleDateString("fa-IR", { month: "short" }),
     });
 
     return { year, month };
   };
 
-  const creaetDateTable = () => {
+  const createDateTable = () => {
     // destruct year and month values from dateParams
-    const { year, month } = dateParams();
+    const { year , month } = dateParams();
 
     // get first day of week to start array from there
-    let firstDayOfMonth = moment(`${year}/${month}/1`, "jYYYY/jM/jD").format(
-      "YYYY-M-D"
-    );
+    let firstDayOfMonth = moment(`${year}/${month}/1`, "jYYYY/jM/jD").format("YYYY-M-D");
     let firstDayOfWeekIndex = new Date(firstDayOfMonth).getDay();
-    firstDayOfWeekIndex =
-      firstDayOfWeekIndex === 6 ? 0 : firstDayOfWeekIndex + 1;
+    // change day index during to persian week days (week start day is friday in gregorian calender, plus it one to start from saturday)
+    firstDayOfWeekIndex = firstDayOfWeekIndex === 6 ? 0 : firstDayOfWeekIndex + 1;
 
-    // get month length to use in loop create array of dates
+    // get month length to indicate max number for loop to create array of dates
     const monthLength = moment.jDaysInMonth(year, month - 1);
     // get previous month length
     const prevMothLenth = moment.jDaysInMonth(year, month - 2);
+    // get prevoius month days
     let prevMothDays = prevMothLenth - (firstDayOfWeekIndex - 1);
     let prevMonth = month - 1 === 0 ? 12 : month - 1;
 
-    // create table of date
+    // create table of dates
     let result: DateList[] = [];
     let index = firstDayOfWeekIndex;
     for (let i = 0; i < monthLength; i++) {
@@ -79,7 +79,7 @@ const CalenderView: React.FC = (): JSX.Element => {
         };
         prevMothDays += 1;
       }
-      // fill current month dates start from first dat of week index
+      // fill current month dates start from first day of week index
       result[index] = {
         key: uuid(),
         day: String(i + 1),
@@ -93,7 +93,7 @@ const CalenderView: React.FC = (): JSX.Element => {
   };
 
   useEffect(() => {
-    creaetDateTable();
+    createDateTable();
   }, [dateValues.currentMonth]);
 
   return (
@@ -105,8 +105,8 @@ const CalenderView: React.FC = (): JSX.Element => {
       today={dateValues.today}
       dates={dates}
       currentMonth={dateValues.currentMonth}
-      onMouseEnter={(key, status) => handleShowBtn(key, status)}
-      onMouseLeave={(key, status) => handleShowBtn(key, status)}
+      onMouseEnter={(key, status) => handleAddButton(key, status)}
+      onMouseLeave={(key, status) => handleAddButton(key, status)}
     />
   );
 };

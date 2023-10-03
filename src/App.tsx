@@ -18,10 +18,17 @@ import { AppContext } from "./context/store";
 import { useState } from "react";
 
 function App() {
-  const [dateValues, setDateValues] = useState<any>({currentMonth: 0, year: '', month: '', today: 0, monthName: ''});
-  
+  const [dateValues, setDateValues] = useState<any>({
+    currentMonth: 0,
+    year: "",
+    month: "",
+    today: 0,
+    monthName: "",
+    type: "",
+  });
+
   return (
-    <AppContext.Provider value={{dateValues, setDateValues}}>
+    <AppContext.Provider value={{ dateValues, setDateValues }}>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<AuthLayout />}>

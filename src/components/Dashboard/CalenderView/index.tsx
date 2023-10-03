@@ -9,6 +9,7 @@ type DateList = {
   day: string;
   showBtn: boolean;
   value: string;
+  disable: boolean
 };
 
 const CalenderView: React.FC = (): JSX.Element => {
@@ -17,53 +18,81 @@ const CalenderView: React.FC = (): JSX.Element => {
 
   const handleAddButton = (key, status) => {
     const dateIndex = dates.findIndex((x) => x.key === key);
-    dates[dateIndex].showBtn = status === "show" ? true : false;
-    setDates([...dates]);
+
+    if(!dates[dateIndex].disable) {
+      dates[dateIndex].showBtn = status === "show" ? true : false;
+      setDates([...dates]);
+    }
   };
 
-  const dateParams = () => {
+  const createDatesArray = (type = "gregorian") => {
     const date = new Date();
     date.setMonth(date.getMonth() + dateValues.currentMonth);
 
     // get full persian date, it return array [0] = year, [1] = month , [2] = day
-    const jajaliDate = date
-      .toLocaleDateString("fa-IR-u-nu-latn")
+    const splitedtDate = date
+      .toLocaleDateString(
+        type === "jalali" ? "fa-IR-u-nu-latn" : "en-US-u-nu-latn"
+      )
       .split("/")
       .map(Number);
 
     // set year, month and currentDay
-    let year = jajaliDate[0];
-    let month = jajaliDate[1];
-    let today = jajaliDate[2];
+    const year = type === "jalali" ? splitedtDate[0] : splitedtDate[2];
+    const month = type === "jalali" ? splitedtDate[1] : splitedtDate[0];
+    const today = type === "jalali" ? splitedtDate[2] : splitedtDate[1];
+    const monthName = date.toLocaleDateString(
+      type === "jalali" ? "fa-IR" : "en-US",
+      { month: "short" }
+    );
 
     setDateValues({
       ...dateValues,
       year,
       month,
       today,
-      monthName: date.toLocaleDateString("fa-IR", { month: "short" }),
+      monthName,
+      type,
     });
+    
 
-    return { year, month };
+    createArray(year, month, type);
   };
 
-  const createDateTable = () => {
-    // destruct year and month values from dateParams
-    const { year , month } = dateParams();
+  const createArray = (year: number, month: number, type: string) => {
 
+    let firstDayOfWeekIndex: any = 0;
     // get first day of week to start array from there
-    let firstDayOfMonth = moment(`${year}/${month}/1`, "jYYYY/jM/jD").format("YYYY-M-D");
-    let firstDayOfWeekIndex = new Date(firstDayOfMonth).getDay();
-    // change day index during to persian week days (week start day is friday in gregorian calender, plus it one to start from saturday)
-    firstDayOfWeekIndex = firstDayOfWeekIndex === 6 ? 0 : firstDayOfWeekIndex + 1;
+    if (type === "jalali") {
+      let firstDayOfMonth = moment(`${year}/${month}/1`, "jYYYY/jM/jD").format(
+        "YYYY-M-D"
+      );
+      firstDayOfWeekIndex = new Date(firstDayOfMonth).getDay();
+      // change day index during to persian week days (week start day is friday in gregorian calender, plus it one to start from saturday)
+      firstDayOfWeekIndex =
+        firstDayOfWeekIndex === 6 ? 0 : firstDayOfWeekIndex + 1;
+    } else {
+      firstDayOfWeekIndex = new Date(`${year}-${month}-1`).getDay() + 1;
+    }
 
-    // get month length to indicate max number for loop to create array of dates
-    const monthLength = moment.jDaysInMonth(year, month - 1);
-    // get previous month length
-    const prevMothLenth = moment.jDaysInMonth(year, month - 2);
-    // get prevoius month days
-    let prevMothDays = prevMothLenth - (firstDayOfWeekIndex - 1);
-    let prevMonth = month - 1 === 0 ? 12 : month - 1;
+    let monthLength: number,
+      prevMothLenth: number,
+      prevMothDays: number,
+      prevMonth: number = 0;
+    if (type === "jalali") {
+      // get month length to indicate max number for loop to create array of dates
+      monthLength = moment.jDaysInMonth(year, month - 1);
+      // get previous month length
+      prevMothLenth = moment.jDaysInMonth(year, month - 2);
+      // get prevoius month days
+      prevMothDays = prevMothLenth - (firstDayOfWeekIndex - 1);
+      prevMonth = month - 1 === 0 ? 12 : month - 1;
+    } else {
+      monthLength = new Date(year, month, 0).getDate();
+      prevMothLenth = moment.jDaysInMonth(year, month - 1);
+      prevMothDays = prevMothLenth - (firstDayOfWeekIndex - 2);
+      prevMonth = month - 1 === 0 ? 12 : month - 1;
+    }
 
     // create table of dates
     let result: DateList[] = [];
@@ -76,6 +105,7 @@ const CalenderView: React.FC = (): JSX.Element => {
           day: String(prevMothDays),
           value: `${year}/${prevMonth}/${prevMothDays}`,
           showBtn: false,
+          disable: true
         };
         prevMothDays += 1;
       }
@@ -85,6 +115,7 @@ const CalenderView: React.FC = (): JSX.Element => {
         day: String(i + 1),
         value: `${year}/${month}/${i + 1}`,
         showBtn: false,
+        disable: false
       };
       index += 1;
     }
@@ -93,15 +124,16 @@ const CalenderView: React.FC = (): JSX.Element => {
   };
 
   useEffect(() => {
-    createDateTable();
+    createDatesArray('jalali');
   }, [dateValues.currentMonth]);
 
   return (
     <CalenderTable
-      month={dateValues.monthName}
+    monthName={dateValues.monthName}
       onclick={(date) => {
         console.log(date);
       }}
+      type={dateValues.type}
       today={dateValues.today}
       dates={dates}
       currentMonth={dateValues.currentMonth}

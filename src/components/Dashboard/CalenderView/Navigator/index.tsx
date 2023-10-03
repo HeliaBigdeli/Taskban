@@ -3,18 +3,24 @@ import Icon from "../../../Common/Icon";
 import { AppContext } from "../../../../context/store";
 
 const CalenderView: React.FC = (): JSX.Element => {
-  const {dateValues, setDateValues} = useContext(AppContext);
+  const { dateValues, setDateValues } = useContext(AppContext);
 
   const handleChangeMonth = (e) => {
     if (e.currentTarget.name === "next") {
-      setDateValues({...dateValues, currentMonth : dateValues.currentMonth + 1});
+      setDateValues({
+        ...dateValues,
+        currentMonth: dateValues.currentMonth + 1,
+      });
     } else {
-      setDateValues({...dateValues, currentMonth : dateValues.currentMonth - 1});
+      setDateValues({
+        ...dateValues,
+        currentMonth: dateValues.currentMonth - 1,
+      });
     }
   };
 
   const handleToday = () => {
-    setDateValues({...dateValues, currentMonth : 0});
+    setDateValues({ ...dateValues, currentMonth: 0 });
   };
 
   return (
@@ -30,10 +36,10 @@ const CalenderView: React.FC = (): JSX.Element => {
             <Icon icon="chevron_right" />
           </button>
           <span onClick={handleToday} className="cursor-pointer">
-            امروز
+            {dateValues.type === "jalali" ? "امروز" : "today"}
           </span>
         </div>
-      </div>     
+      </div>
     </>
   );
 };

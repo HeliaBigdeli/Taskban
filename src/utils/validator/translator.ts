@@ -5,7 +5,12 @@ const dictionary:Values = {
     fullName: 'نام کامل',
     email: 'ایمیل',
     password: 'رمز عبور',
-    rules: 'قوانین و مقررات'
+    rules: 'قوانین و مقررات',
+    username:'نام کاربری',
+    currentPassword:'رمز عبور فعلی',
+    newPassword:'رمز عبور جدید',
+    confirmNewPassword:'تکرار رمز عبور جدید',
+    shareWithEmail: 'ایمیل اشتراک گذاری'
 }
 
 const Translator = (input: string): string => {

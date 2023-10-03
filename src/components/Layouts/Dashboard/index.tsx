@@ -2,14 +2,14 @@ import { Outlet } from "react-router-dom";
 import Button from "../../Common/Form/Button";
 import Input from "../../Common/Form/Input";
 import Icon from "../../Common/Icon";
-import DarkMode from "../../Theme/DarkMode";
+import DarkMode from "../../Theme/Switcher";
 import Header from "./Header";
 import SideBar from "./SideBar";
 import styles from "./style.module.css";
 import List from "./../../Common/List";
-import Modal from "../../Common/Modal";
 import { useState } from "react";
-import Select from "../../Common/Form/Select";
+import { createPortal } from "react-dom";
+import NestedModals from "./NestedModals";
 
 const data = [
   {
@@ -24,12 +24,15 @@ const data = [
 ];
 
 const DashboardLayout: React.FC = (): JSX.Element => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const portals = document.getElementById("portals") as Element;
+
   const handleChange = (name: string, value: string) => {
     console.log(name, value);
   };
 
   return (
-    <div className="flex px-2XL mt">
+    <div className="flex px-2XL">
       <div className="flex-grow flex-col w-full overflow-hidden">
         <Header />
         <Outlet />
@@ -57,7 +60,9 @@ const DashboardLayout: React.FC = (): JSX.Element => {
         />
         <Button
           text="ساختن اسپیس جدید"
-          onClick={() => {}}
+          onClick={() => {
+            setIsModalOpen(true);
+          }}
           type="button"
           className="bg-lightgray_300 text-black h-L text-sm leading-normal self-stretch rounded-md"
           hasIcon={true}
@@ -90,18 +95,13 @@ const DashboardLayout: React.FC = (): JSX.Element => {
           </div>
         </div>
       </SideBar>
-      <Button
-        text="تسک جدید"
-        onClick={() => {}}
-        type="button"
-        className="z-20 bg-brand-primary text-white h-L text-sm leading-normal self-stretch rounded-md fixed bottom-[30px] p-S"
-        hasIcon={true}
-        icon={{
-          icon: "plus_square",
-          color: "white",
-          className: "ml-1",
-        }}
-      />
+      {createPortal(
+        <NestedModals
+          isModalOpen={isModalOpen}
+          setIsModalOpen={setIsModalOpen}
+        />,
+        portals
+      )}
     </div>
   );
 };

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Icon from "../../Common/Icon";
 import TaskList from "./TaskList";
+import Button from "../../Common/Form/Button";
 
 const ListShow: React.FC = (): JSX.Element => {
   const [isShown, setIsShown] = useState<boolean>(true);
@@ -22,6 +23,18 @@ const ListShow: React.FC = (): JSX.Element => {
         <TaskList color="orange" />
         <TaskList color="green" />
       </div>
+      <Button
+        text="تسک جدید"
+        onClick={() => {}}
+        type="button"
+        className="z-20 bg-brand-primary text-white h-L text-sm leading-normal self-stretch rounded-md fixed bottom-[30px] p-S left-2XL"
+        hasIcon={true}
+        icon={{
+          icon: "plus_square",
+          color: "white",
+          className: "ml-1",
+        }}
+      />
     </div>
   );
 };

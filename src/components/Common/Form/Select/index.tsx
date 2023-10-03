@@ -1,7 +1,7 @@
-import { setServers } from "dns";
 import Icon from "../../Icon";
-import Input from "../Input";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
+import Selectlist from "./SelectList";
+
 interface IItem {
   id: number;
   title: string;
@@ -10,14 +10,16 @@ interface IItem {
 
 interface IProps {
   items: IItem[];
+  name: string,
   className?: string;
   hasSearch?: boolean;
   searchPlaceholder?: string;
-  onChange: (value: string | undefined) => void;
+  onChange: (e: React.MouseEvent<HTMLElement>) => void;
 }
 
 const Select: React.FC<IProps> = ({
   onChange,
+  name,
   items,
   className,
   hasSearch = true,
@@ -27,21 +29,22 @@ const Select: React.FC<IProps> = ({
   const [open, setOpen] = useState(false);
   const [data, setData] = useState(items)
 
-  const toggleList = (e: React.MouseEvent<HTMLElement>) => {
+  const toggleList = () => {
     setData(items)
     setOpen(!open)
   };
 
-  const handleClick = (e: React.MouseEvent<HTMLElement>) => {
-    onChange(e.currentTarget.dataset.value)
+  const handleSelect = (e: React.MouseEvent<HTMLElement>) => {
+    onChange(e)
     setValue(e.currentTarget.textContent)
     setOpen(!open)
   };
 
-  const handleSearch = (name: string, value: string) => {
+  const handleSearch = (value: string) => {
     const data = items.filter((item) => {
       return item.title.includes(value)
     })
+
     setData(data)
   }
 
@@ -57,51 +60,15 @@ const Select: React.FC<IProps> = ({
         <span className={`text-sm ${value ? 'black' : 'text-lightgray'} font-b`}>{value || 'انتخاب کنید'}</span>
         <Icon icon="chevron_down" className="mr-auto" />
       </div>
-      {open && <div
-        onClick={(e) => {e.stopPropagation()}}
-        className="bg-white rounded-lg gap-XS absolute w-full top-11 left-0 shadow-select border border-lightgray_300 z-10"
-      >
-        {hasSearch && (
-          <div className="border-b-2 mb-XS border-lightgray_300">
-            <Input
-              className="pr-L border-none bg-white h-XL outline-none"
-              placeholder={searchPlaceholder}
-              name="search"
-              id="search"
-              type="text"
-              hasLabel={false}
-              hasIcon={true}
-              icon={{
-                icon: "search",
-                color: "#208D8E",
-              }}
-              onChange={handleSearch}
-            />
-          </div>
-        )}
-        <div className="max-h-[200px] overflow-auto">
-          {data?.map((item) => (
-            <div
-              data-name="filter"
-              data-value={item.id}
-              className="p-XS hover:bg-lightgray_100 rounded-md"
-              onClick={handleClick}
-              key={item.id}
-            >
-              {item.color ? (
-                <span
-                  className={`bg-${item.color} text-${item.color} rounded-2xl px-2`}
-                >
-                  {item.title}
-                </span>
-              ) : (
-                item.title
-              )}
-            </div>
-          ))}
-        </div>
-      </div>
-      }
+      {open &&
+        <Selectlist
+          items={data}
+          name={name}
+          hasSearch={hasSearch}
+          searchPlaceholder={searchPlaceholder}
+          onSelect={handleSelect}
+          onSearch={(e) => handleSearch(e)}
+        />}
     </button>
   );
 };

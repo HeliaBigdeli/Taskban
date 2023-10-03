@@ -25,3 +25,7 @@ export const checkedMessage = (fieldName: string) => {
 export const strongMessage = (fieldName: string) => {
     return  `.${fieldName} باید شامل حروف، اعداد و علامت باشد`;
 }   
+
+export const equalMessage = (fieldName: string, extraValue: string) => {
+    return `.${fieldName} باید برابر با ${extraValue} باشد`;
+}   

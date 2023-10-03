@@ -62,7 +62,13 @@ module.exports = {
         taskCard: `0px 2px 4px 0px rgba(0, 0, 0, 0.40), 0px 7px 6px -3px rgba(0, 0, 0, 0.30), 0px -3px 0px 0px rgba(0, 0, 0, 0.20) inset;`,
         taskColumn: `0px 3px 4px 0px rgba(0, 0, 0, 0.20)`,
         select: `0px 4px 4px 0px rgba(0, 0, 0, 0.25)`,
+        
       },
+      backgroundImage: {
+        copyLink: `linear-gradient(0deg, #E9EBF0, #E9EBF0),
+        linear-gradient(0deg, #FFFFFF, #FFFFFF)`
+        
+      }
     },
   },
   plugins: [],

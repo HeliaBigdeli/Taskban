@@ -19,8 +19,8 @@ const TaskModal: React.FC<IProps> = ({ modal, setModal }): JSX.Element => {
       test
       {createPortal(
         <Modal
-          className="p-0"
           modal={modal}
+          style={{ padding: 0 }}
           setModal={handleShowModal}
           hasCloseIcon={false}
           closeIcon={{ order: 1 }}
@@ -31,7 +31,7 @@ const TaskModal: React.FC<IProps> = ({ modal, setModal }): JSX.Element => {
           coloredSquare="lightgray_300"
           header={{ order: 3, text: "عنوان تسک" }}
         >
-          <DatePicker />
+          <DatePicker onClick={handleShowModal} />
         </Modal>,
         portals
       )}

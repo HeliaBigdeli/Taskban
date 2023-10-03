@@ -26,11 +26,11 @@ interface IProps extends React.PropsWithChildren {
   backIcon: IBackIcon;
   hasColor?: boolean;
   coloredSquare?: string;
-  className?: string
+  style?: {}
 }
 
 const Modal: React.FC<IProps> = ({
-  className,
+  style,
   modal,
   setModal,
   hasHeader,
@@ -64,7 +64,7 @@ const Modal: React.FC<IProps> = ({
           className="flex items-center justify-center bg-modalOverlay fixed top-0 right-0 left-0 bottom-0 z-50"
           onClick={handleClick}
         >
-          <div className={`trans flex w-auto min-w-[30%] rounded-[12px] p-[20px] flex-col items-center gap-XL bg-white ${className}`}>
+          <div className={`trans flex w-auto min-w-[30%] rounded-[12px] p-[20px] flex-col items-center gap-XL bg-white`} style={style}>
             <div
               className={`flex justify-between items-center w-full h-L ${
                 hasHeader === false &&

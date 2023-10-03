@@ -1,13 +1,6 @@
+import { useEffect } from "react";
 import { dayOfWeek } from "../../../../constants/dayOfWeek";
-import Icon from "../../../Common/Icon";
 import moment from "moment-jalaali";
-import Modal from "../../../Common/Modal";
-import { useState } from "react";
-import { createPortal } from "react-dom";
-import Input from "../../../Common/Form/Input";
-import Button from "../../../Common/Form/Button";
-
-const portals = document.getElementById("portals") as Element;
 
 interface IDates {
   key: string;
@@ -23,27 +16,30 @@ interface IProps {
   today: number;
   dates: IDates[];
   currentMonth: number;
-  onMouseEnter: (x: string, y: string) => void;
-  onMouseLeave: (x: string, y: string) => void;
+  selectedIndex: any;
   onclick: ({}) => void;
 }
 
 const Table: React.FC<IProps> = ({
-  monthName,
+  selectedIndex,
   type,
   today,
   dates,
   currentMonth,
   onclick,
 }): JSX.Element => {
-  const handleClick = (date, day) => {
+  const handleClick = (date, index) => {
+    date = date.value;
     onclick({
-      day,
-      date,
-      convertedDate:
+      index,
+      jDate:
         type === "jalali"
-          ? moment(date, "jYYYY/jM/jD").format("YYYY-M-D HH:mm:ss")
-          : moment(date, "YYYY/M/D").format("jYYYY/jM/jD HH:mm:ss"),
+          ? date
+          : moment(date, "YYYY/M/D").format("jYYYY/jM/jD"),
+      date:
+        type === "jalali"
+          ? moment(date, "jYYYY/jM/jD").format("YYYY/M/D")
+          : date,
     });
   };
 
@@ -54,23 +50,34 @@ const Table: React.FC<IProps> = ({
     >
       {dayOfWeek[type].map((day) => {
         return (
-          <div className="flex items-center justify-center text-lightgray text-sm">
+          <div
+            key={day}
+            className="flex items-center justify-center text-lightgray text-sm"
+          >
             {day}
           </div>
         );
       })}
-      {dates?.map((date) => {
+      {dates?.map((date, index) => {
         return (
           <div
-            onClick={() => handleClick(date.value, date.day)}
+            onClick={() => handleClick(date, index)}
             key={date.key}
             className={`flex items-center justify-center cursor-pointer ${
               today === Number(date.day) && currentMonth === 0
                 ? "border-brand-primary border "
                 : "border-lightgray_300"
-            } relative hover:bg-brand-primary transition-lg duration-200 rounded-lg hover:text-white p-1 ${
-              date.disable === true ? "text-lightgray" : "text-black"
-            }`}
+            } relative hover:bg-brand-primary transition-lg duration-200 rounded-lg hover:text-white m-1
+             ${date.disable === true ? "text-lightgray" : "text-black"}
+             ${
+               index >= selectedIndex.start &&
+               selectedIndex.start !== null &&
+               index <= selectedIndex.end &&
+               selectedIndex.start !== null
+                 ? "bg-brand-primary text-white"
+                 : ""
+             }
+             `}
           >
             {date.day}
           </div>

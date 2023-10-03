@@ -10,13 +10,13 @@ import DashboardLayout from "./components/Layouts/Dashboard";
 import AuthLayout from "./components/Layouts/Auth";
 import List from "./pages/Dashboard/List";
 import Calender from "./pages/Dashboard/Calender";
-import WorkSpaces from "./pages/Dashboard/WorkSpaces";
 import ProfileLayout from "./components/Layouts/Profile";
 import Account from "./pages/Profile/Account";
 import Information from "./pages/Profile/Information";
 import Setting from "./pages/Profile/Setting";
 import { AppContext } from "./context/store";
 import { useState } from "react";
+import WorkSpaces from "./pages/Dashboard/WorkSpaces";
 
 function App() {
   const [dateValues, setDateValues] = useState<any>({
@@ -28,7 +28,7 @@ function App() {
   });
 
   return (
-    <AppContext.Provider value={{dateValues, setDateValues}}>
+    <AppContext.Provider value={{ dateValues, setDateValues }}>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<AuthLayout />}>
@@ -40,6 +40,7 @@ function App() {
           </Route>
           <Route path="/" element={<DashboardLayout />}>
             <Route path="/board" element={<Board />} />
+            <Route path="/workspaces" element={<WorkSpaces />} />
             <Route path="/list" element={<List />} />
             <Route path="/calender" element={<Calender />} />
           </Route>

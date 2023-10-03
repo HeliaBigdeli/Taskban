@@ -90,7 +90,7 @@ const Modal: React.FC<IProps> = ({
               >
                 {hasHeader ? header?.text : ""}
                 {hasColor && (
-                  <div className={`w-XS h-XS bg-${coloredSquare}`}></div>
+                  <div className={`w-S h-S rounded-sm bg-${coloredSquare}`}></div>
                 )}
               </h2>
               <button

@@ -8,7 +8,8 @@ interface IIcon {
 }
 
 interface IProps {
-  text: string;
+  name?: string,
+  text?: string;
   type: "submit" | "button" | "reset";
   onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
   hasIcon?: boolean;
@@ -17,6 +18,7 @@ interface IProps {
 }
 
 const Button: React.FC<IProps> = ({
+  name,
   type,
   text,
   hasIcon,

@@ -18,11 +18,20 @@ import { AppContext } from "./context/store";
 import { useState } from "react";
 import WorkSpace from "./pages/Dashboard/WorkSpaces";
 
+interface IDate {
+  currentMonth: number;
+  year: number;
+  month: number;
+  today: number;
+  monthName: string;
+  type: string;
+}
+
 function App() {
-  const [dateValues, setDateValues] = useState<any>({
+  const [dateValues, setDateValues] = useState<IDate>({
     currentMonth: 0,
-    year: "",
-    month: "",
+    year: 0,
+    month: 0,
     today: 0,
     monthName: "",
     type: "jalali",

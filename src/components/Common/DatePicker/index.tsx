@@ -1,20 +1,14 @@
 import { useEffect, useState, useContext } from "react";
 import Table from "./Table";
+import { datesMaker } from "../../../utils/datesMaker";
 import { AppContext } from "../../../context/store";
-import { datesMaker } from '../../../utils/datesMaker'
 
 const CalenderView: React.FC = (): JSX.Element => {
   const [dates, setDates] = useState<any[]>([]);
   const { dateValues, setDateValues } = useContext(AppContext);
 
-  const handleAddButton = (key, status) => {
-    const dateIndex = dates.findIndex((x) => x.key === key);
 
-    if(!dates[dateIndex].disable) {
-      dates[dateIndex].showBtn = status === "show" ? true : false;
-      setDates([...dates]);
-    }
-  };
+  const handleSelect = (key, status) => {};
 
   useEffect(() => {
     // dateMaker get month index (0 is current ,1 and more are next monthes and -1 and more are previous monthew)
@@ -27,17 +21,15 @@ const CalenderView: React.FC = (): JSX.Element => {
       year: result.year,
       month: result.month,
       today: result.today,
-      monthName: result.monthName,   
-      type: result.type,     
-    });    
-
+      monthName: result.monthName,
+      type: result.type,
+    });
     setDates(result.dates);
-
   }, [dateValues.currentMonth, dateValues.type]);
 
   return (
     <Table
-    monthName={dateValues.monthName}
+      monthName={dateValues.monthName}
       onclick={(date) => {
         console.log(date);
       }}
@@ -45,8 +37,8 @@ const CalenderView: React.FC = (): JSX.Element => {
       today={dateValues.today}
       dates={dates}
       currentMonth={dateValues.currentMonth}
-      onMouseEnter={(key, status) => handleAddButton(key, status)}
-      onMouseLeave={(key, status) => handleAddButton(key, status)}
+      onMouseEnter={(key, status) => handleSelect(key, status)}
+      onMouseLeave={(key, status) => handleSelect(key, status)}
     />
   );
 };

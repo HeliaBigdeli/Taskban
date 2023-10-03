@@ -1,5 +1,6 @@
 import { createPortal } from "react-dom";
 import Modal from "../../Common/Modal";
+import DatePicker from "../../Common/DatePicker";
 
 const portals = document.getElementById("portals") as Element;
 
@@ -18,18 +19,19 @@ const TaskModal: React.FC<IProps> = ({ modal, setModal }): JSX.Element => {
       test
       {createPortal(
         <Modal
+          className="p-0"
           modal={modal}
           setModal={handleShowModal}
-          hasCloseIcon={true}
+          hasCloseIcon={false}
           closeIcon={{ order: 1 }}
-          hasHeader={true}
+          hasHeader={false}
           backIcon={{ order: 2 }}
           hasBackIcon={false}
-          hasColor= {true}
-          coloredSquare= "lightgray_300"
-          header={{ order: 3, text: 'عنوان تسک' }}
+          hasColor={false}
+          coloredSquare="lightgray_300"
+          header={{ order: 3, text: "عنوان تسک" }}
         >
-            new task modal        
+          <DatePicker />
         </Modal>,
         portals
       )}

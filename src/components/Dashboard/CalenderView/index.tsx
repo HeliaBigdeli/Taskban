@@ -47,6 +47,7 @@ const CalenderView: React.FC = (): JSX.Element => {
   };
 
   const creaetDateTable = () => {
+    // destruct year and month values from dateParams
     const { year, month } = dateParams();
 
     // get first day of week to start array from there
@@ -54,28 +55,32 @@ const CalenderView: React.FC = (): JSX.Element => {
       "YYYY-M-D"
     );
     let firstDayOfWeekIndex = new Date(firstDayOfMonth).getDay();
-    firstDayOfWeekIndex = firstDayOfWeekIndex === 6 ? 0 : firstDayOfWeekIndex + 1;
+    firstDayOfWeekIndex =
+      firstDayOfWeekIndex === 6 ? 0 : firstDayOfWeekIndex + 1;
 
     // get month length to use in loop create array of dates
     const monthLength = moment.jDaysInMonth(year, month - 1);
     // get previous month length
     const prevMothLenth = moment.jDaysInMonth(year, month - 2);
-    let prevMothDates = prevMothLenth - (firstDayOfWeekIndex - 1);
+    let prevMothDays = prevMothLenth - (firstDayOfWeekIndex - 1);
     let prevMonth = month - 1 === 0 ? 12 : month - 1;
 
     // create table of date
+    let result: DateList[] = [];
     let index = firstDayOfWeekIndex;
     for (let i = 0; i < monthLength; i++) {
+      // fill previous month dates
       if (i < firstDayOfWeekIndex) {
-        dates[i] = {
+        result[i] = {
           key: uuid(),
-          day: String(prevMothDates),
-          value: `${year}/${prevMonth}/${prevMothDates}`,
+          day: String(prevMothDays),
+          value: `${year}/${prevMonth}/${prevMothDays}`,
           showBtn: false,
         };
-        prevMothDates += 1;
+        prevMothDays += 1;
       }
-      dates[index] = {
+      // fill current month dates start from first dat of week index
+      result[index] = {
         key: uuid(),
         day: String(i + 1),
         value: `${year}/${month}/${i + 1}`,
@@ -84,7 +89,7 @@ const CalenderView: React.FC = (): JSX.Element => {
       index += 1;
     }
 
-    setDates([...dates]);
+    setDates(result);
   };
 
   useEffect(() => {

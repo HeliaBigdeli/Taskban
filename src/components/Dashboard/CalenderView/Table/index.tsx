@@ -68,7 +68,7 @@ const CalenderTable: React.FC<IProps> = ({
             onMouseEnter={() => onMouseEnter(date.key, "show")}
             onMouseLeave={() => onMouseLeave(date.key, "hide")}
             key={date.key}
-            className={`flex items-center justify-center border min-h-max  ${
+            className={`flex items-center justify-center border min-h-max ${
               today === Number(date.day) && currentMonth === 0
                 ? "border-brand-primary"
                 : "border-lightgray_300"

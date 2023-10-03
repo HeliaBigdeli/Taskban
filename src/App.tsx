@@ -16,6 +16,7 @@ import Information from "./pages/Profile/Information";
 import Setting from "./pages/Profile/Setting";
 import { AppContext } from "./context/store";
 import { useState } from "react";
+import WorkSpace from "./pages/Dashboard/WorkSpaces";
 
 function App() {
   const [dateValues, setDateValues] = useState<any>({
@@ -41,6 +42,7 @@ function App() {
           <Route path="/" element={<DashboardLayout />}>
             <Route path="/board" element={<Board />} />
             <Route path="/list" element={<List />} />
+            <Route path="/workspace" element={<WorkSpace />} />
             <Route path="/calender" element={<Calender />} />
           </Route>
           <Route path="/" element={<ProfileLayout />}>

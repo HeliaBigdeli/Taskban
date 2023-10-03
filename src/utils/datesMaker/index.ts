@@ -1,6 +1,11 @@
 import moment from "moment-jalaali";
 import uuid from "react-uuid";
 
+// dateMaker get month index (0 is current ,1 and more are next monthes and -1 and more are previous monthew)
+// dateMaker use for both gregorian and jalali dates
+// example : to get next moth set first param of dateMaker to 1 and to get prev month dates set it to -1
+// how to use : const result = datesMaker(dateValues.currentMonth, 'jalali');
+
 type DateList = {
   key: string;
   day: string;

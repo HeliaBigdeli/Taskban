@@ -10,24 +10,26 @@ import DashboardLayout from "./components/Layouts/Dashboard";
 import AuthLayout from "./components/Layouts/Auth";
 import List from "./pages/Dashboard/List";
 import Calender from "./pages/Dashboard/Calender";
+import WorkSpaces from "./pages/Dashboard/WorkSpaces";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<AuthLayout />}>
-            <Route index element={<Login/>}/>
-            <Route path="/login" element={<Login/>}/>
-            <Route path="/register" element={<Register/>}/>
-            <Route path="/forgot" element={<ForgotPassword/>}/>
-            <Route path="/reset" element={<Reset/>}/>
+          <Route index element={<Login />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/forgot" element={<ForgotPassword />} />
+          <Route path="/reset" element={<Reset />} />
         </Route>
-        <Route path="/" element={<DashboardLayout/>}>
-          <Route path="/board" element={<Board />}/>
-          <Route path="/list" element={<List />}/>
-          <Route path="/calender" element={<Calender />}/>
+        <Route path="/" element={<DashboardLayout />}>
+          <Route path="/board" element={<Board />} />
+          <Route path="/workspaces" element={<WorkSpaces />} />
+          <Route path="/list" element={<List />} />
+          <Route path="/calender" element={<Calender />} />
         </Route>
-        <Route path='*' element={<NotFound />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );

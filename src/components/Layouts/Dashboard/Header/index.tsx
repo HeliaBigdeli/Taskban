@@ -11,6 +11,7 @@ import MemberList from "../../../Common/MemberList/MemberList";
 import uuid from "react-uuid";
 import { email, validate } from "../../../../utils/validator/";
 import { ToastContainer, toast } from "react-toastify";
+import Navigator from '../../../Dashboard/CalenderView/Navigator'
 
 interface IProps {
   title?: string;
@@ -158,18 +159,24 @@ const Header: React.FC<IProps> = ({ title }): JSX.Element => {
         </button>
       </div>
       <div className="border-b-2 border-lightgray_300 py-S mb-S flex divide-x justify-end items-center divide-lightgray_300">
-        <div className="flex">
-          <p className="text-xs bg-blue_secondary p-1 px-S text-blue_primary">
-            دسته بندی شده با : وضعیت
-          </p>
-          <button
-            onClick={handleShowModal}
-            className="px-S flex justify-center items-center text-xs"
-          >
-            فیلترها
-            <Icon icon="filter" />
-          </button>
-        </div>
+        {pathname === "/calender" ? (
+          <div className="px-S">
+            <Navigator />
+          </div>
+        ) : (
+          <div className="flex">
+            <p className="text-xs bg-blue_secondary p-1 px-S text-blue_primary">
+              دسته بندی شده با : وضعیت
+            </p>
+            <button
+              onClick={handleShowModal}
+              className="px-S flex justify-center items-center text-xs"
+            >
+              فیلترها
+              <Icon icon="filter" />
+            </button>
+          </div>
+        )}
         <Input
           className="pr-L border-none w-[200px] bg-white text-xs"
           placeholder="جستجو بین تسک‌ها"

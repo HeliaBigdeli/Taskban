@@ -54,8 +54,7 @@ const CalenderView: React.FC = (): JSX.Element => {
       "YYYY-M-D"
     );
     let firstDayOfWeekIndex = new Date(firstDayOfMonth).getDay();
-    firstDayOfWeekIndex =
-      firstDayOfWeekIndex === 6 ? 0 : firstDayOfWeekIndex + 1;
+    firstDayOfWeekIndex = firstDayOfWeekIndex === 6 ? 0 : firstDayOfWeekIndex + 1;
 
     // get month length to use in loop create array of dates
     const monthLength = moment.jDaysInMonth(year, month - 1);

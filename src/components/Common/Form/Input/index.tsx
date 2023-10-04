@@ -11,9 +11,10 @@ interface IIcon {
 }
 
 interface IProps {
+  inputValue?: string | number,
   name: string;
   id: string;
-  type: "text" | "number" | "email" | "password";
+  type: "text" | "number" | "email" | "password"| "tel" | "hidden";
   label?: string;
   hasLabel?: boolean;
   placeholder?: string;
@@ -30,6 +31,7 @@ interface IProps {
 }
 
 const Input: React.FC<IProps> = ({
+  inputValue,
   autoFocus = false,
   name,
   id,
@@ -43,7 +45,7 @@ const Input: React.FC<IProps> = ({
   className,
   icon,
 }): JSX.Element => {
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState(inputValue);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);

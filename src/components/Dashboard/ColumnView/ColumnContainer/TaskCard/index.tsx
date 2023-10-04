@@ -22,7 +22,9 @@ const TaskCard: React.FC<ITaskCardProps> = (): JSX.Element => {
       onMouseEnter={() => setIsShown(true)}
       onMouseLeave={() => setIsShown(false)}
     >
-      <img src="https://s3-alpha-sig.figma.com/img/1ff2/08fc/84a00a92e59b4eaa4703234f3437659c?Expires=1696204800&Signature=h3dd-SZzpNulq5-GqW4g1xpgy2YXbu8Sa5gMjersJNEZ-mny0X3LABehTBaXJjCLOZt4fGojEb-dx69utNccQxdEKa5M7smLfna7Pg3kmYmHVZSn-D1WF0q-v2EGbv3NyZlEv0CyVZN-DvskfxtQbcxrPcSqgeBxno8BN7GpFxRojBmewYHHy2ol2L0AIX4bu0H9d1J1Z2SZEp2lCsqg5~bah8cB1QhF-08mmWxnbR5UVQ2VvcKjMNeJws7kbVFTWI0QhiZriiWGxVQXZvmFJ0CTfa4S4wupNDaai1Rz2VYg9718FLAjnSHvj4ZQIQ6i7-ukylsZ86Zr7ZcnF7poEA__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4"
+      <img
+        src="https://s3-alpha-sig.figma.com/img/1ff2/08fc/84a00a92e59b4eaa4703234f3437659c?Expires=1697414400&Signature=NdEELGlUgpVKt28LTTA0pvyNGP7MiAZu355SZHwXHjF2wSinKpN7VyExDP8R5TarldS-jxELVf-Js0MrSBgdpAN1bcEoHSiIUIgxIm~R2FvMO5h9gwwOKAjyT7Au86W8qUuZT1v41DyAqtlUHZJ37lh1ZPCekY99lrbdjs~FJUb0AQdTR4lLmRTXXWxdLFktqJjO2Y5ReNTUUfuWuSe07~rR5qvkTo2tB11u868UBDHjWZiU7nvYzvN2iWQ6ZeyiFs~RS8oGZ7oU2DkdjF1tjzJv41mFXf7UXh91UdqyY-m3Pf-yqfc90oP~zuh00RrSKEJgkgMA8KHT8DTV-Vum4w__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4"
+        alt="task-img"
         className={`h-[134px] self-stretch rounded-[4px] bg-lightgray  bg-cover bg-no-repeat`}
       />
       <section className="flex flex-col items-end gap-[9px] self-stretch">

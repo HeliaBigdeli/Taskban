@@ -10,6 +10,7 @@ import List from "./../../Common/List";
 import { useState } from "react";
 import { createPortal } from "react-dom";
 import NestedModals from "../../Common/Modal/NestedModals";
+import { Link } from 'react-router-dom'
 
 const data = [
   {
@@ -39,7 +40,9 @@ const DashboardLayout: React.FC = (): JSX.Element => {
       </div>
       <SideBar>
         <h2 className={`${styles.navbarTitle} mb-[27px] mt-XL`}>
-          کوئرا تسک منیجر
+          <Link to="/workspace">
+            کوئرا تسک منیجر
+          </Link>
         </h2>
         <div className="flex justify-between">
           <Icon icon="chevron_down" />

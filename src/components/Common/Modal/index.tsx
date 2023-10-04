@@ -28,9 +28,11 @@ interface IProps extends React.PropsWithChildren {
   backIcon: IBackIcon;
   hasColor?: boolean;
   coloredSquare?: string;
+  style?: {}
 }
 
 const Modal: React.FC<IProps> = ({
+  style,
   modal,
   setModal,
   hasHeader,
@@ -59,7 +61,7 @@ const Modal: React.FC<IProps> = ({
           className="flex items-center justify-center bg-modalOverlay fixed top-0 right-0 left-0 bottom-0 z-50"
           onClick={handleClick}
         >
-          <div className="trans flex w-auto min-w-[30%] rounded-[12px] p-[20px] flex-col items-center gap-XL bg-white">
+          <div className={`trans flex w-auto min-w-[30%] rounded-[12px] p-[20px] flex-col items-center gap-XL bg-white`} style={style}>
             <div
               className={`flex justify-between items-center w-full h-L ${
                 hasHeader === false &&
@@ -87,7 +89,7 @@ const Modal: React.FC<IProps> = ({
               >
                 {hasHeader ? header?.text : ""}
                 {hasColor && (
-                  <div className={`w-XS h-XS bg-${coloredSquare}`}></div>
+                  <div className={`w-S h-S rounded-sm bg-${coloredSquare}`}></div>
                 )}
               </h2>
               <button
@@ -100,7 +102,7 @@ const Modal: React.FC<IProps> = ({
                 <Icon icon="close" color="#1e1e1ec4" size={32} />
               </button>
             </div>
-            <div className="flex flex-col w-full gap-[28px]">{children}</div>
+            <div className="flex flex-col w-full mb[28px]">{children}</div>
           </div>
         </div>
       )}

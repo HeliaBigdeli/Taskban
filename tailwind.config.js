@@ -21,6 +21,8 @@ module.exports = {
       "orange-secondary": "#FFE8CC",
       "green-primary": "#40C057",
       "green-secondary": "#D3F9D8",
+      "gray-secondary": "#F1F3F5",
+      "gray-darke": "#343A40",
       black: "#1e1e1e",
       white: "#ffffff",
       lightgray: "#aaaaaa",
@@ -32,7 +34,7 @@ module.exports = {
       indigo_secondary: "#DBE4FF",
       blue_secondary: "#D0EBFF",
       blue_primary: "#228BE6",
-      modalOverlay: '#000000ab',
+      modalOverlay: "#000000ab",
     },
 
     fontFamily: {
@@ -59,7 +61,7 @@ module.exports = {
         0px 30px 60px -30px rgba(0, 0, 0, 0.3)`,
         taskCard: `0px 2px 4px 0px rgba(0, 0, 0, 0.40), 0px 7px 6px -3px rgba(0, 0, 0, 0.30), 0px -3px 0px 0px rgba(0, 0, 0, 0.20) inset;`,
         taskColumn: `0px 3px 4px 0px rgba(0, 0, 0, 0.20)`,
-        select: `0px 4px 4px 0px rgba(0, 0, 0, 0.25)`
+        select: `0px 4px 4px 0px rgba(0, 0, 0, 0.25)`,
         
       },
       backgroundImage: {

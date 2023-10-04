@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Icon from "../Icon";
 import colors from "./colors";
 
@@ -6,19 +7,34 @@ interface IColor {
 }
 interface IProps {
   onClick: (color: IColor) => void;
-  hasDisableIcon:boolean,
+  hasDisableIcon: boolean;
+  ref?: React.RefObject<HTMLDivElement>;
 }
 
-const ColorPicker: React.FC<IProps> = ({ onClick ,hasDisableIcon}) => {
+const ColorPicker: React.FC<IProps> = ({ onClick, hasDisableIcon, ref }) => {
+  const [selected, setSelected] = useState(true);
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
     onClick({
       name: e.currentTarget.dataset.name,
       code: e.currentTarget.dataset.code,
     });
+    setSelected(!selected);
+    if (ref?.current) {
+      ref.current.style.backgroundColor = e.currentTarget.dataset.code!;
+    }
   };
 
   return (
     <>
+      {hasDisableIcon && (
+        <Icon
+          icon="disable"
+          size={20}
+          style={{ margin: 4, cursor: "pointer" }}
+          data-code=""
+          data-name=""
+        />
+      )}
       {colors.map((color) => {
         return (
           <div
@@ -28,18 +44,16 @@ const ColorPicker: React.FC<IProps> = ({ onClick ,hasDisableIcon}) => {
             data-name={color.name}
             style={{
               backgroundColor: color.code,
-              width: 20,
-              height: 20,
               display: "inline-block",
-              borderRadius: 8,
+              borderRadius: 100,
               margin: 4,
               cursor: "pointer",
+              width: selected ? 20 : 30,
+              height: selected ? 20 : 30,
             }}
           ></div>
         );
       })}
-      {hasDisableIcon&&
-      <Icon icon="disable" size={20} style={{ margin: 4, cursor: "pointer" }} data-code="" data-name=""/>}
     </>
   );
 };

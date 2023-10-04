@@ -8,11 +8,13 @@ interface IHeader {
 interface ICloseIcon {
   color?: string;
   order: number;
+  resetInputValue?: () => void;
 }
 
 interface IBackIcon {
   color?: string;
   order: number;
+  handleBack?: () => void;
 }
 
 interface IProps extends React.PropsWithChildren {
@@ -48,13 +50,8 @@ const Modal: React.FC<IProps> = ({
   };
 
   const handleClose = () => {
+    if (closeIcon.resetInputValue) closeIcon.resetInputValue();
     setModal(false);
-  };
-
-  const history: History = window.history;
-
-  const handleBack = () => {
-    history.back();
   };
 
   return (
@@ -79,7 +76,7 @@ const Modal: React.FC<IProps> = ({
                   hasBackIcon ? "" : "invisible"
                 }`}
                 style={{ order: backIcon.order }}
-                onClick={handleBack}
+                onClick={backIcon.handleBack}
               >
                 <Icon icon="back" color="#1e1e1ec4" size={32} />
               </button>

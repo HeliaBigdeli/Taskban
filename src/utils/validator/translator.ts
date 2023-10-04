@@ -10,7 +10,8 @@ const dictionary:Values = {
     currentPassword:'رمز عبور فعلی',
     newPassword:'رمز عبور جدید',
     confirmNewPassword:'تکرار رمز عبور جدید',
-    shareWithEmail: 'ایمیل اشتراک گذاری'
+    shareWithEmail: 'ایمیل اشتراک گذاری',
+    workSpaceName: "نام ورک اسپیس جدید"
 }
 
 const Translator = (input: string): string => {

@@ -36,8 +36,22 @@ const CalenderView: React.FC = (): JSX.Element => {
         <div className="flex gap-2 items-center">
           <span>{dateValues.year}</span>
           <span>{dateValues.monthName}</span>
-          <Button type="button" hasIcon={true} icon={{icon: 'chevron_left'}} name="next" onClick={handleChangeMonth} className="flex" />
-          <Button type="button" hasIcon={true} icon={{icon: 'chevron_right'}} name="prev" onClick={handleChangeMonth} className="flex" />
+          <Button
+            type="button"
+            hasIcon={true}
+            icon={{ icon: "chevron_left" }}
+            name={dateValues.type === "jalali" ? "next" : "prev"}
+            onClick={(e) => handleChangeMonth(e)}
+            className="flex"
+          />
+          <Button
+            type="button"
+            hasIcon={true}
+            icon={{ icon: "chevron_right" }}
+            name={dateValues.type === "jalali" ? "prev" : "next"}
+            onClick={(e) => handleChangeMonth(e)}
+            className="flex"
+          />
           <span onClick={handleToday} className="cursor-pointer">
             {dateValues.type === "jalali" ? "امروز" : "today"}
           </span>
@@ -45,7 +59,9 @@ const CalenderView: React.FC = (): JSX.Element => {
             type="button"
             onClick={handleType}
             className="cursor-pointer bg-brand-primary text-white px-3 rounded-md"
-            text={dateValues.type === "jalali" ? "تقویم میلادی" : "jalali calender"}
+            text={
+              dateValues.type === "jalali" ? "تقویم میلادی" : "jalali calender"
+            }
           />
         </div>
       </div>

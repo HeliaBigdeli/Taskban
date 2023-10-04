@@ -5,6 +5,8 @@ import { AppContext } from "../../../context/store";
 import Navigator from "../../Dashboard/CalenderView/Navigator";
 import Icon from "../Icon";
 import Button from "../Form/Button";
+import { datesBetween } from "../../../utils/datesBetween";
+import moment from "moment-jalaali";
 
 interface IProps {
   onClick: (e: React.MouseEvent<HTMLElement>) => void;
@@ -14,15 +16,27 @@ const CalenderView: React.FC<IProps> = ({ onClick }): JSX.Element => {
   const [dates, setDates] = useState<any[]>([]);
   const { dateValues, setDateValues } = useContext(AppContext);
   const [selectedDate, setSelectedDate] = useState({ start: "", end: "" });
-  const [selectedIndex, setSelectedIndex] = useState({ start: null, end: null });
+  const [selectedArray, setSelectedArray] = useState<number[]>([]);
 
   const handleSelect = (data) => {
     if (!selectedDate.start || (selectedDate.start && selectedDate.end)) {
-      setSelectedDate({ ...selectedDate, start: dateValues.type === 'jalali' ? data.jDate : data.date, end: "" });
-      setSelectedIndex({...selectedIndex, start: data.index, end: null})
+      setSelectedDate({
+        ...selectedDate,
+        start: data.date,
+        end: "",
+      });
+      setSelectedArray([]);
     } else {
-      setSelectedDate({ ...selectedDate, end: dateValues.type === 'jalali' ? data.jDate : data.date });
-      setSelectedIndex({...selectedIndex, end: data.index})
+      let start = selectedDate.start;
+      let end = data.date;
+
+      if (new Date(selectedDate.start) > new Date(end)) {
+        start = end;
+        end = selectedDate.start;
+      }
+
+      setSelectedDate({ start, end });
+      setSelectedArray(datesBetween(start, end));
     }
   };
 
@@ -41,18 +55,34 @@ const CalenderView: React.FC<IProps> = ({ onClick }): JSX.Element => {
       type: result.type,
     });
     setDates(result.dates);
-  }, [dateValues.currentMonth, dateValues.type, selectedIndex]);
+  }, [dateValues.currentMonth, dateValues.type, selectedArray]);
 
   return (
     <div className="flex flex-col">
       <div className="flex flex-row-reverse justify-between border-b-2 p-M border-lightgray_300 font-bold">
         <span className="flex justify-end grow gap-1">
-          <span>{selectedDate.start}</span>
+          <span>
+            {selectedDate.start && dateValues.type === "jalali"
+              ? moment(selectedDate.start, "YYYY-M-D HH:mm:ss").format(
+                  "jYYYY-jM-jD"
+                )
+              : selectedDate.start && moment(selectedDate.start, "YYYY-M-D HH:mm:ss").format(
+                  "YYYY-M-D"
+                )}
+          </span>
           زمان شروع
           <Icon icon="calende_empty" color="#cccccc" />
         </span>
         <span className="flex justify-end grow gap-1">
-          <span>{selectedDate.end}</span>
+          <span>
+            {selectedDate.end && dateValues.type === "jalali"
+              ? moment(selectedDate.end, "YYYY-M-D HH:mm:ss").format(
+                  "jYYYY-jM-jD"
+                )
+              : selectedDate.end && moment(selectedDate.end, "YYYY-M-D HH:mm:ss").format(
+                  "YYYY-M-D"
+                )}
+          </span>
           زمان پایان
           <Icon icon="calende_empty" color="#cccccc" />
         </span>
@@ -60,8 +90,9 @@ const CalenderView: React.FC<IProps> = ({ onClick }): JSX.Element => {
       <div className="flex flex-row-reverse">
         <div className="w-[200px] bg-lightgray_200 py-M px-XS rounded-br-[12px] rounded-bl-[12px]">
           <ul className="flex flex-col gap-XS text-right text-sm">
-            <li className="hover:bg-lightgray_300 p-1 transition-all duration-100 cursor-pointer rounded-md px-4">
-              امروز
+            <li className="hover:bg-lightgray_300 p-1 transition-all duration-100 cursor-pointer rounded-md px-4 flex justify-between">
+              <span></span>
+              <span>امروز</span>
             </li>
             <li className="hover:bg-lightgray_300 p-1 transition-all duration-100 cursor-pointer rounded-md px-4">
               کمی بعد
@@ -88,7 +119,7 @@ const CalenderView: React.FC<IProps> = ({ onClick }): JSX.Element => {
             <Navigator />
           </div>
           <Table
-            selectedIndex={selectedIndex}
+            selectedArray={selectedArray}
             monthName={dateValues.monthName}
             onclick={(data) => {
               handleSelect(data);

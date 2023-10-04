@@ -28,7 +28,8 @@ const Button: React.FC<IProps> = ({
 }): JSX.Element => {
   return (
     <button
-      onClick={onClick}
+      name={name}
+      onClick={(e) => onClick(e)}
       type={type}
       className={`flex items-center justify-center ${className}`}
     >

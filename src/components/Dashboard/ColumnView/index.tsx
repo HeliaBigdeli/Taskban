@@ -13,7 +13,7 @@ const ColumnView: React.FC = (): JSX.Element => {
     <div
       ref={ref}
       {...events}
-      className={`flex gap-S overflow-auto h-full px-S ${style.scroll}`}
+      className={`flex items-start gap-6 overflow-x-auto overflow-y-hidden h-[800px] px-S ${style.scroll}`}
       style={{ direction: "rtl" }}
     >
       <ColumnContainer />

@@ -27,12 +27,12 @@ const ListShow: React.FC = (): JSX.Element => {
         text="تسک جدید"
         onClick={() => {}}
         type="button"
-        className="z-20 bg-brand-primary text-white h-L text-sm leading-normal self-stretch rounded-md fixed bottom-[30px] p-S left-2XL"
+        className="z-20 bg-brand-primary text-white w-[118px] text-sm flex-row-reverse justify-center items-center rounded-md fixed bottom-[30px] py-XS px-3 gap-1 left-2XL font-extrabold"
         hasIcon={true}
         icon={{
           icon: "plus_square",
           color: "white",
-          className: "ml-1",
+          size: 24,
         }}
       />
     </div>

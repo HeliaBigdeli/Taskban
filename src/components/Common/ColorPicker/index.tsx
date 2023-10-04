@@ -11,17 +11,14 @@ interface IProps {
   ref?: React.RefObject<HTMLDivElement>;
 }
 
-const ColorPicker: React.FC<IProps> = ({ onClick, hasDisableIcon, ref }) => {
-  const [selected, setSelected] = useState(true);
+const ColorPicker: React.FC<IProps> = ({ onClick, hasDisableIcon }) => {
+  const [selected, setSelected] = useState<string | undefined>("");
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
     onClick({
       name: e.currentTarget.dataset.name,
       code: e.currentTarget.dataset.code,
     });
-    setSelected(!selected);
-    if (ref?.current) {
-      ref.current.style.backgroundColor = e.currentTarget.dataset.code!;
-    }
+    setSelected(e.currentTarget.dataset.code);   
   };
 
   return (
@@ -43,13 +40,14 @@ const ColorPicker: React.FC<IProps> = ({ onClick, hasDisableIcon, ref }) => {
             data-code={color.code}
             data-name={color.name}
             style={{
-              backgroundColor: color.code,
+              backgroundColor: color.code === selected ? 'white' : color.code,
               display: "inline-block",
-              borderRadius: 100,
-              margin: 4,
+              borderRadius: 50,
+              margin: 2,
               cursor: "pointer",
-              width: selected ? 20 : 30,
-              height: selected ? 20 : 30,
+              width: 22,
+              height: 22,
+              border: color.code === selected ? `solid 6px ${color.code}` : 'none'
             }}
           ></div>
         );

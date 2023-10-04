@@ -82,14 +82,12 @@ const ReviewInfo: React.FC<IProps> = ({
               <span className="text-black text-sm font-extrabold">اعضا</span>
             </div>
           </div>
-          <div className=" w-full px-6">
             <Button
               text="ساختن ورک‌اسپیس"
               type="submit"
               onClick={handleCreate}
-              className="flex h-XL p-2.5 rounded-md bg-brand-primary text-white w-full"
+              className="flex h-XL rounded-md bg-brand-primary text-white w-full"
             />
-          </div>
         </div>
       </Modal>
     </>

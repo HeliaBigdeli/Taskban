@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useRef, useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import Modal from "../..";
 import ColorPicker from "../../../ColorPicker";
 import Button from "../../../Form/Button";
@@ -24,8 +24,6 @@ const PickColor: React.FC<IProps> = ({
   setWorkSpaceInfo,
 }): JSX.Element => {
   const [isReviewInfoOpen, setIsReviewInfoOpen] = useState(false);
-
-  const ref = useRef<HTMLDivElement>(null);
 
   const handleBackClick = () => {
     setIsModalOpen(true);
@@ -58,8 +56,8 @@ const PickColor: React.FC<IProps> = ({
             }),
         }}
       >
-        <div className="flex flex-col gap-XL w-[500px] p-6 pr-1 pt-0 items-end">
-          <div className="flex justify-end items-start gap-S">
+        <div className="flex flex-col gap-XL w-[500px] pt-0 items-end">
+          <div className="flex gap-S">
             <div className="flex flex-col items-end gap-S">
               <span className="text-sm text-black">رنگ ورک‌اسپیس</span>
               <div className="flex w-[293px] flex-row-reverse gap-[8px] flex-wrap">
@@ -71,14 +69,13 @@ const PickColor: React.FC<IProps> = ({
                       colorCode: data.code,
                     })
                   }
-                  hasDisableIcon
-                  ref={ref}
+                  hasDisableIcon = {true}
                 />
               </div>
             </div>
             <div
-              ref={ref}
-              className="flex w-[80px] py-[21px] mb-[5px] justify-center items-center rounded-[8px] bg-[#7D828C] text-white text-2xl font-extrabold"
+              className="flex text-center w-[80px] p-[10px] mb-[5px] justify-center items-center rounded-[8px] bg-[#7D828C] text-white text-2xl font-extrabold"
+              style={{backgroundColor: workSpaceInfo.colorCode}}
             >
               {workSpaceInfo.name
                 ? workSpaceInfo.name.split(" ").map((item, index) => {
@@ -87,17 +84,15 @@ const PickColor: React.FC<IProps> = ({
                       accOfWorkSpaceName += item.charAt(0).toUpperCase() + " ";
                     return accOfWorkSpaceName;
                   })
-                : "ت ط"}
+                : ""}
             </div>
           </div>
-          <div className=" w-full pr-6">
             <Button
               text="ادامه"
               type="button"
               onClick={handlePickolorClick}
-              className="flex h-XL p-2.5 rounded-md bg-brand-primary text-white w-full"
+              className="flex h-XL rounded-md bg-brand-primary text-white w-full"
             />
-          </div>
         </div>
       </Modal>
       <ReviewInfo

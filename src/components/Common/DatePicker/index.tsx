@@ -61,7 +61,7 @@ const CalenderView: React.FC<IProps> = ({ onClick }): JSX.Element => {
     <div className="flex flex-col">
       <div className="flex flex-row-reverse justify-between border-b-2 p-M border-lightgray_300 font-bold">
         <span className="flex justify-end grow gap-1">
-          <span>
+          <span className="text-brand-primary">
             {selectedDate.start && dateValues.type === "jalali"
               ? moment(selectedDate.start, "YYYY-M-D HH:mm:ss").format(
                   "jYYYY-jM-jD"
@@ -74,7 +74,7 @@ const CalenderView: React.FC<IProps> = ({ onClick }): JSX.Element => {
           <Icon icon="calende_empty" color="#cccccc" />
         </span>
         <span className="flex justify-end grow gap-1">
-          <span>
+        <span className="text-brand-primary">
             {selectedDate.end && dateValues.type === "jalali"
               ? moment(selectedDate.end, "YYYY-M-D HH:mm:ss").format(
                   "jYYYY-jM-jD"

@@ -40,7 +40,7 @@ const ColumnView: React.FC = (): JSX.Element => {
           }}
         />
       </div>
-      {taskModal && <TaskModal modal={taskModal} setModal={handleTaskModal} />}
+      {taskModal && <TaskModal modal={taskModal} setModal={handleTaskModal} />}   
     </>
   );
 };

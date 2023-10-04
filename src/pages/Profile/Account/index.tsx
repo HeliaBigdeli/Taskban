@@ -1,80 +1,109 @@
 import Button from "../../../components/Common/Form/Button";
 import Input from "../../../components/Common/Form/Input";
-import { required, validate } from "../../../utils/validator";
-import { useState } from "react";
+import { useState, useEffect } from 'react'
+import {
+  required,
+  email,
+  validate,
+  strong,
+  minLength,
+} from "../../../utils/validator/index";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const rules = {
-  email: [required],
+  email: [required, email],
   username: [required],
-  password: [required],
-  newPassword: [required],
-  commitNewPassword: [required],
+  currentPassword: [required],
+  newPassword: [required, strong, minLength(8)],
+  confirmNewPassword: [required]
 };
 
 type Values = {
   [key: string]: string;
 };
-const Account: React.FC = (): JSX.Element => {
+
+const Information: React.FC = (): JSX.Element => {
   const [errors, setErrors] = useState<string[]>([]);
   const [values, setValues] = useState<Values>({
     email: "",
-    password: "",
+    currentPassword: "",
     username: "",
     newPassword: "",
-    commitNewPassword: "",
+    confirmNewPassword: ""
   });
+
+  useEffect(() => {
+    errors?.map((error) => {
+      toast.error(error, {
+        position: "bottom-left",
+        autoClose: 3000,
+      });
+    });
+  }, [errors]);
+
   const handleChange = (name: string, value: string) => {
     setValues({ ...values, [name]: value });
   };
+
   const handleClick = () => {
     const resultErrors = validate(values, rules);
     setErrors(resultErrors);
+    
+    if (values.newPassword != values.confirmNewPassword) {
+      toast.error("تکرار رمز عبور جدید با رمز عبور جدید مطابقت ندارد", {
+        position: "bottom-left",
+        autoClose: 3000,
+      });
+    }
   };
+
   return (
     <div className="flex flex-row-reverse">
-      <div className="mt-[160px] mr-[58px]">
-        <h2 className="text-[31px] text-bold text-right mb-L">
-          اطلاعات فردی
-        </h2>
-        <div className="flex flex-row-reverse justify-start items-center">
-          <span className="rounded-full w-[100px] h-[100px] bg-[#FFF3BF] ml-S"></span>
-          <div className="py-[6px]">
-            <Button
-              text="ویرایش تصویر پروفایل"
-              type="button"
-              onClick={handleClick}
-              hasIcon={false}
-              className="text-brand-primary text-xl font-medium border border-brand-primary h-[55px] rounded-lg w-[212px] p-[10px] mb-S"
-            />
-            <p className="text-lightgray text-xs text-center font-normal">
-              این تصویر برای عموم قابل نمایش است
-            </p>
-          </div>
-        </div>
+      <div className="w-[354px] mt-[160px] mr-[58px]">
+        <h2 className="text-[31px] text-bold text-right mb-[32px]" >اطلاعات حساب</h2>
         <form className="flex flex-col gap-S">
           <Input
-            name="firstname"
-            id="firstname"
-            type="text"
-            label="نام"
+            name="email"
+            id="email"
+            type="email"
+            label="ایمیل"
             hasLabel={true}
             className="h-XL"
             onChange={(name, value) => handleChange(name, value)}
           />
           <Input
-            name="lastname"
-            id="lastname"
+            name="username"
+            id="username"
             type="text"
-            label="نام خانوادگی"
+            label="نام کاربری"
             hasLabel={true}
             className="h-XL"
             onChange={(name, value) => handleChange(name, value)}
           />
 
           <Input
-            name="telNumber"
-            id="telNumber"
-            type="number"
-            label="شماره موبایل"
+            name="currentPassword"
+            id="currentPassword"
+            type="password"
+            label="رمز عبور فعلی"
+            className="h-XL"
+            hasLabel={true}
+            onChange={(name, value) => handleChange(name, value)}
+          />
+          <Input
+            name="newPassword"
+            id="newPassword"
+            type="password"
+            label="رمز عبور جدید"
+            className="h-XL"
+            hasLabel={true}
+            onChange={(name, value) => handleChange(name, value)}
+          />
+          <Input
+            name="confirmNewPassword"
+            id="confirmNewPassword"
+            type="password"
+            label="تکرار رمز عبور جدید"
             className="h-XL"
             hasLabel={true}
             onChange={(name, value) => handleChange(name, value)}
@@ -88,8 +117,9 @@ const Account: React.FC = (): JSX.Element => {
           />
         </form>
       </div>
+      <ToastContainer style={{ width: "400px" }} />
     </div>
   );
-};
+}
 
-export default Account;
+export default Information;

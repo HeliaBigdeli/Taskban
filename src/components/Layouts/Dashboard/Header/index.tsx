@@ -11,7 +11,7 @@ import MemberList from "../../../Common/MemberList/MemberList";
 import uuid from "react-uuid";
 import { email, validate } from "../../../../utils/validator/";
 import { ToastContainer, toast } from "react-toastify";
-import Navigator from '../../../Dashboard/CalenderView/Navigator'
+import Navigator from "../../../Dashboard/CalenderView/Navigator";
 
 interface IProps {
   title?: string;
@@ -219,7 +219,7 @@ const Header: React.FC<IProps> = ({ title }): JSX.Element => {
               className="h-XL rounded-l-none rounded-r-lg border-none bg-[#F0F1F3] text-sm outline-none pl-[255px]"
             />
           </div>
-          <div className="flex justify-between w-[430px]">
+          <div className="flex justify-between w-[430px] my-[25px]">
             <CopyLink privateLink="hell@gmail.com" />
           </div>
           <div className="flex flex-col w-[430px] gap-S">

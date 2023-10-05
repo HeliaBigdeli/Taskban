@@ -43,7 +43,7 @@ const Textarea: React.FC<IProps> = ({
             {label}
           </label>
         )}
-        <div className="relative flex items-center justify-end">
+        <div className="flex items-center justify-end">
           <textarea
             autoFocus = {autoFocus}
             value={value}

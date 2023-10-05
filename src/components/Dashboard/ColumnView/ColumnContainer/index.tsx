@@ -22,7 +22,7 @@ const ColumnContainer: React.FC = (): JSX.Element => {
       defaultPosition={{ x: 0, y: 0 }}
     >
       <div
-        className="flex shrink-0 flex-col items-start gap-S   "
+        className="flex shrink-0 flex-col items-start gap-S"
         ref={ref}
         style={{ direction: "ltr" }}
       >
@@ -30,8 +30,7 @@ const ColumnContainer: React.FC = (): JSX.Element => {
         <div className="flex flex-col items-start gap-3">
           <TaskCard />
           <TaskCard />
-          <TaskCard />
-         
+          <TaskCard />         
         </div>
       </div>
     </Draggable>

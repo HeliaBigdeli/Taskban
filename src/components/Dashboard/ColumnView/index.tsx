@@ -47,7 +47,5 @@ const ColumnView: React.FC = (): JSX.Element => {
       </div>
       {taskModal && <TaskModal modal={taskModal} setModal={handleTaskModal} />}   
     </>
-  );
-};
-
+  )};
 export default ColumnView;

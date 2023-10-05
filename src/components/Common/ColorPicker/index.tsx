@@ -17,6 +17,7 @@ interface IProps {
   ) => void;
 }
 
+
 const ColorPicker: React.FC<IProps> = ({
   onClick,
   hasDisableIcon,
@@ -24,12 +25,15 @@ const ColorPicker: React.FC<IProps> = ({
   selected,
   setSelected,
 }) => {
+
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
     onClick({
       name: e.currentTarget.dataset.name,
       code: e.currentTarget.dataset.code,
     });
+
     if (setSelected) setSelected(e.currentTarget.dataset.code);
+
   };
 
   return (
@@ -53,6 +57,7 @@ const ColorPicker: React.FC<IProps> = ({
             data-code={color.code}
             data-name={color.name}
             style={{
+
               backgroundColor: color.code === selected ? "white" : color.code,
               display: "inline-block",
               borderRadius: color.code === selected ? 13 : 9,
@@ -62,6 +67,7 @@ const ColorPicker: React.FC<IProps> = ({
               height: color.code === selected ? 30 : 22,
               border:
                 color.code === selected ? `solid 10px ${color.code}` : "none",
+
             }}
           ></div>
         );

@@ -5,7 +5,7 @@ import Draggable from "react-draggable";
 
 const ColumnContainer: React.FC = (): JSX.Element => {
   const [maxHeight, setMaxHeight] = useState<boolean>(true);
-  const eventHandler = (e, data) => {
+  const eventHandler = (e, data) => { 
     e.stopPropagation();
   };
   const ref = useRef<any>(null);

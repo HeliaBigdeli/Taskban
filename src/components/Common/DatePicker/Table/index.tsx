@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { dayOfWeek } from "../../../../constants/dayOfWeek";
-import moment from "moment-jalaali";
 
 interface IDates {
   key: string;
@@ -29,15 +28,12 @@ const Table: React.FC<IProps> = ({
   onclick,
   selectedArray,
 }): JSX.Element => {
-  const handleClick = (date, index) => {
+  const handleClick = (date) => {
     onclick({
-      index,
-      date,
-      jDate: moment(date, "YYYY-M-D").format("jYYYY-jM-jD"),
+      date: date.value,
+      day: date.day,
     });
   };
-
-  useEffect(() => {}, [selectedArray]);
 
   return (
     <div
@@ -57,7 +53,7 @@ const Table: React.FC<IProps> = ({
       {dates?.map((date, index) => {
         return (
           <div
-            onClick={() => handleClick(date.value, index)}
+            onClick={() => handleClick(date)}
             key={date.key}
             className={`flex items-center justify-center cursor-pointer ${
               today === Number(date.day) && currentMonth === 0

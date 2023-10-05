@@ -6,7 +6,6 @@ import Navigator from "../../Dashboard/CalenderView/Navigator";
 import Icon from "../Icon";
 import Button from "../Form/Button";
 import { datesBetween } from "../../../utils/datesBetween";
-import moment from "moment-jalaali";
 
 interface IProps {
   onClick: (e: React.MouseEvent<HTMLElement>) => void;
@@ -15,28 +14,30 @@ interface IProps {
 const CalenderView: React.FC<IProps> = ({ onClick }): JSX.Element => {
   const [dates, setDates] = useState<any[]>([]);
   const { dateValues, setDateValues } = useContext(AppContext);
-  const [selectedDate, setSelectedDate] = useState({ start: "", end: "" });
+  const [selecte, setSelecte] = useState({
+    start: { date: "", day: "" },
+    end: { date: "", day: "" },
+  });
   const [selectedArray, setSelectedArray] = useState<number[]>([]);
 
   const handleSelect = (data) => {
-    if (!selectedDate.start || (selectedDate.start && selectedDate.end)) {
-      setSelectedDate({
-        ...selectedDate,
-        start: data.date,
-        end: "",
+    if (!selecte.start.date || (selecte.start.date && selecte.end.date)) {
+      setSelecte({
+        start: { date: data.date, day: data.day },
+        end: { date: "", day: "" },
       });
       setSelectedArray([]);
     } else {
-      let start = selectedDate.start;
-      let end = data.date;
+      let start = selecte.start;
+      let end = data;
 
-      if (new Date(selectedDate.start) > new Date(end)) {
+      if (new Date(start.date) > new Date(end.date)) {
         start = end;
-        end = selectedDate.start;
+        end = selecte.start;
       }
 
-      setSelectedDate({ start, end });
-      setSelectedArray(datesBetween(start, end));
+      setSelecte({ start, end });
+      setSelectedArray(datesBetween(start.date, end.date));
     }
   };
 
@@ -54,37 +55,41 @@ const CalenderView: React.FC<IProps> = ({ onClick }): JSX.Element => {
       monthName: result.monthName,
       type: result.type,
     });
-    setDates(result.dates);
-  }, [dateValues.currentMonth, dateValues.type, selectedArray]);
+    setDates(result.dates);   
+  }, [dateValues.currentMonth, dateValues.type]);
 
   return (
     <div className="flex flex-col">
       <div className="flex flex-row-reverse justify-between border-b-2 p-M border-lightgray_300 font-bold">
-        <span className="flex justify-end grow gap-1">
-          <span className="text-brand-primary">
-            {selectedDate.start && dateValues.type === "jalali"
-              ? moment(selectedDate.start, "YYYY-M-D HH:mm:ss").format(
-                  "jYYYY-jM-jD"
-                )
-              : selectedDate.start && moment(selectedDate.start, "YYYY-M-D HH:mm:ss").format(
-                  "YYYY-M-D"
+        <span className="flex justify-end grow gap-2">
+          {selecte.start.date && (
+            <span className="text-brand-primary flex justify-end gap-2">
+              <span>
+                {new Date(selecte.start.date).toLocaleDateString(
+                  dateValues.type === "jalali" ? "fa-IR" : "en-US",
+                  { month: "short" }
                 )}
-          </span>
+              </span>
+              <span>{selecte.start.day}</span>
+            </span>
+          )}
           زمان شروع
-          <Icon icon="calende_empty" color="#cccccc" />
+          <Icon icon="calende_empty" />
         </span>
-        <span className="flex justify-end grow gap-1">
-        <span className="text-brand-primary">
-            {selectedDate.end && dateValues.type === "jalali"
-              ? moment(selectedDate.end, "YYYY-M-D HH:mm:ss").format(
-                  "jYYYY-jM-jD"
-                )
-              : selectedDate.end && moment(selectedDate.end, "YYYY-M-D HH:mm:ss").format(
-                  "YYYY-M-D"
+        <span className="flex justify-end grow gap-2">
+          {selecte.end.date && (
+            <span className="text-brand-primary flex justify-end gap-2">
+              <span>
+                {new Date(selecte.end.date).toLocaleDateString(
+                  dateValues.type === "jalali" ? "fa-IR" : "en-US",
+                  { month: "short" }
                 )}
-          </span>
+              </span>
+              <span>{selecte.end.day}</span>
+            </span>
+          )}
           زمان پایان
-          <Icon icon="calende_empty" color="#cccccc" />
+          <Icon icon="calende_empty" />
         </span>
       </div>
       <div className="flex flex-row-reverse">

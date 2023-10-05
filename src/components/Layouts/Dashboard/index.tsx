@@ -10,7 +10,7 @@ import List from "./../../Common/List";
 import { useState } from "react";
 import { createPortal } from "react-dom";
 import NestedModals from "../../Common/Modal/NestedModals";
-import { Link } from 'react-router-dom'
+import { Link } from "react-router-dom";
 
 const data = [
   {
@@ -26,6 +26,7 @@ const data = [
 
 const DashboardLayout: React.FC = (): JSX.Element => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+
   const portals = document.getElementById("portals") as Element;
 
   const handleChange = (name: string, value: string) => {
@@ -40,9 +41,7 @@ const DashboardLayout: React.FC = (): JSX.Element => {
       </div>
       <SideBar>
         <h2 className={`${styles.navbarTitle} mb-[27px] mt-XL`}>
-          <Link to="/workspace">
-            کوئرا تسک منیجر
-          </Link>
+          <Link to="/workspace">کوئرا تسک منیجر</Link>
         </h2>
         <div className="flex justify-between">
           <Icon icon="chevron_down" />

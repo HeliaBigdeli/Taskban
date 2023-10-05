@@ -12,6 +12,7 @@ type DateList = {
   showBtn: boolean;
   value: string;
   disable: boolean;
+  uKey: number;
 };
 
 export const datesMaker = (currentMonth = 0, type = "gregorian") => {
@@ -35,22 +36,24 @@ export const datesMaker = (currentMonth = 0, type = "gregorian") => {
     { month: "short" }
   );
 
-  return createArray(year, month, type, today, monthName);
+  return createArray(year, month, today, date, monthName, type);
 };
 
 const createArray = (
   year: number,
   month: number,
-  type: string,
   today: number,
-  monthName: string
+  date: Date,
+  monthName: string,
+  type: string
 ) => {
   let firstDayOfWeekIndex: number = 0;
   // get first day of week to start array from there
   if (type === "jalali") {
-    let firstDayOfMonth = moment(`${year}/${month}/1`, "jYYYY/jM/jD").format(
+    let firstDayOfMonth = moment(`${year}-${month}-1`, "jYYYY-jM-jD").format(
       "YYYY-M-D"
     );
+
     firstDayOfWeekIndex = new Date(firstDayOfMonth).getDay();
     // change day index during to persian week days (week start day is friday in gregorian calender, plus it one to start from saturday)
     firstDayOfWeekIndex =
@@ -73,8 +76,8 @@ const createArray = (
     prevMonth = month - 1 === 0 ? 12 : month - 1;
   } else {
     monthLength = new Date(year, month, 0).getDate();
-    prevMothLenth = moment.jDaysInMonth(year, month - 1);
-    prevMothDays = prevMothLenth - (firstDayOfWeekIndex - 2);
+    prevMothLenth = new Date(year, month - 1, 0).getDate();
+    prevMothDays = prevMothLenth - (firstDayOfWeekIndex - 1);
     prevMonth = month - 1 === 0 ? 12 : month - 1;
   }
 
@@ -84,22 +87,36 @@ const createArray = (
   for (let i = 0; i < monthLength; i++) {
     // fill previous month dates
     if (i < firstDayOfWeekIndex) {
+      const value =
+        type === "jalali"
+          ? moment(`${year}-${prevMonth}-${prevMothDays} 00:00:00`, "jYYYY-jM-jD HH:mm:ss").format(
+              "YYYY-M-D HH:mm:ss"
+            )
+          : `${year}-${prevMonth}-${prevMothDays} 00:00:00`;
+
       dates[i] = {
         key: uuid(),
         day: String(prevMothDays),
-        value: `${year}/${prevMonth}/${prevMothDays}`,
+        value,
         showBtn: false,
         disable: true,
+        uKey: new Date(value).getTime(),
       };
       prevMothDays += 1;
     }
     // fill current month dates start from first day of week index
+    const value =
+      type === "jalali"
+        ? moment(`${year}-${month}-${i + 1} 00:00:00`, "jYYYY-jM-jD ").format("YYYY-M-D HH:mm:ss")
+        : `${year}-${month}-${i + 1} 00:00:00`;
+
     dates[index] = {
       key: uuid(),
       day: String(i + 1),
-      value: `${year}/${month}/${i + 1}`,
+      value,
       showBtn: false,
       disable: false,
+      uKey: new Date(value).getTime(),
     };
     index += 1;
   }

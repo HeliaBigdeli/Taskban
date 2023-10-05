@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { dayOfWeek } from "../../../../constants/dayOfWeek";
-import moment from "moment-jalaali";
 
 interface IDates {
   key: string;
@@ -8,6 +7,7 @@ interface IDates {
   showBtn: boolean;
   value: string;
   disable: boolean;
+  uKey: number;
 }
 
 interface IProps {
@@ -16,30 +16,22 @@ interface IProps {
   today: number;
   dates: IDates[];
   currentMonth: number;
-  selectedIndex: any;
   onclick: ({}) => void;
+  selectedArray: number[];
 }
 
 const Table: React.FC<IProps> = ({
-  selectedIndex,
   type,
   today,
   dates,
   currentMonth,
   onclick,
+  selectedArray,
 }): JSX.Element => {
-  const handleClick = (date, index) => {
-    date = date.value;
+  const handleClick = (date) => {
     onclick({
-      index,
-      jDate:
-        type === "jalali"
-          ? date
-          : moment(date, "YYYY/M/D").format("jYYYY/jM/jD"),
-      date:
-        type === "jalali"
-          ? moment(date, "jYYYY/jM/jD").format("YYYY/M/D")
-          : date,
+      date: date.value,
+      day: date.day,
     });
   };
 
@@ -61,22 +53,30 @@ const Table: React.FC<IProps> = ({
       {dates?.map((date, index) => {
         return (
           <div
-            onClick={() => handleClick(date, index)}
+            onClick={() => handleClick(date)}
             key={date.key}
             className={`flex items-center justify-center cursor-pointer ${
               today === Number(date.day) && currentMonth === 0
                 ? "border-brand-primary border "
                 : "border-lightgray_300"
-            } relative hover:bg-brand-primary transition-lg duration-200 rounded-lg hover:text-white m-1
+            } relative hover:bg-brand-primary transition-lg duration-200 rounded-lg hover:text-white my-1
              ${date.disable === true ? "text-lightgray" : "text-black"}
              ${
-               index >= selectedIndex.start &&
-               selectedIndex.start !== null &&
-               index <= selectedIndex.end &&
-               selectedIndex.start !== null
-                 ? "bg-brand-primary text-white"
+               selectedArray[0] === date.uKey ||
+               selectedArray[selectedArray.length - 1] === date.uKey
+                 ? `bg-brand-primary text-white ${
+                     selectedArray[0] === date.uKey
+                       ? type === "jalali"
+                         ? "rounded-l-none"
+                         : "rounded-r-none"
+                       : type === "jalali"
+                       ? "rounded-r-none"
+                       : "rounded-l-none"
+                   }`
+                 : selectedArray.find((x) => x === date.uKey)
+                 ? "bg-brand-secondary rounded-none"
                  : ""
-             }
+             }          
              `}
           >
             {date.day}

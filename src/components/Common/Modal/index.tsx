@@ -8,11 +8,13 @@ interface IHeader {
 interface ICloseIcon {
   color?: string;
   order: number;
+  resetInputValue?: () => void;
 }
 
 interface IBackIcon {
   color?: string;
   order: number;
+  handleBack?: () => void;
 }
 
 interface IProps extends React.PropsWithChildren {
@@ -26,7 +28,7 @@ interface IProps extends React.PropsWithChildren {
   backIcon: IBackIcon;
   hasColor?: boolean;
   coloredSquare?: string;
-  style?: {}
+  style?: {};
 }
 
 const Modal: React.FC<IProps> = ({
@@ -44,17 +46,16 @@ const Modal: React.FC<IProps> = ({
   coloredSquare,
 }): JSX.Element => {
   const handleClick = (e: React.SyntheticEvent<EventTarget>) => {
-    if (e.target === e.currentTarget) setModal(!modal);
+    if (e.target === e.currentTarget) {
+      setModal(!modal);
+      if (closeIcon.resetInputValue) closeIcon.resetInputValue();
+      setModal(false);
+    }
   };
 
   const handleClose = () => {
+    if (closeIcon.resetInputValue) closeIcon.resetInputValue();
     setModal(false);
-  };
-
-  const history: History = window.history;
-
-  const handleBack = () => {
-    history.back();
   };
 
   return (
@@ -64,7 +65,10 @@ const Modal: React.FC<IProps> = ({
           className="flex items-center justify-center bg-modalOverlay fixed top-0 right-0 left-0 bottom-0 z-50"
           onClick={handleClick}
         >
-          <div className={`trans flex w-auto min-w-[30%] rounded-[12px] p-[20px] flex-col items-center gap-XL bg-white`} style={style}>
+          <div
+            className={`trans flex w-auto min-w-[30%] rounded-[12px] p-[20px] flex-col items-center gap-XL bg-white`}
+            style={style}
+          >
             <div
               className={`flex justify-between items-center w-full h-L ${
                 hasHeader === false &&
@@ -79,7 +83,7 @@ const Modal: React.FC<IProps> = ({
                   hasBackIcon ? "" : "invisible"
                 }`}
                 style={{ order: backIcon.order }}
-                onClick={handleBack}
+                onClick={backIcon.handleBack}
               >
                 <Icon icon="back" color="#1e1e1ec4" size={32} />
               </button>
@@ -92,7 +96,9 @@ const Modal: React.FC<IProps> = ({
               >
                 {hasHeader ? header?.text : ""}
                 {hasColor && (
-                  <div className={`w-S h-S rounded-sm bg-${coloredSquare}`}></div>
+                  <div
+                    className={`w-S h-S rounded-sm bg-${coloredSquare}`}
+                  ></div>
                 )}
               </h2>
               <button

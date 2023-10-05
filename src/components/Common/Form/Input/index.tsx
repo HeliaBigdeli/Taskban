@@ -27,7 +27,7 @@ interface IProps {
   hasIcon?: boolean;
   icon?: IIcon;
   className?: string;
-  autoFocus?: boolean
+  autoFocus?: boolean;
 }
 
 const Input: React.FC<IProps> = ({
@@ -65,8 +65,8 @@ const Input: React.FC<IProps> = ({
         )}
         <div className="relative flex items-center justify-end">
           <input
-            autoFocus = {autoFocus}
             value={value}
+            autoFocus={autoFocus}
             placeholder={placeholder}
             name={name}
             id={id}

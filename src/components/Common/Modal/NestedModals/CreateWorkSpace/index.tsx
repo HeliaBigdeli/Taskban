@@ -3,6 +3,7 @@ import Modal from "../..";
 import Button from "../../../Form/Button";
 import PickColor from "../PickColor";
 import { Dispatch, SetStateAction } from "react";
+import Input from "../../../Form/Input";
 
 interface IProps {
   isModalOpen: boolean;
@@ -21,10 +22,10 @@ const CreateWorkSpace: React.FC<IProps> = ({
 }): JSX.Element => {
   const [isPickColorOpen, setIsPickColorOpen] = useState(false);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (name ,value) => {
     setWorkSpaceInfo({
       ...workSpaceInfo,
-      name: e.target.value,
+      [name]: value,
     });
   };
 
@@ -50,18 +51,17 @@ const CreateWorkSpace: React.FC<IProps> = ({
         closeIcon={{ order: 3, resetInputValue: handleResetInput }}
       >
         <div className="flex flex-col gap-XL w-[500px] pt-0">
-          <div className="flex flex-col gap-[8px]" dir="rtl">
-            <label className="text-black text-sm" htmlFor="workSpaceName">
-              نام ورک‌اسپیس
-            </label>
-            <input
+          <div className="flex flex-col gap-[8px]" dir="rtl">           
+            <Input
               name="workSpaceName"
               id="workSpaceName"
               type="text"
+              label="نام ورک‌اسپیس"
+              hasLabel={true}
               className="h-XL rounded-md border border-[#aaaaaa] text-sm outline-none pr-1 bg-white"
-              onChange={handleChange}
-              value={workSpaceInfo.name}
-              autoFocus
+              onChange={(name, value) => handleChange(name, value)}
+              inputValue={workSpaceInfo.name}
+              autoFocus={true}
             />
           </div>
           <Button

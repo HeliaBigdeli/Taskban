@@ -11,6 +11,7 @@ import { useState } from "react";
 import { createPortal } from "react-dom";
 import NestedModals from "../../Common/Modal/NestedModals";
 import { Link } from 'react-router-dom'
+import ProjectModal from "../../Dashboard/ProjectModal";
 
 const data = [
   {
@@ -27,6 +28,11 @@ const data = [
 const DashboardLayout: React.FC = (): JSX.Element => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const portals = document.getElementById("portals") as Element;
+  const [projectModal, setProjectModal] = useState<boolean>(false);
+
+  const handleProjectModal = () => {
+    setProjectModal(!projectModal);
+  };
 
   const handleChange = (name: string, value: string) => {
     console.log(name, value);
@@ -78,7 +84,7 @@ const DashboardLayout: React.FC = (): JSX.Element => {
         <List data={data}></List>
         <Button
           text="ساختن پروژه جدید"
-          onClick={() => {}}
+          onClick={handleProjectModal}
           type="button"
           className="text-brand-primary h-L text-sm font-bold leading-normal self-stretch rounded-md border border-brand-primary mb-L"
         />
@@ -105,6 +111,7 @@ const DashboardLayout: React.FC = (): JSX.Element => {
         />,
         portals
       )}
+      {projectModal && <ProjectModal modal={projectModal} setModal={handleProjectModal} />}   
     </div>
   );
 };

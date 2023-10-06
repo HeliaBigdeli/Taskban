@@ -1,5 +1,5 @@
 import Icon from "../../Icon";
-import React, { useState } from "react";
+import { useState } from "react";
 import Selectlist from "./SelectList";
 
 interface IItem {

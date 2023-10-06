@@ -52,7 +52,7 @@ const Textarea: React.FC<IProps> = ({
             id={id}
             rows={rows}
             onChange={handleChange}
-            className={`rounded-md border border-lightgray px-2 text-right w-full ${className}`}
+            className={`rounded-md border border-lightgray px-2 text-right w-full p-1 ${className}`}
           />        
         </div>       
       </div>

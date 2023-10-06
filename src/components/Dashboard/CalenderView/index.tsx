@@ -1,108 +1,52 @@
 import { useEffect, useState, useContext } from "react";
-import moment from "moment-jalaali";
-import uuid from "react-uuid";
-import CalenderTable from "./Table";
+import Table from "./Table";
 import { AppContext } from "../../../context/store";
-
-type DateList = {
-  key: string;
-  day: string;
-  showBtn: boolean;
-  value: string;
-};
+import { datesMaker } from '../../../utils/datesMaker'
 
 const CalenderView: React.FC = (): JSX.Element => {
-  const [dates, setDates] = useState<DateList[]>([]);
+  const [dates, setDates] = useState<any[]>([]);
   const { dateValues, setDateValues } = useContext(AppContext);
 
-  const handleShowBtn = (key, staus) => {
+  const handleAddButton = (key, status) => {
     const dateIndex = dates.findIndex((x) => x.key === key);
-    dates[dateIndex].showBtn = staus === "show" ? true : false;
-    setDates([...dates]);
-  };
 
-  const dateParams = () => {
-    const date = new Date();
-    date.setMonth(date.getMonth() + dateValues.currentMonth);
-
-    // get full persian date, it return array [0] = year, [1] = month , [2] = day
-    const jajaliDate = date
-      .toLocaleDateString("fa-IR-u-nu-latn")
-      .split("/")
-      .map(Number);
-
-    // set month and year and day
-    let year = jajaliDate[0];
-    let month = jajaliDate[1];
-
-    setDateValues({
-      ...dateValues,
-      year: jajaliDate[0],
-      month: jajaliDate[1],
-      today: jajaliDate[2],
-      monthName: date.toLocaleDateString("fa-IR", { month: "short" }),
-    });
-
-    return { year, month };
-  };
-
-  const creaetDateTable = () => {
-    const { year, month } = dateParams();
-
-    // get first day of week to start array from there
-    let firstDayOfMonth = moment(`${year}/${month}/1`, "jYYYY/jM/jD").format(
-      "YYYY-M-D"
-    );
-    let firstDayOfWeekIndex = new Date(firstDayOfMonth).getDay();
-    firstDayOfWeekIndex =
-      firstDayOfWeekIndex === 6 ? 0 : firstDayOfWeekIndex + 1;
-
-    // get month length to use in loop create array of dates
-    const monthLength = moment.jDaysInMonth(year, month - 1);
-    // get previous month length
-    const prevMothLenth = moment.jDaysInMonth(year, month - 2);
-    let prevMothDates = prevMothLenth - (firstDayOfWeekIndex - 1);
-    let prevMonth = month - 1 === 0 ? 12 : month - 1;
-
-    // create table of date
-    let index = firstDayOfWeekIndex;
-    for (let i = 0; i < monthLength; i++) {
-      if (i < firstDayOfWeekIndex) {
-        dates[i] = {
-          key: uuid(),
-          day: String(prevMothDates),
-          value: `${year}/${prevMonth}/${prevMothDates}`,
-          showBtn: false,
-        };
-        prevMothDates += 1;
-      }
-      dates[index] = {
-        key: uuid(),
-        day: String(i + 1),
-        value: `${year}/${month}/${i + 1}`,
-        showBtn: false,
-      };
-      index += 1;
+    if(!dates[dateIndex].disable) {
+      dates[dateIndex].showBtn = status === "show" ? true : false;
+      setDates([...dates]);
     }
-
-    setDates([...dates]);
   };
 
   useEffect(() => {
-    creaetDateTable();
-  }, [dateValues.currentMonth]);
+    // dateMaker get month index (0 is current ,1 and more are next monthes and -1 and more are previous monthew)
+    // dateMaker use for both gregorian and jalali dates
+    // example : to get next moth set first param of dateMaker to 1 and to get prev month dates set it to -1
+    const result = datesMaker(dateValues.currentMonth, dateValues.type);
+
+    setDateValues({
+      ...dateValues,
+      year: result.year,
+      month: result.month,
+      today: result.today,
+      monthName: result.monthName,   
+      type: result.type,     
+    });    
+
+    setDates(result.dates);
+
+  }, [dateValues.currentMonth, dateValues.type]);
 
   return (
-    <CalenderTable
-      month={dateValues.monthName}
+    <Table
+    monthName={dateValues.monthName}
       onclick={(date) => {
         console.log(date);
       }}
+      type={dateValues.type}
       today={dateValues.today}
       dates={dates}
       currentMonth={dateValues.currentMonth}
-      onMouseEnter={(key, status) => handleShowBtn(key, status)}
-      onMouseLeave={(key, status) => handleShowBtn(key, status)}
+      onMouseEnter={(key, status) => handleAddButton(key, status)}
+      onMouseLeave={(key, status) => handleAddButton(key, status)}
     />
   );
 };

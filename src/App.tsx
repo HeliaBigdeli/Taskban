@@ -16,13 +16,30 @@ import Information from "./pages/Profile/Information";
 import Setting from "./pages/Profile/Setting";
 import { AppContext } from "./context/store";
 import { useState } from "react";
+import WorkSpace from "./pages/Dashboard/WorkSpaces";
+
+interface IDate {
+  currentMonth: number;
+  year: number;
+  month: number;
+  today: number;
+  monthName: string;
+  type: string;
+}
 
 
 function App() {
-  const [dateValues, setDateValues] = useState<any>({currentMonth: 0, year: '', month: '', today: 0, monthName: ''});
-  
+  const [dateValues, setDateValues] = useState<IDate>({
+    currentMonth: 0,
+    year: 0,
+    month: 0,
+    today: 0,
+    monthName: "",
+    type: "jalali",
+  });
+
   return (
-    <AppContext.Provider value={{dateValues, setDateValues}}>
+    <AppContext.Provider value={{ dateValues, setDateValues }}>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<AuthLayout />}>
@@ -35,6 +52,7 @@ function App() {
           <Route path="/" element={<DashboardLayout />}>
             <Route path="/board" element={<Board />} />
             <Route path="/list" element={<List />} />
+            <Route path="/workspace" element={<WorkSpace />} />
             <Route path="/calender" element={<Calender />} />
           </Route>
           <Route path="/" element={<ProfileLayout />}>

@@ -14,10 +14,12 @@ interface IDates {
   day: string;
   showBtn: boolean;
   value: string;
+  disable: boolean
 }
 
 interface IProps {
-  month: string;
+  monthName: string,
+  type: string
   today: number;
   dates: IDates[];
   currentMonth: number;
@@ -26,35 +28,38 @@ interface IProps {
   onclick: ({}) => void;
 }
 
-const CalenderTable: React.FC<IProps> = ({
+const Table: React.FC<IProps> = ({
+  monthName,
+  type,
   today,
   dates,
   currentMonth,
   onMouseEnter,
   onMouseLeave,
   onclick,
-  month,
 }): JSX.Element => {
   const [modal, setModal] = useState<boolean>(false);
   const [currentDay, setCurrentDay] = useState<number>(today)
 
-  const handleShowModal = (day) => {
-    setCurrentDay(day)
+  const handleShowModal = (date) => {
+    setCurrentDay(date.day)
     setModal(!modal);
   };
 
   const handleClick = (date, day) => {
     onclick({
       day,
-      jDate: date,
-      date: moment(date, "jYYYY/jM/jD").format("YYYY-M-D HH:mm:ss"),
+      date,
+      convertedDate: type === 'jalali' 
+      ? moment(date, "jYYYY/jM/jD").format("YYYY-M-D HH:mm:ss") 
+        : moment(date, "YYYY/M/D").format("jYYYY/jM/jD HH:mm:ss"),
     });
   };
 
   return (
     <div
       className="grid grid-cols-7 place-content-stretch h-screen mr-S mb-S"
-      dir="rtl"
+      dir={`${type === 'jalali' ? 'rtl' : 'ltr'}`}
     >
       {dates?.map((date, index) => {
         return (
@@ -70,10 +75,10 @@ const CalenderTable: React.FC<IProps> = ({
             } relative`}
           >
             {index <= 6 ? (
-              <span className="absolute top-1 right-2">{dayOfWeek[index]}</span>
+              <span className="absolute top-1 right-2">{dayOfWeek[type][index]}</span>
             ) : null}
             {date.showBtn && (
-              <span onClick={() => handleShowModal(date.day)}>
+              <span onClick={() => handleShowModal(date)}>
                 <Icon
                   icon="plus_square"
                   color="#ffffff"
@@ -81,7 +86,7 @@ const CalenderTable: React.FC<IProps> = ({
                 />
               </span>
             )}
-            <span className="absolute bottom-1 left-2">{date.day}</span>
+            <span className={`absolute bottom-1 left-2 ${date.disable === true ? 'text-lightgray' : 'text-black font-bold'}`}>{date.day}</span>
           </div>
         );
       })}
@@ -109,8 +114,8 @@ const CalenderTable: React.FC<IProps> = ({
             <div className="flex flex-row-reverse justify-between items-center">
               <div className="flex justify-center items-center gap-3">
                 <span className="text-brand-primary text-xl gap-1 flex">
-                  <span>{month}</span>
-                  <span> {currentDay.toLocaleString("fa-IR")}</span>
+                  <span>{monthName}</span>
+                  <span> {currentDay?.toLocaleString("fa-IR")}</span>
                 </span>
                 <Icon icon="flag" color="#c1c1c1" />
               </div>
@@ -130,4 +135,4 @@ const CalenderTable: React.FC<IProps> = ({
   );
 };
 
-export default CalenderTable;
+export default Table;

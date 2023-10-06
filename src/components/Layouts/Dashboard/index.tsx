@@ -7,6 +7,12 @@ import Header from "./Header";
 import SideBar from "./SideBar";
 import styles from "./style.module.css";
 import List from "./../../Common/List";
+import { useState } from "react";
+import { createPortal } from "react-dom";
+import NestedModals from "../../Common/Modal/NestedModals";
+import { Link } from "react-router-dom";
+import ProjectModal from "../../Dashboard/ProjectModal";
+
 
 const data = [
   {
@@ -21,6 +27,15 @@ const data = [
 ];
 
 const DashboardLayout: React.FC = (): JSX.Element => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const portals = document.getElementById("portals") as Element;
+  const [projectModal, setProjectModal] = useState<boolean>(false);
+
+  const handleProjectModal = () => {
+    setProjectModal(!projectModal);
+  };
+
   const handleChange = (name: string, value: string) => {
     console.log(name, value);
   };
@@ -33,7 +48,7 @@ const DashboardLayout: React.FC = (): JSX.Element => {
       </div>
       <SideBar>
         <h2 className={`${styles.navbarTitle} mb-[27px] mt-XL`}>
-          کوئرا تسک منیجر
+          <Link to="/workspace">کوئرا تسک منیجر</Link>
         </h2>
         <div className="flex justify-between">
           <Icon icon="chevron_down" />
@@ -54,7 +69,9 @@ const DashboardLayout: React.FC = (): JSX.Element => {
         />
         <Button
           text="ساختن اسپیس جدید"
-          onClick={() => {}}
+          onClick={() => {
+            setIsModalOpen(true);
+          }}
           type="button"
           className="bg-lightgray_300 text-black h-L text-sm leading-normal self-stretch rounded-md"
           hasIcon={true}
@@ -67,7 +84,7 @@ const DashboardLayout: React.FC = (): JSX.Element => {
         <List data={data}></List>
         <Button
           text="ساختن پروژه جدید"
-          onClick={() => {}}
+          onClick={handleProjectModal}
           type="button"
           className="text-brand-primary h-L text-sm font-bold leading-normal self-stretch rounded-md border border-brand-primary mb-L"
         />
@@ -86,7 +103,15 @@ const DashboardLayout: React.FC = (): JSX.Element => {
             </span>
           </div>
         </div>
-      </SideBar>    
+      </SideBar>
+      {createPortal(
+        <NestedModals
+          isModalOpen={isModalOpen}
+          setIsModalOpen={setIsModalOpen}
+        />,
+        portals
+      )}
+      {projectModal && <ProjectModal modal={projectModal} setModal={handleProjectModal} />}   
     </div>
   );
 };

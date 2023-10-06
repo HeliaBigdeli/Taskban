@@ -8,7 +8,8 @@ interface IIcon {
 }
 
 interface IProps {
-  text: string;
+  name?: string,
+  text?: string;
   type: "submit" | "button" | "reset";
   onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
   hasIcon?: boolean;
@@ -17,6 +18,7 @@ interface IProps {
 }
 
 const Button: React.FC<IProps> = ({
+  name,
   type,
   text,
   hasIcon,
@@ -26,7 +28,8 @@ const Button: React.FC<IProps> = ({
 }): JSX.Element => {
   return (
     <button
-      onClick={onClick}
+      name={name}
+      onClick={(e) => onClick(e)}
       type={type}
       className={`flex items-center justify-center ${className}`}
     >

@@ -6,10 +6,17 @@ interface IColor {
 }
 interface IProps {
   onClick: (color: IColor) => void;
-  hasDisableIcon:boolean,
+  hasDisableIcon?: boolean;
+  handleDisableClick?: (e: React.MouseEvent<HTMLElement>) => void;
+  selected?: string | undefined;  
 }
 
-const ColorPicker: React.FC<IProps> = ({ onClick ,hasDisableIcon}) => {
+const ColorPicker: React.FC<IProps> = ({
+  onClick,
+  hasDisableIcon = false,
+  handleDisableClick,
+  selected,
+}) => {
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
     onClick({
       name: e.currentTarget.dataset.name,
@@ -19,6 +26,17 @@ const ColorPicker: React.FC<IProps> = ({ onClick ,hasDisableIcon}) => {
 
   return (
     <>
+      {hasDisableIcon && (
+        <div className="flex items-center" onClick={handleDisableClick}>
+          <Icon
+            icon="disable"
+            size={20}
+            style={{ margin: 4, cursor: "pointer" }}
+            data-code=""
+            data-name=""
+          />
+        </div>
+      )}
       {colors.map((color) => {
         return (
           <div
@@ -27,19 +45,19 @@ const ColorPicker: React.FC<IProps> = ({ onClick ,hasDisableIcon}) => {
             data-code={color.code}
             data-name={color.name}
             style={{
-              backgroundColor: color.code,
-              width: 20,
-              height: 20,
+              backgroundColor: color.code === selected ? "white" : color.code,
               display: "inline-block",
-              borderRadius: 8,
-              margin: 4,
+              borderRadius: color.code === selected ? 12 : 8,
+              margin: 2,
               cursor: "pointer",
+              width: color.code === selected ? 28 : 22,
+              height: color.code === selected ? 28 : 22,
+              border:
+              color.code === selected ? `solid 9px ${color.code}` : "none",
             }}
           ></div>
         );
       })}
-      {hasDisableIcon&&
-      <Icon icon="disable" size={20} style={{ margin: 4, cursor: "pointer" }} data-code="" data-name=""/>}
     </>
   );
 };

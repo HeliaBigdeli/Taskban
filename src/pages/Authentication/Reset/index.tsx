@@ -2,10 +2,10 @@ import Card from "../../../components/Layouts/Auth/Card";
 import Input from "../../../components/Common/Form/Input";
 import Button from "../../../components/Common/Form/Button";
 import { useState } from "react";
-import { required, strong, validate } from "../../../utils/validator";
+import { minLength, required, strong, validate } from "../../../utils/validator";
 
 const rules = {
-  password: [required, strong],
+  password: [required, strong, minLength(20)],
 };
 
 const Reset: React.FC = (): JSX.Element => {

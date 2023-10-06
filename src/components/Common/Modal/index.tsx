@@ -29,6 +29,7 @@ interface IProps extends React.PropsWithChildren {
   hasColor?: boolean;
   coloredSquare?: string;
   style?: {};
+  contentTopGap?: string
 }
 
 const Modal: React.FC<IProps> = ({
@@ -44,6 +45,7 @@ const Modal: React.FC<IProps> = ({
   closeIcon,
   hasColor,
   coloredSquare,
+  contentTopGap = "gap-XL",
 }): JSX.Element => {
   const handleClick = (e: React.SyntheticEvent<EventTarget>) => {
     if (e.target === e.currentTarget) {
@@ -66,7 +68,7 @@ const Modal: React.FC<IProps> = ({
           onClick={handleClick}
         >
           <div
-            className={`trans flex w-auto min-w-[30%] rounded-[12px] p-[20px] flex-col items-center gap-XL bg-white`}
+            className={`trans flex w-auto min-w-[30%] rounded-[12px] p-[20px] flex-col items-center bg-white ${contentTopGap}`}
             style={style}
           >
             <div

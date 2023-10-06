@@ -44,6 +44,7 @@ const TaskInfoModal: React.FC<IProps> = ({ modal, setModal }): JSX.Element => {
     <>
       {createPortal(
         <Modal
+          contentTopGap="gap-0"
           modal={modal}
           setModal={handleShowModal}
           hasHeader={false}

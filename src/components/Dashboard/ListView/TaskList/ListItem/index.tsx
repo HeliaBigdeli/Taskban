@@ -1,5 +1,5 @@
 import Icon from "../../../../Common/Icon";
-import UserIcon from "../../../../Common/UserIcon";
+import UserIcon from "../../../UserIcon";
 import ListItemTitle from "./ListItemTitle";
 
 interface IListItemProps {

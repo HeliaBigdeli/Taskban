@@ -28,8 +28,8 @@ interface IProps extends React.PropsWithChildren {
   backIcon: IBackIcon;
   hasColor?: boolean;
   coloredSquare?: string;
-  style?: {};
-  contentTopGap?: string
+  style?: {},
+  contentTopGap? : string
 }
 
 const Modal: React.FC<IProps> = ({
@@ -45,14 +45,10 @@ const Modal: React.FC<IProps> = ({
   closeIcon,
   hasColor,
   coloredSquare,
-  contentTopGap = "gap-XL",
+  contentTopGap = " gap-XL"
 }): JSX.Element => {
   const handleClick = (e: React.SyntheticEvent<EventTarget>) => {
-    if (e.target === e.currentTarget) {
-      setModal(!modal);
-      if (closeIcon.resetInputValue) closeIcon.resetInputValue();
-      setModal(false);
-    }
+    if (e.target === e.currentTarget) setModal(!modal);
   };
 
   const handleClose = () => {
@@ -67,10 +63,7 @@ const Modal: React.FC<IProps> = ({
           className="flex items-center justify-center bg-modalOverlay fixed top-0 right-0 left-0 bottom-0 z-50"
           onClick={handleClick}
         >
-          <div
-            className={`trans flex w-auto min-w-[30%] rounded-[12px] p-[20px] flex-col items-center bg-white ${contentTopGap}`}
-            style={style}
-          >
+          <div className={`trans flex w-auto min-w-[30%] rounded-[12px] p-[20px] flex-col items-center bg-white ${contentTopGap}`} style={style}>
             <div
               className={`flex justify-between items-center w-full h-L ${
                 hasHeader === false &&
@@ -98,9 +91,7 @@ const Modal: React.FC<IProps> = ({
               >
                 {hasHeader ? header?.text : ""}
                 {hasColor && (
-                  <div
-                    className={`w-S h-S rounded-sm bg-${coloredSquare}`}
-                  ></div>
+                  <div className={`w-S h-S rounded-sm bg-${coloredSquare}`}></div>
                 )}
               </h2>
               <button

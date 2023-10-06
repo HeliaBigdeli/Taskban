@@ -84,7 +84,6 @@ const TaskInfoModal: React.FC<IProps> = ({ modal, setModal }): JSX.Element => {
                     <Icon icon="flag" color="#c1c1c1" />
                   </div>
                   <ProfileImage
-                    multi={true}
                     img={member.img}
                     firstName={member.firstName}
                     lastName={member.lastName}

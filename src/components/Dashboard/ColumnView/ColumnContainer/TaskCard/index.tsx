@@ -3,7 +3,6 @@ import Tag from "../../../../Dashboard/Tag";
 import { useState } from "react";
 import More from "./More";
 import Icon from "../../../../Common/Icon";
-import ProjectModal from "../../../ProjectModal";
 
 interface ITaskCardProps {
   // image?: string;
@@ -17,7 +16,6 @@ interface ITaskCardProps {
 }
 const TaskCard: React.FC<ITaskCardProps> = (): JSX.Element => {
   const [isShown, setIsShown] = useState<boolean>(false);
-
   return (
     <article
       className="flex w-[249px] p-S flex-col items-end gap-S rounded-2xl bg-white shadow-taskCard"
@@ -53,7 +51,7 @@ const TaskCard: React.FC<ITaskCardProps> = (): JSX.Element => {
         <Tag color="grape" text="پروژه" />
         <Tag color="blue" text="درس" />
       </section>
-      <More isShown={isShown} />    
+      <More isShown={isShown} />
     </article>
   );
 };

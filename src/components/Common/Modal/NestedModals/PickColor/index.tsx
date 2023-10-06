@@ -1,6 +1,4 @@
-
-import { Dispatch, SetStateAction, useState, useRef } from "react";
-
+import { Dispatch, SetStateAction, useState } from "react";
 import Modal from "../..";
 import ColorPicker from "../../../ColorPicker";
 import Button from "../../../Form/Button";
@@ -25,12 +23,6 @@ const PickColor: React.FC<IProps> = ({
   workSpaceInfo,
   setWorkSpaceInfo,
 }): JSX.Element => {
-
-  const [selected, setSelected] = useState<string | undefined>(
-    workSpaceInfo?.colorCode
-  );
-  const ref = useRef<HTMLDivElement>(null);
-
   const [isReviewInfoOpen, setIsReviewInfoOpen] = useState(false);
 
   const handleBackClick = () => {
@@ -41,26 +33,6 @@ const PickColor: React.FC<IProps> = ({
   const handlePickolorClick = () => {
     setIsReviewInfoOpen(true);
     setIsPickColorOpen(false);
-  };
-
-  const handleDisableClick = () => {
-    if (ref.current) ref.current.style.backgroundColor = "#7D828C";
-    setWorkSpaceInfo({
-      ...workSpaceInfo,
-      colorCode: "disabled",
-      colorName: "disabled",
-    });
-    setSelected("disabled");
-  };
-
-  const handleReset = () => {
-    setWorkSpaceInfo({
-      ...workSpaceInfo,
-      name: "",
-      colorCode: "",
-      colorName: "",
-    });
-    setSelected("disable");
   };
 
   return (
@@ -75,14 +47,20 @@ const PickColor: React.FC<IProps> = ({
         hasCloseIcon={true}
         closeIcon={{
           order: 3,
-          resetInputValue: handleReset,
+          resetInputValue: () =>
+            setWorkSpaceInfo({
+              ...workSpaceInfo,
+              name: "",
+              colorCode: "",
+              colorName: "",
+            }),
         }}
       >
         <div className="flex flex-col gap-XL w-[500px] pt-0 items-end">
           <div className="flex gap-S">
             <div className="flex flex-col items-end gap-S">
               <span className="text-sm text-black">رنگ ورک‌اسپیس</span>
-              <div className="flex w-[293px] flex-row-reverse gap-[8px] flex-wrap items-center">
+              <div className="flex w-[293px] flex-row-reverse gap-[8px] flex-wrap">
                 <ColorPicker
                   onClick={(data) =>
                     setWorkSpaceInfo({
@@ -91,19 +69,13 @@ const PickColor: React.FC<IProps> = ({
                       colorCode: data.code,
                     })
                   }
-
-                  hasDisableIcon={true}
-                  handleDisableClick={handleDisableClick}
-                  selected={workSpaceInfo.colorCode}
+                  hasDisableIcon = {true}
                 />
               </div>
             </div>
             <div
-
-              ref={ref}
-              className="flex text-center w-[80px] h-[80px] p-[10px] mb-[20px] justify-center items-center rounded-[8px] bg-[#7D828C] text-white text-2xl font-extrabold"
-              style={{ backgroundColor: workSpaceInfo.colorCode }}
-
+              className="flex text-center w-[80px] p-[10px] mb-[5px] justify-center items-center rounded-[8px] bg-[#7D828C] text-white text-2xl font-extrabold"
+              style={{backgroundColor: workSpaceInfo.colorCode}}
             >
               {workSpaceInfo.name
                 ? workSpaceInfo.name.split(" ").map((item, index) => {
@@ -115,14 +87,12 @@ const PickColor: React.FC<IProps> = ({
                 : ""}
             </div>
           </div>
-
-          <Button
-            text="ادامه"
-            type="button"
-            onClick={handlePickolorClick}
-            className="flex h-XL rounded-md bg-brand-primary text-white w-full"
-          />
-
+            <Button
+              text="ادامه"
+              type="button"
+              onClick={handlePickolorClick}
+              className="flex h-XL rounded-md bg-brand-primary text-white w-full"
+            />
         </div>
       </Modal>
       <ReviewInfo
@@ -131,7 +101,6 @@ const PickColor: React.FC<IProps> = ({
         workSpaceInfo={workSpaceInfo}
         setIsPickColorOpen={setIsPickColorOpen}
         setWorkSpaceInfo={setWorkSpaceInfo}
-        setSelected={setSelected}
       />
     </>
   );

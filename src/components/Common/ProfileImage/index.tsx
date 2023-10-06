@@ -1,5 +1,4 @@
 import colors from "../ColorPicker/colors";
-import Icon from "../Icon";
 
 interface IProps {
   img?: string;
@@ -7,7 +6,6 @@ interface IProps {
   lastName: string;
   size: number;
   nameColor?: boolean;
-  multi?: boolean;
 }
 
 const ProfileImage: React.FC<IProps> = ({
@@ -15,7 +13,6 @@ const ProfileImage: React.FC<IProps> = ({
   firstName,
   lastName,
   size,
-  multi = false,
   nameColor = false,
 }): JSX.Element => {
   const max = 12;
@@ -33,43 +30,24 @@ const ProfileImage: React.FC<IProps> = ({
   return (
     <>
       {img ? (
-        <div className="relative z-20 flex items-center justify-center">
-          <img
-            src={img}
-            alt={firstLettersOfName}
-            className={`rounded-full flex justify-center items-center text-xs z-10 ${
-              multi ? "ml-6" : ""
-            }`}
-            style={{ width: size + "px", height: size + "px" }}
-          />
-          {multi && (
-            <div className={`absolute right-7 border-dashed border-2 rounded-full border-[#c1c1c1] w-[${size}px] h-[${size}px] flex justify-center items-center`}>
-              <Icon icon="user_add" color="#c1c1c1"/>
-            </div>
-          )}
-        </div>
+        <img
+          src={img}
+          alt={firstLettersOfName}
+          className={`rounded-full flex justify-center items-center text-xs`}
+          style={{ width: size + "px", height: size + "px" }}
+        />
       ) : (
-        <div className="relative z-20 flex items-center justify-center">
-          <div
-            className={`rounded-full p-1 flex justify-center items-center text-xs z-10 ${
-              multi ? "ml-6" : ""
-            }`}
-            style={{
-              zIndex: 10,
-              backgroundColor: "green",
-              width: size + "px",
-              height: size + "px",
-              color: nameColor ? colorDetails.mainColor : "black",
-              fontSize: size / 3 + "px",
-            }}
-          >
-            {firstLettersOfName}
-          </div>
-          {multi && (
-            <div className={`absolute right-7 border-dashed border-2 rounded-full border-[#c1c1c1] w-[${size}px] h-[${size}px] flex justify-center items-center`}>
-            <Icon icon="user_add" color="#c1c1c1"/>
-          </div>
-          )}
+        <div
+          className={`rounded-full px-1 py-1 flex justify-center items-center text-xs`}
+          style={{
+            backgroundColor: colorDetails.paleColor,
+            width: size + "px",
+            height: size + "px",
+            color: nameColor ? colorDetails.mainColor : "black",
+            fontSize:size/3+"px",
+          }}
+        >
+          {firstLettersOfName}
         </div>
       )}
     </>

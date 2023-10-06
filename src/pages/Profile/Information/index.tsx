@@ -3,7 +3,7 @@ import Button from "../../../components/Common/Form/Button";
 import Input from "../../../components/Common/Form/Input";
 import ProfileImage from "../../../components/Common/ProfileImage";
 import { required, validate } from "../../../utils/validator";
-import { useState } from "react";
+import { useState,useRef } from "react";
 const rules = {
   email: [required],
   username: [required],

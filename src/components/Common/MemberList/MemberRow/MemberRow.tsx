@@ -21,7 +21,7 @@ const MemberRow: React.FC<IProps> = ({
   return (
     <>
       <div className="flex justify-between items-center mt-1 h-[37px]">
-        {role === "owner" ? (
+        {role === "workspace owner" ? (
           <Button
             text="دسترسی کامل"
             type="button"
@@ -38,7 +38,7 @@ const MemberRow: React.FC<IProps> = ({
         )}
 
         <div className="flex gap-[12px]">
-          {role === "owner" ? (
+          {role === "workspace owner" ? (
             <span className="h-[29px] rounded-md px-2 py-1 gap-[10px] bg-blue-secondary text-xs text-blue-primary text-center mt-1">
               workspace owner
             </span>
@@ -46,7 +46,7 @@ const MemberRow: React.FC<IProps> = ({
             ""
           )}
           <span className="text-sm text-black mt-[5px]">
-            {role === "owner" ? "من" : email}
+            {role === "workspace owner" ? "من" : email}
           </span>
           <ProfileImage
             img={img}

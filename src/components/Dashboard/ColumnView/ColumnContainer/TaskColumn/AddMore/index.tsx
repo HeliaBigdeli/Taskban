@@ -10,8 +10,8 @@ const AddMore: React.FC<IAddMoreProps> = ({isShown}): JSX.Element => {
         !isShown ? "opacity-0" : "opacity-100"
       } flex items-center gap-1 transition-all`}
     >
-      <Icon size={24} icon="plus" className="cursor-pointer"/>
-      <Icon size={20} icon="dots" className="cursor-pointer"/>
+      <Icon size={24} icon="plus" />
+      <Icon size={20} icon="dots" />
     </section>
   );
 };

@@ -12,14 +12,14 @@ const ColumnContainer: React.FC = (): JSX.Element => {
 
   return (
     <div
-      className="flex shrink-0 flex-col items-start gap-S   "
+      className="flex shrink-0  flex-col items-start gap-S   "
       style={{ direction: "ltr" }}
     >
       <TaskColumn />
       <div
         ref={ref}
         {...events}
-        className={`flex  w-[255px] pt-0.5 flex-col items-center gap-3 h-[700px] overflow-y-auto ${style.scroll} `}
+        className={`flex  w-[255px] pt-0.5 flex-col items-center gap-3 h-[750px] overflow-y-auto ${style.scroll} `}
       >
         <TaskCard />
         <TaskCard />

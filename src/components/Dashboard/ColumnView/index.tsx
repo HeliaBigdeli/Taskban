@@ -28,7 +28,8 @@ const ColumnView: React.FC = (): JSX.Element => {
         ref={ref}
         {...events}
         onMouseDownCapture={handleClick}
-        className={`flex items-start gap-6 overflow-x-auto overflow-y-hidden  px-S ${style.scroll}`}
+        className={`flex w-full px-S  items-start gap-6 overflow-x-auto 
+         ${style.scroll}`}
         style={{ direction: "rtl" }}
       >
         <ColumnContainer />
@@ -40,19 +41,19 @@ const ColumnView: React.FC = (): JSX.Element => {
           <Icon icon="plus" color="#1E1E1E" size={20} />
           ساختن برد جدید
         </button>
-        <Button
-          text="تسک جدید"
-          onClick={handleTaskModal}
-          type="button"
-          className="z-20 bg-brand-primary text-white w-[118px] text-sm flex-row-reverse justify-center items-center rounded-md fixed bottom-[30px] py-XS px-3 gap-1 left-2XL font-extrabold"
-          hasIcon={true}
-          icon={{
-            icon: "plus_square",
-            color: "white",
-            size: 24,
-          }}
-        />
       </div>
+      <Button
+        text="تسک جدید"
+        onClick={handleTaskModal}
+        type="button"
+        className="z-20 bg-brand-primary text-white w-[118px] text-sm  justify-center items-center rounded-md fixed bottom-[30px] py-XS px-3 gap-1 left-2XL font-extrabold"
+        hasIcon={true}
+        icon={{
+          icon: "plus_square",
+          color: "white",
+          size: 24,
+        }}
+      />
       {taskModal && <TaskModal modal={taskModal} setModal={handleTaskModal} />}
     </>
   );

@@ -8,11 +8,18 @@ import TaskModal from "../TaskModal";
 
 const ColumnView: React.FC = (): JSX.Element => {
   const ref = useRef<any>();
-  const { events } = useDraggable(ref);
-  const [taskModal, setTaskModal] = useState<boolean>(false);
 
+  const [mouseDown, setMouseDown] = useState<boolean>(true);
+  const [taskModal, setTaskModal] = useState<boolean>(false);
+  const { events } = useDraggable(ref, {
+    isMounted: mouseDown,
+  });
   const handleTaskModal = () => {
     setTaskModal(!taskModal);
+  };
+  const handleClick = (e: React.MouseEvent<EventTarget>) => {
+    if (e.target === e.currentTarget) setMouseDown(true);
+    else setMouseDown(false);
   };
 
   return (
@@ -20,7 +27,8 @@ const ColumnView: React.FC = (): JSX.Element => {
       <div
         ref={ref}
         {...events}
-        className={`flex items-start gap-6 overflow-x-auto overflow-y-hidden h-[800px] px-S ${style.scroll}`}
+        onMouseDownCapture={handleClick}
+        className={`flex items-start gap-6 overflow-x-auto overflow-y-hidden  px-S ${style.scroll}`}
         style={{ direction: "rtl" }}
       >
         <ColumnContainer />
@@ -28,10 +36,10 @@ const ColumnView: React.FC = (): JSX.Element => {
         <ColumnContainer />
         <ColumnContainer />
         <ColumnContainer />
-      <button className="flex w-[250px] h-[44px] py-XS px-[12px]  items-center rounded-2xl shrink-0  shadow-taskColumn text-base font-medium">
-        <Icon icon="plus" color="#1E1E1E" size={20}/>
-        ساختن برد جدید
-      </button>
+        <button className="flex w-[250px] h-[44px] py-XS px-[12px]  items-center rounded-2xl shrink-0  shadow-taskColumn text-base font-medium">
+          <Icon icon="plus" color="#1E1E1E" size={20} />
+          ساختن برد جدید
+        </button>
         <Button
           text="تسک جدید"
           onClick={handleTaskModal}
@@ -45,7 +53,9 @@ const ColumnView: React.FC = (): JSX.Element => {
           }}
         />
       </div>
-      {taskModal && <TaskModal modal={taskModal} setModal={handleTaskModal} />}   
+      {taskModal && <TaskModal modal={taskModal} setModal={handleTaskModal} />}
     </>
-  )};
+  );
+};
+
 export default ColumnView;

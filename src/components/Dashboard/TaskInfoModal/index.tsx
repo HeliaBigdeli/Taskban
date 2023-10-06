@@ -142,7 +142,7 @@ const TaskInfoModal: React.FC<IProps> = ({ modal, setModal }): JSX.Element => {
           modal={datePickerModal}
           setModal={handleDatePickerModal}
         />
-      )}      
+      )}
     </>
   );
 };

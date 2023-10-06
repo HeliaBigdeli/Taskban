@@ -54,7 +54,7 @@ const TaskInfoModal: React.FC<IProps> = ({ modal, setModal }): JSX.Element => {
           hasCloseIcon={true}
           closeIcon={{ order: 1 }}
         >
-          <div className="flex flex-col gap-M divide-y divide-lightgray_300 w-[1200px]">
+          <div className="flex flex-col gap-M divide-y divide-lightgray_300 w-[1100px]">
             <div className="flex flex-row justify-between divide-x divide-lightgray_300">
               <div className="flex w-[50%] justify-end px-S grow gap-M">
                 <div className="flex flex-col">

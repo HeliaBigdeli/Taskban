@@ -16,7 +16,7 @@ const More: React.FC<IMoreProps> = ({ isShown }): JSX.Element => {
     <div
       className={`${!isShown ? "h-0" : "h-10"} overflow-hidden transition-all `}
     >
-      <hr className="w-[217px] h-[1px] bg-[#EFF0F0] mb-S" />
+      <div className="w-[217px] h-[1px] bg-[#EFF0F0] mb-S" />
       <section className="flex justify-between items-center self-stretch ">
         <span onClick={handleProjectModal} className="cursor-pointer">
           <Icon size={20} icon="dots" />

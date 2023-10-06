@@ -80,7 +80,9 @@ const TaskModal: React.FC<IProps> = ({ modal, setModal }): JSX.Element => {
                 >
                   <Icon icon="calender_full" color="#c1c1c1" />
                 </div>
-                 
+                <div className="cursor-pointer border-dashed border-2 rounded-full border-[#c1c1c1] w-[50px] h-[50px] flex justify-center items-center">
+                  <Icon icon="flag" color="#c1c1c1" />
+                </div>
               </div>
               <div className="flex justify-center items-center">
                 <Button

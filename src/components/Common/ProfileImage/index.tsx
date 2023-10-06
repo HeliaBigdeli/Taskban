@@ -37,18 +37,31 @@ const ProfileImage: React.FC<IProps> = ({
           style={{ width: size + "px", height: size + "px" }}
         />
       ) : (
-        <div
-          className={`rounded-full px-1 py-1 flex justify-center items-center text-xs`}
-          style={{
-            backgroundColor: colorDetails.paleColor,
-            width: size + "px",
-            height: size + "px",
-            color: nameColor ? colorDetails.mainColor : "black",
-            fontSize:size/3+"px",
-          }}
-        >
-          {firstLettersOfName}
-        </div>
+          <div
+            className={`rounded-full px-1 py-1 flex justify-center items-center text-xs relative`}
+            style={{
+              zIndex: 10,
+              backgroundColor: 'green',
+              width: size + "px",
+              height: size + "px",
+              color: nameColor ? colorDetails.mainColor : "black",
+              fontSize: size / 3 + "px",
+            }}
+          >
+             <div
+            className={`rounded-full absolute right-3`}
+            style={{
+              zIndex: -10,
+              backgroundColor: colorDetails.mainColor,
+              width: size + "px",
+              height: size + "px",
+              color: nameColor ? colorDetails.mainColor : "black",
+              fontSize: size / 3 + "px",
+            }}
+          >
+          </div>
+            {firstLettersOfName}
+          </div>
       )}
     </>
   );

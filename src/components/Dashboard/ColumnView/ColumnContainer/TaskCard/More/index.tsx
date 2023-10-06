@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Icon from "../../../../../Common/Icon";
-import ProjectModal from "../../../../ProjectModal";
+import TaskInfoModal from "../../../../TaskInfoModal";
 
 interface IMoreProps {
   isShown: boolean;
@@ -8,7 +8,7 @@ interface IMoreProps {
 const More: React.FC<IMoreProps> = ({ isShown }): JSX.Element => {
   const [projectModal, setProjectModal] = useState<boolean>(false);
 
-  const handleProjectModal = () => {
+  const handleProjectModal = () => { 
     setProjectModal(!projectModal);
   };
 
@@ -26,7 +26,7 @@ const More: React.FC<IMoreProps> = ({ isShown }): JSX.Element => {
         </div>
       </section>
       {projectModal && (
-        <ProjectModal modal={projectModal} setModal={handleProjectModal} />
+        <TaskInfoModal modal={projectModal} setModal={handleProjectModal} />
       )}
     </div>
   );

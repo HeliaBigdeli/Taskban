@@ -1,10 +1,8 @@
 import { createPortal } from "react-dom";
 import Modal from "../../Common/Modal";
-import Button from "../../Common/Form/Button";
-import Icon from "../../Common/Icon";
 import { useState } from "react";
-import DatePickerModal from "../DatePickerModal";
-import Textarea from "../../Common/Form/Textarea";
+import Button from "../../Common/Form/Button";
+import Input from "../../Common/Form/Input";
 
 const portals = document.getElementById("portals") as Element;
 
@@ -14,13 +12,15 @@ interface IProps {
 }
 
 const ProjectModal: React.FC<IProps> = ({ modal, setModal }): JSX.Element => {
-  const [datePickerModal, setDatePickerModal] = useState<boolean>(false);
-  const [values, setVlaues] = useState<{}>({
-    description: "",
+  const [values, setVlaues] = useState({
+    title: "",
   });
 
-  const handleDatePickerModal = () => {
-    setDatePickerModal(!datePickerModal);
+  const handleChange = (name, value) => {
+    setVlaues({
+      ...values,
+      [name]: value,
+    });
   };
 
   const handleShowModal = () => {
@@ -34,51 +34,34 @@ const ProjectModal: React.FC<IProps> = ({ modal, setModal }): JSX.Element => {
           style={{}}
           modal={modal}
           setModal={handleShowModal}
-          hasHeader={false}
-          header={{ text: "", order: 3 }}
+          hasHeader={true}
+          header={{ text: "ساختن پروژه جدید", order: 2 }}
           hasBackIcon={false}
-          backIcon={{ order: 2 }}
+          backIcon={{ order: 0 }}
           hasCloseIcon={true}
-          hasColor={true}
-          coloredSquare="lightgray_300"
-          closeIcon={{ order: 1 }}
+          closeIcon={{ order: 2 }}
         >
-          <div className="flex flex-row-reverse w-[1100px] justify-between">
-            <div className="flex justify-end w-[50%]">
-              <div className="flex flex-col gap-2">
-                <Button
-                  type="button"
-                  name="status"
-                  onClick={() => {}}
-                  text="test"
-                  className="bg-darkred p-1 rounded-md text-white"
-                />
-                <div className="cursor-pointer border-dashed border-2 rounded-full border-[#c1c1c1] w-[40px] h-[40px] flex justify-center items-center">
-                  <Icon icon="flag" color="#c1c1c1" />
-                </div>
-                <Textarea
-                  // value={value}
-                  name="description"
-                  id="description"
-                  onChange={() => {}}
-                />
-              </div>
+          <div className="flex flex-col gap-XL w-[500px]">
+            <div className="flex flex-col gap-[8px]" dir="rtl">
+              <Input
+                name="title"
+                id="title"
+                type="text"
+                className="h-XL rounded-md border border-[#aaaaaa] text-sm outline-none pr-1 bg-white"
+                onChange={(name, value) => handleChange(name, value)}
+                inputValue={values.title}
+                autoFocus={true}
+              />
             </div>
-            <div className="flex justify-end w-[50%]">
-              <div className="flex flex-col">
-                <div>1</div>
-                <div>2</div>
-              </div>
-            </div>
+            <Button
+              text="ادامه"
+              type="button"
+              onClick={() => {}}
+              className="flex h-XL rounded-md bg-brand-primary text-white"
+            />
           </div>
         </Modal>,
         portals
-      )}
-      {DatePickerModal && (
-        <DatePickerModal
-          modal={datePickerModal}
-          setModal={handleDatePickerModal}
-        />
       )}
     </>
   );

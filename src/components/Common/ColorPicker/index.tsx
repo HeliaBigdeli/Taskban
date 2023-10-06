@@ -6,34 +6,22 @@ interface IColor {
 }
 interface IProps {
   onClick: (color: IColor) => void;
-  hasDisableIcon: boolean;
-  handleDisableClick?: () => void;
-  selected?: string | undefined;
-  setSelected?: (
-    value:
-      | string
-      | undefined
-      | ((prevVar: string | undefined) => string | undefined)
-  ) => void;
+  hasDisableIcon?: boolean;
+  handleDisableClick?: (e: React.MouseEvent<HTMLElement>) => void;
+  selected?: string | undefined;  
 }
-
 
 const ColorPicker: React.FC<IProps> = ({
   onClick,
-  hasDisableIcon,
+  hasDisableIcon = false,
   handleDisableClick,
   selected,
-  setSelected,
 }) => {
-
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
     onClick({
       name: e.currentTarget.dataset.name,
       code: e.currentTarget.dataset.code,
     });
-
-    if (setSelected) setSelected(e.currentTarget.dataset.code);
-
   };
 
   return (
@@ -57,17 +45,15 @@ const ColorPicker: React.FC<IProps> = ({
             data-code={color.code}
             data-name={color.name}
             style={{
-
               backgroundColor: color.code === selected ? "white" : color.code,
               display: "inline-block",
-              borderRadius: color.code === selected ? 13 : 9,
+              borderRadius: color.code === selected ? 12 : 8,
               margin: 2,
               cursor: "pointer",
-              width: color.code === selected ? 30 : 22,
-              height: color.code === selected ? 30 : 22,
+              width: color.code === selected ? 28 : 22,
+              height: color.code === selected ? 28 : 22,
               border:
-                color.code === selected ? `solid 10px ${color.code}` : "none",
-
+              color.code === selected ? `solid 9px ${color.code}` : "none",
             }}
           ></div>
         );

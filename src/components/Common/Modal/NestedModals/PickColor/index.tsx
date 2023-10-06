@@ -94,9 +94,7 @@ const PickColor: React.FC<IProps> = ({
 
                   hasDisableIcon={true}
                   handleDisableClick={handleDisableClick}
-                  selected={selected}
-                  setSelected={setSelected}
-
+                  selected={workSpaceInfo.colorCode}
                 />
               </div>
             </div>

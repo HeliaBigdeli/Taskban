@@ -1,6 +1,6 @@
 import Button from "../../../components/Common/Form/Button";
 import Input from "../../../components/Common/Form/Input";
-import { useState, useEffect } from 'react'
+import { useState, useEffect } from "react";
 import {
   required,
   email,
@@ -10,12 +10,13 @@ import {
 } from "../../../utils/validator/index";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
 const rules = {
   email: [required, email],
   username: [required],
   currentPassword: [required],
   newPassword: [required, strong, minLength(8)],
-  confirmNewPassword: [required]
+  confirmNewPassword: [required],
 };
 
 type Values = {
@@ -29,7 +30,7 @@ const Information: React.FC = (): JSX.Element => {
     currentPassword: "",
     username: "",
     newPassword: "",
-    confirmNewPassword: ""
+    confirmNewPassword: "",
   });
 
   useEffect(() => {
@@ -48,7 +49,7 @@ const Information: React.FC = (): JSX.Element => {
   const handleClick = () => {
     const resultErrors = validate(values, rules);
     setErrors(resultErrors);
-    
+
     if (values.newPassword != values.confirmNewPassword) {
       toast.error("تکرار رمز عبور جدید با رمز عبور جدید مطابقت ندارد", {
         position: "bottom-left",
@@ -59,8 +60,12 @@ const Information: React.FC = (): JSX.Element => {
 
   return (
     <div className="flex flex-row-reverse">
+      
+
       <div className="w-[354px] mt-[160px] mr-[58px]">
-        <h2 className="text-[31px] text-bold text-right mb-[32px]" >اطلاعات حساب</h2>
+        <h2 className="text-[31px] text-bold text-right mb-[32px]">
+          اطلاعات حساب
+        </h2>
         <form className="flex flex-col gap-S">
           <Input
             name="email"
@@ -120,8 +125,6 @@ const Information: React.FC = (): JSX.Element => {
       <ToastContainer style={{ width: "400px" }} />
     </div>
   );
-}
+};
 
 export default Information;
-
-

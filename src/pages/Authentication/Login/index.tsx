@@ -5,6 +5,7 @@ import Button from "../../../components/Common/Form/Button";
 import { useState } from "react";
 import { required, validate } from "../../../utils/validator";
 
+
 const rules = {
   email: [required],
   password: [required],
@@ -43,6 +44,8 @@ const Login: React.FC = (): JSX.Element => {
             className="h-XL"
             onChange={(name, value) => handleChange(name, value)}
           />
+        
+
           <Input
             name="password"
             id="password"
@@ -70,11 +73,14 @@ const Login: React.FC = (): JSX.Element => {
               className="text-brand-primary text-base font-extrabold"
               to="/register"
             >
+            
+
               ثبت‌نام
             </Link>
             <span className="text-black text-base font-medium">
               ثبت‌نام نکرده‌ای؟
             </span>
+           
           </div>
         </div>
       </form>

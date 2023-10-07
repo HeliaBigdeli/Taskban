@@ -2,7 +2,7 @@ import { createPortal } from "react-dom";
 import Modal from "../../Common/Modal";
 import Button from "../../Common/Form/Button";
 import Icon from "../../Common/Icon";
-import { MouseEvent, useState } from "react";
+import {useState } from "react";
 import DatePickerModal from "../DatePickerModal";
 import Textarea from "../../Common/Form/Textarea";
 import Input from "../../Common/Form/Input";
@@ -10,9 +10,7 @@ import IconItem from '../../Common/IconItem'
 import Select from "../../Common/Form/Select";
 import ShareModal from "../ShareModal";
 
-
 const portals = document.getElementById("portals") as Element;
-
 interface IProps {
   modal: boolean;
   setModal: (value: boolean | ((prevVar: boolean) => boolean)) => void;
@@ -92,7 +90,7 @@ const TaskModal: React.FC<IProps> = ({ modal, setModal }): JSX.Element => {
     });
    setData(data);
   };
-  const getPriority = (name: string, value: string) => {
+  const getPriority = (value: string) => {
     setVlaues({ ...values, priority: value });
   };
   // const handleSelect=(e: React.MouseEvent<HTMLElement>)=>{
@@ -193,7 +191,7 @@ const TaskModal: React.FC<IProps> = ({ modal, setModal }): JSX.Element => {
                     </div>
                     {data.map((item) => (
                       <div className="flex flex-row-reverse justify-between">
-                        <span
+                        <span 
                           className={`bg-${item.color} text-${item.color} px-XS rounded-[14px]`}
                         >
                           {item.title}
@@ -225,26 +223,18 @@ const TaskModal: React.FC<IProps> = ({ modal, setModal }): JSX.Element => {
 
                      {priority.map((item)=>{
                        return(
-                        <IconItem text={item.text} color2={item.color} icon={"flag"} url=""/>
+                        <IconItem text={item.text} color={item.color} icon={"flag"} url="" onClick={(e)=>getPriority(item.text)}/>
                         )
                      })}
+                     <IconItem text={"حذف اولویت"} icon={"close"} color="red" className="text-[#534D60]" onClick={(e)=>getPriority("")}></IconItem>
                     </ul>
-                    <Button
-                      type={"button"}
-                      onClick={() => {}}
-                      hasIcon={true}
-                      icon={{
-                        icon: "close",
-                        color: "#E45454",
-                      }}
-                      text="حذف اولویت"
-                    />
+                   
                   </div>
                 </div>
               </div>
               <Button
                 text="ساختن تسک"
-                onClick={() => {}}
+                onClick={() =>{}}
                 type="button"
                 className="z-20 bg-brand-primary text-white h-L text-sm leading-normal self-stretch rounded-md p-S"
                 hasIcon={false}
@@ -253,6 +243,7 @@ const TaskModal: React.FC<IProps> = ({ modal, setModal }): JSX.Element => {
                   color: "white",
                   className: "ml-1",
                 }}
+              
               />
             </div>
           </div>

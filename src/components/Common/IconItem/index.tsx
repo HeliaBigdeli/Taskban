@@ -6,21 +6,21 @@ interface IProps {
   text: string,
   icon: string,
   className?: string;
-  color2?:string,
+  color?:string,
   onClick?:(e: React.MouseEvent<HTMLElement>) => void;
 }
-const IconItem: React.FC<IProps> = ({ url, text, icon,className,color2,onClick }): JSX.Element => {
-    console.log(color2)
+const IconItem: React.FC<IProps> = ({ url, text, icon,className,color,onClick }): JSX.Element => {
+    console.log(color)
   return (
     <li>
       {url?<Link to={`/${url}`} className={`flex flex-row justify-end items-center py-[4px] px-[8px] rounded focus:bg-blue-secondary focus:font-extrabold ${className}`}>
         <h3 className="mr-[11px] text-xl">{text}</h3>
-        <Icon icon={icon} color={color2}></Icon>
+        <Icon icon={icon} color={color}></Icon>
       </Link>
       :
       <div className='flex flex-row justify-end items-center py-[4px] px-[8px] rounded' onClick={onClick}>
       <h3 className="mr-[11px] text-sm">{text}</h3>
-      <Icon icon={icon} color={color2} size={20}></Icon>
+      <Icon icon={icon} color={color} size={20}></Icon>
       </div>
   }
     </li>

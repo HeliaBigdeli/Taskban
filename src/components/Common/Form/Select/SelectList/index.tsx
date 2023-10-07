@@ -11,10 +11,12 @@ interface IProps {
   hasSearch?: boolean;
   searchPlaceholder?: string;
   onSelect: (e: React.MouseEvent<HTMLElement>) => void;
+  onFocus: (ee :React.ChangeEvent<HTMLInputElement>) => void;
   onSearch: (value: string) => void;
 }
 
 const Selectlist: React.FC<IProps> = ({
+  onFocus,
   onSelect,
   onSearch,
   items,
@@ -24,6 +26,11 @@ const Selectlist: React.FC<IProps> = ({
 }): JSX.Element => {
   const handleSelect = (e: React.MouseEvent<HTMLElement>) => {
     onSelect(e)
+  };
+
+  const handleFocus = (e :React.ChangeEvent<HTMLInputElement>) => {
+    console.log(1111)
+    onFocus(e)
   };
 
   const handleSearch = (name: string, value: string) => {
@@ -38,7 +45,8 @@ const Selectlist: React.FC<IProps> = ({
       {hasSearch && (
         <div className="border-b-2 mb-XS border-lightgray_300">
           <Input
-            autoFocus={true}
+            onFocus={handleFocus}
+            autoFocus={false}
             className="pr-L border-none bg-white h-XL outline-none"
             placeholder={searchPlaceholder}
             name="search"

@@ -1,5 +1,5 @@
 import Icon from "../../Icon";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import Selectlist from "./SelectList";
 
 interface IItem {
@@ -25,19 +25,31 @@ const Select: React.FC<IProps> = ({
   hasSearch = true,
   searchPlaceholder = "جستجو بین فیلترها",
 }): JSX.Element => {
+  const selectBtn = useRef<any>()
   const [value, setValue] = useState<string | null>("")
   const [open, setOpen] = useState(false);
   const [data, setData] = useState(items)
 
-  const toggleList = () => {
-    setData(items)
-    setOpen(!open)
+  const openList = () => {
+    setOpen(true)
+  };
+
+  const closeList = () => {
+    console.log(22)
+    setOpen(false)
   };
 
   const handleSelect = (e: React.MouseEvent<HTMLElement>) => {
     onChange(e)
     setValue(e.currentTarget.textContent)
-    setOpen(!open)
+    // selectBtn.current.blur()
+  };
+
+  const handleFocus = () => {    
+    console.log(1111)
+    // onChange(e)
+    // setValue(e.currentTarget.textContent)
+    // selectBtn.current.blur()
   };
 
   const handleSearch = (value: string) => {
@@ -50,9 +62,12 @@ const Select: React.FC<IProps> = ({
 
   return (
     <button
+      data-name="selectBtn"
+      ref={selectBtn}
       type="button"
       className={`border border-solid border-lightgray_300 rounded-md relative text-right p-XS ${className}`}
-      onClick={toggleList}
+      onBlur={closeList}
+      onFocus={openList}
     >
       <div
         className="flex items-center justify-between flex-row-reverse"
@@ -67,8 +82,10 @@ const Select: React.FC<IProps> = ({
           hasSearch={hasSearch}
           searchPlaceholder={searchPlaceholder}
           onSelect={handleSelect}
-          onSearch={(e) => handleSearch(e)}
-        />}
+          onFocus={handleFocus}
+          onSearch={(value) => handleSearch(value)}
+        />
+      }
     </button>
   );
 };

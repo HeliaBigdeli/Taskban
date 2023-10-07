@@ -2,7 +2,7 @@ import { createPortal } from "react-dom";
 import Modal from "../../Common/Modal";
 import Button from "../../Common/Form/Button";
 import Icon from "../../Common/Icon";
-import { MouseEvent, useState } from "react";
+import { useState } from "react";
 import DatePickerModal from "../DatePickerModal";
 import Textarea from "../../Common/Form/Textarea";
 import Input from "../../Common/Form/Input";
@@ -17,13 +17,13 @@ interface IProps {
   modal: boolean;
   setModal: (value: boolean | ((prevVar: boolean) => boolean)) => void;
 }
-interface Itag{
-id:number
-title:string,
-color:string
+interface Itag {
+  id: number
+  title: string,
+  color: string
 }
 const TaskModal: React.FC<IProps> = ({ modal, setModal }): JSX.Element => {
-  const [tags,setTags] =useState( [
+  const [tags, setTags] = useState([
     { id: 1, title: "درس", color: "indigo_secondary" },
     { id: 2, title: "کاژر", color: "blue_secondary" },
     { id: 3, title: "پروژه", color: "indigo_secondary" },
@@ -34,20 +34,20 @@ const TaskModal: React.FC<IProps> = ({ modal, setModal }): JSX.Element => {
     { id: 3, text: "متوسط", color: "blue" },
     { id: 4, text: "پایین", color: "gray" },
   ];
- // const[count,setCount]=useState(0)
+  // const[count,setCount]=useState(0)
   const [datePickerModal, setDatePickerModal] = useState<boolean>(false);
   const [shareModal, setShareModal] = useState<boolean>(false);
-  const [projects,setProjectsState]=useState([
-    { id: 1,color:"yellow", title: "پروژه اول" },
-    { id: 2,color:"yellow", title: "پروژه دوم" },
-    { id: 3,color:"yellow", title: "پروژه سوم" },
-    { id: 4,color:"yellow", title: "پروژه چهارم" },
+  const [projects, setProjectsState] = useState([
+    { id: 1, color: "yellow", title: "پروژه اول" },
+    { id: 2, color: "yellow", title: "پروژه دوم" },
+    { id: 3, color: "yellow", title: "پروژه سوم" },
+    { id: 4, color: "yellow", title: "پروژه چهارم" },
   ])
-  const [newTags,setNewTagsState]=useState<Itag[]>([])
+  const [newTags, setNewTagsState] = useState<Itag[]>([])
   const [tagDropdown, setTagDropdown] = useState<boolean>(false);
   const [data, setData] = useState(tags);
   const [showPriority, setShowPriority] = useState<boolean>(false);
-  const [showTagEdit,setShowTagEdit]=useState(false)
+  const [showTagEdit, setShowTagEdit] = useState(false)
   const [searchValue, setSearchValue] = useState<string>("");
   const [values, setVlaues] = useState<{}>({
     description: "",
@@ -56,7 +56,7 @@ const TaskModal: React.FC<IProps> = ({ modal, setModal }): JSX.Element => {
     memebers: [],
     projectName: "",
   });
-  
+
 
   const handleDatePickerModal = () => {
     setDatePickerModal(!datePickerModal);
@@ -72,25 +72,25 @@ const TaskModal: React.FC<IProps> = ({ modal, setModal }): JSX.Element => {
   const dropdownToggele = () => {
     setData(tags);
     setTagDropdown(!tagDropdown);
-    showPriority&&setShowPriority(false)
+    showPriority && setShowPriority(false)
   };
   const togglePriority = () => {
     setShowPriority(!showPriority);
-    tagDropdown&& setTagDropdown(false)
+    tagDropdown && setTagDropdown(false)
   };
-  const keyDownHandler=(e)=>{
-    if(e.key==='Enter'){
-    if(data.length===tags.length){
-      setNewTagsState([...newTags,{id:0,color:"blue_secondary",title:searchValue}])
+  const keyDownHandler = (e) => {
+    if (e.key === 'Enter') {
+      if (data.length === tags.length) {
+        setNewTagsState([...newTags, { id: 0, color: "blue_secondary", title: searchValue }])
+      }
     }
   }
-  }
   const handleSearch = (name: string, value: string) => {
-    setSearchValue(value); 
+    setSearchValue(value);
     const data = tags.filter((item) => {
       return (item.title.includes(value));
     });
-   setData(data);
+    setData(data);
   };
   const getPriority = (name: string, value: string) => {
     setVlaues({ ...values, priority: value });
@@ -119,9 +119,9 @@ const TaskModal: React.FC<IProps> = ({ modal, setModal }): JSX.Element => {
           <div className="flex flex-col w-[1153px] gap-[40px]">
             <div className="flex flex-row-reverse items-center gap-[8px]">
               <span>در</span>
-              <Select items={projects} name={"projects"} onChange={()=>{}} className="w-[158px] h-[37px] rounded-md border border-[#E9EBF0] text-right py-[8px] pr-[5px] pl-[4px]" ></Select>
+              <Select items={projects} name={"projects"} onChange={() => { }} className="w-[158px] h-[37px] rounded-md border border-[#E9EBF0] text-right py-[8px] pr-[5px] pl-[4px]" ></Select>
               <span>برای</span>
-              <div className="border-dashed border-2 rounded-full border-[#c1c1c1] w-[34px] h-[34px] flex justify-center items-center" onClick={()=>{setShareModal(!shareModal)}} >
+              <div className="border-dashed border-2 rounded-full border-[#c1c1c1] w-[34px] h-[34px] flex justify-center items-center" onClick={() => { setShareModal(!shareModal) }} >
                 <Icon icon="user_add" color="#c1c1c1" />
               </div>
             </div>
@@ -129,7 +129,7 @@ const TaskModal: React.FC<IProps> = ({ modal, setModal }): JSX.Element => {
               className="w-full py-[19px] px-L rounded-xl text-right h-[191px] resize-none border border-[#E2E2E2] outline-none"
               id="description"
               name="description"
-              onChange={() => {}}
+              onChange={() => { }}
               placeholder="توضیحاتی برای این تسک بنویسید"
             />
             <div className="flex flex-row-reverse items-center">
@@ -144,7 +144,7 @@ const TaskModal: React.FC<IProps> = ({ modal, setModal }): JSX.Element => {
               <div className="flex flex-row gap-[24px]">
                 <div
                   className="cursor-pointer border-dashed border-2 rounded-full border-[#c1c1c1] w-[50px] h-[50px] flex justify-center items-center relative"
-                  onClick={dropdownToggele} onKeyDown={(e)=>keyDownHandler(e)}
+                  onClick={dropdownToggele} onKeyDown={(e) => keyDownHandler(e)}
                 >
                   <Icon icon="tag" color="#c1c1c1" />
                   <div
@@ -152,20 +152,19 @@ const TaskModal: React.FC<IProps> = ({ modal, setModal }): JSX.Element => {
                       e.stopPropagation();
                     }}
                     id="myDropdown"
-                    className={`flex flex-col gap-XS ${
-                      tagDropdown ? "inline-block" : "hidden"
-                    } absolute overflow: auto w-[173px] h-auto z-2 bg-white p-XS bottom-10 shadow-select rounded-lg `}
+                    className={`flex flex-col gap-XS ${tagDropdown ? "inline-block" : "hidden"
+                      } absolute overflow: auto w-[173px] h-auto z-2 bg-white p-XS bottom-10 shadow-select rounded-lg `}
                   >
-                    {newTags.map((item)=>{
-                      return(
+                    {newTags.map((item) => {
+                      return (
                         <div className="flex flex-row-reverse justify-between">
-                        <span
-                          className={`bg-${item.color} text-${item.color} px-XS rounded-[14px]`}
-                        >
-                          {item.title}
-                        </span>
-                           <Icon icon="dots" color="#BDBDBD"></Icon>
-                      </div>
+                          <span
+                            className={`bg-${item.color} text-${item.color} px-XS rounded-[14px]`}
+                          >
+                            {item.title}
+                          </span>
+                          <Icon icon="dots" color="#BDBDBD"></Icon>
+                        </div>
                       )
                     }
 
@@ -185,7 +184,7 @@ const TaskModal: React.FC<IProps> = ({ modal, setModal }): JSX.Element => {
                           color: "#BDBDBD",
                           size: 24,
                         }}
-                        
+
                         onChange={(name, value) => handleSearch(name, value)}
                         inputValue={searchValue}
                       />
@@ -198,7 +197,7 @@ const TaskModal: React.FC<IProps> = ({ modal, setModal }): JSX.Element => {
                         >
                           {item.title}
                         </span>
-                        
+
                         <Icon icon="dots" color="#BDBDBD"></Icon>
                       </div>
                     ))}
@@ -217,21 +216,20 @@ const TaskModal: React.FC<IProps> = ({ modal, setModal }): JSX.Element => {
                   <Icon icon="flag" color="#c1c1c1" />
                   <div
                     id="myDropdown"
-                    className={`flex flex-col gap-XS ${
-                      showPriority ? "inline-block" : "hidden"
-                    } absolute overflow: auto w-[158px] h-auto z-2 bg-white p-XS bottom-10 shadow-select rounded-lg`}
+                    className={`flex flex-col gap-XS ${showPriority ? "inline-block" : "hidden"
+                      } absolute overflow: auto w-[158px] h-auto z-2 bg-white p-XS bottom-10 shadow-select rounded-lg`}
                   >
                     <ul className="flex flex-col gap-XS">
 
-                     {priority.map((item)=>{
-                       return(
-                        <IconItem text={item.text} color2={item.color} icon={"flag"} url=""/>
+                      {priority.map((item) => {
+                        return (
+                          <IconItem text={item.text} color2={item.color} icon={"flag"} url="" />
                         )
-                     })}
+                      })}
                     </ul>
                     <Button
                       type={"button"}
-                      onClick={() => {}}
+                      onClick={() => { }}
                       hasIcon={true}
                       icon={{
                         icon: "close",
@@ -244,7 +242,7 @@ const TaskModal: React.FC<IProps> = ({ modal, setModal }): JSX.Element => {
               </div>
               <Button
                 text="ساختن تسک"
-                onClick={() => {}}
+                onClick={() => { }}
                 type="button"
                 className="z-20 bg-brand-primary text-white h-L text-sm leading-normal self-stretch rounded-md p-S"
                 hasIcon={false}

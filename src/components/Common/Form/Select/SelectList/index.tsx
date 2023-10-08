@@ -11,12 +11,10 @@ interface IProps {
   hasSearch?: boolean;
   searchPlaceholder?: string;
   onSelect: (e: React.MouseEvent<HTMLElement>) => void;
-  onFocus: (ee :React.ChangeEvent<HTMLInputElement>) => void;
   onSearch: (value: string) => void;
 }
 
 const Selectlist: React.FC<IProps> = ({
-  onFocus,
   onSelect,
   onSearch,
   items,
@@ -28,11 +26,6 @@ const Selectlist: React.FC<IProps> = ({
     onSelect(e)
   };
 
-  const handleFocus = (e :React.ChangeEvent<HTMLInputElement>) => {
-    console.log(1111)
-    onFocus(e)
-  };
-
   const handleSearch = (name: string, value: string) => {
     onSearch(value)
   }
@@ -42,11 +35,10 @@ const Selectlist: React.FC<IProps> = ({
       onClick={(e) => { e.stopPropagation() }}
       className="bg-white rounded-lg gap-XS absolute w-full top-11 left-0 shadow-select border border-lightgray_300 z-10"
     >
-      {hasSearch && (
+      {hasSearch ? (
         <div className="border-b-2 mb-XS border-lightgray_300">
           <Input
-            onFocus={handleFocus}
-            autoFocus={false}
+            autoFocus={true}
             className="pr-L border-none bg-white h-XL outline-none"
             placeholder={searchPlaceholder}
             name="search"
@@ -61,7 +53,9 @@ const Selectlist: React.FC<IProps> = ({
             onChange={handleSearch}
           />
         </div>
-      )}
+      ) : <div style={{ maxWidth: 0, maxHeight: 0, overflow: 'hidden' }}>
+        <input autoFocus={true} />
+      </div>}
       <div className="max-h-[200px] overflow-auto">
         {items.length ? items?.map((item) => (
           <div

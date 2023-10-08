@@ -30,26 +30,21 @@ const Select: React.FC<IProps> = ({
   const [open, setOpen] = useState(false);
   const [data, setData] = useState(items)
 
-  const openList = () => {
-    setOpen(true)
+  const toggleOpen = () => {
+    setData(items)
+    setOpen(!open)
   };
 
   const closeList = () => {
-    console.log(22)
-    setOpen(false)
+    setTimeout(() => {
+      setOpen(false)
+    }, 100)
   };
 
   const handleSelect = (e: React.MouseEvent<HTMLElement>) => {
-    onChange(e)
     setValue(e.currentTarget.textContent)
-    // selectBtn.current.blur()
-  };
-
-  const handleFocus = () => {    
-    console.log(1111)
-    // onChange(e)
-    // setValue(e.currentTarget.textContent)
-    // selectBtn.current.blur()
+    closeList()
+    onChange(e)
   };
 
   const handleSearch = (value: string) => {
@@ -66,8 +61,7 @@ const Select: React.FC<IProps> = ({
       ref={selectBtn}
       type="button"
       className={`border border-solid border-lightgray_300 rounded-md relative text-right p-XS ${className}`}
-      onBlur={closeList}
-      onFocus={openList}
+      onClick={toggleOpen}
     >
       <div
         className="flex items-center justify-between flex-row-reverse"
@@ -75,17 +69,20 @@ const Select: React.FC<IProps> = ({
         <span className={`text-sm ${value ? 'black' : 'text-lightgray'} font-b`}>{value || 'انتخاب کنید'}</span>
         <Icon icon="chevron_down" className="mr-auto" />
       </div>
-      {open &&
-        <Selectlist
-          items={data}
-          name={name}
-          hasSearch={hasSearch}
-          searchPlaceholder={searchPlaceholder}
-          onSelect={handleSelect}
-          onFocus={handleFocus}
-          onSearch={(value) => handleSearch(value)}
-        />
-      }
+      <div onBlur={closeList}
+      >
+        {open &&
+          <Selectlist
+            items={data}
+            name={name}
+            hasSearch={hasSearch}
+            searchPlaceholder={searchPlaceholder}
+            onSelect={handleSelect}
+            onSearch={(value) => handleSearch(value)}
+          />
+        }
+      </div>
+
     </button>
   );
 };

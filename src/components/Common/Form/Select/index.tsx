@@ -29,8 +29,15 @@ const Select: React.FC<IProps> = ({
   const [value, setValue] = useState<string | null>("")
   const [open, setOpen] = useState(false);
   const [data, setData] = useState(items)
+  const [listDirection, setListDirectiob] = useState({})
 
   const toggleOpen = () => {
+    const elementHeight = selectBtn.current.offsetTop + selectBtn.current.offsetHeight + 180;
+    if (elementHeight > window.innerHeight) {
+      setListDirectiob({bottom: '2.75rem'})
+    } else {
+      setListDirectiob({top: '2.75rem'})
+    }
     setData(items)
     setOpen(!open)
   };
@@ -38,7 +45,7 @@ const Select: React.FC<IProps> = ({
   const closeList = () => {
     setTimeout(() => {
       setOpen(false)
-    }, 100)
+    }, 150)
   };
 
   const handleSelect = (e: React.MouseEvent<HTMLElement>) => {
@@ -73,6 +80,7 @@ const Select: React.FC<IProps> = ({
       >
         {open &&
           <Selectlist
+            listDirection={listDirection}
             items={data}
             name={name}
             hasSearch={hasSearch}

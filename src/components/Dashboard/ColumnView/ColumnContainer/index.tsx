@@ -3,6 +3,7 @@ import TaskCard from "./TaskCard";
 import TaskColumn from "./TaskColumn";
 import { useDraggable } from "react-use-draggable-scroll";
 import style from "../style.module.css";
+import { Droppable } from "react-beautiful-dnd";
 
 interface IColumnContainerProps {
   setMouseDown: React.Dispatch<React.SetStateAction<boolean>>;
@@ -20,11 +21,6 @@ const ColumnContainer: React.FC<IColumnContainerProps> = ({
   tasks,
   setMouseDown,
 }): JSX.Element => {
-  const ref = useRef<any>();
-
-  const { events } = useDraggable(ref, {
-    isMounted: true,
-  });
   const handleClick = (e: React.MouseEvent<EventTarget>) => {
     if (e.target === e.currentTarget) setMouseDown(true);
     else setMouseDown(false);
@@ -32,21 +28,33 @@ const ColumnContainer: React.FC<IColumnContainerProps> = ({
 
   return (
     <div
-      className="flex shrink-0  flex-col items-start gap-S   "
+      className="flex shrink-0  flex-col items-center gap-S   "
       style={{ direction: "ltr" }}
     >
       <TaskColumn title={cloumnTitle} />
 
-      <div
-        ref={ref}
-        {...events}
-        onMouseDownCapture={handleClick}
-        className={`flex  w-[255px] pt-0.5 flex-col items-center gap-3 h-[750px] overflow-y-auto ${style.scroll} `}
-      >
-        {tasks.map(({ id, ...item }) => {
-          return <TaskCard {...item} key={id} />;
-        })}
-      </div>
+      <Droppable droppableId={cloumnTitle} type="group">
+        {(provided) => (
+          <div
+            onMouseDownCapture={handleClick}
+            className={`flex w-[290px] pt-0.5 flex-col items-center gap-3 h-[750px] overflow-y-auto overflow-x-hidden ${style.customScrool} `}
+            {...provided.droppableProps}
+            ref={provided.innerRef}
+          >
+            {tasks.map((item, index) => {
+              return (
+                <TaskCard
+                  {...item}
+                  key={item.id}
+                  index={index}
+                  cloumnTitle={cloumnTitle}
+                />
+              );
+            })}
+            {provided.placeholder}
+          </div>
+        )}
+      </Droppable>
     </div>
   );
 };

@@ -110,13 +110,12 @@ const FilterModal: React.FC<IProps> = ({ modal, setModal }): JSX.Element => {
                     className="w-[107px]"
                     hasSearch={false}
                   />
-                  <span onClick={() => handleRemoveFilter(filter.key)}>
-                    <Icon
-                      icon="trash"
-                      color="#FA5252"
-                      className="cursor-pointer mr-2XL"
-                    />
-                  </span>
+                  <Icon
+                    onClick={() => handleRemoveFilter(filter.key)}
+                    icon="trash"
+                    color="#FA5252"
+                    className="cursor-pointer mr-2XL"
+                  />
                 </div>
               );
             })}

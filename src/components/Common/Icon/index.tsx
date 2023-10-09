@@ -7,6 +7,7 @@ interface IProps {
   size?: number;
   style?: {};
   className?: string;
+  onClick?:(e: React.MouseEvent<HTMLElement>) => void
 }
 
 const Icon: React.FC<IProps> = ({
@@ -15,9 +16,10 @@ const Icon: React.FC<IProps> = ({
   size = 24,
   style,
   className,
+  onClick
 }) => {
   return (
-    <span className={`${styles.inlineBlock} ${className}`} style={style}>
+    <span className={`${styles.inlineBlock} ${className}`} style={style} onClick={onClick}>
       {list[`${icon}`](color, size)}
     </span>
   );

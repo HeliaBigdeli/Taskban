@@ -9,10 +9,9 @@ import styles from "./style.module.css";
 import List from "./../../Common/List";
 import { useState } from "react";
 import { createPortal } from "react-dom";
+import { Link } from "react-router-dom";
 import NestedModals from "../../Common/Modal/NestedModals";
-
 import ProjectModal from "../../Dashboard/ProjectModal";
-
 
 const data = [
   {
@@ -111,7 +110,9 @@ const DashboardLayout: React.FC = (): JSX.Element => {
         />,
         portals
       )}
-      {projectModal && <ProjectModal modal={projectModal} setModal={handleProjectModal} />}   
+      {projectModal && (
+        <ProjectModal modal={projectModal} setModal={handleProjectModal} />
+      )}
     </div>
   );
 };

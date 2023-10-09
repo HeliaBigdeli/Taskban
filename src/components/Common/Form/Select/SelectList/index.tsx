@@ -1,4 +1,5 @@
 import Input from "../../Input";
+
 interface IItem {
   id: number;
   title: string;
@@ -12,6 +13,7 @@ interface IProps {
   searchPlaceholder?: string;
   onSelect: (e: React.MouseEvent<HTMLElement>) => void;
   onSearch: (value: string) => void;
+  listDirection?: {}
 }
 
 const Selectlist: React.FC<IProps> = ({
@@ -21,7 +23,9 @@ const Selectlist: React.FC<IProps> = ({
   name,
   hasSearch = true,
   searchPlaceholder = "جستجو بین فیلترها",
+  listDirection
 }): JSX.Element => {
+
   const handleSelect = (e: React.MouseEvent<HTMLElement>) => {
     onSelect(e)
   };
@@ -32,10 +36,11 @@ const Selectlist: React.FC<IProps> = ({
 
   return (
     <div
+      style={listDirection}
       onClick={(e) => { e.stopPropagation() }}
-      className="bg-white rounded-lg gap-XS absolute w-full top-11 left-0 shadow-select border border-lightgray_300 z-10"
+      className={`bg-white rounded-lg gap-XS absolute w-full left-0 shadow-select border border-lightgray_300 z-10`}
     >
-      {hasSearch && (
+      {hasSearch ? (
         <div className="border-b-2 mb-XS border-lightgray_300">
           <Input
             autoFocus={true}
@@ -53,8 +58,10 @@ const Selectlist: React.FC<IProps> = ({
             onChange={handleSearch}
           />
         </div>
-      )}
-      <div className="max-h-[200px] overflow-auto">
+      ) : <div style={{ maxWidth: 0, maxHeight: 0, overflow: 'hidden' }}>
+        <input autoFocus={true} />
+      </div>}
+      <div className="max-h-[180px] overflow-auto">
         {items.length ? items?.map((item) => (
           <div
             data-name={name}

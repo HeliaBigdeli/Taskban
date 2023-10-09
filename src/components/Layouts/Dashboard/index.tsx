@@ -27,7 +27,6 @@ const data = [
 
 const DashboardLayout: React.FC = (): JSX.Element => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-
   const portals = document.getElementById("portals") as Element;
   const [projectModal, setProjectModal] = useState<boolean>(false);
 

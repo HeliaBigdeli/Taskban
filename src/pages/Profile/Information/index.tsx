@@ -1,35 +1,15 @@
 
 import Button from "../../../components/Common/Form/Button";
 import Input from "../../../components/Common/Form/Input";
-<<<<<<< HEAD
-import { useState, useEffect } from "react";
-import {
-  required,
-  email,
-  validate,
-  strong,
-  minLength,
-} from "../../../utils/validator/index";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-
-=======
 import ProfileImage from "../../../components/Common/ProfileImage";
 import { required, validate } from "../../../utils/validator";
-import { useState,useRef } from "react";
->>>>>>> 73e26f9d712f70a634d3bc832f7016f35aa5c1fb
+import { useState } from "react";
 const rules = {
   email: [required],
   username: [required],
-<<<<<<< HEAD
-  currentPassword: [required],
-  newPassword: [required, strong, minLength(8)],
-  confirmNewPassword: [required],
-=======
   password: [required],
   newPassword: [required],
   commitNewPassword: [required],
->>>>>>> 73e26f9d712f70a634d3bc832f7016f35aa5c1fb
 };
 
 type Values = {
@@ -42,11 +22,7 @@ const Account: React.FC = (): JSX.Element => {
     password: "",
     username: "",
     newPassword: "",
-<<<<<<< HEAD
-    confirmNewPassword: "",
-=======
     commitNewPassword: "",
->>>>>>> 73e26f9d712f70a634d3bc832f7016f35aa5c1fb
   });
   const handleChange = (name: string, value: string) => {
     setValues({ ...values, [name]: value });
@@ -54,28 +30,10 @@ const Account: React.FC = (): JSX.Element => {
   const handleClick = () => {
     const resultErrors = validate(values, rules);
     setErrors(resultErrors);
-<<<<<<< HEAD
-
-    if (values.newPassword != values.confirmNewPassword) {
-      toast.error("تکرار رمز عبور جدید با رمز عبور جدید مطابقت ندارد", {
-        position: "bottom-left",
-        autoClose: 3000,
-      });
-    }
-=======
->>>>>>> 73e26f9d712f70a634d3bc832f7016f35aa5c1fb
   };
 
   return (
     <div className="flex flex-row-reverse">
-<<<<<<< HEAD
-      
-
-      <div className="w-[354px] mt-[160px] mr-[58px]">
-        <h2 className="text-[31px] text-bold text-right mb-[32px]">
-          اطلاعات حساب
-        </h2>
-=======
       <div className="mt-[160px] mr-[58px]">
         <h2 className="text-[31px] text-bold text-right mb-L">
           اطلاعات فردی
@@ -99,7 +57,6 @@ const Account: React.FC = (): JSX.Element => {
           </div>
         </div>
         <div className="w-[354px] mt-L">
->>>>>>> 73e26f9d712f70a634d3bc832f7016f35aa5c1fb
         <form className="flex flex-col gap-S">
           <Input
             name="firstname"
@@ -143,8 +100,4 @@ const Account: React.FC = (): JSX.Element => {
   );
 };
 
-<<<<<<< HEAD
-export default Information;
-=======
 export default Account;
->>>>>>> 73e26f9d712f70a634d3bc832f7016f35aa5c1fb

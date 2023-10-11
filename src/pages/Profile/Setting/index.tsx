@@ -11,6 +11,9 @@ const Setting: React.FC = (): JSX.Element => {
 
   };
 
+
+
+
   return (
     <div className="flex justify-end">
       <div className="flex flex-col mt-[160px] mr-[58px]">
@@ -30,6 +33,8 @@ const Setting: React.FC = (): JSX.Element => {
           className="text-white text-sm font-black leading-normal h-XL self-stretch rounded-md bg-brand-primary"
         />
       </div>
+
+
     </div>
   );
 }

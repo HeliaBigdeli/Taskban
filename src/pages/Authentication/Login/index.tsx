@@ -4,9 +4,12 @@ import { Link } from "react-router-dom";
 import Button from "../../../components/Common/Form/Button";
 import { useState } from "react";
 import { required, validate } from "../../../utils/validator";
+import { AXIOS } from "../../../config/axios.config";
+import { useDispatch } from "react-redux";
+import { login } from "../../../features/authSlice";
 
 const rules = {
-  email: [required],
+  username: [required],
   password: [required],
 };
 
@@ -17,9 +20,10 @@ type Values = {
 const Login: React.FC = (): JSX.Element => {
   const [errors, setErrors] = useState<string[]>([]);
   const [values, setValues] = useState<Values>({
-    email: "",
+    username: "",
     password: "",
   });
+  const dispatch = useDispatch();
 
   const handleChange = (name: string, value: string) => {
     setValues({ ...values, [name]: value });
@@ -27,7 +31,21 @@ const Login: React.FC = (): JSX.Element => {
 
   const handleClick = () => {
     const resultErrors = validate(values, rules);
-    setErrors(resultErrors);
+
+    if (resultErrors.length) {
+      setErrors(resultErrors);
+    } else {
+      AXIOS.post("accounts/login/", values)
+        .then((response) => {
+
+          if (response?.status === 200) {
+            dispatch(login(response.data));
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   };
 
   return (
@@ -35,15 +53,17 @@ const Login: React.FC = (): JSX.Element => {
       <form className="flex flex-col gap-L self-stretch">
         <div className="flex flex-col gap-M self-stretch">
           <Input
-            name="email"
-            id="email"
-            type="email"
-            label="ایمیل"
+            inputValue={values.username}
+            name="username"
+            id="username"
+            type="text"
+            label="نام کاربری"
             hasLabel={true}
             className="h-XL"
             onChange={(name, value) => handleChange(name, value)}
           />
           <Input
+            inputValue={values.password}
             name="password"
             id="password"
             type="password"

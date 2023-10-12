@@ -118,6 +118,8 @@ const Information: React.FC = (): JSX.Element => {
         </form>
       </div>
       <ToastContainer style={{ width: "400px" }} />
+
+      
     </div>
   );
 }

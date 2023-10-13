@@ -1,12 +1,13 @@
 import Card from "../../../components/Layouts/Auth/Card";
 import Input from "../../../components/Common/Form/Input";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Button from "../../../components/Common/Form/Button";
 import { useState } from "react";
 import { required, validate } from "../../../utils/validator";
 import { AXIOS } from "../../../config/axios.config";
 import { useDispatch } from "react-redux";
 import { login } from "../../../features/authSlice";
+import API_URL from "../../../constants/api.url";
 
 const rules = {
   username: [required],
@@ -18,6 +19,7 @@ type Values = {
 };
 
 const Login: React.FC = (): JSX.Element => {
+  const navigate = useNavigate()
   const [errors, setErrors] = useState<string[]>([]);
   const [values, setValues] = useState<Values>({
     username: "",
@@ -35,16 +37,14 @@ const Login: React.FC = (): JSX.Element => {
     if (resultErrors.length) {
       setErrors(resultErrors);
     } else {
-      AXIOS.post("accounts/login/", values)
+      AXIOS.post(API_URL.Login, values)
         .then((response) => {
-
           if (response?.status === 200) {
             dispatch(login(response.data));
+            navigate('/workspace')
           }
         })
-        .catch((error) => {
-          console.log(error);
-        });
+        .catch((error) => {});
     }
   };
 

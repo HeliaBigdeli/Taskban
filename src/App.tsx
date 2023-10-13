@@ -14,33 +14,15 @@ import ProfileLayout from "./components/Layouts/Profile";
 import Account from "./pages/Profile/Account";
 import Information from "./pages/Profile/Information";
 import Setting from "./pages/Profile/Setting";
-import { AppContext } from "./context/store";
-import { useState } from "react";
+import ContextProvider from "./context/store";
 import WorkSpace from "./pages/Dashboard/WorkSpaces";
 import { Provider } from "react-redux";
 import { store } from "../src/app/store";
+import { ToastContainer } from "react-toastify";
 
-interface IDate {
-  currentMonth: number;
-  year: number;
-  month: number;
-  today: number;
-  monthName: string;
-  type: string;
-}
-
-function App() {
-  const [dateValues, setDateValues] = useState<IDate>({
-    currentMonth: 0,
-    year: 0,
-    month: 0,
-    today: 0,
-    monthName: "",
-    type: "jalali",
-  });
-
+function App() { 
   return (
-    <AppContext.Provider value={{ dateValues, setDateValues }}>
+    <ContextProvider>
       <Provider store={store}>
         <BrowserRouter>
           <Routes>
@@ -66,7 +48,8 @@ function App() {
           </Routes>
         </BrowserRouter>
       </Provider>
-    </AppContext.Provider>
+      <ToastContainer style={{ width: "400px" }} />
+    </ContextProvider>
   );
 }
 

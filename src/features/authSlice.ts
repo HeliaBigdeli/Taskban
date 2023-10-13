@@ -7,7 +7,7 @@ type Auth = {
   username: string;
   first_name: string;
   last_name: string;
-  refresh: string;
+  refresh?: string;
   access: string;
 };
 
@@ -15,7 +15,6 @@ const initialState: Auth = {
   username: "",
   first_name: "",
   last_name: "",
-  refresh: "",
   access: "",
 };
 
@@ -27,7 +26,6 @@ export const authSlice = createSlice({
       state.username = action.payload.username;
       state.first_name = action.payload.first_name;
       state.last_name = action.payload.last_name;
-      state.refresh = action.payload.refresh;
       state.access = action.payload.access;
 
       Cookies.set("refresh", action.payload.refresh, {expires: 365});
@@ -37,9 +35,10 @@ export const authSlice = createSlice({
         username: "",
         first_name: "",
         last_name: "",
-        refresh: "",
         access: "",
       };
+
+      Cookies.remove("refresh");
     },
     refresh: (state, action: PayloadAction<Partial<Auth>>) => {
       state = {
@@ -53,6 +52,5 @@ export const authSlice = createSlice({
 export const { login, logout, refresh } = authSlice.actions;
 
 export const selectToken = (state: RootState) => state.auth.access;
-export const selectRefresh = (state: RootState) => state.auth.refresh;
 
-export default authSlice.reducer;
+export default authSlice.reducer

@@ -116,10 +116,7 @@ const Information: React.FC = (): JSX.Element => {
             className="text-white text-sm font-black leading-normal h-XL self-stretch rounded-md bg-brand-primary w-full mt-M"
           />
         </form>
-      </div>
-      <ToastContainer style={{ width: "400px" }} />
-
-      
+      </div>      
     </div>
   );
 }

@@ -111,15 +111,6 @@ const ColumnView: React.FC = (): JSX.Element => {
          ${style.scroll}`}
         style={{ direction: "rtl" }}
       >
-        {tasksColumns.map((item) => {
-          return (
-            <ColumnContainer
-              key={item.id}
-              {...item}
-              setMouseDown={setMouseDown}
-            />
-          );
-        })}
         <DragDropContext onDragEnd={handleDragDrop}>
           {tasksColumns.map((item) => {
             return (
@@ -130,14 +121,14 @@ const ColumnView: React.FC = (): JSX.Element => {
               />
             );
           })}
+          <button
+            onClick={handleNewBoardModal}
+            className="flex w-[250px] h-[44px] py-XS px-[12px]  items-center rounded-2xl shrink-0  shadow-taskColumn text-base font-medium"
+          >
+            <Icon icon="plus" color="#1E1E1E" size={20} />
+            ساختن برد جدید
+          </button>
         </DragDropContext>
-        <button
-          onClick={handleNewBoardModal}
-          className="flex w-[250px] h-[44px] py-XS px-[12px]  items-center rounded-2xl shrink-0  shadow-taskColumn text-base font-medium"
-        >
-          <Icon icon="plus" color="#1E1E1E" size={20} />
-          ساختن برد جدید
-        </button>
       </div>
       <Button
         text="تسک جدید"

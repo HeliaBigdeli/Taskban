@@ -1,13 +1,13 @@
 import Card from "../../../components/Layouts/Auth/Card";
 import Input from "../../../components/Common/Form/Input";
-import { Link, useFetcher, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Button from "../../../components/Common/Form/Button";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { required, validate } from "../../../utils/validator";
 import API_URL from "../../../constants/api.url";
 import { login } from "../../../features/authSlice";
-import { useDispatch } from 'react-redux'
-import useAPI from '../../../services/useAPI'
+import { useDispatch } from "react-redux";
+import useAxios from "../../../hooks/useAxios";
 const rules = {
   username: [required],
   password: [required],
@@ -18,34 +18,30 @@ type Values = {
 };
 
 const Login: React.FC = (): JSX.Element => {
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [errors, setErrors] = useState<string[]>([]);
   const [values, setValues] = useState<Values>({
-    username: "",
-    password: "",
+    username: "username ",
+    password: "password",
   });
-  const { success, error, call } = useAPI(false)
+  const [response, error, loading, fetcher] = useAxios();
+  if (response) {
+    dispatch(login(response));
+    navigate("/workspace");
+  }
 
   const handleChange = (name: string, value: string) => {
     setValues({ ...values, [name]: value });
   };
 
-  const handleClick = async () => {
+  const handleClick = () => {
     const resultErrors = validate(values, rules);
 
     if (resultErrors.length) {
       setErrors(resultErrors);
     } else {
-      // response(values)
-      // if (response?.status === 200) {
-      //   dispatch(login(response.data));
-      // }
-      call({ method: 'post', url: API_URL.Login, body: values })   
-      console.log(success)
-      // console.log(!loading && success)
-      // console.log(3)
-      // navigate('/workspace')
+      fetcher("post", API_URL.Login, values);
     }
   };
 

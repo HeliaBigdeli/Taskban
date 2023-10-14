@@ -30,7 +30,7 @@ export const authSlice = createSlice({
 
       Cookies.set("refresh", action.payload.refresh, {expires: 365});
     },
-    logout: (state, action: PayloadAction<Auth>) => {
+    logout: (state) => {
       state = {
         username: "",
         first_name: "",

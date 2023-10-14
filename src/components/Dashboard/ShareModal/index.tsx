@@ -80,7 +80,6 @@ const ShareModal: React.FC<IProps> = ({ modal, setModal }): JSX.Element => {
         </Modal>,
         portals
       )}
-      <ToastContainer style={{ width: "400px" }} />
     </>
   );
 };

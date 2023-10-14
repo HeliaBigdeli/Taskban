@@ -1,14 +1,14 @@
 import styles from "./style.module.css";
-import { Link, useLocation  } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const Header: React.FC = (): JSX.Element => {
-  const {pathname} = useLocation();
+  const { pathname } = useLocation();
 
   return (
     <nav className="fixed w-full z-10">
       <div className="flex items-center justify-between xs:p-[10px] md:p-[20px] lg:px-[80px] lg:pt-[80px]">
         <div className="flex gap-XS items-center">
-          {pathname === "/login" ? (
+          {pathname === "/login" || pathname === "/" ? (
             <>
               <Link
                 to="/register"
@@ -24,7 +24,7 @@ const Header: React.FC = (): JSX.Element => {
                 to="/login"
                 className="flex justify-center items-center bg-brand-primary p-[10px] w-[95px] text-white h-XL rounded-md"
               >
-                ورود 
+                ورود
               </Link>
               <span>قبلا ثبت نام کرده‌ای؟</span>
             </>

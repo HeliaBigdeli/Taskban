@@ -54,11 +54,7 @@ AXIOS.interceptors.response.use(
       } catch (error) {
         window.location.href = "/Login";
       }
-    } else {
-      toast.error(error.response.data.detail, {
-        position: "bottom-left",
-        autoClose: 3000,
-      });
+    } else {  
       return Promise.reject(error);
     }
   }

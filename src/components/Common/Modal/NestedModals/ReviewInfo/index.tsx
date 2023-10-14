@@ -15,6 +15,12 @@ interface IProps {
   setWorkSpaceInfo: Dispatch<
     SetStateAction<{ name?: string; colorName?: string; colorCode?: string }>
   >;
+  setSelected?: (
+    value:
+      | string
+      | undefined
+      | ((prevVar: string | undefined) => string | undefined)
+  ) => void;
 }
 
 const ReviewInfo: React.FC<IProps> = ({
@@ -23,6 +29,7 @@ const ReviewInfo: React.FC<IProps> = ({
   workSpaceInfo,
   setIsPickColorOpen,
   setWorkSpaceInfo,
+  setSelected,
 }): JSX.Element => {
   const handleCreate = () => {
     console.log(workSpaceInfo);
@@ -31,6 +38,16 @@ const ReviewInfo: React.FC<IProps> = ({
   const handleBackClick = () => {
     setIsPickColorOpen(true);
     setIsReviewInfoOpen(false);
+  };
+
+  const handleReset = () => {
+    setWorkSpaceInfo({
+      ...workSpaceInfo,
+      name: "",
+      colorCode: "",
+      colorName: "",
+    });
+    if (setSelected) setSelected("disable");
   };
 
   return (
@@ -45,13 +62,7 @@ const ReviewInfo: React.FC<IProps> = ({
         hasCloseIcon={true}
         closeIcon={{
           order: 3,
-          resetInputValue: () =>
-            setWorkSpaceInfo({
-              ...workSpaceInfo,
-              name: "",
-              colorCode: "",
-              colorName: "",
-            }),
+          resetInputValue: handleReset,
         }}
       >
         <div className="flex flex-col gap-XL">
@@ -82,12 +93,12 @@ const ReviewInfo: React.FC<IProps> = ({
               <span className="text-black text-sm font-extrabold">اعضا</span>
             </div>
           </div>
-            <Button
-              text="ساختن ورک‌اسپیس"
-              type="submit"
-              onClick={handleCreate}
-              className="flex h-XL rounded-md bg-brand-primary text-white w-full"
-            />
+          <Button
+            text="ساختن ورک‌اسپیس"
+            type="submit"
+            onClick={handleCreate}
+            className="flex h-XL rounded-md bg-brand-primary text-white w-full"
+          />
         </div>
       </Modal>
     </>

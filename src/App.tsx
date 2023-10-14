@@ -48,7 +48,7 @@ function App() {
           </Routes>
         </BrowserRouter>
       </Provider>
-      <ToastContainer style={{ width: "400px" }} />
+      <ToastContainer style={{ width: 340, fontSize: 14}} rtl/>
     </ContextProvider>
   );
 }

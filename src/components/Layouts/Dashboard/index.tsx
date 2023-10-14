@@ -9,8 +9,8 @@ import styles from "./style.module.css";
 import List from "./../../Common/List";
 import { useState } from "react";
 import { createPortal } from "react-dom";
+import { Link } from "react-router-dom";
 import NestedModals from "../../Common/Modal/NestedModals";
-import { Link } from 'react-router-dom'
 import ProjectModal from "../../Dashboard/ProjectModal";
 
 const data = [
@@ -46,9 +46,7 @@ const DashboardLayout: React.FC = (): JSX.Element => {
       </div>
       <SideBar>
         <h2 className={`${styles.navbarTitle} mb-[27px] mt-XL`}>
-          <Link to="/workspace">
-            کوئرا تسک منیجر
-          </Link>
+          <Link to="/workspace">کوئرا تسک منیجر</Link>
         </h2>
         <div className="flex justify-between">
           <Icon icon="chevron_down" />
@@ -111,7 +109,9 @@ const DashboardLayout: React.FC = (): JSX.Element => {
         />,
         portals
       )}
-      {projectModal && <ProjectModal modal={projectModal} setModal={handleProjectModal} />}   
+      {projectModal && (
+        <ProjectModal modal={projectModal} setModal={handleProjectModal} />
+      )}
     </div>
   );
 };

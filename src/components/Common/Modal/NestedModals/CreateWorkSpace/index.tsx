@@ -22,10 +22,10 @@ const CreateWorkSpace: React.FC<IProps> = ({
 }): JSX.Element => {
   const [isPickColorOpen, setIsPickColorOpen] = useState(false);
 
-  const handleChange = (name ,value) => {
+  const handleChange = (name: string, value: string) => {
     setWorkSpaceInfo({
       ...workSpaceInfo,
-      [name]: value,
+      name: value,
     });
   };
 
@@ -51,7 +51,7 @@ const CreateWorkSpace: React.FC<IProps> = ({
         closeIcon={{ order: 3, resetInputValue: handleResetInput }}
       >
         <div className="flex flex-col gap-XL w-[500px] pt-0">
-          <div className="flex flex-col gap-[8px]" dir="rtl">           
+          <div className="flex flex-col gap-[8px]" dir="rtl">
             <Input
               name="workSpaceName"
               id="workSpaceName"

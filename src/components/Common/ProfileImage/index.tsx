@@ -43,8 +43,10 @@ const ProfileImage: React.FC<IProps> = ({
             style={{ width: size + "px", height: size + "px" }}
           />
           {multi && (
-            <div className={`absolute right-7 border-dashed border-2 rounded-full border-[#c1c1c1] w-[${size}px] h-[${size}px] flex justify-center items-center`}>
-              <Icon icon="user_add" color="#c1c1c1"/>
+            <div
+              className={`absolute right-7 border-dashed border-2 rounded-full border-[#c1c1c1] w-[${size}px] h-[${size}px] flex justify-center items-center`}
+            >
+              <Icon icon="user_add" color="#c1c1c1" />
             </div>
           )}
         </div>
@@ -56,7 +58,7 @@ const ProfileImage: React.FC<IProps> = ({
             }`}
             style={{
               zIndex: 10,
-              backgroundColor: "green",
+              backgroundColor: colorDetails.paleColor,
               width: size + "px",
               height: size + "px",
               color: nameColor ? colorDetails.mainColor : "black",
@@ -66,9 +68,11 @@ const ProfileImage: React.FC<IProps> = ({
             {firstLettersOfName}
           </div>
           {multi && (
-            <div className={`absolute right-7 border-dashed border-2 rounded-full border-[#c1c1c1] w-[${size}px] h-[${size}px] flex justify-center items-center`}>
-            <Icon icon="user_add" color="#c1c1c1"/>
-          </div>
+            <div
+              className={`absolute right-7 border-dashed border-2 rounded-full border-[#c1c1c1] w-[${size}px] h-[${size}px] flex justify-center items-center`}
+            >
+              <Icon icon="user_add" color="#c1c1c1" />
+            </div>
           )}
         </div>
       )}

@@ -6,6 +6,7 @@ import Button from "../../Common/Form/Button";
 import Icon from "../../Common/Icon";
 import TaskModal from "../TaskModal";
 import React from "react";
+import NewBoardModal from "./NewBoardModal";
 
 const image =
   "https://s3-alpha-sig.figma.com/img/1ff2/08fc/84a00a92e59b4eaa4703234f3437659c?Expires=1697414400&Signature=NdEELGlUgpVKt28LTTA0pvyNGP7MiAZu355SZHwXHjF2wSinKpN7VyExDP8R5TarldS-jxELVf-Js0MrSBgdpAN1bcEoHSiIUIgxIm~R2FvMO5h9gwwOKAjyT7Au86W8qUuZT1v41DyAqtlUHZJ37lh1ZPCekY99lrbdjs~FJUb0AQdTR4lLmRTXXWxdLFktqJjO2Y5ReNTUUfuWuSe07~rR5qvkTo2tB11u868UBDHjWZiU7nvYzvN2iWQ6ZeyiFs~RS8oGZ7oU2DkdjF1tjzJv41mFXf7UXh91UdqyY-m3Pf-yqfc90oP~zuh00RrSKEJgkgMA8KHT8DTV-Vum4w__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4";
@@ -52,6 +53,7 @@ const data = [
 const ColumnView: React.FC = (): JSX.Element => {
   const ref = useRef<any>();
   const [tasksColumns, settasksColumns] = useState(data);
+  const [newBoardModal, setNewBoardModal] = useState<boolean>(false);
 
   const [mouseDown, setMouseDown] = useState<boolean>(true);
   const [taskModal, setTaskModal] = useState<boolean>(false);
@@ -61,7 +63,10 @@ const ColumnView: React.FC = (): JSX.Element => {
   const handleTaskModal = () => {
     setTaskModal(!taskModal);
   };
-  
+
+  const handleNewBoardModal = () => {
+    setNewBoardModal(!newBoardModal);
+  };
 
   return (
     <>
@@ -81,7 +86,10 @@ const ColumnView: React.FC = (): JSX.Element => {
             />
           );
         })}
-        <button className="flex w-[250px] h-[44px] py-XS px-[12px]  items-center rounded-2xl shrink-0  shadow-taskColumn text-base font-medium">
+        <button
+          onClick={handleNewBoardModal}
+          className="flex w-[250px] h-[44px] py-XS px-[12px] items-center rounded-2xl shrink-0  shadow-taskColumn text-base font-medium"
+        >
           <Icon icon="plus" color="#1E1E1E" size={20} />
           ساختن برد جدید
         </button>
@@ -99,6 +107,9 @@ const ColumnView: React.FC = (): JSX.Element => {
         }}
       />
       {taskModal && <TaskModal modal={taskModal} setModal={handleTaskModal} />}
+      {newBoardModal && (
+        <NewBoardModal modal={newBoardModal} setModal={handleNewBoardModal} />
+      )}
     </>
   );
 };

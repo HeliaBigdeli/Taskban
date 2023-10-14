@@ -37,7 +37,6 @@ const Card: React.FC<ICardProps> = ({
         </h2>
         {children}
       </div>
-      <ToastContainer style={{ width: "400px" }} />
     </>
   );
 };

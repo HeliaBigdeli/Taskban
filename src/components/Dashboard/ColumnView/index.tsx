@@ -7,7 +7,7 @@ import Icon from "../../Common/Icon";
 import TaskModal from "../TaskModal";
 import React from "react";
 import NewBoardModal from "./NewBoardModal";
-
+import { DragDropContext } from "react-beautiful-dnd";
 const image =
   "https://s3-alpha-sig.figma.com/img/1ff2/08fc/84a00a92e59b4eaa4703234f3437659c?Expires=1697414400&Signature=NdEELGlUgpVKt28LTTA0pvyNGP7MiAZu355SZHwXHjF2wSinKpN7VyExDP8R5TarldS-jxELVf-Js0MrSBgdpAN1bcEoHSiIUIgxIm~R2FvMO5h9gwwOKAjyT7Au86W8qUuZT1v41DyAqtlUHZJ37lh1ZPCekY99lrbdjs~FJUb0AQdTR4lLmRTXXWxdLFktqJjO2Y5ReNTUUfuWuSe07~rR5qvkTo2tB11u868UBDHjWZiU7nvYzvN2iWQ6ZeyiFs~RS8oGZ7oU2DkdjF1tjzJv41mFXf7UXh91UdqyY-m3Pf-yqfc90oP~zuh00RrSKEJgkgMA8KHT8DTV-Vum4w__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4";
 const data = [
@@ -32,10 +32,10 @@ const data = [
     id: 3,
     cloumnTitle: "Pending",
     tasks: [
-      { id: 1, title: "تسک یک", img: "" },
-      { id: 2, title: "تسک یک", img: image },
       { id: 3, title: "تسک یک", img: "" },
-      { id: 4, title: "تسک یک", img: "" },
+      { id: 4, title: "تسک یک", img: image },
+      { id: 5, title: "تسک یک", img: "" },
+      { id: 6, title: "تسک یک", img: "" },
     ],
   },
   {
@@ -43,7 +43,7 @@ const data = [
     cloumnTitle: "To Do",
     tasks: [
       {
-        id: 1,
+        id: 7,
         title: "تسک یک",
         img: "",
       },
@@ -67,7 +67,41 @@ const ColumnView: React.FC = (): JSX.Element => {
   const handleNewBoardModal = () => {
     setNewBoardModal(!newBoardModal);
   };
+  const handleDragDrop = (results: any) => {
+    const { source, destination } = results;
+    if (!destination) return;
+    if (
+      source.droppableId === destination.droppableId &&
+      source.index === destination.index
+    )
+      return;
 
+    const columnSourceIndex = tasksColumns.findIndex((item) => {
+      return item.cloumnTitle === source.droppableId;
+    });
+    const columnDestinationIndex = tasksColumns.findIndex((item) => {
+      return item.cloumnTitle === destination.droppableId;
+    });
+    const newSourceItems = [...tasksColumns[columnSourceIndex].tasks];
+    const newDestinationItems =
+      source.droppableId !== destination.droppableId
+        ? [...tasksColumns[columnDestinationIndex].tasks]
+        : newSourceItems;
+
+    const [deletedItem] = newSourceItems.splice(source.index, 1);
+    newDestinationItems.splice(destination.index, 0, deletedItem);
+
+    const newTaskColumns = [...tasksColumns];
+    newTaskColumns[columnSourceIndex] = {
+      ...tasksColumns[columnSourceIndex],
+      tasks: newSourceItems,
+    };
+    newTaskColumns[columnDestinationIndex] = {
+      ...tasksColumns[columnDestinationIndex],
+      tasks: newDestinationItems,
+    };
+    settasksColumns(newTaskColumns);
+  };
   return (
     <>
       <div
@@ -86,9 +120,20 @@ const ColumnView: React.FC = (): JSX.Element => {
             />
           );
         })}
+        <DragDropContext onDragEnd={handleDragDrop}>
+          {tasksColumns.map((item) => {
+            return (
+              <ColumnContainer
+                key={item.id}
+                {...item}
+                setMouseDown={setMouseDown}
+              />
+            );
+          })}
+        </DragDropContext>
         <button
           onClick={handleNewBoardModal}
-          className="flex w-[250px] h-[44px] py-XS px-[12px] items-center rounded-2xl shrink-0  shadow-taskColumn text-base font-medium"
+          className="flex w-[250px] h-[44px] py-XS px-[12px]  items-center rounded-2xl shrink-0  shadow-taskColumn text-base font-medium"
         >
           <Icon icon="plus" color="#1E1E1E" size={20} />
           ساختن برد جدید

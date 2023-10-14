@@ -9,12 +9,11 @@ import { refresh } from "../../../../features/authSlice";
 interface IProps extends React.PropsWithChildren {}
 
 const AuthCheck: React.FC<IProps> = ({ children }): JSX.Element => {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   useEffect(() => {
-    setLoading(true);
     const refreshToken = Cookies.get("refresh");
 
     if (!refreshToken) {

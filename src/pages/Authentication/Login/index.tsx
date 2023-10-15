@@ -8,6 +8,7 @@ import { AXIOS } from "../../../config/axios.config";
 import { useDispatch } from "react-redux";
 import { login } from "../../../features/authSlice";
 import API_URL from "../../../constants/api.url";
+import { getWorkSpace } from "../../../services";
 
 const rules = {
   username: [required],
@@ -19,7 +20,7 @@ type Values = {
 };
 
 const Login: React.FC = (): JSX.Element => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [errors, setErrors] = useState<string[]>([]);
   const [values, setValues] = useState<Values>({
     username: "",
@@ -41,10 +42,11 @@ const Login: React.FC = (): JSX.Element => {
         .then((response) => {
           if (response?.status === 200) {
             dispatch(login(response.data));
-            navigate('/workspace')
+            navigate("/workspace");
           }
         })
         .catch((error) => {});
+      getWorkSpace();
     }
   };
 

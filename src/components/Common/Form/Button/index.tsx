@@ -15,6 +15,8 @@ interface IProps {
   hasIcon?: boolean;
   className?: string;
   icon?: IIcon;
+  autoFocus?: boolean,
+  loading?: boolean,
 }
 
 const Button: React.FC<IProps> = ({
@@ -24,16 +26,20 @@ const Button: React.FC<IProps> = ({
   hasIcon,
   className,
   icon,
+  autoFocus = false,
   onClick,
+  loading = false,
 }): JSX.Element => {
   return (
     <button
+      disabled={loading}
+      autoFocus={autoFocus}
       name={name}
       onClick={(e) => onClick(e)}
       type={type}
-      className={`flex items-center justify-center ${className}`}
+      className={`flex items-center justify-center ${className} ${loading ? 'cursor-wait' : ''}`}
     >
-      {text}
+      {loading ? <span dir="rtl">لطفا منتظر بمانید ...</span> : text}
       {hasIcon && (
         <Icon
           icon={icon?.icon}

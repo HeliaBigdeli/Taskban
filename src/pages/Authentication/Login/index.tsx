@@ -1,13 +1,13 @@
 import Card from "../../../components/Layouts/Auth/Card";
 import Input from "../../../components/Common/Form/Input";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, isRouteErrorResponse, useNavigate } from "react-router-dom";
 import Button from "../../../components/Common/Form/Button";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { required, validate } from "../../../utils/validator";
-import { AXIOS } from "../../../config/axios.config";
-import { useDispatch } from "react-redux";
-import { login } from "../../../features/authSlice";
 import API_URL from "../../../constants/api.url";
+import { login } from "../../../features/authSlice";
+import { useDispatch } from "react-redux";
+import useAxios from "../../../hooks/useAxios";
 
 const rules = {
   username: [required],
@@ -19,34 +19,36 @@ type Values = {
 };
 
 const Login: React.FC = (): JSX.Element => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [errors, setErrors] = useState<string[]>([]);
   const [values, setValues] = useState<Values>({
     username: "",
     password: "",
   });
-  const dispatch = useDispatch();
+
+  const [response, error, loading, fetcher] = useAxios();
 
   const handleChange = (name: string, value: string) => {
     setValues({ ...values, [name]: value });
   };
 
-  const handleClick = () => {
+  const handleClick = async () => {
     const resultErrors = validate(values, rules);
 
     if (resultErrors.length) {
       setErrors(resultErrors);
     } else {
-      AXIOS.post(API_URL.Login, values)
-        .then((response) => {
-          if (response?.status === 200) {
-            dispatch(login(response.data));
-            navigate('/workspace')
-          }
-        })
-        .catch((error) => {});
+      await fetcher("post", API_URL.Login, values);
     }
   };
+
+  useEffect(() => {
+    if (response) {
+      dispatch(login(response));
+      navigate("/workspace");
+    }   
+  }, [response])
 
   return (
     <Card page={"login"} errors={errors}>
@@ -79,6 +81,8 @@ const Login: React.FC = (): JSX.Element => {
         </div>
         <div className="flex flex-col items-center gap-M self-stretch">
           <Button
+            loading={loading}
+            autoFocus={true}
             text="ورود"
             type="button"
             onClick={handleClick}

@@ -1,49 +1,81 @@
 import Card from "../../../components/Layouts/Auth/Card";
 import Input from "../../../components/Common/Form/Input";
 import Button from "../../../components/Common/Form/Button";
-import { useState } from "react";
-import { minLength, required, strong, validate } from "../../../utils/validator";
+import { useState, useEffect } from "react";
+import {
+  minLength,
+  required,
+  strong,
+  validate,
+} from "../../../utils/validator";
+import useAxios from "../../../hooks/useAxios";
+import API_URL from "../../../constants/api.url";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 const rules = {
-  password: [required, strong, minLength(20)],
+  password: [required, strong, minLength(8)],
+};
+
+type Values = {
+  [key: string]: string;
 };
 
 const Reset: React.FC = (): JSX.Element => {
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const [errors, setErrors] = useState<string[]>([]);
-  const [values, setValues] = useState<{}>({
+  const [values, setValues] = useState<Values>({
     password: "",
+    password1: "",
+    token: "",
   });
+  const [response, error, loading, fetcher] = useAxios();
 
   const handleChange = (name: string, value: string) => {
     setValues({ ...values, [name]: value });
   };
 
-  const handleClick = () => {
+  const handleClick = async () => {
     const resultErrors = validate(values, rules);
-    setErrors(resultErrors);
+
+    if (resultErrors.length) {
+      setErrors(resultErrors);
+    } else {
+      values.password1 = values.password;
+      values.token = searchParams.get('token') || ""
+      
+      await fetcher("patch", API_URL.SetPassword, values);
+    }
   };
 
+  useEffect(() => {
+    if (response) {
+      navigate("/login");
+    }
+  }, [response]);
+
   return (
-      <Card page={"reset"} errors={errors}>
-        <form className="flex flex-col gap-5 self-stretch">
-          <Input
-            name="password"
-            id="password"
-            type="password"
-            label="رمز عبور جدید را وارد کنید"
-            className="h-XL"
-            hasLabel={true}
-            onChange={(name, value) => handleChange(name, value)}
-          />
-          <Button
-            text="تغییر رمز عبور"
-            type="button"
-            onClick={handleClick}
-            hasIcon={false}
-            className="text-white text-sm leading-normal font-extrabold h-12 self-stretch rounded-md bg-brand-primary"
-          />
-        </form>
-      </Card>
+    <Card page={"reset"} errors={errors}>
+      <form className="flex flex-col gap-5 self-stretch">
+        <Input
+          name="password"
+          id="password"
+          type="password"
+          label="رمز عبور جدید را وارد کنید"
+          className="h-XL"
+          hasLabel={true}
+          onChange={(name, value) => handleChange(name, value)}
+        />
+        <Button
+          loading={loading}
+          text="تغییر رمز عبور"
+          type="button"
+          onClick={handleClick}
+          hasIcon={false}
+          className="text-white text-sm leading-normal font-extrabold h-12 self-stretch rounded-md bg-brand-primary"
+        />
+      </form>
+    </Card>
   );
 };
 

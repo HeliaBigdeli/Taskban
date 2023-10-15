@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import Button from "../../Common/Form/Button";
 import Input from "../../Common/Form/Input";
 import Icon from "../../Common/Icon";
@@ -12,6 +12,8 @@ import { createPortal } from "react-dom";
 import { Link } from "react-router-dom";
 import NestedModals from "../../Common/Modal/NestedModals";
 import ProjectModal from "../../Dashboard/ProjectModal";
+import { logout } from "../../../features/authSlice";
+import { useDispatch } from "react-redux";
 
 const data = [
   {
@@ -29,6 +31,8 @@ const DashboardLayout: React.FC = (): JSX.Element => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const portals = document.getElementById("portals") as Element;
   const [projectModal, setProjectModal] = useState<boolean>(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleProjectModal = () => {
     setProjectModal(!projectModal);
@@ -38,6 +42,10 @@ const DashboardLayout: React.FC = (): JSX.Element => {
     console.log(name, value);
   };
 
+  const handleClose = () => {
+    dispatch(logout());
+    navigate("/login");
+  };
   return (
     <div className="flex px-2XL">
       <div className="flex-grow flex-col w-full overflow-hidden">
@@ -87,15 +95,20 @@ const DashboardLayout: React.FC = (): JSX.Element => {
           className="text-brand-primary h-L text-sm font-bold leading-normal self-stretch rounded-md border border-brand-primary mb-L"
         />
         <div className="mt-auto mb-L flex flex-col gap-S">
-          <div className="text-right font-bold">
-            نیلوفر موجودی
-            <span className="w-[30px] h-[30px] bg-indigo_secondary rounded-full p-1 ml-1 text-indigo_primary">
-              NM
-            </span>
-          </div>
+          <Link to="/account">
+            <div className="text-right font-bold">
+              نیلوفر موجودی
+              <span className="w-[30px] h-[30px] bg-indigo_secondary rounded-full p-1 ml-1 text-indigo_primary">
+                NM
+              </span>
+            </div>
+          </Link>
           <div className="flex justify-between items-center">
             <DarkMode />
-            <span className="flex items-center">
+            <span
+              className="flex items-center cursor-pointer"
+              onClick={handleClose}
+            >
               خروج
               <Icon icon="door" color="#818181" />
             </span>

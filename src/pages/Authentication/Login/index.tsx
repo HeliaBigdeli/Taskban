@@ -1,13 +1,14 @@
 import Card from "../../../components/Layouts/Auth/Card";
 import Input from "../../../components/Common/Form/Input";
-import { Link, useFetcher, useNavigate } from "react-router-dom";
+import { Link, isRouteErrorResponse, useNavigate } from "react-router-dom";
 import Button from "../../../components/Common/Form/Button";
 import { useState, useEffect } from "react";
 import { required, validate } from "../../../utils/validator";
 import API_URL from "../../../constants/api.url";
 import { login } from "../../../features/authSlice";
-import { useDispatch } from 'react-redux'
-import useAPI from '../../../services/useAPI'
+import { useDispatch } from "react-redux";
+import useAxios from "../../../hooks/useAxios";
+
 const rules = {
   username: [required],
   password: [required],
@@ -18,14 +19,15 @@ type Values = {
 };
 
 const Login: React.FC = (): JSX.Element => {
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [errors, setErrors] = useState<string[]>([]);
   const [values, setValues] = useState<Values>({
     username: "",
     password: "",
   });
-  const { success, error, call } = useAPI(false)
+
+  const [response, error, loading, fetcher] = useAxios();
 
   const handleChange = (name: string, value: string) => {
     setValues({ ...values, [name]: value });
@@ -37,17 +39,16 @@ const Login: React.FC = (): JSX.Element => {
     if (resultErrors.length) {
       setErrors(resultErrors);
     } else {
-      // response(values)
-      // if (response?.status === 200) {
-      //   dispatch(login(response.data));
-      // }
-      call({ method: 'post', url: API_URL.Login, body: values })   
-      console.log(success)
-      // console.log(!loading && success)
-      // console.log(3)
-      // navigate('/workspace')
+      await fetcher("post", API_URL.Login, values);
     }
   };
+
+  useEffect(() => {
+    if (response) {
+      dispatch(login(response));
+      navigate("/workspace");
+    }   
+  }, [response])
 
   return (
     <Card page={"login"} errors={errors}>
@@ -80,6 +81,7 @@ const Login: React.FC = (): JSX.Element => {
         </div>
         <div className="flex flex-col items-center gap-M self-stretch">
           <Button
+            loading={loading}
             autoFocus={true}
             text="ورود"
             type="button"

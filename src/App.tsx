@@ -19,7 +19,7 @@ import WorkSpace from "./pages/Dashboard/WorkSpaces";
 import { Provider } from "react-redux";
 import { store } from "../src/app/store";
 import { ToastContainer } from "react-toastify";
-import AuthCheck from "./components/Dashboard/Authenticate/Check";
+import AuthCheck from "./components/Check";
 
 function App() {
   return (

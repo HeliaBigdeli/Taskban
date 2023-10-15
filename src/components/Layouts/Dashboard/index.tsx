@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import Button from "../../Common/Form/Button";
 import Input from "../../Common/Form/Input";
 import Icon from "../../Common/Icon";
@@ -12,6 +12,8 @@ import { createPortal } from "react-dom";
 import { Link } from "react-router-dom";
 import NestedModals from "../../Common/Modal/NestedModals";
 import ProjectModal from "../../Dashboard/ProjectModal";
+import { logout } from "../../../features/authSlice";
+import { useDispatch } from "react-redux";
 
 const data = [
   {
@@ -29,6 +31,17 @@ const DashboardLayout: React.FC = (): JSX.Element => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const portals = document.getElementById("portals") as Element;
   const [projectModal, setProjectModal] = useState<boolean>(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  /*************************************** Theme Toggle Button Starts ***************************************/
+  const [isShowing, setIsShowing] = useState(false);
+
+  const handleToggle = () => {
+    setIsShowing(!isShowing);
+  };
+
+  /*************************************** Theme Toggle Button Ends ****************************************/
 
   const handleProjectModal = () => {
     setProjectModal(!projectModal);
@@ -38,6 +51,10 @@ const DashboardLayout: React.FC = (): JSX.Element => {
     console.log(name, value);
   };
 
+  const handleClose = () => {
+    dispatch(logout());
+    navigate("/login");
+  };
   return (
     <div className="flex px-2XL">
       <div className="flex-grow flex-col w-full overflow-hidden">
@@ -94,8 +111,16 @@ const DashboardLayout: React.FC = (): JSX.Element => {
             </span>
           </div>
           <div className="flex justify-between items-center">
-            <DarkMode />
-            <span className="flex items-center">
+            <DarkMode
+              isOn={isShowing}
+              onToggle={handleToggle}
+              labelOn="Items are showing"
+              labelOff="Items are hidden"
+            />
+            <span
+              className="flex items-center cursor-pointer"
+              onClick={handleClose}
+            >
               خروج
               <Icon icon="door" color="#818181" />
             </span>

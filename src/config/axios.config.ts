@@ -41,7 +41,6 @@ AXIOS.interceptors.response.use(
     if (error.response.status === 401 && request.url !== API_URL.Login) {
       try {
         const refreshToken = Cookies.get("refresh");
-
         const refreshRequest = await AXIOS.post(API_URL.Refresh, {
           refresh: refreshToken,
         });
@@ -54,11 +53,13 @@ AXIOS.interceptors.response.use(
       } catch (error) {
         window.location.href = "/Login";
       }
-    } else {
-      toast.error(error.response.data.detail, {
-        position: "bottom-left",
-        autoClose: 3000,
-      });
+    } else {  
+      if (error.response.data?.detail) {
+        toast.error(error.response.data.detail, {
+          position: "bottom-left",
+          autoClose: 3000,
+        });
+      }
       return Promise.reject(error);
     }
   }

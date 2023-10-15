@@ -15,6 +15,7 @@ interface IProps {
   hasIcon?: boolean;
   className?: string;
   icon?: IIcon;
+  autoFocus?: boolean
 }
 
 const Button: React.FC<IProps> = ({
@@ -24,10 +25,12 @@ const Button: React.FC<IProps> = ({
   hasIcon,
   className,
   icon,
+  autoFocus = false,
   onClick,
 }): JSX.Element => {
   return (
     <button
+      autoFocus={autoFocus}
       name={name}
       onClick={(e) => onClick(e)}
       type={type}

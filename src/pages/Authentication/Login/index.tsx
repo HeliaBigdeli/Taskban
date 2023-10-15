@@ -4,12 +4,12 @@ import { Link, useNavigate } from "react-router-dom";
 import Button from "../../../components/Common/Form/Button";
 import { useState } from "react";
 import { required, validate } from "../../../utils/validator";
-import { AXIOS } from "../../../config/axios.config";
-import { useDispatch } from "react-redux";
-import { login } from "../../../features/authSlice";
 import API_URL from "../../../constants/api.url";
 import { getWorkSpace } from "../../../services";
-
+import { login } from "../../../features/authSlice";
+import { useDispatch } from "react-redux";
+import useAxios from "../../../hooks/useAxios";
+import { AXIOS } from "../../../config/axios.config";
 const rules = {
   username: [required],
   password: [required],
@@ -21,12 +21,17 @@ type Values = {
 
 const Login: React.FC = (): JSX.Element => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [errors, setErrors] = useState<string[]>([]);
   const [values, setValues] = useState<Values>({
-    username: "",
-    password: "",
+    username: "username ",
+    password: "password",
   });
-  const dispatch = useDispatch();
+  const [response, error, loading, fetcher] = useAxios();
+  if (response) {
+    dispatch(login(response));
+    navigate("/workspace");
+  }
 
   const handleChange = (name: string, value: string) => {
     setValues({ ...values, [name]: value });
@@ -47,6 +52,7 @@ const Login: React.FC = (): JSX.Element => {
         })
         .catch((error) => {});
       getWorkSpace();
+      fetcher("post", API_URL.Login, values);
     }
   };
 
@@ -81,6 +87,7 @@ const Login: React.FC = (): JSX.Element => {
         </div>
         <div className="flex flex-col items-center gap-M self-stretch">
           <Button
+            autoFocus={true}
             text="ورود"
             type="button"
             onClick={handleClick}

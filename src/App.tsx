@@ -19,36 +19,39 @@ import WorkSpace from "./pages/Dashboard/WorkSpaces";
 import { Provider } from "react-redux";
 import { store } from "../src/app/store";
 import { ToastContainer } from "react-toastify";
+import AuthCheck from "./components/Dashboard/Authenticate/Check";
 
-function App() { 
+function App() {
   return (
     <ContextProvider>
       <Provider store={store}>
         <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<AuthLayout />}>
-              <Route index element={<Login />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
-              <Route path="/forgot" element={<ForgotPassword />} />
-              <Route path="/reset" element={<Reset />} />
-            </Route>
-            <Route path="/" element={<DashboardLayout />}>
-              <Route path="/board" element={<Board />} />
-              <Route path="/list" element={<List />} />
-              <Route path="/workspace" element={<WorkSpace />} />
-              <Route path="/calender" element={<Calender />} />
-            </Route>
-            <Route path="/" element={<ProfileLayout />}>
-              <Route path="/account" element={<Account />} />
-              <Route path="/information" element={<Information />} />
-              <Route path="/setting" element={<Setting />} />
-            </Route>
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+          <AuthCheck>
+            <Routes>
+              <Route path="/" element={<AuthLayout />}>
+                <Route index element={<Login />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
+                <Route path="/forgot" element={<ForgotPassword />} />
+                <Route path="/reset" element={<Reset />} />
+              </Route>
+              <Route path="/" element={<DashboardLayout />}>
+                <Route path="/board" element={<Board />} />
+                <Route path="/list" element={<List />} />
+                <Route path="/workspace" element={<WorkSpace />} />
+                <Route path="/calender" element={<Calender />} />
+              </Route>
+              <Route path="/" element={<ProfileLayout />}>
+                <Route path="/account" element={<Account />} />
+                <Route path="/information" element={<Information />} />
+                <Route path="/setting" element={<Setting />} />
+              </Route>
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </AuthCheck>
         </BrowserRouter>
       </Provider>
-      <ToastContainer style={{ width: "400px" }} />
+      <ToastContainer style={{ width: 340, fontSize: 14 }} rtl />
     </ContextProvider>
   );
 }

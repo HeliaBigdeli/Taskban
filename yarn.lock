@@ -6961,6 +6961,11 @@ performance-now@^2.1.0:
   resolved "https://registry.npmjs.org/performance-now/-/performance-now-2.1.0.tgz"
   integrity sha512-7EAHlyLHI56VEIdK57uwHdHKIaAGbnXPiw0yWbarQZOKaKpvUIgW0jWRVLiatnM+XXlSwsanIBH/hzGMJulMow==
 
+persian-number@^1.5.1:
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/persian-number/-/persian-number-1.5.1.tgz#7c897e8ab8f72ba2eba4daf8d8be19b8aec5fab6"
+  integrity sha512-BbJ0vUV23RtFCYiEn6jTx3hzDHRD8pAWl7xrisff2Pihqopu2G2zIySscchJ6lWp8QnwJBXf2FXHIW5V2QemRQ==
+
 picocolors@^0.2.1:
   version "0.2.1"
   resolved "https://registry.npmjs.org/picocolors/-/picocolors-0.2.1.tgz"

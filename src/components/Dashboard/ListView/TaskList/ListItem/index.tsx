@@ -4,8 +4,9 @@ import ListItemTitle from "./ListItemTitle";
 
 interface IListItemProps {
   color?: string;
+  name:string
 }
-const ListItem: React.FC<IListItemProps> = ({ color }): JSX.Element => {
+const ListItem: React.FC<IListItemProps> = ({ color,name }): JSX.Element => {
   const colorVariants = {
     orange: "bg-orange-primary ",
     green: "bg-green-primary",
@@ -20,7 +21,7 @@ const ListItem: React.FC<IListItemProps> = ({ color }): JSX.Element => {
         ></div>
 
         <span className="text-[#0E0E0E] text-xs font-normal">
-          این یک تیتر برای این تسک است.
+         {name}
         </span>
       </section>
       <section className="flex items-center gap-[70px]">

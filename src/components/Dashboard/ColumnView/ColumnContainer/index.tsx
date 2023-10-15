@@ -7,18 +7,20 @@ import { Droppable } from "react-beautiful-dnd";
 
 interface IColumnContainerProps {
   setMouseDown: React.Dispatch<React.SetStateAction<boolean>>;
-  cloumnTitle: string;
+  name: string;
+  is_archive: boolean;
   id: number;
   tasks: {
     id: number;
-    title: string;
+    name: string;
     img: string;
   }[];
 }
 const ColumnContainer: React.FC<IColumnContainerProps> = ({
   id,
-  cloumnTitle,
+  name,
   tasks,
+  is_archive,
   setMouseDown,
 }): JSX.Element => {
   const handleClick = (e: React.MouseEvent<EventTarget>) => {
@@ -31,9 +33,9 @@ const ColumnContainer: React.FC<IColumnContainerProps> = ({
       className="flex shrink-0  flex-col items-center gap-S   "
       style={{ direction: "ltr" }}
     >
-      <TaskColumn title={cloumnTitle} />
+      <TaskColumn title={name} />
 
-      <Droppable droppableId={cloumnTitle} type="group">
+      <Droppable droppableId={name} type="group">
         {(provided) => (
           <div
             onMouseDownCapture={handleClick}
@@ -45,9 +47,10 @@ const ColumnContainer: React.FC<IColumnContainerProps> = ({
               return (
                 <TaskCard
                   {...item}
+                  title={item.name}
                   key={item.id}
                   index={index}
-                  cloumnTitle={cloumnTitle}
+                  boardTitle={name}
                 />
               );
             })}

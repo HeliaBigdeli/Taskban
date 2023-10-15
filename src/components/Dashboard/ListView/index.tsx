@@ -1,16 +1,27 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Icon from "../../Common/Icon";
 import TaskList from "./TaskList";
 import Button from "../../Common/Form/Button";
 import TaskModal from "../TaskModal";
+import { AXIOS } from "../../../config/axios.config";
 
 const ListShow: React.FC = (): JSX.Element => {
   const [isShown, setIsShown] = useState<boolean>(true);
   const [taskModal, setTaskModal] = useState<boolean>(false);
-
+  const [boardTaks, setBoardTaks] = useState<any>([]);
+  useEffect(() => {
+    fetch();
+  }, []);
   const handleTaskModal = () => {
-    setTaskModal(!taskModal)
-  }
+    setTaskModal(!taskModal);
+  };
+  const fetch = async () => {
+    try {
+      const response = await AXIOS.get("workspaces/92/projects/13/boards/");
+      setBoardTaks(response.data);
+      console.log(response.data);
+    } catch (error) {}
+  };
   return (
     <div style={{ direction: "rtl" }} className={` pr-S `}>
       <div className="flex items-center gap-XS my-L">
@@ -22,11 +33,14 @@ const ListShow: React.FC = (): JSX.Element => {
       <div
         className={`${
           !isShown ? "opacity-0 -z-10" : "opacity-100 z-10"
-        } relative flex w-[1011px] flex-col items-end gap-XL mr-6 ml-12 transition-all duration-300 `}
+        } relative flex w-[1011px] flex-col items-end gap-XL mr-6 ml-12 h-[800px] transition-all duration-300 `}
       >
+        {boardTaks && boardTaks.map((item) => {
+          return <TaskList key={item.id} {...item} />;
+        })}
+        {/* <TaskList />
         <TaskList />
-        <TaskList color="orange" />
-        <TaskList color="green" />
+        <TaskList /> */}
       </div>
       <Button
         text="تسک جدید"

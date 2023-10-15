@@ -8,6 +8,7 @@ import API_URL from "../../../constants/api.url";
 import { login } from "../../../features/authSlice";
 import { useDispatch } from "react-redux";
 import useAxios from "../../../hooks/useAxios";
+
 const rules = {
   username: [required],
   password: [required],
@@ -39,16 +40,14 @@ const Login: React.FC = (): JSX.Element => {
       setErrors(resultErrors);
     } else {
       await fetcher("post", API_URL.Login, values);
-      console.log(response)
     }
   };
 
   useEffect(() => {
     if (response) {
-      console.log(response)
       dispatch(login(response));
       navigate("/workspace");
-    }
+    }   
   }, [response])
 
   return (

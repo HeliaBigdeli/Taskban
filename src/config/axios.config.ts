@@ -53,12 +53,24 @@ AXIOS.interceptors.response.use(
       } catch (error) {
         window.location.href = "/Login";
       }
-    } else {  
+    } else {
+
       if (error.response.data?.detail) {
+        // hande show error as a string
         toast.error(error.response.data.detail, {
           position: "bottom-left",
           autoClose: 3000,
         });
+      } else {
+        // handle errors as array of objects
+        Object.keys(error.response.data).map((item) => {
+          error.response.data[item].map((error) => {
+            toast.error(error, {
+              position: "bottom-left",
+              autoClose: 3000,
+            });
+          })
+        })
       }
       return Promise.reject(error);
     }

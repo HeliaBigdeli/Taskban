@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import { AXIOS } from "../../config/axios.config";
 import API_URL from "../../constants/api.url";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { refresh } from "../../features/authSlice";
 

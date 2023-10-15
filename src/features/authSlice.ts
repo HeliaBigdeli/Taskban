@@ -23,12 +23,12 @@ export const authSlice = createSlice({
   initialState,
   reducers: {
     login: (state, action: PayloadAction<Auth>) => {
-      state.username = action.payload.username;
-      state.first_name = action.payload.first_name;
-      state.last_name = action.payload.last_name;
-      state.access = action.payload.access;
+      state.username = action.payload?.username;
+      state.first_name = action.payload?.first_name;
+      state.last_name = action.payload?.last_name;
+      state.access = action.payload?.access;
 
-      Cookies.set("refresh", action.payload.refresh, {expires: 365});
+      Cookies.set("refresh", action.payload?.refresh, {expires: 365});
     },
     logout: (state) => {
       state = {
@@ -43,7 +43,7 @@ export const authSlice = createSlice({
     refresh: (state, action: PayloadAction<Partial<Auth>>) => {
       state = {
         ...state,
-        access: action.payload.access || "",
+        access: action.payload?.access || "",
       };
     },
   },

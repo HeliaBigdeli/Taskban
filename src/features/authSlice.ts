@@ -4,58 +4,66 @@ import { RootState } from "../app/store";
 import Cookies from "js-cookie";
 
 type Auth = {
-  id: number,
-  username: string;
+  user_id: number,
   first_name: string;
   last_name: string;
   refresh?: string;
   access: string;
+  thumbnail: string
 };
 
-const initialState: Auth = {
-  id: 0,
-  username: "",
-  first_name: "",
-  last_name: "",
-  access: ""
-};
+const initialState: Auth = localStorage.hasOwnProperty('user')
+  ? JSON.parse(localStorage.getItem('user') || '{}')
+  : {
+    user_id: 0,
+    first_name: "",
+    last_name: "",
+    access: "",
+    thumbnail: ""
+  };
 
 export const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
     login: (state, action: PayloadAction<Auth>) => {
-      state.id = action.payload?.id;
-      state.username = action.payload?.username;
-      state.first_name = action.payload?.first_name;
-      state.last_name = action.payload?.last_name;
-      state.access = action.payload?.access;
+      state = {
+        user_id: action.payload?.user_id,
+        first_name: action.payload?.first_name,
+        last_name: action.payload?.last_name,
+        access: action.payload?.access,
+        thumbnail: action.payload?.thumbnail,
+      }
 
-      Cookies.set("refresh", action.payload?.refresh, {expires: 365});
+      // save refresh token in cookie and some user information in localstorage
+      Cookies.set("refresh", action.payload?.refresh, { expires: 365 });
+      localStorage.setItem('user', JSON.stringify(state))
     },
     logout: (state) => {
       state = {
-        id: 0,
-        username: "",
+        user_id: 0,
         first_name: "",
         last_name: "",
         access: "",
+        thumbnail: "",
       };
 
       Cookies.remove("refresh");
+      localStorage.removeItem('user')
     },
     refresh: (state, action: PayloadAction<Auth>) => {
-      state.id = action.payload?.id || 0;
-      state.username = action.payload?.username || "";
-      state.first_name = action.payload?.first_name || "";
-      state.last_name = action.payload?.last_name || "";
-      state.access = action.payload?.access || "";
-    },
+      state = {
+        ...state,
+        access: action.payload.access
+      }
+      localStorage.setItem('user', JSON.stringify(state))
+    }
   },
 });
 
 export const { login, logout, refresh } = authSlice.actions;
 
 export const selectToken = (state: RootState) => state.auth.access;
+export const selectUser = (state: RootState) => state.auth;
 
 export default authSlice.reducer

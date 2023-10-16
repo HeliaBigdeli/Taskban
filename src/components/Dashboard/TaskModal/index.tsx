@@ -32,7 +32,7 @@ const TaskModal: React.FC<IProps> = ({ modal, setModal }): JSX.Element => {
     { id: 3, text: "متوسط", color: "blue" },
     { id: 4, text: "پایین", color: "gray" },
   ];
-  // const[count,setCount]=useState(0)
+
   const [datePickerModal, setDatePickerModal] = useState<boolean>(false);
   const [shareModal, setShareModal] = useState<boolean>(false);
   const [projects, setProjectsState] = useState([
@@ -93,10 +93,6 @@ const TaskModal: React.FC<IProps> = ({ modal, setModal }): JSX.Element => {
   const getPriority = (value: string) => {
     setVlaues({ ...values, priority: value });
   };
-  // const handleSelect=(e: React.MouseEvent<HTMLElement>)=>{
-  //     //setSearchValue(e.currentTarget.textContent)
-  //     setTagDropdown(!tagDropdown)
-  // }
 
   return (
     <>

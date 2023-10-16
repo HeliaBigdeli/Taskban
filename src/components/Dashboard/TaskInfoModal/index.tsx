@@ -5,17 +5,36 @@ import Icon from "../../Common/Icon";
 import { useState } from "react";
 import DatePickerModal from "../DatePickerModal";
 import Textarea from "../../Common/Form/Textarea";
-import ProfileImage from "../../Common/ProfileImage";
-
 import memberPhoto from "../../../assets/images/member.png";
+import MembersThumb from "../../Common/MembersThumb";
 
-const member = {
-  img: memberPhoto,
-  email: "helya@gmail.com",
-  role: "owner",
-  firstName: "Helya",
-  lastName: "Bigdeli",
-};
+const members = [
+  {
+    id: 1,
+    thumbnail: memberPhoto,
+    first_name: "Helya",
+    last_name: "Bigdeli",
+  },
+  {
+    id: 2,
+    thumbnail: "",
+    first_name: "Helya",
+    last_name: "Bigdeli",
+  },
+  {
+    id: 3,
+    thumbnail: "",
+    first_name: "Helya",
+    last_name: "Bigdeli",
+  },
+  {
+    id: 6,
+    thumbnail: "",
+    first_name: "Helya",
+    last_name: "Bigdeli",
+  },
+
+];
 
 const portals = document.getElementById("portals") as Element;
 
@@ -79,17 +98,11 @@ const TaskInfoModal: React.FC<IProps> = ({ modal, setModal }): JSX.Element => {
                   hasIcon={true}
                   icon={{ icon: "share" }}
                 />
-                <div className="flex justify-end items-center gap-S">
-                  <div className="cursor-pointer border-dashed border-2 rounded-full border-[#c1c1c1] w-[40px] h-[40px] flex justify-center items-center">
-                    <Icon icon="flag" color="#c1c1c1" />
-                  </div>
-                  <ProfileImage
-                    multi={true}
-                    img={member.img}
-                    firstName={member.firstName}
-                    lastName={member.lastName}
-                    size={40}
-                  />
+                <div className="flex items-center gap-S">
+                    <div className="mr-S cursor-pointer border-dashed border-2 rounded-full border-[#c1c1c1] w-[40px] h-[40px] flex justify-center items-center">
+                      <Icon icon="flag" color="#c1c1c1" />
+                    </div>
+                  <MembersThumb members={members} hasAddIcon={false} />
                   <Button
                     type="button"
                     name="status"

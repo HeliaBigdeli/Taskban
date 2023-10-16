@@ -8,8 +8,9 @@ import {
   strong,
   minLength,
 } from "../../../utils/validator/index";
-import { ToastContainer, toast } from "react-toastify";
+import {toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import API_URL from "../../../constants/api.url";
 const rules = {
   email: [required, email],
   username: [required],
@@ -42,6 +43,13 @@ const Information: React.FC = (): JSX.Element => {
   }, [errors]);
 
   const handleChange = (name: string, value: string) => {
+    const resultErrors = validate(values, rules);
+    if(resultErrors.length){
+      setErrors(resultErrors)
+    }
+    else{
+      // await fetcher("post",API_URL.Register{},values)
+    }
     setValues({ ...values, [name]: value });
   };
 

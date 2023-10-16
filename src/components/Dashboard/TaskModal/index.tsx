@@ -2,11 +2,7 @@ import { createPortal } from "react-dom";
 import Modal from "../../Common/Modal";
 import Button from "../../Common/Form/Button";
 import Icon from "../../Common/Icon";
-<<<<<<< HEAD
-import {useState } from "react";
-=======
 import { useState } from "react";
->>>>>>> 9f4104b8de9b4a82a5b4f597a4b6049e9b50a9bc
 import DatePickerModal from "../DatePickerModal";
 import Textarea from "../../Common/Form/Textarea";
 import Input from "../../Common/Form/Input";
@@ -223,19 +219,9 @@ const TaskModal: React.FC<IProps> = ({ modal, setModal }): JSX.Element => {
                   >
                     <ul className="flex flex-col gap-XS">
 
-<<<<<<< HEAD
-                     {priority.map((item)=>{
-                       return(
-                        <IconItem text={item.text} color={item.color} icon={"flag"} url="" onClick={(e)=>getPriority(item.text)}/>
-                        )
-                     })}
-                     <IconItem text={"حذف اولویت"} icon={"close"} color="red" className="text-[#534D60]" onClick={(e)=>getPriority("")}></IconItem>
-                    </ul>
-                   
-=======
                       {priority.map((item) => {
                         return (
-                          <IconItem text={item.text} color2={item.color} icon={"flag"} url="" />
+                          <IconItem text={item.text} color={item.color} icon={"flag"} url="" />
                         )
                       })}
                     </ul>
@@ -249,17 +235,12 @@ const TaskModal: React.FC<IProps> = ({ modal, setModal }): JSX.Element => {
                       }}
                       text="حذف اولویت"
                     />
->>>>>>> 9f4104b8de9b4a82a5b4f597a4b6049e9b50a9bc
                   </div>
                 </div>
               </div>
               <Button
                 text="ساختن تسک"
-<<<<<<< HEAD
-                onClick={() =>{}}
-=======
                 onClick={() => { }}
->>>>>>> 9f4104b8de9b4a82a5b4f597a4b6049e9b50a9bc
                 type="button"
                 className="z-20 bg-brand-primary text-white h-L text-sm leading-normal self-stretch rounded-md p-S"
                 hasIcon={false}

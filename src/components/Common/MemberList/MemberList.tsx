@@ -4,14 +4,14 @@ import memberPhoto from "../../../assets/images/member.png";
 const MemberList: React.FC = (): JSX.Element => {
   const members = [
     {
-      thumbnail: memberPhoto,
+      img: memberPhoto,
       email: "helya@gmail.com",
       role: "workspace owner",
       firstName: "Helya",
       lastName: "Bigdeli",
     },
     {
-      thumbnail: "",
+      img: "",
       email: "sararahimi@gmail.com",
       role: "",
       firstName: "Sara",
@@ -30,7 +30,7 @@ const MemberList: React.FC = (): JSX.Element => {
             key={item.email}
             role={item.role}
             email={item.email}
-            thumbnail={item.thumbnail}
+            img={item.img}
             firstName={item.firstName}
             lastName={item.lastName}
           />

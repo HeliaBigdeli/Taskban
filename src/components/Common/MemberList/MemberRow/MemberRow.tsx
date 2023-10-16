@@ -1,10 +1,10 @@
 import Button from "../../Form/Button";
-import ProfileImage from "../../ProfileThumb";
+import ProfileImage from "../../ProfileImage";
 
 interface IProps {
   role: string;
   email: string;
-  thumbnail?: string;
+  img?: string;
   firstName: string;
   lastName: string;
 }
@@ -12,7 +12,7 @@ interface IProps {
 const MemberRow: React.FC<IProps> = ({
   role,
   email,
-  thumbnail,
+  img,
   firstName,
   lastName,
 }): JSX.Element => {
@@ -48,12 +48,12 @@ const MemberRow: React.FC<IProps> = ({
           <span className="text-sm text-black mt-[5px]">
             {role === "workspace owner" ? "من" : email}
           </span>
-          {/* <ProfileImage
-            thumbnail={thumbnail}
+          <ProfileImage
+            img={img}
             firstName={firstName}
             lastName={lastName}
             size={35}
-          /> */}
+          />
         </div>
       </div>
     </>

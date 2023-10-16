@@ -12,8 +12,9 @@ import { createPortal } from "react-dom";
 import { Link } from "react-router-dom";
 import NestedModals from "../../Common/Modal/NestedModals";
 import ProjectModal from "../../Dashboard/ProjectModal";
-import { logout } from "../../../features/authSlice";
-import { useDispatch } from "react-redux";
+import { logout, selectUser } from "../../../features/authSlice";
+import { useDispatch, useSelector } from "react-redux";
+import Profile from "../../Common/ProfileThumb";
 
 const data = [
   {
@@ -33,6 +34,7 @@ const DashboardLayout: React.FC = (): JSX.Element => {
   const [projectModal, setProjectModal] = useState<boolean>(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const user = useSelector(selectUser)
 
   const handleProjectModal = () => {
     setProjectModal(!projectModal);
@@ -87,7 +89,7 @@ const DashboardLayout: React.FC = (): JSX.Element => {
             className: "ml-1",
           }}
         />
-        <List data={data}></List>
+        <List data={data} />
         <Button
           text="ساختن پروژه جدید"
           onClick={handleProjectModal}
@@ -96,12 +98,7 @@ const DashboardLayout: React.FC = (): JSX.Element => {
         />
         <div className="mt-auto mb-L flex flex-col gap-S">
           <Link to="/account">
-            <div className="text-right font-bold">
-              نیلوفر موجودی
-              <span className="w-[30px] h-[30px] bg-indigo_secondary rounded-full p-1 ml-1 text-indigo_primary">
-                NM
-              </span>
-            </div>
+            {/* <Profile firstName={user.first_name} lastName={user.last_name} showName={true} /> */}
           </Link>
           <div className="flex justify-between items-center">
             <DarkMode />

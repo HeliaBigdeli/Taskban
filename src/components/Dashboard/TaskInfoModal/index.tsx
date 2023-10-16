@@ -5,12 +5,12 @@ import Icon from "../../Common/Icon";
 import { useState } from "react";
 import DatePickerModal from "../DatePickerModal";
 import Textarea from "../../Common/Form/Textarea";
-import ProfileImage from "../../Common/ProfileImage";
 
 import memberPhoto from "../../../assets/images/member.png";
+import Profile from "../../Common/ProfileThumb";
 
 const member = {
-  img: memberPhoto,
+  thumbnail: memberPhoto,
   email: "helya@gmail.com",
   role: "owner",
   firstName: "Helya",
@@ -83,13 +83,13 @@ const TaskInfoModal: React.FC<IProps> = ({ modal, setModal }): JSX.Element => {
                   <div className="cursor-pointer border-dashed border-2 rounded-full border-[#c1c1c1] w-[40px] h-[40px] flex justify-center items-center">
                     <Icon icon="flag" color="#c1c1c1" />
                   </div>
-                  <ProfileImage
-                    multi={true}
-                    img={member.img}
+                  {/* <Profile
+                    addIcon={true}
+                    thumbnail={member.thumbnail}
                     firstName={member.firstName}
                     lastName={member.lastName}
                     size={40}
-                  />
+                  /> */}
                   <Button
                     type="button"
                     name="status"

@@ -4,6 +4,7 @@ import { RootState } from "../app/store";
 import Cookies from "js-cookie";
 
 type Auth = {
+  id: number,
   username: string;
   first_name: string;
   last_name: string;
@@ -12,10 +13,11 @@ type Auth = {
 };
 
 const initialState: Auth = {
+  id: 0,
   username: "",
   first_name: "",
   last_name: "",
-  access: "",
+  access: ""
 };
 
 export const authSlice = createSlice({
@@ -23,6 +25,7 @@ export const authSlice = createSlice({
   initialState,
   reducers: {
     login: (state, action: PayloadAction<Auth>) => {
+      state.id = action.payload?.id;
       state.username = action.payload?.username;
       state.first_name = action.payload?.first_name;
       state.last_name = action.payload?.last_name;
@@ -32,6 +35,7 @@ export const authSlice = createSlice({
     },
     logout: (state) => {
       state = {
+        id: 0,
         username: "",
         first_name: "",
         last_name: "",
@@ -40,11 +44,12 @@ export const authSlice = createSlice({
 
       Cookies.remove("refresh");
     },
-    refresh: (state, action: PayloadAction<Partial<Auth>>) => {
-      state = {
-        ...state,
-        access: action.payload?.access || "",
-      };
+    refresh: (state, action: PayloadAction<Auth>) => {
+      state.id = action.payload?.id || 0;
+      state.username = action.payload?.username || "";
+      state.first_name = action.payload?.first_name || "";
+      state.last_name = action.payload?.last_name || "";
+      state.access = action.payload?.access || "";
     },
   },
 });

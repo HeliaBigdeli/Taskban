@@ -4,21 +4,24 @@ import { AXIOS } from "../../config/axios.config";
 import API_URL from "../../constants/api.url";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { refresh } from "../../features/authSlice";
+import { refresh, selectUser } from "../../features/authSlice";
+import {useSelector} from 'react-redux'
 
-interface IProps extends React.PropsWithChildren {}
+interface IProps extends React.PropsWithChildren { }
 
 const AuthCheck: React.FC<IProps> = ({ children }): JSX.Element => {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const {pathname} = useLocation()
+  const { pathname } = useLocation()
+
+  const user = useSelector(selectUser)
 
   useEffect(() => {
     const controller = new AbortController();
     const refreshToken = Cookies.get("refresh");
 
-    if(pathname === "/Reset-password/") {
+    if (pathname === "/Reset-password/") {
       setLoading(false);
       return
     }
@@ -36,11 +39,16 @@ const AuthCheck: React.FC<IProps> = ({ children }): JSX.Element => {
       .then((response) => {
         if (response.status === 200) {
           dispatch(refresh(response.data));
-          navigate("/workspace");
+          if (pathname === '/' || pathname === '/login' || pathname === '/register' || pathname === '/forgot') {
+            navigate('workspace');
+          } else {
+            navigate(pathname);
+          }
         }
       })
       .catch((error) => {
         Cookies.remove("refresh");
+        localStorage.removeItem('user')
         navigate("/login");
       })
       .finally(() => {

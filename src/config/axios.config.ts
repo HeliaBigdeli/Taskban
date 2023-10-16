@@ -23,16 +23,16 @@ AXIOS.interceptors.request.use(
 
 AXIOS.interceptors.response.use(
   (response) => {
-    if (
-      response.status === 200 ||
-      response.status === 201 ||
-      response.status === 204
-    ) {
-      toast.info("عملیات با موفقیت انجام شد.", {
-        position: "bottom-left",
-        autoClose: 3000,
-      });
-    }
+    // if (
+    //   response.status === 200 ||
+    //   response.status === 201 ||
+    //   response.status === 204
+    // ) {
+    //   toast.info("عملیات با موفقیت انجام شد.", {
+    //     position: "bottom-left",
+    //     autoClose: 3000,
+    //   });
+    // }
     return response;
   },
   async (error) => {

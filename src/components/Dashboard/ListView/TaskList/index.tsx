@@ -11,7 +11,7 @@ const TaskList: React.FC<ITaskListProps> = ({ color }): JSX.Element => {
   };
 
   return (
-    <div className={` flex w-full flex-col items-start gap-5`}>
+    <div className={`flex w-full flex-col items-start gap-5`}>
       <ListHeader color={color} handleShow={handleShow} />
       <div
         className={`flex ${

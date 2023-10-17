@@ -15,6 +15,13 @@ interface IProps {
   setWorkSpaceInfo: Dispatch<
     SetStateAction<{ name?: string; colorName?: string; colorCode?: string }>
   >;
+  selectedColor: string | undefined;
+  setSelectedColor: (
+    value:
+      | string
+      | undefined
+      | ((prevVar: string | undefined) => string | undefined)
+  ) => void;
 }
 
 const PickColor: React.FC<IProps> = ({
@@ -23,10 +30,9 @@ const PickColor: React.FC<IProps> = ({
   setIsModalOpen,
   workSpaceInfo,
   setWorkSpaceInfo,
+  selectedColor,
+  setSelectedColor,
 }): JSX.Element => {
-  const [selected, setSelected] = useState<string | undefined>(
-    workSpaceInfo?.colorCode
-  );
   const ref = useRef<HTMLDivElement>(null);
 
   const [isReviewInfoOpen, setIsReviewInfoOpen] = useState(false);
@@ -48,7 +54,7 @@ const PickColor: React.FC<IProps> = ({
       colorCode: "disabled",
       colorName: "disabled",
     });
-    setSelected("disabled");
+    setSelectedColor("disabled");
   };
 
   const handleReset = () => {
@@ -58,7 +64,7 @@ const PickColor: React.FC<IProps> = ({
       colorCode: "",
       colorName: "",
     });
-    setSelected("disable");
+    setSelectedColor("disable");
   };
 
   return (
@@ -91,8 +97,8 @@ const PickColor: React.FC<IProps> = ({
                   }
                   hasDisableIcon={true}
                   handleDisableClick={handleDisableClick}
-                  selected={selected}
-                  setSelected={setSelected}
+                  selected={selectedColor}
+                  setSelected={setSelectedColor}
                 />
               </div>
             </div>
@@ -126,7 +132,7 @@ const PickColor: React.FC<IProps> = ({
         workSpaceInfo={workSpaceInfo}
         setIsPickColorOpen={setIsPickColorOpen}
         setWorkSpaceInfo={setWorkSpaceInfo}
-        setSelected={setSelected}
+        setSelected={setSelectedColor}
       />
     </>
   );

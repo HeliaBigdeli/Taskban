@@ -1,41 +1,45 @@
-import { useEffect, useState } from "react";
-import { AXIOS } from "../../../config/axios.config";
+import { useEffect } from "react";
 import API_URL from "../../../constants/api.url";
 import Item from "./Item";
+import useAxios from "../../../hooks/useAxios";
+import { useSelector } from "react-redux";
+import { selectUpdate } from "../../../features/updateSlice";
+import { store } from "../../../app/store";
 interface IData {
   name: string;
-  id: number;
+  id?: number;
   color: string;
   hasProject?: boolean;
 }
 
 const List: React.FC = (): JSX.Element => {
-  const [data, setData] = useState<IData[]>([]);
+  const [response, error, loading, fetcher] = useAxios();
 
-  async function getWorkSpaces() {
-    try {
-      const response = await AXIOS.get(API_URL.WorkSpaces);
-      if (response.status === 200) setData(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  }
+  const update = store.getState().update.workspace;
+
+  const getWorkSpace = async () => {
+    await fetcher("get", API_URL.WorkSpaces);
+  };
 
   useEffect(() => {
-    getWorkSpaces();
-    console.log(data);
-  }, []);
+    console.log(update);
+    getWorkSpace();
+  }, [update]);
 
   return (
     <ul>
-      {data.map((item) => (
-        <Item
-          key={item.id}
-          text={item.name}
-          color={item.color}
-          hasProject={item.hasProject}
-        ></Item>
-      ))}
+      {loading ? "Loading..." : ""}
+      {error ? "ورک اسپیسی وجود ندارد" : ""}
+      {response?.length
+        ? response.map((item: IData) => (
+            <Item
+              key={item.id}
+              text={item.name}
+              color={item.color}
+              hasProject={item.hasProject}
+            ></Item>
+          ))
+        : "ورک اسپیسی وجود ندارد"}
     </ul>
   );
 };

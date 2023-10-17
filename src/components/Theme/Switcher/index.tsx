@@ -1,5 +1,6 @@
 import Icon from "../../Common/Icon";
 import { useRef } from "react";
+import "./style.module.css";
 
 const Switcher: React.FC = () => {
   const myIconRef = useRef<HTMLElement>(null);

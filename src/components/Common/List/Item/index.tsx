@@ -46,7 +46,8 @@ const ListItem: React.FC<IProps> = ({
         >
           <div> {text}</div>
           <span
-            className={`w-[20px] h-[20px] bg-${color} rounded-md ml-XS inline-block`}
+            className={`w-[20px] h-[20px] rounded-md ml-XS inline-block`}
+            style={{ backgroundColor: color }}
           ></span>
         </div>
         {hasProject && (

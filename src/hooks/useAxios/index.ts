@@ -1,12 +1,17 @@
 import { useEffect, useState } from "react";
 import { AXIOS } from "../../config/axios.config";
 
+type Body = {
+  [key: string]: string
+}
+
 const useAxios = () => {
   const [response, setResponse] = useState<any>(null);
   const [error, setError] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState<boolean>(false);
 
-  const fetcher = async (method, url, body = null) => {
+  const fetcher = async (method: 'get' | 'post' | 'put' | 'patch' | 'delete', url: string, body: Body = {}) => {
+    setLoading(true)
     try {
       const res = await AXIOS[method.toLowerCase()](url, body);
       setResponse(res?.data);
@@ -18,7 +23,7 @@ const useAxios = () => {
   };
 
   useEffect(() => {
-    console.log('rerender')
+    console.log('useAxios rerendered')
   }, [response, error, loading]);
 
   return [response, error, loading, fetcher];

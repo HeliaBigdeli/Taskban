@@ -18,7 +18,7 @@ const ProfileLayout: React.FC = (): JSX.Element => {
           کوئرا تسک منیجر
         </h2>
         <div className="flex flex-col items-end ">
-          <Link to="/board">
+          <Link to="/workspace">
           <Button text="بازگشت" type="button" hasIcon={true} onClick={handleClick}
             className="bg-brand-primary text-white text-xl rounded-md w-[113px] h-XL justify-start mb-[36px] p-[4px]"
             icon={{

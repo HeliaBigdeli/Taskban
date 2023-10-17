@@ -11,10 +11,10 @@ interface IIcon {
 }
 
 interface IProps {
-  inputValue?: string | number,
+  inputValue?: string | number;
   name: string;
   id: string;
-  type: "text" | "number" | "email" | "password" | "tel" | "hidden";
+  type: "text" | "number" | "email" | "password" | "tel" | "hidden" | "file";
   label?: string;
   hasLabel?: boolean;
   placeholder?: string;
@@ -22,16 +22,18 @@ interface IProps {
     text?: string;
     link?: string;
   };
+  hidden?: boolean;
   showError?: boolean;
   onChange: (name: string, value: string) => void;
   hasIcon?: boolean;
   icon?: IIcon;
   className?: string;
   autoFocus?: boolean;
-  onFocus?: (e: React.FocusEvent<HTMLInputElement>) => void
+  onFocus?: (e: React.FocusEvent<HTMLInputElement>) => void;
 }
 
 const Input: React.FC<IProps> = ({
+  hidden = false,
   inputValue,
   autoFocus = false,
   name,
@@ -67,6 +69,7 @@ const Input: React.FC<IProps> = ({
         )}
         <div className="relative flex items-center justify-end">
           <input
+            hidden={hidden}
             onFocus={onFocus}
             value={value}
             autoFocus={autoFocus}

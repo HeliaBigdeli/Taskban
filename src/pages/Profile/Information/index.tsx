@@ -1,5 +1,3 @@
-import Dropdown from "../../../components/Common/Dropdown";
-import DropdownItem from "../../../components/Common/Dropdown/DropdownItem";
 import Button from "../../../components/Common/Form/Button";
 import Input from "../../../components/Common/Form/Input";
 import ProfileImage from "../../../components/Common/ProfileImage";
@@ -39,26 +37,7 @@ const Account: React.FC = (): JSX.Element => {
   };
 
   return (
-    <div className="flex flex-row-reverse">
-        <Dropdown type="button" buttonText="اشتراک" className="w-[160px]">
-        <DropdownItem
-          onClick={() => { }}
-          title="11"
-          hasIcon={true}
-          icon={{ icon: 'edit' }}
-          hasDescription={true}
-          description="توضیحات اگر داره" />
-      </Dropdown>
-      <Dropdown type="icon" buttonText="اشتراک" className="w-[160px]">
-        <DropdownItem
-          onClick={() => { }}
-          title="11"
-          hasIcon={true}
-          icon={{ icon: 'edit', color: 'red' }}
-          hasDescription={true}
-          description="توضیحات اگر داره" />
-      </Dropdown>
-    
+    <div className="flex flex-row-reverse">       
       <div className="mt-[160px] mr-[58px]">
         <h2 className="text-[31px] text-bold text-right mb-L">اطلاعات فردی</h2>
         <div className="flex flex-row-reverse items-center">

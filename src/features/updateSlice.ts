@@ -2,11 +2,11 @@ import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../app/store";
 
 interface ISection {
-  workspace: boolean;
+  workspace: number;
 }
 
 const initialState: ISection = {
-  workspace: false,
+  workspace: 0,
 };
 
 export const updateSlice = createSlice({
@@ -14,13 +14,13 @@ export const updateSlice = createSlice({
   initialState,
   reducers: {
     addWorkSpace: (state) => {
-      state.workspace = true;
+      state.workspace += 1;
     },
   },
 });
 
 export const { addWorkSpace } = updateSlice.actions;
 
-export const selectUpdate = (state: RootState) => state.update;
+export const workSpaceUpdate = (state: RootState) => state.update;
 
 export default updateSlice.reducer;

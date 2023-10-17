@@ -3,7 +3,7 @@ import API_URL from "../../../constants/api.url";
 import Item from "./Item";
 import useAxios from "../../../hooks/useAxios";
 import { useSelector } from "react-redux";
-import { selectUpdate } from "../../../features/updateSlice";
+import { workSpaceUpdate } from "../../../features/updateSlice";
 
 interface IData {
   name: string;
@@ -15,7 +15,7 @@ interface IData {
 const List: React.FC = (): JSX.Element => {
   const [response, error, loading, fetcher] = useAxios();
 
-  const update = useSelector(selectUpdate);
+  const update = useSelector(workSpaceUpdate);
 
   const getWorkSpace = async () => {
     await fetcher("get", API_URL.WorkSpaces);
@@ -28,9 +28,8 @@ const List: React.FC = (): JSX.Element => {
   return (
     <ul>
       {loading ? "Loading..." : ""}
-      {error ? "ورک اسپیسی وجود ندارد" : ""}
-      {response?.length
-        ? response.map((item: IData) => (
+      {error && !loading ? "ورک اسپیسی وجود ندارد" : ""}
+      {response?.map((item: IData) => (
             <Item
               key={item.id}
               text={item.name}
@@ -38,7 +37,7 @@ const List: React.FC = (): JSX.Element => {
               hasProject={item.hasProject}
             ></Item>
           ))
-        : "ورک اسپیسی وجود ندارد"}
+        }
     </ul>
   );
 };

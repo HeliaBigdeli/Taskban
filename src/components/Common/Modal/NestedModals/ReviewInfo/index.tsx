@@ -1,5 +1,7 @@
 import Modal from "../..";
 import image from "../../../../../assets/images/member.png";
+import { AXIOS } from "../../../../../config/axios.config";
+import API_URL from "../../../../../constants/api.url";
 import Button from "../../../Form/Button";
 import { Dispatch, SetStateAction } from "react";
 
@@ -32,7 +34,7 @@ const ReviewInfo: React.FC<IProps> = ({
   setSelected,
 }): JSX.Element => {
   const handleCreate = () => {
-    console.log(workSpaceInfo);
+    postWorkSpace(workSpaceInfo);
   };
 
   const handleBackClick = () => {
@@ -49,6 +51,22 @@ const ReviewInfo: React.FC<IProps> = ({
     });
     if (setSelected) setSelected("disable");
   };
+
+  async function postWorkSpace(workSpaceInfo: {
+    name?: string;
+    colorName?: string;
+    colorCode?: string;
+  }) {
+    try {
+      const response = await AXIOS.post(API_URL.WorkSpaces, {
+        name: workSpaceInfo.name,
+        color: workSpaceInfo.colorCode,
+      });
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   return (
     <>

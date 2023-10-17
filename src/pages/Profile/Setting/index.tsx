@@ -1,18 +1,8 @@
 import ColorPicker from "../../../components/Common/ColorPicker";
 import Button from "../../../components/Common/Form/Button";
 import Switcher from "../../../components/Theme/Switcher";
-import { useState } from "react";
 
 const Setting: React.FC = (): JSX.Element => {
-  /*************************************** Theme Toggle Button Starts ***************************************/
-  const [isShowing, setIsShowing] = useState(false);
-
-  const handleToggle = () => {
-    setIsShowing(!isShowing);
-  };
-
-  /*************************************** Theme Toggle Button Ends ****************************************/
-
   const onClick = () => {};
   const handleClick = () => {};
 
@@ -28,12 +18,7 @@ const Setting: React.FC = (): JSX.Element => {
           ></ColorPicker>
         </div>
         <div className="my-M flex flex-row-reverse">
-          <Switcher
-            isOn={isShowing}
-            onToggle={handleToggle}
-            labelOn="Items are showing"
-            labelOff="Items are hidden"
-          />
+          <Switcher />
         </div>
         <Button
           text="ثبت تغییرات"

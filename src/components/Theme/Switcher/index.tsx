@@ -1,40 +1,28 @@
 import Icon from "../../Common/Icon";
+import { useRef } from "react";
 
-interface IProps {
-  isOn;
-  labelOn;
-  labelOff;
-  onToggle;
-}
+const Switcher: React.FC = () => {
+  const myIconRef = useRef<HTMLElement>(null);
+  const myBtnRef = useRef<HTMLElement>(null);
 
-const Switcher: React.FC<IProps> = ({
-  isOn,
-  labelOn,
-  labelOff,
-  onToggle,
-  ...props
-}) => {
-  const handleToggle = () => {
-    onToggle(!isOn);
+  const handleClick = () => {
+    myIconRef.current?.classList.toggle("bg-[#323232]");
+    myBtnRef.current?.classList.toggle("justify-end");
   };
 
   return (
-    <div>
-      {/*<span className="flex items-center justify-end w-[56px] bg-lightgray_200 rounded-md cursor-pointer">
-        <Icon icon="sun" color="#818181" className="bg-white m-1 rounded-md" />
-  </span>*/}
-
-      <label className="toggle-label">
-        <input
-          type="checkbox"
-          checked={isOn}
-          onChange={handleToggle}
-          {...props}
-        />
-        <br />
-        <span className="toggle-label-text">{isOn ? labelOn : labelOff}</span>
-      </label>
-    </div>
+    <span
+      ref={myBtnRef}
+      onClick={handleClick}
+      className="flex items-center justify-end w-[65px] bg-lightgray_200 rounded-md cursor-pointer"
+    >
+      <Icon
+        ref={myIconRef}
+        icon="sun"
+        color="#818181"
+        className="bg-white m-1 rounded-md p-[3px]"
+      />
+    </span>
   );
 };
 

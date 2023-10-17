@@ -15,33 +15,12 @@ import ProjectModal from "../../Dashboard/ProjectModal";
 import { logout } from "../../../features/authSlice";
 import { useDispatch } from "react-redux";
 
-const data = [
-  {
-    id: 1,
-    text: "درس مدیریت پروژه",
-    hasProject: true,
-    color: "indigo_secondary",
-  },
-  { id: 2, text: "کارهای شخصی", hasProject: false, color: "indigo_secondary" },
-  { id: 3, text: "درس کامپایلر", hasProject: true, color: "lightgray_300" },
-  { id: 4, text: "پروژه کوئرا", hasProject: false, color: "blue_secondary" },
-];
-
 const DashboardLayout: React.FC = (): JSX.Element => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const portals = document.getElementById("portals") as Element;
   const [projectModal, setProjectModal] = useState<boolean>(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  /*************************************** Theme Toggle Button Starts ***************************************/
-  const [isShowing, setIsShowing] = useState(false);
-
-  const handleToggle = () => {
-    setIsShowing(!isShowing);
-  };
-
-  /*************************************** Theme Toggle Button Ends ****************************************/
 
   const handleProjectModal = () => {
     setProjectModal(!projectModal);
@@ -96,7 +75,7 @@ const DashboardLayout: React.FC = (): JSX.Element => {
             className: "ml-1",
           }}
         />
-        <List data={data}></List>
+        <List />
         <Button
           text="ساختن پروژه جدید"
           onClick={handleProjectModal}
@@ -111,12 +90,7 @@ const DashboardLayout: React.FC = (): JSX.Element => {
             </span>
           </div>
           <div className="flex justify-between items-center">
-            <DarkMode
-              isOn={isShowing}
-              onToggle={handleToggle}
-              labelOn="Items are showing"
-              labelOff="Items are hidden"
-            />
+            <DarkMode />
             <span
               className="flex items-center cursor-pointer"
               onClick={handleClose}

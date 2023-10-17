@@ -5,7 +5,6 @@ import Button from "../../../components/Common/Form/Button";
 import { useState } from "react";
 import { required, validate } from "../../../utils/validator";
 import API_URL from "../../../constants/api.url";
-import { getWorkSpace } from "../../../services";
 import { login } from "../../../features/authSlice";
 import { useDispatch } from "react-redux";
 import useAxios from "../../../hooks/useAxios";
@@ -51,7 +50,6 @@ const Login: React.FC = (): JSX.Element => {
           }
         })
         .catch((error) => {});
-      getWorkSpace();
       fetcher("post", API_URL.Login, values);
     }
   };

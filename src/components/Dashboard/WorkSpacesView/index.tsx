@@ -20,10 +20,7 @@ const WorkSpacesView: React.FC = (): JSX.Element => {
         {workspaces.length && workspaces.map((item) => {
           return <WorkSpace key={item.id} {...item} />
         })}
-        {/* <WorkSpace color="green" title="درس مدیریت پروژه" />
-        <WorkSpace color="orange" title="کارهای شخصیی" />
-        <WorkSpace color="red" title="درس کامپایلر" />
-        <WorkSpace color="blue" title="درس طراحی الگوریتم" /> */}
+        
       </div>
     </div>
   );

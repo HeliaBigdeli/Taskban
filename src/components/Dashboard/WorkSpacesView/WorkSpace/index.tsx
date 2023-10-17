@@ -57,11 +57,11 @@ const WorkSpace: React.FC<IWorkSpaceProps> = ({
                 <WorkSpacesItem
                   key={item.id}
                   {...item}
+                  workspace_id={id}
                   color={colorVariants.grad}
                 />
               );
             })}
-          {/* <WorkSpacesItem color={colorVariants.grad} /> */}
         </div>
         <div className=" w-full h-0.5 bg-gray-secondary"></div>
       </div>

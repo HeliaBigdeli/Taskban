@@ -5,15 +5,16 @@ import { useState } from "react";
 import Navigator from "../../../Dashboard/CalenderView/Navigator";
 import FilterModal from "../../../Dashboard/FilterModal";
 import ShareModal from "../../../Dashboard/ShareModal";
+import { useSelector } from "react-redux";
 
 interface IProps {
   title?: string;
 }
 const Header: React.FC<IProps> = ({ title }): JSX.Element => {
-  const { pathname } = useLocation(); 
+  const { pathname } = useLocation();
   const [filterModal, setFilterModal] = useState<boolean>(false);
   const [shareModal, setShareModal] = useState<boolean>(false);
-
+  const { workspace_name } = useSelector((store: any) => store.workspaceId);
   const handleFilterModal = () => {
     setFilterModal(!filterModal);
   };
@@ -62,7 +63,9 @@ const Header: React.FC<IProps> = ({ title }): JSX.Element => {
               color={`${pathname === "/list" ? "#208d8e" : "#323232"}`}
             />
           </Link>
-          <span className="font-bold pl-S justify-end text-xl">پروژ</span>
+          <span className="font-bold pl-S justify-end text-xl">
+            {workspace_name}
+          </span>
         </div>
         <button
           onClick={handleShareModal}
@@ -102,11 +105,13 @@ const Header: React.FC<IProps> = ({ title }): JSX.Element => {
           icon={{
             icon: "search",
           }}
-          onChange={(name, value) => {console.log(name, value)}}
+          onChange={(name, value) => {
+            console.log(name, value);
+          }}
         />
       </div>
-      {/*----------------------------------------------- Sharing & Filter Modal --------------------------------------------- */}     
-       {shareModal && (
+      {/*----------------------------------------------- Sharing & Filter Modal --------------------------------------------- */}
+      {shareModal && (
         <ShareModal modal={shareModal} setModal={handleShareModal} />
       )}
       {filterModal && (

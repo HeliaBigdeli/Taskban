@@ -1,6 +1,4 @@
 import Icon from "../../../../Common/Icon";
-import ProfileImage from "../../../../Common/ProfileImage";
-import UserIcon from "../../../../Common/UserIcon";
 import MembersThumb from "../../../../Common/MembersThumb";
 import ListItemTitle from "./ListItemTitle";
 import { useSelector } from "react-redux";

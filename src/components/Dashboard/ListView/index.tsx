@@ -4,6 +4,7 @@ import TaskList from "./TaskList";
 import Button from "../../Common/Form/Button";
 import TaskModal from "../TaskModal";
 import { AXIOS } from "../../../config/axios.config";
+import { useSelector } from "react-redux";
 
 const ListShow: React.FC = (): JSX.Element => {
   const [isShown, setIsShown] = useState<boolean>(true);
@@ -15,9 +16,14 @@ const ListShow: React.FC = (): JSX.Element => {
   const handleTaskModal = () => {
     setTaskModal(!taskModal);
   };
+    const { workspace_id, project_id } = useSelector(
+      (store: any) => store.workspaceId
+    );
   const fetch = async () => {
     try {
-      const response = await AXIOS.get("workspaces/92/projects/13/boards/");
+      const response = await AXIOS.get(
+        `workspaces/${workspace_id}/projects/${project_id}/boards/`
+      );
       setBoardTaks(response.data);
       console.log(response.data);
     } catch (error) {}

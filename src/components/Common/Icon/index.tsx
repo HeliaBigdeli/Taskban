@@ -1,5 +1,6 @@
 import list from "./list";
 import styles from "./style.module.css";
+import React from "react";
 
 interface IProps {
   color?: string;
@@ -7,22 +8,25 @@ interface IProps {
   size?: number;
   style?: {};
   className?: string;
-  onClick?:(e: React.MouseEvent<HTMLElement>) => void
+  onClick?: (e: React.MouseEvent<HTMLElement>) => void;
 }
 
-const Icon: React.FC<IProps> = ({
-  icon,
-  color = "#323232",
-  size = 24,
-  style,
-  className,
-  onClick
-}) => {
-  return (
-    <span className={`${styles.inlineBlock} ${className}`} style={style} onClick={onClick}>
-      {list[`${icon}`](color, size)}
-    </span>
-  );
-};
+const Icon = React.forwardRef(
+  (props: IProps, ref: React.LegacyRef<HTMLSpanElement> | undefined) => {
+    return (
+      <span
+        ref={ref}
+        className={`${styles.inlineBlock} ${props.className}`}
+        style={props.style}
+        onClick={props.onClick}
+      >
+        {list[`${props.icon}`](
+          props.color ? props.color : "#323232",
+          props.size ? props.size : 24
+        )}
+      </span>
+    );
+  }
+);
 
 export default Icon;

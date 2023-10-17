@@ -1,7 +1,12 @@
 import Modal from "../..";
 import image from "../../../../../assets/images/member.png";
+import API_URL from "../../../../../constants/api.url";
 import Button from "../../../Form/Button";
 import { Dispatch, SetStateAction } from "react";
+import useAxios from "../../../../../hooks/useAxios";
+import { useDispatch } from "react-redux";
+import { addWorkSpace } from "../../../../../features/updateSlice";
+import { useEffect } from "react";
 
 interface IProps {
   isReviewInfoOpen: boolean;
@@ -31,8 +36,21 @@ const ReviewInfo: React.FC<IProps> = ({
   setWorkSpaceInfo,
   setSelected,
 }): JSX.Element => {
+  const [response, error, loading, fetcher] = useAxios();
+
+  const dispatch = useDispatch();
+
+  const postWorkSpace = async () => {
+    await fetcher("post", API_URL.WorkSpaces, {
+      name: workSpaceInfo.name,
+      color: workSpaceInfo.colorCode,
+    });
+  };
+
   const handleCreate = () => {
-    console.log(workSpaceInfo);
+    postWorkSpace();
+    handleReset();
+    setIsReviewInfoOpen(false);
   };
 
   const handleBackClick = () => {
@@ -50,6 +68,11 @@ const ReviewInfo: React.FC<IProps> = ({
     if (setSelected) setSelected("disable");
   };
 
+  useEffect(() => {
+    if (response) {
+      dispatch(addWorkSpace());
+    }
+  }, [response]);
   return (
     <>
       <Modal

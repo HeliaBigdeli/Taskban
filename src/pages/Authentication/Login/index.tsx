@@ -8,7 +8,6 @@ import API_URL from "../../../constants/api.url";
 import { login } from "../../../features/authSlice";
 import { useDispatch } from "react-redux";
 import useAxios from "../../../hooks/useAxios";
-
 const rules = {
   username: [required],
   password: [required],
@@ -47,8 +46,8 @@ const Login: React.FC = (): JSX.Element => {
     if (response) {
       dispatch(login(response));
       navigate("/workspace");
-    }   
-  }, [response])
+    }
+  }, [response]);
 
   return (
     <Card page={"login"} errors={errors}>

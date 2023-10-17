@@ -3,7 +3,7 @@ import Input from "../../../components/Common/Form/Input";
 import ProfileImage from "../../../components/Common/ProfileImage";
 import { selectUser } from "../../../features/authSlice";
 import { required, validate } from "../../../utils/validator";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 const rules = {
@@ -35,6 +35,9 @@ const Account: React.FC = (): JSX.Element => {
     const resultErrors = validate(values, rules);
     setErrors(resultErrors);
   };
+
+  useEffect(() => {
+  }, [user])
 
   return (
     <div className="flex flex-row-reverse">       

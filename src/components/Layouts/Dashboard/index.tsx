@@ -14,20 +14,7 @@ import NestedModals from "../../Common/Modal/NestedModals";
 import ProjectModal from "../../Dashboard/ProjectModal";
 import { logout, selectUser } from "../../../features/authSlice";
 import { useDispatch, useSelector } from "react-redux";
-import Profile from "../../Common/MembersThumb";
 import ProfileImage from "../../Common/ProfileImage";
-
-const data = [
-  {
-    id: 1,
-    text: "درس مدیریت پروژه",
-    hasProject: true,
-    color: "indigo_secondary",
-  },
-  { id: 2, text: "کارهای شخصی", hasProject: false, color: "indigo_secondary" },
-  { id: 3, text: "درس کامپایلر", hasProject: true, color: "lightgray_300" },
-  { id: 4, text: "پروژه کوئرا", hasProject: false, color: "blue_secondary" },
-];
 
 const DashboardLayout: React.FC = (): JSX.Element => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -50,9 +37,7 @@ const DashboardLayout: React.FC = (): JSX.Element => {
     navigate("/login");
   };
 
-  useEffect(() => {
-
-  }, [user])
+  useEffect(() => {}, [user]);
   return (
     <div className="flex px-2XL">
       <div className="flex-grow flex-col w-full overflow-hidden">
@@ -94,7 +79,7 @@ const DashboardLayout: React.FC = (): JSX.Element => {
             className: "ml-1",
           }}
         />
-        <List data={data} />
+        <List />
         <Button
           text="ساختن پروژه جدید"
           onClick={handleProjectModal}

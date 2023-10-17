@@ -49,7 +49,7 @@ const ListItem: React.FC<IListItemProps> = ({ color, name }): JSX.Element => {
         <div className="flex w-[70px] px-2.5 justify-center items-center gap-2.5 text-xs font-normal text-[#0E0E0E]">
           <MembersThumb members={members} />
         </div>
-        <ListItemTitle title={"۶ آبان"} />
+        <ListItemTitle title="۶ آبان" />
         <ListItemTitle title={<Icon icon="flag" size={16} color="#FA5252" />} />
         <ListItemTitle
           title={<Icon icon="paragraph" size={16} color="#BDC0C6" />}

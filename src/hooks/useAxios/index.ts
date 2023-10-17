@@ -23,7 +23,6 @@ const useAxios = () => {
   };
 
   useEffect(() => {
-    console.log('useAxios rerendered')
   }, [response, error, loading]);
 
   return [response, error, loading, fetcher];

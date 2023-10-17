@@ -1,8 +1,10 @@
 interface IWorkSpacesItemProps {
   color: string;
+  name:string
 }
 const WorkSpacesItem: React.FC<IWorkSpacesItemProps> = ({
   color,
+  name
 }): JSX.Element => {
   return (
     <div
@@ -11,7 +13,7 @@ const WorkSpacesItem: React.FC<IWorkSpacesItemProps> = ({
         background: `${color}`,
       }}
     >
-      پروژه اول
+      {name}
     </div>
   );
 };

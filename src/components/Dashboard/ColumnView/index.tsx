@@ -128,7 +128,7 @@ const ColumnView: React.FC = (): JSX.Element => {
         style={{ direction: "rtl" }}
       >
         <DragDropContext onDragEnd={handleDragDrop}>
-          {boardTaks &&
+          {boardTaks.length &&
             boardTaks.map((item) => {
               return (
                 <ColumnContainer

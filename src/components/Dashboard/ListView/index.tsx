@@ -35,12 +35,10 @@ const ListShow: React.FC = (): JSX.Element => {
           !isShown ? "opacity-0 -z-10" : "opacity-100 z-10"
         } relative flex w-[1011px] flex-col items-end gap-XL mr-6 ml-12 h-[800px] transition-all duration-300 `}
       >
-        {boardTaks && boardTaks.map((item) => {
+        {boardTaks.length && boardTaks.map((item) => {
           return <TaskList key={item.id} {...item} />;
         })}
-        {/* <TaskList />
-        <TaskList />
-        <TaskList /> */}
+         
       </div>
       <Button
         text="تسک جدید"

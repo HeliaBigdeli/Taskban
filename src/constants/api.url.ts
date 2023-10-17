@@ -3,6 +3,7 @@ export const API_URL = {
     Register: "accounts/",
     Refresh: "accounts/refresh/",
     WorkSpaces: "workspaces/",
+    Projects: "projects/",
     AccountDetails: "accounts/",
     ChangePassword: "accounts/change-password/",
     Settings: "settings/",

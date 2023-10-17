@@ -14,7 +14,6 @@ import NestedModals from "../../Common/Modal/NestedModals";
 import ProjectModal from "../../Dashboard/ProjectModal";
 import { logout, selectUser } from "../../../features/authSlice";
 import { useDispatch, useSelector } from "react-redux";
-import Profile from "../../Common/MembersThumb";
 import ProfileImage from "../../Common/ProfileImage";
 
 const DashboardLayout: React.FC = (): JSX.Element => {

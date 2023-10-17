@@ -51,8 +51,8 @@ const DashboardLayout: React.FC = (): JSX.Element => {
   };
 
   useEffect(() => {
-
   }, [user])
+
   return (
     <div className="flex px-2XL">
       <div className="flex-grow flex-col w-full overflow-hidden">

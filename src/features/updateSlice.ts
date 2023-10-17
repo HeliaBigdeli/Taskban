@@ -14,9 +14,7 @@ const initialState: ISection = {
     initialState,
     reducers:{
       addWorkSpace: (state) => {
-        state = {
-            workspace: true
-        }    
+        state.workspace= true
       }
     }
   })

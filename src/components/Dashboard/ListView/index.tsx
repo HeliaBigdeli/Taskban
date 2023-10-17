@@ -23,7 +23,7 @@ const ListShow: React.FC = (): JSX.Element => {
     } catch (error) {}
   };
   return (
-    <div style={{ direction: "rtl" }} className={` pr-S `}>
+    <div style={{ direction: "rtl" }} className={`pr-S`}>
       <div className="flex items-center gap-XS my-L">
         <button className="h-6 inline" onClick={() => setIsShown(!isShown)}>
           <Icon icon="chevron_down_circle" size={24} />

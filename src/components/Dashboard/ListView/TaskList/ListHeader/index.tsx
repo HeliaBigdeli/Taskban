@@ -26,7 +26,7 @@ const ListHeader: React.FC<IListHeaderProps> = ({
             <Icon icon="chevron_down_circle" size={20} />
           </button>
           <div
-            className={`flex  py-1 px-1.5 items-start gap-2.5 rounded-[4px] bg-[#F92E8F] text-white text-center text-base font-medium ${
+            className={`flex py-1 px-1.5 items-start gap-2.5 rounded-[4px] bg-[#F92E8F] text-white text-center text-base font-medium ${
               color && colorVariants[color as keyof typeof colorVariants]
             }`}
           >
@@ -38,7 +38,7 @@ const ListHeader: React.FC<IListHeaderProps> = ({
           <span className="self-end">تسک</span>
         </div>
       </section>
-      <section className="flex justify-start gap-[70px] ">
+      <section className="flex justify-center gap-[70px]">
         <HeaderTitle title="اعضا" />
         <HeaderTitle title="ددلاین" />
         <HeaderTitle title="اولویت" />

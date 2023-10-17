@@ -12,7 +12,7 @@ type Auth = {
   thumbnail: string
 };
 
-const initialState: Auth = localStorage.hasOwnProperty('user')
+const initialState: Auth = localStorage.getItem('user')
   ? JSON.parse(localStorage.getItem('user') || '{}')
   : {
     user_id: 0,
@@ -27,17 +27,18 @@ export const authSlice = createSlice({
   initialState,
   reducers: {
     login: (state, action: PayloadAction<Auth>) => {
-      state = {
+      const newState = {
         user_id: action.payload?.user_id,
         first_name: action.payload?.first_name,
         last_name: action.payload?.last_name,
         access: action.payload?.access,
         thumbnail: action.payload?.thumbnail,
       }
+      state = newState
 
       // save refresh token in cookie and some user information in localstorage
       Cookies.set("refresh", action.payload?.refresh, { expires: 365 });
-      localStorage.setItem('user', JSON.stringify(state))
+      localStorage.setItem('user', JSON.stringify(newState))
     },
     logout: (state) => {
       state = {

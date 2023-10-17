@@ -48,8 +48,10 @@ export const authSlice = createSlice({
       localStorage.removeItem("user");
     },
     refresh: (state, action: PayloadAction<Auth>) => {
-      state.access = action.payload.access;
-
+      state = {
+        ...state,
+        access: action.payload.access,
+      };
       localStorage.setItem("user", JSON.stringify(state));
     },
   },

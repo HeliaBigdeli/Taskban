@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Icon from "../../Icon";
+import { AXIOS } from "../../../../config/axios.config";
+import API_URL from "../../../../constants/api.url";
+import axios from "axios";
 
 interface IProps {
   text: string;
   color: string;
-  hasProject: boolean;
+  hasProject?: boolean;
 }
 
 const projects = [
@@ -17,12 +20,23 @@ const projects = [
 const ListItem: React.FC<IProps> = ({
   text,
   color,
-  hasProject,
+  hasProject = true,
 }): JSX.Element => {
   const [isOpen, setIsOpen] = useState(false);
   const toggleAccordion = () => {
     setIsOpen(!isOpen);
+    getProjects();
   };
+
+  async function getProjects() {
+    try {
+      const response = await axios.get(`${API_URL.WorkSpaces}${1}/`);
+      if (response.status === 200) console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return (
     <li>
       <div className="flex justify-between items-center flex-row-reverse p-[4px] h-[36px] mt-S">
@@ -32,7 +46,8 @@ const ListItem: React.FC<IProps> = ({
         >
           <div> {text}</div>
           <span
-            className={`w-[20px] h-[20px] bg-${color} rounded-md ml-XS inline-block`}
+            className={`w-[20px] h-[20px] rounded-md ml-XS inline-block`}
+            style={{ backgroundColor: color }}
           ></span>
         </div>
         {hasProject && (

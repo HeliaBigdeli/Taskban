@@ -21,6 +21,9 @@ const CreateWorkSpace: React.FC<IProps> = ({
   setWorkSpaceInfo,
 }): JSX.Element => {
   const [isPickColorOpen, setIsPickColorOpen] = useState(false);
+  const [selectedColor, setSelectedColor] = useState<string | undefined>(
+    workSpaceInfo?.colorCode
+  );
 
   const handleChange = (name: string, value: string) => {
     setWorkSpaceInfo({
@@ -35,7 +38,13 @@ const CreateWorkSpace: React.FC<IProps> = ({
   };
 
   const handleResetInput = () => {
-    setWorkSpaceInfo({ ...workSpaceInfo, name: "" });
+    setWorkSpaceInfo({
+      ...workSpaceInfo,
+      name: "",
+      colorCode: "",
+      colorName: "",
+    });
+    if (selectedColor) setSelectedColor("disable");
   };
 
   return (
@@ -78,6 +87,8 @@ const CreateWorkSpace: React.FC<IProps> = ({
         setIsModalOpen={setIsModalOpen}
         workSpaceInfo={workSpaceInfo}
         setWorkSpaceInfo={setWorkSpaceInfo}
+        selectedColor={selectedColor}
+        setSelectedColor={setSelectedColor}
       />
     </>
   );

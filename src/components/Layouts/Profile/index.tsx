@@ -16,7 +16,7 @@ const ProfileLayout: React.FC = (): JSX.Element => {
           کوئرا تسک منیجر
         </h2>
         <div className="flex flex-col items-end ">
-          <Link to="/workspace">
+          <Link to="/workspaces">
             <Button
               text="بازگشت"
               type="button"

@@ -45,7 +45,7 @@ const Login: React.FC = (): JSX.Element => {
   useEffect(() => {
     if (response) {
       dispatch(login(response));
-      navigate("/workspace");
+      navigate("/workspaces");
     }
   }, [response]);
 

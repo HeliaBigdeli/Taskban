@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import ColumnContainer from "./ColumnContainer";
-import { useDraggable } from "react-use-draggable-scroll";
 import style from "./style.module.css";
 import Button from "../../Common/Form/Button";
 import Icon from "../../Common/Icon";
@@ -8,9 +7,9 @@ import TaskModal from "../TaskModal";
 import React from "react";
 import NewBoardModal from "./NewBoardModal";
 import { DragDropContext } from "react-beautiful-dnd";
-import { AXIOS } from "../../../config/axios.config";
-import { useSelector } from "react-redux";
+import API_URL from "../../../constants/api.url";
 import useAxios from "../../../hooks/useAxios";
+import { useParams } from 'react-router-dom';
 
 const ColumnView: React.FC = (): JSX.Element => {
   const ref =
@@ -18,19 +17,20 @@ const ColumnView: React.FC = (): JSX.Element => {
 
   const [boardTaks, setBoardTaks] = useState<any>([]);
   const [newBoardModal, setNewBoardModal] = useState<boolean>(false);
-
   const [mouseDown, setMouseDown] = useState<boolean>(true);
   const [taskModal, setTaskModal] = useState<boolean>(false);
-  // const { events } = useDraggable(ref, {
-  //   isMounted: mouseDown,
-  // });
-  const { workspace_id, project_id } = useSelector(
-    (store: any) => store.workspaceId
-  );
-  useEffect( () => {
-    fetch()
+  const [response, error, loading, fetcher] = useAxios();
+  const params = useParams()
+
+  useEffect(() => {
+    fetcher(
+      "get",
+      `${API_URL.WorkSpaces}${params.wid}/${API_URL.Projects}${params.pid}/${API_URL.Boards}`
+    );
+    if (response) {
+      setBoardTaks(response)
+    }
   }, []);
-  
 
   const handleTaskModal = () => {
     setTaskModal(!taskModal);
@@ -39,17 +39,7 @@ const ColumnView: React.FC = (): JSX.Element => {
   const handleNewBoardModal = () => {
     setNewBoardModal(!newBoardModal);
   };
-  const fetch = async () => {
-    try {
-      const response = await AXIOS.get(
-        `workspaces/${workspace_id}/projects/${project_id}/boards/`,
-        
-      );
-      setBoardTaks(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+
   const handleDragDrop = (results: any) => {
     const { source, destination } = results;
     if (!destination) return;
@@ -95,9 +85,9 @@ const ColumnView: React.FC = (): JSX.Element => {
          ${style.scroll}`}
         style={{ direction: "rtl" }}
       >
-        {boardTaks.length && (
+        {
           <DragDropContext onDragEnd={handleDragDrop}>
-            {boardTaks.map((item) => {
+            {boardTaks?.map((item) => {
               return (
                 <ColumnContainer
                   key={item.id}
@@ -107,7 +97,7 @@ const ColumnView: React.FC = (): JSX.Element => {
               );
             })}
           </DragDropContext>
-        )}
+        }
 
         <button
           onClick={handleNewBoardModal}

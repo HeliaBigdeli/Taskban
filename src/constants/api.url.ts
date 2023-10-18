@@ -4,6 +4,7 @@ export const API_URL = {
     Refresh: "accounts/refresh/",
     WorkSpaces: "workspaces/",
     Projects: "projects/",
+    Boards: "boards/",
     AccountDetails: "accounts/",
     ChangePassword: "accounts/change-password/",
     Settings: "settings/",

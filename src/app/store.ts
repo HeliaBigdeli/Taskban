@@ -1,17 +1,17 @@
-import {configureStore} from '@reduxjs/toolkit'
-import authReducer from '../features/authSlice'
-import workspaceIdSlice from "../features/workspacesSlice";
-import updateReducer from '../features/updateSlice';
+import { configureStore } from "@reduxjs/toolkit";
+import authReducer from "../features/authSlice";
+import updateReducer from "../features/updateSlice";
+import viewReducer from "../features/viewSlice";
 
 export const store = configureStore({
-    reducer: {
-        auth: authReducer,
-        workspaceId:workspaceIdSlice,
-        update: updateReducer,
-    }
-})    
+  reducer: {
+    auth: authReducer,
+    update: updateReducer,
+    view: viewReducer,
+  },
+});
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
-export type RootState = ReturnType<typeof store.getState>
+export type RootState = ReturnType<typeof store.getState>;
 // Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
-export type AppDispatch = typeof store.dispatch
+export type AppDispatch = typeof store.dispatch;

@@ -1,26 +1,24 @@
 import WorkSpace from "./WorkSpace";
+import { useEffect } from "react";
 import useAxios from "../../../hooks/useAxios";
-import { useEffect, useState } from "react";
-import { AXIOS } from "../../../config/axios.config";
+import API_URL from "../../../constants/api.url";
+import { workSpaceUpdate } from "../../../features/updateSlice";
+import { useSelector } from "react-redux";
 
 const WorkSpacesView: React.FC = (): JSX.Element => {
-  const [workspaces, setWorkspaces] = useState<any>([]);
+  const [response, error, loading, fetcher] = useAxios();
+  const update = useSelector(workSpaceUpdate);
+
   useEffect(() => {
-    fetch();
-  }, []);
-  const fetch = async () => {
-    try {
-      const response = await AXIOS.get("workspaces/");
-      setWorkspaces(response.data);
-    } catch (error) {}
-  };
+    fetcher("get", API_URL.WorkSpaces);
+  }, [update]);
+
   return (
-    <div className="w-full h-full pt-16 pr-8 ">
-      <div className="flex flex-col items-end gap-L h-[800px]">
-        {workspaces.length && workspaces.map((item) => {
-          return <WorkSpace key={item.id} {...item} />
+    <div className="w-full h-full pt-14 pr-8 ">
+      <div className="flex flex-col items-end gap-L">
+        {response?.map((item) => {
+          return <WorkSpace key={item.id} {...item} />;
         })}
-        
       </div>
     </div>
   );

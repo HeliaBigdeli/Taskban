@@ -3,31 +3,27 @@ import Icon from "../../Common/Icon";
 import TaskList from "./TaskList";
 import Button from "../../Common/Form/Button";
 import TaskModal from "../TaskModal";
-import { AXIOS } from "../../../config/axios.config";
-import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import API_URL from "../../../constants/api.url";
+import useAxios from "../../../hooks/useAxios";
 
-const ListShow: React.FC = (): JSX.Element => {
+const ListShow: React.FC = (data): JSX.Element => {
   const [isShown, setIsShown] = useState<boolean>(true);
   const [taskModal, setTaskModal] = useState<boolean>(false);
-  const [boardTaks, setBoardTaks] = useState<any>([]);
-  useEffect(() => {
-    fetch();
-  }, []);
+  const params = useParams();
+  const [response, error, loading, fetcher] = useAxios();
+
   const handleTaskModal = () => {
     setTaskModal(!taskModal);
   };
-    const { workspace_id, project_id } = useSelector(
-      (store: any) => store.workspaceId
+
+  useEffect(() => {
+    fetcher(
+      "get",
+      `${API_URL.WorkSpaces}${params.wid}/${API_URL.Projects}${params.pid}/${API_URL.Boards}`
     );
-  const fetch = async () => {
-    try {
-      const response = await AXIOS.get(
-        `workspaces/${workspace_id}/projects/${project_id}/boards/`
-      );
-      setBoardTaks(response.data);
-      console.log(response.data);
-    } catch (error) {}
-  };
+  }, []);
+
   return (
     <div style={{ direction: "rtl" }} className={`pr-S`}>
       <div className="flex items-center gap-XS my-L">
@@ -39,12 +35,11 @@ const ListShow: React.FC = (): JSX.Element => {
       <div
         className={`${
           !isShown ? "opacity-0 -z-10" : "opacity-100 z-10"
-        } relative flex w-[1011px] flex-col items-end gap-XL mr-6 ml-12 h-[800px] transition-all duration-300 `}
+        } relative flex flex-col items-end gap-XL mr-6 ml-12 transition-all duration-300 `}
       >
-        {boardTaks.length && boardTaks.map((item) => {
+        {response?.map((item) => {
           return <TaskList key={item.id} {...item} />;
         })}
-         
       </div>
       <Button
         text="تسک جدید"

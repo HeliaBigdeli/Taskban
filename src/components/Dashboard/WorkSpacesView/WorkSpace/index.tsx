@@ -1,9 +1,10 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import WorkSpacesItem from "./WorkSpaceItem";
 import { useDraggable } from "react-use-draggable-scroll";
 import style from "./style.module.css";
 import Icon from "../../../Common/Icon";
-import { AXIOS } from "../../../../config/axios.config";
+import API_URL from "../../../../constants/api.url";
+import useAxios from "../../../../hooks/useAxios";
 
 interface IWorkSpaceProps {
   name: string;
@@ -16,19 +17,14 @@ const WorkSpace: React.FC<IWorkSpaceProps> = ({
   id,
 }): JSX.Element => {
   const ref = useRef<any>();
-  const [projects, setProjects] = useState<any>([]);
-
   const { events } = useDraggable(ref);
+
+  const [response, error, loading, fetcher] = useAxios();
+
   useEffect(() => {
-    fetch();
+    fetcher('get', `${API_URL.WorkSpaces}${id}/${API_URL.Projects}`);
   }, []);
-  const fetch = async () => {
-    try {
-      const response = await AXIOS.get(`workspaces/${id}/projects/`);
-      setProjects(response.data);
-      console.log(response.data);
-    } catch (error) {}
-  };
+
   const colorVariants = {
     grad: `linear-gradient(250deg, ${color} 0%, ${color}90 100%)`,
     btn: color,
@@ -45,23 +41,20 @@ const WorkSpace: React.FC<IWorkSpaceProps> = ({
           <h4 className="text-right text-2xl leading-8 font-extrabold">
             {name}
           </h4>
-          <button className="h-6 mt-1">
-            <Icon icon="plus_square" color={colorVariants.btn} size={24} />
-          </button>
+          <Icon icon="plus_square" color={colorVariants.btn} size={24} />
         </div>
 
         <div className="flex items-start gap-L my-L">
-          {projects.length &&
-            projects.map((item) => {
-              return (
-                <WorkSpacesItem
-                  key={item.id}
-                  {...item}
-                  workspace_id={id}
-                  color={colorVariants.grad}
-                />
-              );
-            })}
+          {response?.map((item) => {
+            return (
+              <WorkSpacesItem
+                key={item.id}
+                {...item}
+                workspace_id={id}
+                color={colorVariants.grad}
+              />
+            );
+          })}
         </div>
         <div className=" w-full h-0.5 bg-gray-secondary"></div>
       </div>

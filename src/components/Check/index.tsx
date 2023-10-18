@@ -37,7 +37,7 @@ const AuthCheck: React.FC<IProps> = ({ children }): JSX.Element => {
         if (response.status === 200) {
           dispatch(refresh(response.data));
           if (pathname === '/' || pathname === '/login' || pathname === '/register' || pathname === '/forgot') {
-            navigate('workspace');
+            navigate('workspaces');
           } else {
             navigate(pathname);
           }

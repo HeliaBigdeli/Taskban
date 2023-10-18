@@ -1,19 +1,20 @@
 import { useState } from "react";
 import ListHeader from "./ListHeader";
 import ListItem from "./ListItem";
+
 interface ITaskListProps {
   color?: string;
   name: string;
   is_archive: boolean;
   tasks_count: number;
-
   id: number;
-  tasks: {
+  tasks?: {
     id: number;
     name: string;
     img: string;
   }[];
 }
+
 const TaskList: React.FC<ITaskListProps> = ({
   color,
   name,
@@ -37,7 +38,7 @@ const height = `${70 * tasks_count}px`;
         className={`flex  overflow-hidden w-full flex-col transition-all duration-300 items-start gap-5 `}
         style={{ height: `${!isShown ? "0px" : height}` }}
       >
-        {tasks.map((item) => {
+        {tasks?.map((item) => {
           return <ListItem key={item.id} {...item} />;
         })}
       </div>

@@ -1,20 +1,25 @@
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import Input from "../../../Common/Form/Input";
 import Icon from "../../../Common/Icon";
 import { useState } from "react";
 import Navigator from "../../../Dashboard/CalenderView/Navigator";
 import FilterModal from "../../../Dashboard/FilterModal";
 import ShareModal from "../../../Dashboard/ShareModal";
-import { useSelector } from "react-redux";
+import { selectView } from "../../../../features/viewSlice";
+import { useSelector, useDispatch } from "react-redux";
+import { chengeView } from "../../../../features/viewSlice";
 
 interface IProps {
   title?: string;
 }
-const Header: React.FC<IProps> = ({ title }): JSX.Element => {
+
+const Header: React.FC<IProps> = (): JSX.Element => {
   const { pathname } = useLocation();
   const [filterModal, setFilterModal] = useState<boolean>(false);
   const [shareModal, setShareModal] = useState<boolean>(false);
-  const { workspace_name } = useSelector((store: any) => store.workspaceId);
+  const view = useSelector(selectView);
+  const dispatch = useDispatch();
+
   const handleFilterModal = () => {
     setFilterModal(!filterModal);
   };
@@ -23,48 +28,52 @@ const Header: React.FC<IProps> = ({ title }): JSX.Element => {
     setShareModal(!shareModal);
   };
 
+  const handleView = (type) => {
+    dispatch(chengeView({ type }));
+  };
+
   return (
     <div className="mt-XL mr-S">
       <div className="flex flex-between flex-row-reverse border-b-2 border-lightgray_300 py-S gap-S">
         <div className="flex divide-x divide-lightgray_300 font-bold">
-          <Link
-            className={`px-S flex justify-center text-base items-center  ${
-              pathname === "/calender" ? "text-brand-primary" : ""
+          <p
+            onClick={() => handleView("calender")}
+            className={`px-S flex justify-center text-base items-center cursor-pointer ${
+              view === "calender" ? "text-brand-primary" : ""
             }`}
-            to="/calender"
           >
             تقویم
             <Icon
               icon="calender_full"
-              color={`${pathname === "/calender" ? "#208d8e" : "#323232"}`}
+              color={`${view === "calender" ? "#208d8e" : "#323232"}`}
             />
-          </Link>
-          <Link
-            className={`px-S flex justify-center text-base items-center ${
-              pathname === "/board" ? "text-brand-primary" : ""
+          </p>
+          <p
+            onClick={() => handleView("column")}
+            className={`px-S flex justify-center text-base items-center cursor-pointer ${
+              view === "column" ? "text-brand-primary" : ""
             }`}
-            to="/board"
           >
             نمایش ستونی
             <Icon
               icon="grid"
-              color={`${pathname === "/board" ? "#208d8e" : "#323232"}`}
+              color={`${view === "column" ? "#208d8e" : "#323232"}`}
             />
-          </Link>
-          <Link
-            className={`px-S flex justify-center text-base items-center ${
-              pathname === "/list" ? "text-brand-primary" : ""
+          </p>
+          <p
+            onClick={() => handleView("list")}
+            className={`px-S flex justify-center text-base items-center cursor-pointer ${
+              view === "list" ? "text-brand-primary" : ""
             }`}
-            to="/list"
           >
             نمایش لیستی
             <Icon
               icon="list"
-              color={`${pathname === "/list" ? "#208d8e" : "#323232"}`}
+              color={`${view === "list" ? "#208d8e" : "#323232"}`}
             />
-          </Link>
+          </p>
           <span className="font-bold pl-S justify-end text-xl">
-            {workspace_name}
+            {/* {workspace_name} */}
           </span>
         </div>
         <button

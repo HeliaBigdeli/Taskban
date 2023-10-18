@@ -48,7 +48,7 @@ const SelectBox: React.FC<IProps> = ({
   return (
     <div
       tabIndex={0}
-      className="relative"
+      className="relative flex items-center"
       onClick={toggleOpen}
       ref={dropdown}
       onBlur={closeList}

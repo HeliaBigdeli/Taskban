@@ -36,7 +36,7 @@ const DropdownItem: React.FC<IProps> = ({
     <div className={`flex flex-col rounded-md font-bold ${isButton ? "bg-brand-primary text-white rounded-md px-2 font-normal" : "hover:bg-lightgray_100"}`}>
       <div className="flex items-center flex-row-reverse cursor-pointer p-2" onClick={handleClick}>
         {hasIcon && <Icon icon={icon?.icon} color={isButton ? '#fff' : icon?.color} size={icon?.size} />}
-        <p className="px-1 text-sm" style={{color}}>
+        <p className="text-sm" style={{color}}>
           {title}
         </p>
       </div>

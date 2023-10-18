@@ -1,3 +1,5 @@
+import Dropdown from "../../Dropdown";
+import DropdownItem from "../../Dropdown/DropdownItem";
 import Button from "../../Form/Button";
 import ProfileImage from "../../ProfileImage";
 
@@ -29,12 +31,33 @@ const MemberRow: React.FC<IProps> = ({
             className="h-[30px] rounded-md border-[1px] px-2 pt-[5px] pb-1 gap-[10px] hover:bg-[#E9EBF0] border-[#E9EBF0] text-xs"
           />
         ) : (
-          <Button
-            text="دسترسی کامل"
+          <Dropdown
+            buttonText="دسترسی کامل"
             type="button"
-            onClick={handleClick}
+            icon={{ icon: "dots" }}
             className="h-[30px] rounded-md border-[1px] px-2 pt-[5px] pb-1 gap-[10px] hover:bg-[#E9EBF0] border-[#E9EBF0] text-xs"
-          />
+          >
+            <DropdownItem
+              title="دسترسی کامل"
+              hasDescription={true}
+              description="توانایی ساختن تسک در این پروژه، ویرایش تنظبمات پروژه و حذف پروژه"
+            />
+            <DropdownItem
+              title="دسترسی ویرایش"
+              hasDescription={true}
+              description="توانایی ساختن تسک در این پروژه، ویرایش تنظبمات پروژه و حذف پروژه"
+            />
+            <DropdownItem
+              title="دسترسی کامنت"
+              hasDescription={true}
+              description="توانایی ساختن تسک در این پروژه، ویرایش تنظبمات پروژه و حذف پروژه"
+            />
+            <DropdownItem
+              title="فقط دسترسی مشاهده"
+              hasDescription={true}
+              description="توانایی ساختن تسک در این پروژه، ویرایش تنظبمات پروژه و حذف پروژه"
+            />
+          </Dropdown>
         )}
 
         <div className="flex gap-[12px]">

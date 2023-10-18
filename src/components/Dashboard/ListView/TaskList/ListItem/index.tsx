@@ -1,7 +1,6 @@
 import Icon from "../../../../Common/Icon";
 import MembersThumb from "../../../../Common/MembersThumb";
 import ListItemTitle from "./ListItemTitle";
-import { useSelector } from "react-redux";
 
 const members = [
   {
@@ -33,7 +32,7 @@ const ListItem: React.FC<IListItemProps> = ({ color, name }): JSX.Element => {
     orange: "bg-orange-primary ",
     green: "bg-green-primary",
   };
-  const { first_name, last_name } = useSelector((store: any) => store.auth);
+
   return (
     <div className="flex w-full py-[7px] justify-between items-center">
       <section className="flex items-start gap-[7px]">

@@ -1,5 +1,6 @@
 import Button from "../../../components/Common/Form/Button";
 import Input from "../../../components/Common/Form/Input";
+import useAxios from "../../../hooks/useAxios";
 import { useState, useEffect } from 'react'
 import {
   required,
@@ -11,53 +12,52 @@ import {
 import {toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import API_URL from "../../../constants/api.url";
+import { selectUser } from "../../../features/authSlice";
+import {useSelector} from "react-redux"
+
 const rules = {
   email: [required, email],
   username: [required],
-  currentPassword: [required],
-  newPassword: [required, strong, minLength(8)],
-  confirmNewPassword: [required]
+  old_password: [required],
+  new_password: [required, strong, minLength(8)],
+  new_password1: [required]
 };
 
 type Values = {
   [key: string]: string;
 };
-
+ 
 const Information: React.FC = (): JSX.Element => {
+  const user=useSelector(selectUser)
   const [errors, setErrors] = useState<string[]>([]);
   const [values, setValues] = useState<Values>({
     email: "",
-    currentPassword: "",
+    old_password: "",
     username: "",
-    newPassword: "",
-    confirmNewPassword: ""
+    new_password: "",
+    new_password1: ""
   });
-
-  useEffect(() => {
-    errors?.map((error) => {
-      toast.error(error, {
-        position: "bottom-left",
-        autoClose: 3000,
-      });
-    });
-  }, [errors]);
-
+  
+  const [response, error, loading, fetcher] = useAxios();
+  const [getUserResponse, getUserError, getUserLoading, getUserfetcher] = useAxios();
   const handleChange = (name: string, value: string) => {
+    setValues({ ...values, [name]: value });
+  };
+
+ const getUser=async()=>{
+  await getUserfetcher("get",`${API_URL.Register}${user.user_id}/`)
+ }
+
+  const handleClick =async () => {
     const resultErrors = validate(values, rules);
     if(resultErrors.length){
       setErrors(resultErrors)
     }
     else{
-      // await fetcher("post",API_URL.Register{},values)
+       await fetcher("put",`${API_URL.ChangePassword}`,values)
     }
-    setValues({ ...values, [name]: value });
-  };
-
-  const handleClick = () => {
-    const resultErrors = validate(values, rules);
-    setErrors(resultErrors);
     
-    if (values.newPassword != values.confirmNewPassword) {
+    if (values.newPassword !== values.confirmNewPassword) {
       toast.error("تکرار رمز عبور جدید با رمز عبور جدید مطابقت ندارد", {
         position: "bottom-left",
         autoClose: 3000,
@@ -65,6 +65,18 @@ const Information: React.FC = (): JSX.Element => {
     }
   };
 
+  useEffect(() => {
+    getUser()
+    if(getUserResponse){
+      setValues({...values,email:getUserResponse.email})
+    }
+    if (response) {
+      toast.success(response, {
+        position: "bottom-left",
+        autoClose: 3000,
+      });
+    }   
+  }, [response,errors])
   return (
     <div className="flex flex-row-reverse">
       <div className="w-[354px] mt-[160px] mr-[58px]">
@@ -90,8 +102,8 @@ const Information: React.FC = (): JSX.Element => {
           />
 
           <Input
-            name="currentPassword"
-            id="currentPassword"
+            name="old_password"
+            id="old_password"
             type="password"
             label="رمز عبور فعلی"
             className="h-XL"
@@ -99,8 +111,8 @@ const Information: React.FC = (): JSX.Element => {
             onChange={(name, value) => handleChange(name, value)}
           />
           <Input
-            name="newPassword"
-            id="newPassword"
+            name="new_password"
+            id="new_password"
             type="password"
             label="رمز عبور جدید"
             className="h-XL"
@@ -108,8 +120,8 @@ const Information: React.FC = (): JSX.Element => {
             onChange={(name, value) => handleChange(name, value)}
           />
           <Input
-            name="confirmNewPassword"
-            id="confirmNewPassword"
+            name="new_password1"
+            id="new_password1"
             type="password"
             label="تکرار رمز عبور جدید"
             className="h-XL"

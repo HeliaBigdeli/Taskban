@@ -31,6 +31,9 @@ const ListItem: React.FC<IProps> = ({ id, name, color }): JSX.Element => {
     if (!isOpen) {
       fetcher("get", `${API_URL.WorkSpaces}${id}/${API_URL.Projects}`);
     }
+    navigate(
+      `${API_URL.WorkSpaces}${id}/${API_URL.Projects}`
+    );
   };
 
   const handleBoards = (project_id) => {

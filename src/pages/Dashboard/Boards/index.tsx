@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import useAxios from "../../../hooks/useAxios";
 import API_URL from "../../../constants/api.url";
+import Header from "../../../components/Layouts/Dashboard/Header";
 
 const Boards: React.FC = (): JSX.Element => {
   const view: string = useSelector(selectView);
@@ -22,11 +23,20 @@ const Boards: React.FC = (): JSX.Element => {
 
   switch (view) {
     case "list":
-      return <ListView data={response}/>;
+      return <>
+        <Header />
+        <ListView data={response} />
+      </>;
     case "calender":
-      return <CalenderView />;
+      return <>
+        <Header />
+        <CalenderView />
+      </>;
     default:
-      return <ColumnView data={response}/>;
+      return <>
+        <Header />
+        <ColumnView data={response} />
+      </>;
   }
 };
 

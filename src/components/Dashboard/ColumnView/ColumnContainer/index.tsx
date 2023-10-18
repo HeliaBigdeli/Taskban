@@ -47,6 +47,7 @@ const ColumnContainer: React.FC<IColumnContainerProps> = ({
             {tasks.map((item, index) => {
               return (
                 <TaskCard
+                  boardId={id}
                   {...item}
                   title={item.name}
                   key={item.id}

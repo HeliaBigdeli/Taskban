@@ -5,51 +5,21 @@ import Icon from "../../Common/Icon";
 import { useState } from "react";
 import DatePickerModal from "../DatePickerModal";
 import Textarea from "../../Common/Form/Textarea";
-import memberPhoto from "../../../assets/images/member.png";
 import MembersThumb from "../../Common/MembersThumb";
-
-const members = [
-  {
-    id: 1,
-    thumbnail: memberPhoto,
-    first_name: "Helya",
-    last_name: "Bigdeli",
-  },
-  {
-    id: 2,
-    thumbnail: "",
-    first_name: "Helya",
-    last_name: "Bigdeli",
-  },
-  {
-    id: 3,
-    thumbnail: "",
-    first_name: "Helya",
-    last_name: "Bigdeli",
-  },
-  {
-    id: 6,
-    thumbnail: "",
-    first_name: "Helya",
-    last_name: "Bigdeli",
-  },
-
-];
+import { ITask } from "../../../interfaces/task";
 
 const portals = document.getElementById("portals") as Element;
 
 interface IProps {
+  taskInfo: ITask;
+  comments: [];
   modal: boolean;
   setModal: (value: boolean | ((prevVar: boolean) => boolean)) => void;
 }
 
-const TaskInfoModal: React.FC<IProps> = ({ modal, setModal }): JSX.Element => {
-  const [datePickerModal, setDatePickerModal] = useState<boolean>(false);
-  const [values, setValues] = useState({
-    title: "",
-    description:
-      "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است، و برای شرایط فعلی تکنولوژی مورد نیاز، و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد، ",
-  });
+const TaskInfoModal: React.FC<IProps> = ({ modal, setModal, taskInfo, comments }): JSX.Element => {
+  const [datePickerModal, setDatePickerModal] = useState<boolean>(false);  
+  const [values, setValues] = useState<ITask>(taskInfo);
 
   const handleDatePickerModal = () => {
     setDatePickerModal(!datePickerModal);
@@ -99,14 +69,14 @@ const TaskInfoModal: React.FC<IProps> = ({ modal, setModal }): JSX.Element => {
                   icon={{ icon: "share" }}
                 />
                 <div className="flex items-center gap-S">
-                    <div className="mr-S cursor-pointer border-dashed border-2 rounded-full border-[#c1c1c1] w-[40px] h-[40px] flex justify-center items-center">
-                      <Icon icon="flag" color="#c1c1c1" />
-                    </div>
-                  <MembersThumb members={members} hasAddIcon={false} />
+                  <div className="mr-S cursor-pointer border-dashed border-2 rounded-full border-[#c1c1c1] w-[40px] h-[40px] flex justify-center items-center">
+                    <Icon icon="flag" color="#c1c1c1" />
+                  </div>
+                  <MembersThumb members={values.members} hasAddIcon={false} />
                   <Button
                     type="button"
                     name="status"
-                    onClick={() => {}}
+                    onClick={() => { }}
                     text="Open"
                     className="bg-darkred p-1 rounded-md text-white w-[120px] h-[30px]"
                   />
@@ -136,7 +106,7 @@ const TaskInfoModal: React.FC<IProps> = ({ modal, setModal }): JSX.Element => {
                       inputValue={values.description}
                       name="description"
                       id="description"
-                      onChange={() => {}}
+                      onChange={() => { }}
                     />
                     <div className="flex justify-end text-brand-primary">
                       اضافه کردن پیوست

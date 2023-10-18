@@ -1,22 +1,10 @@
 import colors from "../ColorPicker/colors";
 import Icon from "../Icon";
-
-interface IMember {
-  id: number,
-  first_name: string,
-  last_name: string,
-  thumbnail: string
-}
-
-interface IProps {
-  size?: number;
-  addIcon?: boolean;
-  members: IMember[]
-}
+import {IProps} from '../../../interfaces/members'
 
 const ProfileThumb: React.FC<IProps> = ({
   size = 32,
-  members,
+  members = [],
   addIcon = false,
 }): JSX.Element => {
 

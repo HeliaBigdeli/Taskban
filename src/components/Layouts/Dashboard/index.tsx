@@ -1,9 +1,8 @@
-import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import Button from "../../Common/Form/Button";
 import Input from "../../Common/Form/Input";
 import Icon from "../../Common/Icon";
 import DarkMode from "../../Theme/Switcher";
-import Header from "./Header";
 import SideBar from "./SideBar";
 import styles from "./style.module.css";
 import List from "./../../Common/List";
@@ -23,7 +22,6 @@ const DashboardLayout: React.FC = (): JSX.Element => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector(selectUser);
-  const { pathname } = useLocation();
 
   const handleProjectModal = () => {
     setProjectModal(!projectModal);
@@ -42,7 +40,6 @@ const DashboardLayout: React.FC = (): JSX.Element => {
   return (
     <div className="flex px-2XL">
       <div className="flex-grow flex-col w-full overflow-hidden">
-        {pathname !== "/workspaces" && <Header />}
         <Outlet />
       </div>
       <SideBar>

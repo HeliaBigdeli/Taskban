@@ -50,6 +50,7 @@ const ProjectModal: React.FC<IProps> = ({ modal, setModal }): JSX.Element => {
   };
 
   useEffect(() => {
+    console.log(error);
     if (response) {
       dispatch(addProject());
     }
@@ -82,7 +83,7 @@ const ProjectModal: React.FC<IProps> = ({ modal, setModal }): JSX.Element => {
               />
             </div>
             <Button
-              text="ادامه"
+              text={`${loading ? "Loading..." : "ادامه"}`}
               type="button"
               onClick={postProject}
               className="flex h-XL rounded-md bg-brand-primary text-white"

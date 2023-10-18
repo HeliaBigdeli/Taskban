@@ -11,7 +11,6 @@ import Select from "../../Common/Form/Select";
 import ShareModal from "../ShareModal";
 
 const portals = document.getElementById("portals") as Element;
-
 interface IProps {
   modal: boolean;
   setModal: (value: boolean | ((prevVar: boolean) => boolean)) => void;
@@ -93,7 +92,7 @@ const TaskModal: React.FC<IProps> = ({ modal, setModal }): JSX.Element => {
     });
     setData(data);
   };
-  const getPriority = (name: string, value: string) => {
+  const getPriority = (value: string) => {
     setVlaues({ ...values, priority: value });
   };
 
@@ -198,7 +197,7 @@ const TaskModal: React.FC<IProps> = ({ modal, setModal }): JSX.Element => {
                     </div>
                     {data.map((item) => (
                       <div className="flex flex-row-reverse justify-between">
-                        <span
+                        <span 
                           className={`bg-${item.color} text-${item.color} px-XS rounded-[14px]`}
                         >
                           {item.title}
@@ -229,13 +228,8 @@ const TaskModal: React.FC<IProps> = ({ modal, setModal }): JSX.Element => {
                     <ul className="flex flex-col gap-XS">
                       {priority.map((item) => {
                         return (
-                          <IconItem
-                            text={item.text}
-                            color2={item.color}
-                            icon={"flag"}
-                            url=""
-                          />
-                        );
+                          <IconItem text={item.text} color={item.color} icon={"flag"} url="" />
+                        )
                       })}
                     </ul>
                     <Button
@@ -262,6 +256,7 @@ const TaskModal: React.FC<IProps> = ({ modal, setModal }): JSX.Element => {
                   color: "white",
                   className: "ml-1",
                 }}
+              
               />
             </div>
           </div>

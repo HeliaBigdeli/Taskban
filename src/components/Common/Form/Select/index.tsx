@@ -34,9 +34,9 @@ const Select: React.FC<IProps> = ({
   const toggleOpen = () => {
     const elementHeight = selectBtn.current.offsetTop + selectBtn.current.offsetHeight + 180;
     if (elementHeight > window.innerHeight) {
-      setListDirectiob({bottom: '2.30rem'})
+      setListDirectiob({bottom: selectBtn.current.offsetHeight})
     } else {
-      setListDirectiob({top: '2.30rem'})
+      setListDirectiob({top: selectBtn.current.offsetHeight})
     }
     setData(items)
     setOpen(!open)

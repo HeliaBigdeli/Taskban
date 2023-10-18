@@ -39,11 +39,9 @@ const Dropdown: React.FC<IProps> = ({
           dropdownList.current.offsetHeight;
 
         if (elementHeight > window.innerHeight) {
-          setListDirectiob({
-            bottom: type === "button" ? "2.20rem" : "1.5rem",
-          });
+          setListDirectiob({ bottom: dropdown.current.offsetHeight });
         } else {
-          setListDirectiob({ top: type === "button" ? "2.20rem" : "1.5rem" });
+          setListDirectiob({ top: dropdown.current.offsetHeight });
         }
       }, 0);
     }

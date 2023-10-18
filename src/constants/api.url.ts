@@ -11,7 +11,7 @@ export const API_URL = {
     Settings: "settings/",
     Subscription: "workspaces/subscriptions/",
     Reset: "accounts/reset-password/",
-    SetPassword: "accounts/reset-password/set-password/"
+    SetPassword: "accounts/reset-password/set-password/",
 }
 
 export default API_URL;

@@ -2,25 +2,25 @@ import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../app/store";
 
 interface ISection {
-  workspace: boolean
+  workspace: number;
 }
 
 const initialState: ISection = {
-    workspace: false   
-}
+  workspace: 0,
+};
 
-  export const updateSlice = createSlice({
-    name: "update",
-    initialState,
-    reducers:{
-      addWorkSpace: (state) => {
-        state.workspace= true
-      }
-    }
-  })
+export const updateSlice = createSlice({
+  name: "update",
+  initialState,
+  reducers: {
+    addWorkSpace: (state) => {
+      state.workspace += 1;
+    },
+  },
+});
 
-  export const { addWorkSpace } = updateSlice.actions;
+export const { addWorkSpace } = updateSlice.actions;
 
-  export const selectUpdate = (state: RootState) => state.update.workspace;
+export const workSpaceUpdate = (state: RootState) => state.update;
 
-  export default updateSlice.reducer;
+export default updateSlice.reducer;

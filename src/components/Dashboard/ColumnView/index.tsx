@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect} from "react";
+import { useRef, useState, useEffect } from "react";
 import ColumnContainer from "./ColumnContainer";
 import style from "./style.module.css";
 import Button from "../../Common/Form/Button";
@@ -7,17 +7,19 @@ import TaskModal from "../TaskModal";
 import React from "react";
 import NewBoardModal from "./NewBoardModal";
 import { DragDropContext } from "react-beautiful-dnd";
-import {IProps, IData} from '../../../interfaces/board'
+import { IProps, IData } from "../../../interfaces/board";
+import { useDraggable } from "react-use-draggable-scroll";
 
-const ColumnView: React.FC<IProps> = ({data}): JSX.Element => {
-  const ref =
-    useRef<HTMLDivElement>() as React.MutableRefObject<HTMLInputElement>;
-
+const ColumnView: React.FC<IProps> = ({ data }): JSX.Element => {
   const [boardTaks, setBoardTaks] = useState<IData[]>(data);
   const [newBoardModal, setNewBoardModal] = useState<boolean>(false);
   const [mouseDown, setMouseDown] = useState<boolean>(true);
   const [taskModal, setTaskModal] = useState<boolean>(false);
-
+  const ref =
+    useRef<HTMLDivElement>() as React.MutableRefObject<HTMLInputElement>;
+  const { events } = useDraggable(ref, {
+    isMounted: mouseDown,
+  });
 
   const handleTaskModal = () => {
     setTaskModal(!taskModal);
@@ -64,14 +66,14 @@ const ColumnView: React.FC<IProps> = ({data}): JSX.Element => {
   };
 
   useEffect(() => {
-    setBoardTaks(data)
-  },[data])
+    setBoardTaks(data);
+  }, [data]);
 
   return (
     <>
       <div
         ref={ref}
-        // {...events}
+        {...events}
         className={`flex w-full px-S h-full  items-start gap-6 overflow-x-auto 
          ${style.scroll}`}
         style={{ direction: "rtl" }}

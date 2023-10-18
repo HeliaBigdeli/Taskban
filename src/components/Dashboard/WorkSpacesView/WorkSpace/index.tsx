@@ -16,15 +16,14 @@ const WorkSpace: React.FC<IWorkSpaceProps> = ({
   color,
   id,
 }): JSX.Element => {
-  const ref = useRef<any>();
-  const { events } = useDraggable(ref);
-
   const [response, error, loading, fetcher] = useAxios();
 
   useEffect(() => {
-    fetcher('get', `${API_URL.WorkSpaces}${id}/${API_URL.Projects}`);
+    fetcher("get", `${API_URL.WorkSpaces}${id}/${API_URL.Projects}`);
   }, []);
-
+  const ref =
+    useRef<HTMLDivElement>() as React.MutableRefObject<HTMLInputElement>;
+  const { events } = useDraggable(ref);
   const colorVariants = {
     grad: `linear-gradient(250deg, ${color} 0%, ${color}90 100%)`,
     btn: color,

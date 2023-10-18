@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState, useEffect} from "react";
 import ColumnContainer from "./ColumnContainer";
 import style from "./style.module.css";
 import Button from "../../Common/Form/Button";
@@ -7,30 +7,17 @@ import TaskModal from "../TaskModal";
 import React from "react";
 import NewBoardModal from "./NewBoardModal";
 import { DragDropContext } from "react-beautiful-dnd";
-import API_URL from "../../../constants/api.url";
-import useAxios from "../../../hooks/useAxios";
-import { useParams } from 'react-router-dom';
+import {IProps, IData} from '../../../interfaces/board'
 
-const ColumnView: React.FC = (): JSX.Element => {
+const ColumnView: React.FC<IProps> = ({data}): JSX.Element => {
   const ref =
     useRef<HTMLDivElement>() as React.MutableRefObject<HTMLInputElement>;
 
-  const [boardTaks, setBoardTaks] = useState<any>([]);
+  const [boardTaks, setBoardTaks] = useState<IData[]>(data);
   const [newBoardModal, setNewBoardModal] = useState<boolean>(false);
   const [mouseDown, setMouseDown] = useState<boolean>(true);
   const [taskModal, setTaskModal] = useState<boolean>(false);
-  const [response, error, loading, fetcher] = useAxios();
-  const params = useParams()
 
-  useEffect(() => {
-    fetcher(
-      "get",
-      `${API_URL.WorkSpaces}${params.wid}/${API_URL.Projects}${params.pid}/${API_URL.Boards}`
-    );
-    if (response) {
-      setBoardTaks(response)
-    }
-  }, []);
 
   const handleTaskModal = () => {
     setTaskModal(!taskModal);
@@ -75,6 +62,10 @@ const ColumnView: React.FC = (): JSX.Element => {
     };
     setBoardTaks(newTaskColumns);
   };
+
+  useEffect(() => {
+    setBoardTaks(data)
+  },[data])
 
   return (
     <>

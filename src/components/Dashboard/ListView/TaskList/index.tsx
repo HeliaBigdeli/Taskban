@@ -1,22 +1,9 @@
 import { useState } from "react";
 import ListHeader from "./ListHeader";
 import ListItem from "./ListItem";
+import {IData} from '../../../../interfaces/board'
 
-interface ITaskListProps {
-  color?: string;
-  name: string;
-  is_archive: boolean;
-  tasks_count: number;
-  id: number;
-  tasks?: {
-    id: number;
-    name: string;
-    img: string;
-  }[];
-}
-
-const TaskList: React.FC<ITaskListProps> = ({
-  color,
+const TaskList: React.FC<IData> = ({
   name,
   tasks_count,
   tasks,
@@ -29,7 +16,6 @@ const height = `${70 * tasks_count}px`;
   return (
     <div className={` flex w-full flex-col items-start gap-5`}>
       <ListHeader
-        color={color}
         handleShow={handleShow}
         title={name}
         tasks_count={tasks_count}

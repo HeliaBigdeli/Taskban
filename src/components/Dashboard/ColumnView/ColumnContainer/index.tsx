@@ -1,21 +1,22 @@
-import { useRef } from "react";
 import TaskCard from "./TaskCard";
 import TaskColumn from "./TaskColumn";
-import { useDraggable } from "react-use-draggable-scroll";
 import style from "../style.module.css";
 import { Droppable } from "react-beautiful-dnd";
+
+interface ITask {
+  id: number;
+  name: string;
+  img: string;
+}
 
 interface IColumnContainerProps {
   setMouseDown: React.Dispatch<React.SetStateAction<boolean>>;
   name: string;
   is_archive: boolean;
   id: number;
-  tasks: {
-    id: number;
-    name: string;
-    img: string;
-  }[];
+  tasks: ITask[];
 }
+
 const ColumnContainer: React.FC<IColumnContainerProps> = ({
   id,
   name,
@@ -30,7 +31,7 @@ const ColumnContainer: React.FC<IColumnContainerProps> = ({
 
   return (
     <div
-      className="flex shrink-0  flex-col items-center gap-S   "
+      className="flex shrink-0  flex-col items-center gap-S"
       style={{ direction: "ltr" }}
     >
       <TaskColumn title={name} />

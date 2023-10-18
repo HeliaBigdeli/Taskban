@@ -1,28 +1,22 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import Icon from "../../Common/Icon";
 import TaskList from "./TaskList";
 import Button from "../../Common/Form/Button";
 import TaskModal from "../TaskModal";
-import { useParams } from "react-router-dom";
-import API_URL from "../../../constants/api.url";
-import useAxios from "../../../hooks/useAxios";
+import {IProps, IData} from '../../../interfaces/board'
 
-const ListShow: React.FC = (data): JSX.Element => {
+const ListShow: React.FC<IProps> = ({ data }): JSX.Element => {
+  const [listTasks, setListTaks] = useState<IData[]>(data);
   const [isShown, setIsShown] = useState<boolean>(true);
   const [taskModal, setTaskModal] = useState<boolean>(false);
-  const params = useParams();
-  const [response, error, loading, fetcher] = useAxios();
 
   const handleTaskModal = () => {
     setTaskModal(!taskModal);
   };
 
   useEffect(() => {
-    fetcher(
-      "get",
-      `${API_URL.WorkSpaces}${params.wid}/${API_URL.Projects}${params.pid}/${API_URL.Boards}`
-    );
-  }, []);
+    setListTaks(data)
+  }, [data])
 
   return (
     <div style={{ direction: "rtl" }} className={`pr-S`}>
@@ -33,11 +27,10 @@ const ListShow: React.FC = (data): JSX.Element => {
         <span className="text-black text-xl font-extrabold">پروژه اول</span>
       </div>
       <div
-        className={`${
-          !isShown ? "opacity-0 -z-10" : "opacity-100 z-10"
-        } relative flex flex-col items-end gap-XL mr-6 ml-12 transition-all duration-300 `}
+        className={`${!isShown ? "opacity-0 -z-10" : "opacity-100 z-10"
+          } relative flex flex-col items-end gap-XL mr-6 ml-12 transition-all duration-300 `}
       >
-        {response?.map((item) => {
+        {listTasks?.map((item) => {
           return <TaskList key={item.id} {...item} />;
         })}
       </div>

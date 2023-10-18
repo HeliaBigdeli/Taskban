@@ -3,7 +3,6 @@ import Tag from "../../../../Dashboard/Tag";
 import { useState } from "react";
 import More from "./More";
 import Icon from "../../../../Common/Icon";
-import ProjectModal from "../../../ProjectModal";
 import { Draggable } from "react-beautiful-dnd";
 
 interface ITaskCardProps {
@@ -12,13 +11,15 @@ interface ITaskCardProps {
   title: string;
   index: number;
   boardTitle:string
+  boardId: number
 }
 const TaskCard: React.FC<ITaskCardProps> = ({
   img,
   title,
   id,
   index,
-  boardTitle
+  boardTitle,
+  boardId
 }): JSX.Element => {
   const [isShown, setIsShown] = useState<boolean>(false);
 
@@ -65,7 +66,7 @@ const TaskCard: React.FC<ITaskCardProps> = ({
             <Tag color="grape" text="پروژه" />
             <Tag color="blue" text="درس" />
           </section>
-          <More isShown={isShown} />
+          <More isShown={isShown} taskId={id} boardId={boardId} />
         </article>
       )}
     </Draggable>

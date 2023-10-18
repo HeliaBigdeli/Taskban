@@ -6,21 +6,21 @@ import { useSelector } from "react-redux";
 const members = [
   {
     id: 1,
-    thumbnail: "",
+    email: "44243",
     first_name: "Helya",
     last_name: "Bigdeli",
+    username: "Bigdeli",
+    thumbnail: "Bigdeli",
+    phone_number: "0935165197"
   },
   {
-    id: 1,
-    thumbnail: "",
+    id: 2,
+    email: "44243",
     first_name: "Helya",
     last_name: "Bigdeli",
-  },
-  {
-    id: 1,
-    thumbnail: "",
-    first_name: "Helya",
-    last_name: "Bigdeli",
+    username: "Bigdeli",
+    thumbnail: "Bigdeli",
+    phone_number: "0935165197"
   }
 ];
 

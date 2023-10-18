@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import API_URL from "../../../../constants/api.url";
 import useAxios from "../../../../hooks/useAxios";
 import Dropdown from "../../Dropdown";
 import DropdownItem from "../../Dropdown/DropdownItem";
 import { useNavigate, useParams } from "react-router-dom";
+import ProjectModal from "../../../Dashboard/ProjectModal";
+import { projectUpdate } from "../../../../features/updateSlice";
+import { useSelector } from "react-redux";
 
 interface IProps {
   id: number;
@@ -16,6 +19,8 @@ const ListItem: React.FC<IProps> = ({ id, name, color }): JSX.Element => {
   const [response, error, loading, fetcher] = useAxios();
   const navigate = useNavigate();
   const params = useParams();
+  const [projectModal, setProjectModal] = useState<boolean>(false);
+  const update = useSelector(projectUpdate);
 
   const toggleAccordion = () => {
     setIsOpen(!isOpen);
@@ -34,18 +39,24 @@ const ListItem: React.FC<IProps> = ({ id, name, color }): JSX.Element => {
     );
   };
 
-  const handleAddProject = () => { };
-  const handleEditWsName = () => { };
-  const handleeditWsColor = () => { };
-  const handleCopyWsLink = () => { };
-  const handleWsRemove = () => { };
-  const HandleWsShare = () => { };
+  useEffect(() => {
+    getProjects();
+  }, [update]);
 
-  const handleAddProTask = () => { };
-  const handleEditProName = () => { };
-  const handleCopyProLink = () => { };
-  const handleProRemove = () => { };
-  const HandleProShare = () => { };
+  const handleAddProject = () => {
+    setProjectModal(!projectModal);
+  };
+  const handleEditWsName = () => {};
+  const handleeditWsColor = () => {};
+  const handleCopyWsLink = () => {};
+  const handleWsRemove = () => {};
+  const HandleWsShare = () => {};
+
+  const handleAddProTask = () => {};
+  const handleEditProName = () => {};
+  const handleCopyProLink = () => {};
+  const handleProRemove = () => {};
+  const HandleProShare = () => {};
 
   return (
     <li>
@@ -105,7 +116,9 @@ const ListItem: React.FC<IProps> = ({ id, name, color }): JSX.Element => {
         <ul className={`${isOpen ? "block" : "hidden"}`}>
           {response?.map((project) => (
             <li
-              style={{ backgroundColor: project.id == params.pid ? '#D0EBFF' : '' }}
+              style={{
+                backgroundColor: project.id === params.pid ? "#D0EBFF" : "",
+              }}
               key={project.id}
               className="flex rounded-md justify-between items-center flex-row-reverse p-[4px] h-[36px] pr-[30px] my-S"
             >
@@ -152,6 +165,9 @@ const ListItem: React.FC<IProps> = ({ id, name, color }): JSX.Element => {
             </li>
           ))}
         </ul>
+      )}
+      {projectModal && (
+        <ProjectModal modal={projectModal} setModal={handleAddProject} />
       )}
     </li>
   );

@@ -6,10 +6,9 @@ import { useSelector } from "react-redux";
 import { workSpaceUpdate } from "../../../features/updateSlice";
 
 interface IData {
+  id: number;
   name: string;
-  id?: number;
   color: string;
-  hasProject?: boolean;
 }
 
 const List: React.FC = (): JSX.Element => {
@@ -17,12 +16,12 @@ const List: React.FC = (): JSX.Element => {
 
   const update = useSelector(workSpaceUpdate);
 
-  const getWorkSpace = async () => {
+  const getWorkSpaces = async () => {
     await fetcher("get", API_URL.WorkSpaces);
   };
 
   useEffect(() => {
-    getWorkSpace();
+    getWorkSpaces();
   }, [update]);
 
   return (
@@ -30,14 +29,8 @@ const List: React.FC = (): JSX.Element => {
       {loading ? "Loading..." : ""}
       {error && !loading ? "ورک اسپیسی وجود ندارد" : ""}
       {response?.map((item: IData) => (
-            <Item
-              key={item.id}
-              text={item.name}
-              color={item.color}
-              hasProject={item.hasProject}
-            ></Item>
-          ))
-        }
+        <Item key={item.id} {...item}></Item>
+      ))}
     </ul>
   );
 };

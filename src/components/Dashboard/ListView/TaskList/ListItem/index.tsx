@@ -1,6 +1,7 @@
 import Icon from "../../../../Common/Icon";
 import MembersThumb from "../../../../Common/MembersThumb";
 import ListItemTitle from "./ListItemTitle";
+import { useSelector } from "react-redux";
 
 const members = [
   {
@@ -25,12 +26,14 @@ const members = [
 
 interface IListItemProps {
   color?: string;
+  name: string;
 }
-const ListItem: React.FC<IListItemProps> = ({ color }): JSX.Element => {
+const ListItem: React.FC<IListItemProps> = ({ color, name }): JSX.Element => {
   const colorVariants = {
     orange: "bg-orange-primary ",
     green: "bg-green-primary",
   };
+  const { first_name, last_name } = useSelector((store: any) => store.auth);
   return (
     <div className="flex w-full py-[7px] justify-between items-center">
       <section className="flex items-start gap-[7px]">
@@ -40,9 +43,7 @@ const ListItem: React.FC<IListItemProps> = ({ color }): JSX.Element => {
           }`}
         ></div>
 
-        <span className="text-[#0E0E0E] text-xs font-normal">
-          این یک تیتر برای این تسک است.
-        </span>
+        <span className="text-[#0E0E0E] text-xs font-normal">{name}</span>
       </section>
       <section className="flex items-center gap-[70px]">
         <div className="flex w-[70px] px-2.5 justify-center items-center gap-2.5 text-xs font-normal text-[#0E0E0E]">

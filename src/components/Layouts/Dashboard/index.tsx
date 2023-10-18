@@ -1,4 +1,4 @@
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import Button from "../../Common/Form/Button";
 import Input from "../../Common/Form/Input";
 import Icon from "../../Common/Icon";
@@ -14,7 +14,6 @@ import NestedModals from "../../Common/Modal/NestedModals";
 import ProjectModal from "../../Dashboard/ProjectModal";
 import { logout, selectUser } from "../../../features/authSlice";
 import { useDispatch, useSelector } from "react-redux";
-import Profile from "../../Common/MembersThumb";
 import ProfileImage from "../../Common/ProfileImage";
 
 const DashboardLayout: React.FC = (): JSX.Element => {
@@ -24,6 +23,7 @@ const DashboardLayout: React.FC = (): JSX.Element => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector(selectUser);
+  const { pathname } = useLocation();
 
   const handleProjectModal = () => {
     setProjectModal(!projectModal);
@@ -42,12 +42,12 @@ const DashboardLayout: React.FC = (): JSX.Element => {
   return (
     <div className="flex px-2XL">
       <div className="flex-grow flex-col w-full overflow-hidden">
-        <Header />
+        {pathname !== "/workspaces" && <Header />}
         <Outlet />
       </div>
       <SideBar>
         <h2 className={`${styles.navbarTitle} mb-[27px] mt-XL`}>
-          <Link to="/workspace">کوئرا تسک منیجر</Link>
+          <Link to="/workspaces">کوئرا تسک منیجر</Link>
         </h2>
         <div className="flex justify-between">
           <Icon icon="chevron_down" />

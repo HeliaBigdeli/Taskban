@@ -1,37 +1,33 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import WorkSpacesItem from "./WorkSpaceItem";
 import { useDraggable } from "react-use-draggable-scroll";
 import style from "./style.module.css";
 import Icon from "../../../Common/Icon";
+import API_URL from "../../../../constants/api.url";
+import useAxios from "../../../../hooks/useAxios";
 
 interface IWorkSpaceProps {
-  title: string;
-  color?: string;
+  name: string;
+  color: string;
+  id: number;
 }
 const WorkSpace: React.FC<IWorkSpaceProps> = ({
-  title,
+  name,
   color,
+  id,
 }): JSX.Element => {
   const ref = useRef<any>();
   const { events } = useDraggable(ref);
 
+  const [response, error, loading, fetcher] = useAxios();
+
+  useEffect(() => {
+    fetcher('get', `${API_URL.WorkSpaces}${id}/${API_URL.Projects}`);
+  }, []);
+
   const colorVariants = {
-    blue: {
-      grad: "linear-gradient(250deg, #228BE6 0%, rgba(34, 139, 230, 0.50) 100%)",
-      btn: "#228BE6",
-    },
-    green: {
-      grad: "linear-gradient(250deg, #40C057 0%, rgba(64, 192, 87, 0.50) 100%)",
-      btn: "#40C057",
-    },
-    orange: {
-      grad: "linear-gradient(250deg, #FAB005 0%, rgba(250, 176, 5, 0.50) 100%)",
-      btn: "#FAB005",
-    },
-    red: {
-      grad: "linear-gradient(250deg, #FA5252 0%, #fa5252bf 100%)",
-      btn: "#FA5252",
-    },
+    grad: `linear-gradient(250deg, ${color} 0%, ${color}90 100%)`,
+    btn: color,
   };
   return (
     <div
@@ -43,33 +39,22 @@ const WorkSpace: React.FC<IWorkSpaceProps> = ({
       <div className="shrink-0 ">
         <div className="flex items-center gap-2">
           <h4 className="text-right text-2xl leading-8 font-extrabold">
-            {title}
+            {name}
           </h4>
-          <button className="h-6 mt-1">
-            <Icon
-              icon="plus_square"
-              color={colorVariants[color as keyof typeof colorVariants].btn}
-              size={24}
-            />
-          </button>
+          <Icon icon="plus_square" color={colorVariants.btn} size={24} />
         </div>
 
         <div className="flex items-start gap-L my-L">
-          <WorkSpacesItem
-            color={colorVariants[color as keyof typeof colorVariants].grad}
-          />
-          <WorkSpacesItem
-            color={colorVariants[color as keyof typeof colorVariants].grad}
-          />
-          <WorkSpacesItem
-            color={colorVariants[color as keyof typeof colorVariants].grad}
-          />
-          <WorkSpacesItem
-            color={colorVariants[color as keyof typeof colorVariants].grad}
-          />
-          <WorkSpacesItem
-            color={colorVariants[color as keyof typeof colorVariants].grad}
-          />
+          {response?.map((item) => {
+            return (
+              <WorkSpacesItem
+                key={item.id}
+                {...item}
+                workspace_id={id}
+                color={colorVariants.grad}
+              />
+            );
+          })}
         </div>
         <div className=" w-full h-0.5 bg-gray-secondary"></div>
       </div>

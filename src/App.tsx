@@ -5,17 +5,15 @@ import Register from "./pages/Authentication/Register";
 import ForgotPassword from "./pages/Authentication/ForgotPassword";
 import Reset from "./pages/Authentication/Reset";
 import NotFound from "./pages/NotFound";
-import Board from "./pages/Dashboard/Board";
+import Boards from "./pages/Dashboard/Boards";
 import DashboardLayout from "./components/Layouts/Dashboard";
 import AuthLayout from "./components/Layouts/Auth";
-import List from "./pages/Dashboard/List";
-import Calender from "./pages/Dashboard/Calender";
 import ProfileLayout from "./components/Layouts/Profile";
 import Account from "./pages/Profile/Account";
 import Information from "./pages/Profile/Information";
 import Setting from "./pages/Profile/Setting";
 import ContextProvider from "./context/store";
-import WorkSpace from "./pages/Dashboard/WorkSpaces";
+import WorkSpaces from "./pages/Dashboard/WorkSpaces";
 import { Provider } from "react-redux";
 import { store } from "../src/app/store";
 import { ToastContainer } from "react-toastify";
@@ -36,10 +34,8 @@ function App() {
                 <Route path="/Reset-password" element={<Reset />} />
               </Route>
               <Route path="/" element={<DashboardLayout />}>
-                <Route path="/board" element={<Board />} />
-                <Route path="/list" element={<List />} />
-                <Route path="/workspace" element={<WorkSpace />} />
-                <Route path="/calender" element={<Calender />} />
+                <Route path="/workspaces/:wid/projects/:pid/boards/" element={<Boards />} />
+                <Route path="/workspaces/:wid?/projects?/" element={<WorkSpaces />} />
               </Route>
               <Route path="/" element={<ProfileLayout />}>
                 <Route path="/account" element={<Account />} />

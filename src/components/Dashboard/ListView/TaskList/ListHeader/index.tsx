@@ -1,13 +1,19 @@
 import Icon from "../../../../Common/Icon";
 import HeaderTitle from "./HeaderTitle";
+import PN from "persian-number";
+
 interface IListHeaderProps {
   color?: string;
   handleShow: () => void;
+  title: string;
+  tasks_count: number;
 }
 
 const ListHeader: React.FC<IListHeaderProps> = ({
   color,
   handleShow,
+  title,
+  tasks_count,
 }): JSX.Element => {
   const colorVariants = {
     orange: "bg-orange-primary text-orange-secondary",
@@ -25,10 +31,13 @@ const ListHeader: React.FC<IListHeaderProps> = ({
               color && colorVariants[color as keyof typeof colorVariants]
             }`}
           >
-            Pending
+            {title}
           </div>
         </div>
-        <span className="text-black text-xs font-normal">۲ تسک</span>
+        <div className="text-black text-sm flex gap-1 h-[25px] justify-center font-normal">
+          <span>{PN.convertEnToPe(tasks_count)}</span>{" "}
+          <span className="self-end">تسک</span>
+        </div>
       </section>
       <section className="flex justify-center gap-[70px]">
         <HeaderTitle title="اعضا" />

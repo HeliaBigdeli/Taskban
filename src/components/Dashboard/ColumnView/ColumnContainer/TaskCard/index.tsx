@@ -11,19 +11,19 @@ interface ITaskCardProps {
   img: string;
   title: string;
   index: number;
-  cloumnTitle:string
+  boardTitle:string
 }
 const TaskCard: React.FC<ITaskCardProps> = ({
   img,
   title,
   id,
   index,
-  cloumnTitle
+  boardTitle
 }): JSX.Element => {
   const [isShown, setIsShown] = useState<boolean>(false);
 
   return (
-    <Draggable draggableId={`${cloumnTitle + id} `} index={index}>
+    <Draggable draggableId={`${boardTitle + id} `} index={index}>
       {(provided) => (
         <article
           {...provided.dragHandleProps}

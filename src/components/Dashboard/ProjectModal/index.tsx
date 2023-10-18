@@ -1,8 +1,13 @@
 import { createPortal } from "react-dom";
 import Modal from "../../Common/Modal";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Button from "../../Common/Form/Button";
 import Input from "../../Common/Form/Input";
+import useAxios from "../../../hooks/useAxios";
+import { useDispatch } from "react-redux";
+import API_URL from "../../../constants/api.url";
+import { addProject } from "../../../features/updateSlice";
+import { useNavigate, useParams } from "react-router-dom";
 
 const portals = document.getElementById("portals") as Element;
 
@@ -16,6 +21,12 @@ const ProjectModal: React.FC<IProps> = ({ modal, setModal }): JSX.Element => {
     title: "",
   });
 
+  const [response, error, loading, fetcher] = useAxios();
+
+  const dispatch = useDispatch();
+
+  const params = useParams();
+
   const handleChange = (name, value) => {
     setVlaues({
       ...values,
@@ -26,6 +37,24 @@ const ProjectModal: React.FC<IProps> = ({ modal, setModal }): JSX.Element => {
   const handleShowModal = () => {
     setModal(!modal);
   };
+
+  const postProject = async () => {
+    await fetcher(
+      "post",
+      `${API_URL.WorkSpaces}${params.wid}/${API_URL.Projects}`,
+      {
+        name: values.title,
+      }
+    );
+    setModal(false);
+  };
+
+  useEffect(() => {
+    console.log(error);
+    if (response) {
+      dispatch(addProject());
+    }
+  }, [response]);
 
   return (
     <>
@@ -54,9 +83,9 @@ const ProjectModal: React.FC<IProps> = ({ modal, setModal }): JSX.Element => {
               />
             </div>
             <Button
-              text="ادامه"
+              text={`${loading ? "Loading..." : "ادامه"}`}
               type="button"
-              onClick={() => {}}
+              onClick={postProject}
               className="flex h-XL rounded-md bg-brand-primary text-white"
             />
           </div>

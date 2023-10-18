@@ -1,10 +1,11 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import WorkSpacesItem from "./WorkSpaceItem";
 import { useDraggable } from "react-use-draggable-scroll";
 import style from "./style.module.css";
 import Icon from "../../../Common/Icon";
 import API_URL from "../../../../constants/api.url";
 import useAxios from "../../../../hooks/useAxios";
+import ProjectModal from "../../ProjectModal";
 
 interface IWorkSpaceProps {
   name: string;
@@ -18,6 +19,8 @@ const WorkSpace: React.FC<IWorkSpaceProps> = ({
 }): JSX.Element => {
   const [response, error, loading, fetcher] = useAxios();
 
+  const [projectModal, setProjectModal] = useState<boolean>(false);
+
   useEffect(() => {
     fetcher("get", `${API_URL.WorkSpaces}${id}/${API_URL.Projects}`);
   }, []);
@@ -28,6 +31,11 @@ const WorkSpace: React.FC<IWorkSpaceProps> = ({
     grad: `linear-gradient(250deg, ${color} 0%, ${color}90 100%)`,
     btn: color,
   };
+
+  const handleNewProject = () => {
+    setProjectModal(!projectModal);
+  };
+
   return (
     <div
       ref={ref}
@@ -40,7 +48,9 @@ const WorkSpace: React.FC<IWorkSpaceProps> = ({
           <h4 className="text-right text-2xl leading-8 font-extrabold">
             {name}
           </h4>
-          <Icon icon="plus_square" color={colorVariants.btn} size={24} />
+          <button className="mt-1.5" onClick={handleNewProject}>
+            <Icon icon="plus_square" color={colorVariants.btn} size={24} />
+          </button>
         </div>
 
         <div className="flex items-start gap-L my-L">
@@ -57,6 +67,9 @@ const WorkSpace: React.FC<IWorkSpaceProps> = ({
         </div>
         <div className=" w-full h-0.5 bg-gray-secondary"></div>
       </div>
+      {projectModal && (
+        <ProjectModal modal={projectModal} setModal={handleNewProject} />
+      )}
     </div>
   );
 };

@@ -117,7 +117,7 @@ const ReviewInfo: React.FC<IProps> = ({
             </div>
           </div>
           <Button
-            text="ساختن ورک‌اسپیس"
+            text={`${loading ? "Loading..." : "ساختن ورک‌اسپیس"}`}
             type="submit"
             onClick={handleCreate}
             className="flex h-XL rounded-md bg-brand-primary text-white w-full"

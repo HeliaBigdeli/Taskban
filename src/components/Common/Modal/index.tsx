@@ -48,7 +48,7 @@ const Modal: React.FC<IProps> = ({
   contentTopGap = " gap-XL",
 }): JSX.Element => {
   const handleClick = (e: React.SyntheticEvent<EventTarget>) => {
-    if (e.target === e.currentTarget) setModal(!modal);
+    if (e.target === e.currentTarget) handleClose();
   };
 
   const handleClose = () => {

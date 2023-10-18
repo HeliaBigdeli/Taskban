@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { AXIOS } from "../../config/axios.config";
 
 type Body = {
@@ -23,7 +23,6 @@ const useAxios = () => {
   };
 
   useEffect(() => {
-    console.log('useAxios rerendered')
   }, [response, error, loading]);
 
   return [response, error, loading, fetcher];

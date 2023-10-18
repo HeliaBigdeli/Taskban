@@ -1,61 +1,86 @@
-// const data = [
-//   {
-//     title: "ویرایش نام ستون",
-//     description: " ",
-//     hasDescription:false,
-//     hasIcon: true,
-//     line:false,
-//     icon: {
-//       icon: "edit",
-//     },
-//   },
-// ];
-
-import { useState } from "react";
-import Item from "./Item";
+import { useRef, useState } from "react";
+import Icon from "../Icon";
 
 interface IIcon {
   icon: string;
-  size?: number;
   color?: string;
-}
-interface IData {
-  title: string;
-  description: string;
-  hasIcon: boolean;
-  icon?: IIcon | any;
-  isButton?: boolean;
-  hasDescription?: boolean;
-  line?: boolean;
-}
-interface IProps {
-  items: IData[];
-  className: string;
+  size?: number;
 }
 
-const SelectBox: React.FC<IProps> = ({ items, className }): JSX.Element => {
+interface IProps extends React.PropsWithChildren {
+  className?: string;
+  type: "button" | "icon";
+  icon?: IIcon;
+  buttonText?: string;
+  hasIcon?: boolean;
+}
+
+const SelectBox: React.FC<IProps> = ({
+  children,
+  className,
+  type,
+  buttonText,
+  hasIcon = true,
+  icon,
+}): JSX.Element => {
+  const dropdown = useRef<any>();
   const [open, setOpen] = useState(false);
+  const [listDirection, setListDirectiob] = useState({});
 
-  const getToggle = () => {
+  const toggleOpen = () => {
+    const elementHeight =
+      dropdown.current.offsetParent + dropdown.current.offsetHeight + 240;
+
+    if (elementHeight > window.innerHeight) {
+      setListDirectiob({ bottom: type === "button" ? "2.60rem" : "1.5rem" });
+    } else {
+      setListDirectiob({ top: type === "button" ? "2.60rem" : "1.5rem" });
+    }
     setOpen(!open);
   };
 
+  const closeList = () => {
+    setTimeout(() => {
+      setOpen(false);
+    }, 100);
+  };
+
   return (
-    <div>
-      <button className="" onClick={getToggle}>
-        {" "}
-        ++++
-        {open && (
-          <div
-            className={` ${className} left-0 top-11 z-30 cursor-pointer  text-right p-2
-       rounded-lg shadow flex-col  `}
-          >
-            {items.map((item) => {
-              return <Item {...item} />;
-            })}
-          </div>
-        )}
-      </button>
+    <div
+      tabIndex={0}
+      className="relative flex items-center"
+      onClick={toggleOpen}
+      ref={dropdown}
+      onBlur={closeList}
+    >
+      {type === "button" ? (
+        <button
+          className={`border flex items-center justify-between border-solid border-lightgray_300 rounded-md relative text-right p-XS ${className}`}
+          onClick={() => {}}
+          name="dropdown"
+          type="button"
+        >
+          {hasIcon && type === "button" && <Icon icon="chevron_down" />}
+          {buttonText}
+        </button>
+      ) : (
+        <Icon
+          icon={icon?.icon}
+          color={icon?.color}
+          size={icon?.size}
+          className="cursor-pointer"
+        />
+      )}
+      {open && (
+        <div
+          className={`${
+            type === "icon" ? "min-w-[200px]" : ""
+          } absolute w-full right-0 z-30 text-right p-2 rounded-lg shadow-md flex-col bg-white`}
+          style={listDirection}
+        >
+          {children}
+        </div>
+      )}
     </div>
   );
 };

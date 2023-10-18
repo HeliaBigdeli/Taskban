@@ -3,7 +3,7 @@ import Input from "../../../components/Common/Form/Input";
 import ProfileImage from "../../../components/Common/ProfileImage";
 import { selectUser } from "../../../features/authSlice";
 import { required, validate } from "../../../utils/validator";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 const rules = {
@@ -36,17 +36,20 @@ const Account: React.FC = (): JSX.Element => {
     setErrors(resultErrors);
   };
 
+  useEffect(() => {
+  }, [user])
+
   return (
-    <div className="flex flex-row-reverse">
+    <div className="flex flex-row-reverse">       
       <div className="mt-[160px] mr-[58px]">
         <h2 className="text-[31px] text-bold text-right mb-L">اطلاعات فردی</h2>
         <div className="flex flex-row-reverse items-center">
           <span className="ml-S">
             <ProfileImage
               size={100}
-              firstName={user.first_name}             
-              lastName={user.last_name}    
-              img={user.thumbnail}         
+              firstName={user.first_name}
+              lastName={user.last_name}
+              img={user.thumbnail}
             />
           </span>
           <div className="py-[6px] flex flex-col">
@@ -57,7 +60,7 @@ const Account: React.FC = (): JSX.Element => {
                 type="file"
                 id="thumbnail"
                 name="thumbnail"
-                onChange={() => {}}
+                onChange={() => { }}
               />
             </label>
             <p className="text-lightgray text-xs text-center mt-S">

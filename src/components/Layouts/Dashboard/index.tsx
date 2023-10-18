@@ -3,7 +3,6 @@ import Button from "../../Common/Form/Button";
 import Input from "../../Common/Form/Input";
 import Icon from "../../Common/Icon";
 import DarkMode from "../../Theme/Switcher";
-import Header from "./Header";
 import SideBar from "./SideBar";
 import styles from "./style.module.css";
 import List from "./../../Common/List";
@@ -14,20 +13,7 @@ import NestedModals from "../../Common/Modal/NestedModals";
 import ProjectModal from "../../Dashboard/ProjectModal";
 import { logout, selectUser } from "../../../features/authSlice";
 import { useDispatch, useSelector } from "react-redux";
-import Profile from "../../Common/MembersThumb";
 import ProfileImage from "../../Common/ProfileImage";
-
-const data = [
-  {
-    id: 1,
-    text: "درس مدیریت پروژه",
-    hasProject: true,
-    color: "indigo_secondary",
-  },
-  { id: 2, text: "کارهای شخصی", hasProject: false, color: "indigo_secondary" },
-  { id: 3, text: "درس کامپایلر", hasProject: true, color: "lightgray_300" },
-  { id: 4, text: "پروژه کوئرا", hasProject: false, color: "blue_secondary" },
-];
 
 const DashboardLayout: React.FC = (): JSX.Element => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -50,18 +36,15 @@ const DashboardLayout: React.FC = (): JSX.Element => {
     navigate("/login");
   };
 
-  useEffect(() => {
-
-  }, [user])
+  useEffect(() => {}, [user]);
   return (
     <div className="flex px-2XL">
       <div className="flex-grow flex-col w-full overflow-hidden">
-        <Header />
         <Outlet />
       </div>
       <SideBar>
         <h2 className={`${styles.navbarTitle} mb-[27px] mt-XL`}>
-          <Link to="/workspace">کوئرا تسک منیجر</Link>
+          <Link to="/workspaces">کوئرا تسک منیجر</Link>
         </h2>
         <div className="flex justify-between">
           <Icon icon="chevron_down" />
@@ -94,7 +77,7 @@ const DashboardLayout: React.FC = (): JSX.Element => {
             className: "ml-1",
           }}
         />
-        <List data={data} />
+        <List />
         <Button
           text="ساختن پروژه جدید"
           onClick={handleProjectModal}

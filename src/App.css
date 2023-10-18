@@ -9,15 +9,33 @@
 }
 
 :root {
-  --brand-primary: #208d8e;
-  --black: #1e1e1e;
-  --XL: 40px;
-  --L: 32px;
-  --M: 24px;
-  --S: 16px;
-  --XS: 8px;
+  --primary: #ddd;
+  --secondary: #aaa;
+}
+* {
+  @apply font-yekan
 }
 
 * {
-  @apply font-yekan
+  scrollbar-width: thin;
+  scrollbar-color: var(--secondary) var(--primary);
+}
+
+*::-webkit-scrollbar {
+  width: 10px;
+}
+
+*::-webkit-scrollbar-track {
+  background: var(--primary);
+  border-radius: 2px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--secondary);
+  border-radius: 10px;
+  border: 3px solid var(--primary);
+}
+
+html {
+  overflow-y: scroll;
 }

@@ -1,24 +1,35 @@
+import { useEffect } from "react";
+import API_URL from "../../../constants/api.url";
 import Item from "./Item";
+import useAxios from "../../../hooks/useAxios";
+import { useSelector } from "react-redux";
+import { workSpaceUpdate } from "../../../features/updateSlice";
+
 interface IData {
-  text: string;
   id: number;
+  name: string;
   color: string;
-  hasProject: boolean;
-}
-interface IProps {
-  data: IData[];
 }
 
-const List: React.FC<IProps> = ({ data }): JSX.Element => {
+const List: React.FC = (): JSX.Element => {
+  const [response, error, loading, fetcher] = useAxios();
+
+  const update = useSelector(workSpaceUpdate);
+
+  const getWorkSpaces = async () => {
+    await fetcher("get", API_URL.WorkSpaces);
+  };
+
+  useEffect(() => {
+    getWorkSpaces();
+  }, [update]);
+
   return (
-    <ul> 
-      {data.map((item) => (
-        <Item
-          key={item.id}
-          text={item.text}
-          color={item.color}
-          hasProject={item.hasProject}
-        ></Item>
+    <ul>
+      {loading ? "Loading..." : ""}
+      {error && !loading ? "ورک اسپیسی وجود ندارد" : ""}
+      {response?.map((item: IData) => (
+        <Item key={item.id} {...item}></Item>
       ))}
     </ul>
   );

@@ -1,23 +1,11 @@
 import colors from "../ColorPicker/colors";
 import Icon from "../Icon";
 import { useState, useEffect } from "react";
-
-interface IMember {
-  id: number;
-  first_name: string;
-  last_name: string;
-  thumbnail: string;
-}
-
-interface IProps {
-  size?: number;
-  hasAddIcon?: boolean;
-  members: IMember[];
-}
+import {IMember, IProps} from '../../../interfaces/members'
 
 const MembersThumb: React.FC<IProps> = ({
   size = 32,
-  members,
+  members = [],
   hasAddIcon = false,
 }): JSX.Element => {
   const [slicedData, setSlicedData] = useState<IMember[]>([]);
@@ -36,8 +24,8 @@ const MembersThumb: React.FC<IProps> = ({
   };
 
   useEffect(() => {
-    if (members.length > 3) {
-      setSlicedData(members.slice(0, 3));
+    if (members?.length > 3) {
+      setSlicedData(members?.slice(0, 3));
     } else {
       setSlicedData(members);
     }
@@ -47,11 +35,11 @@ const MembersThumb: React.FC<IProps> = ({
     <div
       className="relative flex items-center z-10"
       style={{
-        width:
-          (slicedData.length +
+        width: 
+          (slicedData?.length +
             (hasAddIcon ? 1 : 0) +
-            (members.length > 3 ? 1 : 0)) *
-          (size / 2),
+            (members?.length > 3 ? 1 : 0)) *
+          (size / 2) || 0
       }}
     >
       {slicedData?.map((member, index) => {
@@ -74,11 +62,11 @@ const MembersThumb: React.FC<IProps> = ({
               fontSize: size / 2.5 + "px",
             }}
           >
-            {member.thumbnail ? "" : firstLettersOfName}
+            {member?.thumbnail ? "" : firstLettersOfName}
           </div>
         );
       })}
-      {members.length > 3 ? (
+      {members?.length > 3 ? (
         <div
           className="absolute rounded-full border-[#c1c1c1] flex justify-center items-center bg-lightgray_300"
           style={{

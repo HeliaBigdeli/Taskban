@@ -1,24 +1,27 @@
-import { useRef } from "react";
 import TaskCard from "./TaskCard";
 import TaskColumn from "./TaskColumn";
-import { useDraggable } from "react-use-draggable-scroll";
 import style from "../style.module.css";
 import { Droppable } from "react-beautiful-dnd";
 
+interface ITask {
+  id: number;
+  name: string;
+  img: string;
+}
+
 interface IColumnContainerProps {
   setMouseDown: React.Dispatch<React.SetStateAction<boolean>>;
-  cloumnTitle: string;
+  name: string;
+  is_archive: boolean;
   id: number;
-  tasks: {
-    id: number;
-    title: string;
-    img: string;
-  }[];
+  tasks: ITask[];
 }
+
 const ColumnContainer: React.FC<IColumnContainerProps> = ({
   id,
-  cloumnTitle,
+  name,
   tasks,
+  is_archive,
   setMouseDown,
 }): JSX.Element => {
   const handleClick = (e: React.MouseEvent<EventTarget>) => {
@@ -28,12 +31,12 @@ const ColumnContainer: React.FC<IColumnContainerProps> = ({
 
   return (
     <div
-      className="flex shrink-0  flex-col items-center gap-S   "
+      className="flex shrink-0  flex-col items-center gap-S"
       style={{ direction: "ltr" }}
     >
-      <TaskColumn title={cloumnTitle} />
+      <TaskColumn title={name} />
 
-      <Droppable droppableId={cloumnTitle} type="group">
+      <Droppable droppableId={name} type="group">
         {(provided) => (
           <div
             onMouseDownCapture={handleClick}
@@ -44,10 +47,12 @@ const ColumnContainer: React.FC<IColumnContainerProps> = ({
             {tasks.map((item, index) => {
               return (
                 <TaskCard
+                  boardId={id}
                   {...item}
+                  title={item.name}
                   key={item.id}
                   index={index}
-                  cloumnTitle={cloumnTitle}
+                  boardTitle={name}
                 />
               );
             })}

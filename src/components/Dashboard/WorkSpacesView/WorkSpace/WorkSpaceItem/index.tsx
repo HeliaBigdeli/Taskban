@@ -13,10 +13,16 @@ const WorkSpacesItem: React.FC<IWorkSpacesItemProps> = ({
   id,
   workspace_id
 }): JSX.Element => {
-  const navigate = useNavigate();  
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate(`${workspace_id}/${API_URL.Projects}${id}/${API_URL.Boards}`);
+    if (pathname === '/workspaces') {
+      navigate(`${workspace_id}/${API_URL.Projects}${id}/${API_URL.Boards}`);
+    } else {
+      navigate(`${id}/${API_URL.Boards}`);
+    }
+
   };
 
   return (

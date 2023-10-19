@@ -14,6 +14,7 @@ const NameEdit: React.FC<IEdit> = ({
   value,
   setValue,
   previousValue,
+  type,
 }): JSX.Element => {
   const [values, setVlaues] = useState({
     title: previousValue,
@@ -38,11 +39,21 @@ const NameEdit: React.FC<IEdit> = ({
     });
   };
 
+  const projectEdit = async () => {
+    await fetcher(
+      "patch",
+      `${API_URL.WorkSpaces}${params.wid}/${API_URL.Projects}${params.pid}/`,
+      {
+        name: values.title,
+      }
+    );
+  };
+
   useEffect(() => {
     if (response) {
       dispatch(addWorkSpace());
       setValue(false);
-      setVlaues({ title: "" });
+      setVlaues({ title: previousValue });
       toast.success("تغییر نام با موفقیت انجام شد.");
     }
   }, [response]);
@@ -76,10 +87,12 @@ const NameEdit: React.FC<IEdit> = ({
             />
           </div>
           <Button
-            text={`${loading ? "Loading..." : "ثبت تغییر"}`}
+            text="ثبت"
             type="button"
-            onClick={workSpaceEdit}
+            onClick={type === "workSpace" ? workSpaceEdit : projectEdit}
             className="flex h-XL rounded-md bg-brand-primary text-white"
+            loading={loading}
+            disabled={!values.title.trim()}
           />
         </div>
       </Modal>

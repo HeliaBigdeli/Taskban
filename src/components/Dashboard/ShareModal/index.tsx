@@ -1,5 +1,5 @@
 import { createPortal } from "react-dom";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import Modal from "../../Common/Modal";
 
 import Button from "../../Common/Form/Button";
@@ -15,12 +15,16 @@ const rules = {
 const portals = document.getElementById("portals") as Element;
 
 interface IProps {
-  title: string,
+  title: string;
   modal: boolean;
   setModal: (value: boolean | ((prevVar: boolean) => boolean)) => void;
 }
 
-const ShareModal: React.FC<IProps> = ({ modal, setModal, title }): JSX.Element => {
+const ShareModal: React.FC<IProps> = ({
+  modal,
+  setModal,
+  title,
+}): JSX.Element => {
   const [shareEmail, setShareEmail] = useState<{}>({
     shareWithEmail: "",
   });

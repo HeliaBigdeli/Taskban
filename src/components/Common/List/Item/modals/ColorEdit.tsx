@@ -16,7 +16,7 @@ const NameEdit: React.FC<IEdit> = ({
   previousValue,
 }): JSX.Element => {
   const [values, setVlaues] = useState({
-    title: previousValue,
+    color: previousValue,
   });
 
   const [selectedColor, setSelectedColor] = useState<string | undefined>(
@@ -33,17 +33,17 @@ const NameEdit: React.FC<IEdit> = ({
 
   const edit = async () => {
     await fetcher("patch", `${API_URL.WorkSpaces}${params.wid}/`, {
-      color: values.title,
+      color: values.color,
     });
   };
 
   const handleDisableClick = () => {
     if (ref.current) ref.current.style.backgroundColor = "#7D828C";
-    setVlaues({ title: "" });
+    setVlaues({ color: "" });
   };
 
   const close = () => {
-    setVlaues({ title: previousValue });
+    setVlaues({ color: previousValue });
     setSelectedColor(previousValue);
   };
 
@@ -51,7 +51,7 @@ const NameEdit: React.FC<IEdit> = ({
     if (response) {
       dispatch(addWorkSpace());
       setValue(false);
-      toast.success("تغییر نام با موفقیت انجام شد.");
+      toast.success("تغییر رنگ با موفقیت انجام شد.");
     }
   }, [response]);
 
@@ -73,7 +73,7 @@ const NameEdit: React.FC<IEdit> = ({
               <span className="text-sm text-black">رنگ ورک‌اسپیس</span>
               <div className="flex w-[293px] flex-row-reverse gap-[8px] flex-wrap items-center">
                 <ColorPicker
-                  onClick={(data) => setVlaues({ title: data.code! })}
+                  onClick={(data) => setVlaues({ color: data.code! })}
                   hasDisableIcon={true}
                   handleDisableClick={handleDisableClick}
                   selected={selectedColor}
@@ -84,15 +84,17 @@ const NameEdit: React.FC<IEdit> = ({
             <div
               ref={ref}
               className="flex text-center w-[80px] h-[80px] p-[10px] mb-[20px] justify-center items-center rounded-[8px] bg-[#7D828C] text-white text-2xl font-extrabold"
-              style={{ backgroundColor: values.title }}
+              style={{ backgroundColor: values.color }}
             ></div>
           </div>
 
           <Button
-            text={`${loading ? "Loading..." : "ثبت"}`}
+            text="ثبت"
             type="button"
             onClick={edit}
             className="flex h-XL rounded-md bg-brand-primary text-white w-full"
+            loading={loading}
+            disabled={!values.color}
           />
         </div>
       </Modal>

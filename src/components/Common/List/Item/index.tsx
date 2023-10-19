@@ -23,19 +23,22 @@ interface IProps {
   color: string;
 }
 
+const portals = document.getElementById("portals") as Element;
+
 const ListItem: React.FC<IProps> = ({ id, name, color }): JSX.Element => {
   const [listToggle, setListToggle] = useState(false);
   const [response, error, loading, fetcher] = useAxios();
-  const [responseWSDelete, errorDel, loadingDel, fetcherDel] = useAxios();
+  const [responseDelete, errorDel, loadingDel, fetcherDel] = useAxios();
   const navigate = useNavigate();
   const params = useParams();
   const [projectModal, setProjectModal] = useState<boolean>(false);
-  const portals = document.getElementById("portals") as Element;
   const [nameEdit, setNameEdit] = useState<boolean>(false);
   const [colorEdit, setColorEdit] = useState<boolean>(false);
   const [alert, setAlert] = useState(false);
-  const [shareWorkSpace, setShareWorkSpace] = useState(false);
+  const [proAlert, setProAlert] = useState(false);
+  const [share, setShare] = useState(false);
   const [newTask, setNewTask] = useState<boolean>(false);
+  const [proNameEdit, setProNameEdit] = useState(false);
 
   const update = useSelector(projectUpdate);
 
@@ -87,29 +90,44 @@ const ListItem: React.FC<IProps> = ({ id, name, color }): JSX.Element => {
     fetcherDel("delete", `${API_URL.WorkSpaces}${id}/`);
   };
   const HandleWsShare = () => {
-    setShareWorkSpace(!shareWorkSpace);
+    setShare(!share);
   };
 
   const handleAddProTask = () => {
     setNewTask(!newTask);
   };
-  const handleEditProName = () => {};
-  const handleCopyProLink = () => {};
-  const handleProRemove = () => {};
-  const HandleProShare = () => {};
+  const handleEditProName = () => {
+    setProNameEdit(!proNameEdit);
+  };
+  const handleCopyProLink = () => {
+    navigator.clipboard.writeText(window.location.href);
+    toast.success("لینک با موفقیت در کلیپ بورد کپی شد.");
+  };
+  const handleProRemove = () => {
+    fetcherDel(
+      "delete",
+      `${API_URL.WorkSpaces}${id}/${API_URL.Projects}${params.pid}/`
+    );
+  };
+  const handleProAlert = () => {
+    setProAlert(!alert);
+  };
+  const HandleProShare = () => {
+    setShare(!share);
+  };
 
   useEffect(() => {
     setListToggle(false);
 
-    if (responseWSDelete) {
+    if (responseDelete) {
       dispatch(addWorkSpace());
       setAlert(false);
-      toast.success("ورک اسپیس با موفقیت حذف شد.");
-      navigate('workspaces');
+      toast.success("آیتم مورد نظر با موفقیت حذف شد.");
+      navigate("workspaces");
     } else {
       getProjects();
     }
-  }, [update, responseWSDelete]);
+  }, [update, responseDelete]);
 
   return (
     <li>
@@ -201,7 +219,7 @@ const ListItem: React.FC<IProps> = ({ id, name, color }): JSX.Element => {
                   icon={{ icon: "link" }}
                 />
                 <DropdownItem
-                  onClick={handleProRemove}
+                  onClick={handleProAlert}
                   title="حذف"
                   hasIcon={true}
                   icon={{ icon: "trash", color: "red" }}
@@ -215,6 +233,25 @@ const ListItem: React.FC<IProps> = ({ id, name, color }): JSX.Element => {
                   isButton={true}
                 />
               </Dropdown>
+              {createPortal(
+                <>
+                  <TaskModal modal={newTask} setModal={setNewTask} />
+                  <NameEdit
+                    value={proNameEdit}
+                    setValue={setProNameEdit}
+                    previousValue={project.name}
+                    type="project"
+                  />
+                  <AlertModal
+                    isAlertOpen={proAlert}
+                    setIsAlertOpen={setProAlert}
+                    alertText="آیا از حذف کردن این پروژه مطمئن هستید؟"
+                    className=""
+                    handleYes={handleProRemove}
+                  />
+                </>,
+                portals
+              )}
             </li>
           ))}
           {!response?.length && !loading && (
@@ -237,6 +274,7 @@ const ListItem: React.FC<IProps> = ({ id, name, color }): JSX.Element => {
             value={nameEdit}
             setValue={setNameEdit}
             previousValue={name}
+            type="workSpace"
           />
           <ColorEdit
             value={colorEdit}
@@ -251,11 +289,10 @@ const ListItem: React.FC<IProps> = ({ id, name, color }): JSX.Element => {
             handleYes={handleWsRemove}
           />
           <ShareModal
-            modal={shareWorkSpace}
-            setModal={setShareWorkSpace}
+            modal={share}
+            setModal={setShare}
             title="اشتراک گذاری پروژه"
           />
-          <TaskModal modal={newTask} setModal={setNewTask} />
         </>,
         portals
       )}

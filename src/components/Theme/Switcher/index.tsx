@@ -1,12 +1,14 @@
 import Icon from "../../Common/Icon";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import styles from "./style.module.css";
 
 const Switcher: React.FC = () => {
   const myIconRef = useRef<HTMLElement>(null);
   const myBtnRef = useRef<HTMLElement>(null);
+  const [theme, setTheme] = useState(true);
 
   const handleClick = () => {
+    setTheme(!theme);
     myIconRef.current?.classList.toggle(`${styles.darkBG}`);
     myBtnRef.current?.classList.toggle("justify-end");
   };
@@ -19,7 +21,7 @@ const Switcher: React.FC = () => {
     >
       <Icon
         ref={myIconRef}
-        icon="sun"
+        icon={theme === true ? "sun" : "moon"}
         color="#818181"
         className={`bg-white m-1 rounded-md p-[3px]`}
       />

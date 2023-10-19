@@ -1,7 +1,8 @@
 export interface IEdit {
     value: boolean;
     setValue: (value: boolean | ((prevVar: boolean) => boolean)) => void;
-    previousValue: string;
+    previousValue: string; 
+    type?: "workSpace" | "project"
 }
 
 export interface IAlert {

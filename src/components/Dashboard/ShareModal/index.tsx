@@ -28,10 +28,7 @@ const ShareModal: React.FC<IProps> = ({ modal, setModal, title }): JSX.Element =
   const handleShareWithEmail = () => {
     const resultErrors = validate(shareEmail, rules);
     resultErrors.forEach((error) => {
-      toast.error(error, {
-        position: "bottom-left",
-        autoClose: 3000,
-      });
+      toast.error(error);
     });
   };
 

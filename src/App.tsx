@@ -47,7 +47,7 @@ function App() {
           </AuthCheck>
         </BrowserRouter>
       </Provider>
-      <ToastContainer style={{ width: 340, fontSize: 14 }} rtl />
+      <ToastContainer style={{ width: 340, fontSize: 14 }} rtl  position="bottom-left" autoClose={3000}/>
     </ContextProvider>
   );
 }

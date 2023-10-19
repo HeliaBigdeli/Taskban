@@ -78,10 +78,7 @@ const ListItem: React.FC<IProps> = ({ id, name, color }): JSX.Element => {
   };
   const handleCopyWsLink = () => {
     navigator.clipboard.writeText(window.location.href);
-    toast.success("لینک با موفقیت در کلیپ بورد کپی شد.", {
-      position: "bottom-left",
-      autoClose: 3000,
-    });
+    toast.success("لینک با موفقیت در کلیپ بورد کپی شد.");
   };
   const handleAlert = () => {
     setAlert(!alert);
@@ -107,10 +104,7 @@ const ListItem: React.FC<IProps> = ({ id, name, color }): JSX.Element => {
     if (responseWSDelete) {
       dispatch(addWorkSpace());
       setAlert(false);
-      toast.success("ورک اسپیس با موفقیت حذف شد.", {
-        position: "bottom-left",
-        autoClose: 3000,
-      });
+      toast.success("ورک اسپیس با موفقیت حذف شد.");
     } else {
       getProjects();
     }

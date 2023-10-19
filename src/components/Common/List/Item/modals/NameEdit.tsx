@@ -43,10 +43,7 @@ const NameEdit: React.FC<IEdit> = ({
       dispatch(addWorkSpace());
       setValue(false);
       setVlaues({ title: "" });
-      toast.success("تغییر نام با موفقیت انجام شد.", {
-        position: "bottom-left",
-        autoClose: 3000,
-      });
+      toast.success("تغییر نام با موفقیت انجام شد.");
     }
   }, [response]);
 

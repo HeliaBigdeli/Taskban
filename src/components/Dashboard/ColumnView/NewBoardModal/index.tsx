@@ -1,8 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import Modal from "../../../Common/Modal";
 import Button from "../../../Common/Form/Button";
 import Input from "../../../Common/Form/Input";
+import { addBoard } from "../../../../features/updateSlice";
+import API_URL from "../../../../constants/api.url";
+import { useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import useAxios from "../../../../hooks/useAxios";
 
 const portals = document.getElementById("portals") as Element;
 
@@ -12,21 +17,42 @@ interface IProps {
 }
 
 const NewBoardModal: React.FC<IProps> = ({ modal, setModal }): JSX.Element => {
-  const [boardName, setBoardName] = useState<{ name: string }>({
-    name: "",
+  const params = useParams();
+  const dispatch = useDispatch();
+  const [response, error, loading, fetcher] = useAxios();
+  const [values, setVlaues] = useState({
+    title: "",
+    order: 0,
+    is_archive: true,
   });
 
-  const handleCreateNewBoard = () => {
-    console.log(boardName);
-  };
-
-  const handleChange = (name: string, value: string) => {
-    setBoardName({ ...boardName, name: value });
+  const handleChange = (name, value) => {
+    setVlaues({
+      ...values,
+      [name]: value,
+    });
   };
 
   const handleShowModal = () => {
     setModal(!modal);
   };
+
+  const postBoard = async () => {
+    await fetcher(
+      "post",
+      `${API_URL.WorkSpaces}${params.wid}/${API_URL.Projects}${params.pid}/${API_URL.Boards}`,
+      {
+        name: values.title,
+      }
+    );
+  };
+
+  useEffect(() => {
+    if (response) {
+      dispatch(addBoard());
+      setModal(false);
+    }
+  }, [response]);
 
   return (
     <>
@@ -44,21 +70,22 @@ const NewBoardModal: React.FC<IProps> = ({ modal, setModal }): JSX.Element => {
           <div className="flex flex-col gap-XL w-[500px] pt-0">
             <div className="flex flex-col gap-[8px]" dir="rtl">
               <Input
-                name="boardName"
-                id="boardName"
+                name="title"
+                id="title"
                 type="text"
                 label="نام برد جدید"
                 hasLabel={true}
                 className="h-XL rounded-md border border-[#aaaaaa] text-sm outline-none pr-1 bg-white"
                 onChange={(name, value) => handleChange(name, value)}
-                inputValue={boardName.name}
+                inputValue={values.title}
                 autoFocus={true}
               />
             </div>
             <Button
+              disabled={!values.title}
               text="ادامه"
               type="button"
-              onClick={handleCreateNewBoard}
+              onClick={postBoard}
               className="flex h-XL rounded-md bg-brand-primary text-white"
             />
           </div>

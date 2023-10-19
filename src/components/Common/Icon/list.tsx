@@ -57,7 +57,7 @@ const icons: ListType = {
         xmlns="http://www.w3.org/2000/svg"
         width={size}
         height={size}
-        viewBox="-160 -160 750 850"
+        viewBox="-140 -150 750 850"
       >
         <path
           stroke={color}

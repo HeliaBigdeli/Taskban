@@ -2,19 +2,20 @@ import Icon from "../../Icon";
 
 interface IProps {
   title: string;
-  color?: string,
+  color?: string;
   description?: string;
   hasIcon?: boolean;
   icon?: IIcon;
   isButton?: boolean;
   hasDescription?: boolean;
+  bgcolor?: string;
   onClick?: (e: React.MouseEvent<HTMLInputElement>) => void;
 }
 
 interface IIcon {
   size?: number;
   color?: string;
-  icon: string;
+  icon?: string;
 }
 
 const DropdownItem: React.FC<IProps> = ({
@@ -25,22 +26,45 @@ const DropdownItem: React.FC<IProps> = ({
   icon,
   isButton,
   hasDescription,
-  onClick = () => { }
+  bgcolor,
+  onClick = () => {},
 }): JSX.Element => {
-
   const handleClick = (e) => {
-    onClick(e)
-  }
+    onClick(e);
+  };
 
   return (
-    <div className={`flex flex-col rounded-md font-bold ${isButton ? "bg-brand-primary text-white rounded-md px-2 font-normal" : "hover:bg-lightgray_100"}`}>
-      <div className="flex items-center flex-row-reverse cursor-pointer p-2" onClick={handleClick}>
-        {hasIcon && <Icon icon={icon?.icon} color={isButton ? '#fff' : icon?.color} size={icon?.size} />}
-        <p className="text-sm" style={{color}}>
-          {title}
-        </p>
+    <div
+      className={`flex flex-col rounded-md font-bold ${
+        isButton
+          ? "bg-brand-primary text-white rounded-md px-2 font-normal"
+          : "hover:bg-lightgray_100"
+      }`}
+    >
+      <div
+        className="flex items-center flex-row-reverse cursor-pointer p-2"
+        onClick={handleClick}
+      >
+        {hasIcon && (
+          <Icon
+            icon={icon?.icon}
+            color={isButton ? "#fff" : icon?.color}
+            size={icon?.size}
+          />
+        )}
+        {bgcolor ? (
+          <span className={`bg-${bgcolor} text-${color} rounded-2xl px-3`}>
+            {title}
+          </span>
+        ) : (
+          <p className="text-sm" style={{ color }}>
+            {title}
+          </p>
+        )}
       </div>
-      {hasDescription && <p className="text-xs font-yekan font-normal p-1">{description}</p>}
+      {hasDescription && (
+        <p className="text-xs font-yekan font-normal p-1">{description}</p>
+      )}
     </div>
   );
 };

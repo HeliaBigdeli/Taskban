@@ -1,4 +1,6 @@
 import Icon from "../../Icon/";
+import {useEffect} from 'react'
+
 interface IIcon {
   icon: string;
   color?: string;
@@ -17,6 +19,7 @@ interface IProps {
   icon?: IIcon;
   autoFocus?: boolean,
   loading?: boolean,
+  disabled?: boolean
 }
 
 const Button: React.FC<IProps> = ({
@@ -29,15 +32,21 @@ const Button: React.FC<IProps> = ({
   autoFocus = false,
   onClick,
   loading = false,
+  disabled = false
 }): JSX.Element => {
+
+  useEffect(() => {
+
+  }, [disabled])
+
   return (
     <button
-      disabled={loading}
+      disabled={loading || disabled}
       autoFocus={autoFocus}
       name={name}
       onClick={(e) => onClick(e)}
       type={type}
-      className={`flex items-center justify-center ${className} ${loading ? 'cursor-wait' : ''}`}
+      className={`flex items-center justify-center ${className} ${loading ? 'cursor-wait' : ''} ${disabled ? 'cursor-not-allowed' : ''}`} 
     >
       {loading ? <span dir="rtl">لطفا منتظر بمانید ...</span> : text}
       {hasIcon && (

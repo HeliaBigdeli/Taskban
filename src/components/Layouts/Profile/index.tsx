@@ -1,20 +1,24 @@
 import Button from "../../Common/Form/Button";
 import SideBar from "../Dashboard/SideBar";
 import styles from "../Auth/Header/style.module.css";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useLocation } from "react-router-dom";
 import IconItem from "../../Common/IconItem";
 
 const ProfileLayout: React.FC = (): JSX.Element => {
+  const { pathname } = useLocation();
+
   const handleClick = () => {};
   return (
     <div className="flex px-2XL">
-      <div className="flex-grow flex-col w-full overflow-hidden">
+      <div className="flex-grow flex-col w-full pb-10">
         <Outlet />
       </div>
       <SideBar>
-        <h2 className={`${styles.navbarTitle} mb-[75px] mt-XL`}>
-          کوئرا تسک منیجر
-        </h2>
+        <Link to="/workspaces">
+          <h2 className={`${styles.navbarTitle} mb-[45px] mt-XL`}>
+            کوئرا تسک منیجر
+          </h2>
+        </Link>
         <div className="flex flex-col items-end ">
           <Link to="/workspaces">
             <Button
@@ -35,13 +39,26 @@ const ProfileLayout: React.FC = (): JSX.Element => {
               text="اطلاعات فردی"
               url="information"
               icon="profile_edit"
+              className={`${
+                pathname === "/information" ? "bg-blue_secondary" : ""
+              }`}
             ></IconItem>
             <IconItem
               text="اطلاعات حساب"
               url="account"
               icon="profile_check"
+              className={`${
+                pathname === "/account" ? "bg-blue_secondary" : ""
+              }`}
             ></IconItem>
-            <IconItem text="تنظیمات" url="setting" icon="setting"></IconItem>
+            <IconItem
+              text="تنظیمات"
+              url="setting"
+              icon="setting"
+              className={`${
+                pathname === "/setting" ? "bg-blue_secondary" : ""
+              }`}
+            ></IconItem>
           </ul>
         </div>
       </SideBar>

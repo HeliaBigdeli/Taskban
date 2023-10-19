@@ -34,7 +34,7 @@ const ColumnContainer: React.FC<IColumnContainerProps> = ({
       className="flex shrink-0  flex-col items-center gap-S"
       style={{ direction: "ltr" }}
     >
-      <TaskColumn title={name} />
+      <TaskColumn title={name} count={tasks.length} />
 
       <Droppable droppableId={name} type="group">
         {(provided) => (

@@ -7,11 +7,9 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 const rules = {
-  email: [required],
-  username: [required],
-  password: [required],
-  newPassword: [required],
-  commitNewPassword: [required],
+  first_name: [required],
+  last_name: [required],
+  phone_number: [required],
 };
 
 type Values = {
@@ -20,11 +18,9 @@ type Values = {
 const Account: React.FC = (): JSX.Element => {
   const [errors, setErrors] = useState<string[]>([]);
   const [values, setValues] = useState<Values>({
-    email: "",
-    password: "",
-    username: "",
-    newPassword: "",
-    commitNewPassword: "",
+    first_name: "",
+    last_name: "",
+    phone_number: "",  
   });
   const user = useSelector(selectUser);
 
@@ -36,12 +32,11 @@ const Account: React.FC = (): JSX.Element => {
     setErrors(resultErrors);
   };
 
-  useEffect(() => {
-  }, [user])
+  useEffect(() => {}, [user]);
 
   return (
-    <div className="flex flex-row-reverse">       
-      <div className="mt-[160px] mr-[58px]">
+    <div className="flex flex-row-reverse">
+      <div className="mt-[125px] mr-[58px]">
         <h2 className="text-[31px] text-bold text-right mb-L">اطلاعات فردی</h2>
         <div className="flex flex-row-reverse items-center">
           <span className="ml-S">
@@ -60,7 +55,7 @@ const Account: React.FC = (): JSX.Element => {
                 type="file"
                 id="thumbnail"
                 name="thumbnail"
-                onChange={() => { }}
+                onChange={() => {}}
               />
             </label>
             <p className="text-lightgray text-xs text-center mt-S">
@@ -70,8 +65,9 @@ const Account: React.FC = (): JSX.Element => {
         </div>
         <form className="flex flex-col gap-S w-full mt-L">
           <Input
-            name="firstname"
-            id="firstname"
+            inputValue={values.first_name}
+            name="first_name"
+            id="first_name"
             type="text"
             label="نام"
             hasLabel={true}
@@ -79,8 +75,9 @@ const Account: React.FC = (): JSX.Element => {
             onChange={(name, value) => handleChange(name, value)}
           />
           <Input
-            name="lastname"
-            id="lastname"
+            inputValue={values.last_name}
+            name="last_name"
+            id="last_name"
             type="text"
             label="نام خانوادگی"
             hasLabel={true}
@@ -89,8 +86,9 @@ const Account: React.FC = (): JSX.Element => {
           />
 
           <Input
-            name="telNumber"
-            id="telNumber"
+            inputValue={values.phone_number}
+            name="phone_number"
+            id="phone_number"
             type="tel"
             label="شماره موبایل"
             className="h-XL"

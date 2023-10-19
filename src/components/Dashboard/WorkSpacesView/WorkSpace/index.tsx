@@ -65,7 +65,7 @@ const WorkSpace: React.FC<IWorkSpaceProps> = ({
         </div>
 
         <div className="flex items-start gap-L my-L">
-          {loading ? 'در حال دریافت اطلاعات ...' : null}
+          {/* {loading ? 'در حال دریافت اطلاعات ...' : null} */}
           {response?.map((item) => {
             return (
               <WorkSpacesItem

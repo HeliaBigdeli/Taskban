@@ -79,7 +79,8 @@ const ProjectModal: React.FC<IProps> = ({ modal, setModal }): JSX.Element => {
               />
             </div>
             <Button
-              text={`${loading ? "Loading..." : "ادامه"}`}
+              loading={loading}
+              text="ادامه"
               type="button"
               onClick={postProject}
               className="flex h-XL rounded-md bg-brand-primary text-white"

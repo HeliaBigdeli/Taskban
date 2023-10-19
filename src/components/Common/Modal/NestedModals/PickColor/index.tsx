@@ -119,6 +119,7 @@ const PickColor: React.FC<IProps> = ({
           </div>
 
           <Button
+            disabled={!workSpaceInfo.colorCode}
             text="ادامه"
             type="button"
             onClick={handlePickolorClick}

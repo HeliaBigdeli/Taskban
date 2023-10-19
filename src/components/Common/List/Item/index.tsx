@@ -105,7 +105,7 @@ const ListItem: React.FC<IProps> = ({ id, name, color }): JSX.Element => {
       dispatch(addWorkSpace());
       setAlert(false);
       toast.success("ورک اسپیس با موفقیت حذف شد.");
-      navigate(`${API_URL.WorkSpaces}`);
+      navigate('workspaces');
     } else {
       getProjects();
     }
@@ -217,7 +217,7 @@ const ListItem: React.FC<IProps> = ({ id, name, color }): JSX.Element => {
               </Dropdown>
             </li>
           ))}
-          {!response.length && !loading && (
+          {!response?.length && !loading && (
             <Button
               text="ساختن پروژه جدید"
               onClick={handleProjectModal}

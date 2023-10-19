@@ -7,7 +7,7 @@ import useAxios from "../../../hooks/useAxios";
 import { useDispatch } from "react-redux";
 import API_URL from "../../../constants/api.url";
 import { addProject } from "../../../features/updateSlice";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 const portals = document.getElementById("portals") as Element;
 
@@ -17,15 +17,12 @@ interface IProps {
 }
 
 const ProjectModal: React.FC<IProps> = ({ modal, setModal }): JSX.Element => {
+  const params = useParams();
+  const dispatch = useDispatch();
+  const [response, error, loading, fetcher] = useAxios();
   const [values, setVlaues] = useState({
     title: "",
   });
-
-  const [response, error, loading, fetcher] = useAxios();
-
-  const dispatch = useDispatch();
-
-  const params = useParams();
 
   const handleChange = (name, value) => {
     setVlaues({
@@ -46,13 +43,12 @@ const ProjectModal: React.FC<IProps> = ({ modal, setModal }): JSX.Element => {
         name: values.title,
       }
     );
-    setModal(false);
   };
 
   useEffect(() => {
-    console.log(error);
     if (response) {
       dispatch(addProject());
+      setModal(false);
     }
   }, [response]);
 
@@ -83,7 +79,8 @@ const ProjectModal: React.FC<IProps> = ({ modal, setModal }): JSX.Element => {
               />
             </div>
             <Button
-              text={`${loading ? "Loading..." : "ادامه"}`}
+              loading={loading}
+              text="ادامه"
               type="button"
               onClick={postProject}
               className="flex h-XL rounded-md bg-brand-primary text-white"

@@ -10,7 +10,7 @@ interface IItem {
 
 interface IProps {
   items: IItem[];
-  name: string,
+  name: string;
   className?: string;
   hasSearch?: boolean;
   searchPlaceholder?: string;
@@ -25,41 +25,43 @@ const Select: React.FC<IProps> = ({
   hasSearch = true,
   searchPlaceholder = "جستجو بین فیلترها",
 }): JSX.Element => {
-  const selectBtn = useRef<any>()
-  const [value, setValue] = useState<string | null>("")
+  const selectBtn = useRef<any>();
+  const [value, setValue] = useState<string | null>("");
   const [open, setOpen] = useState(false);
-  const [data, setData] = useState(items)
-  const [listDirection, setListDirectiob] = useState({})
+  const [data, setData] = useState(items);
+  const [listDirection, setListDirectiob] = useState({});
 
   const toggleOpen = () => {
-    const elementHeight = selectBtn.current.offsetTop + selectBtn.current.offsetHeight + 180;
+    const elementHeight =
+      selectBtn.current.offsetTop + selectBtn.current.offsetHeight + 180;
+
     if (elementHeight > window.innerHeight) {
-      setListDirectiob({bottom: '2.30rem'})
+      setListDirectiob({ bottom: selectBtn.current.offsetHeight });
     } else {
-      setListDirectiob({top: '2.30rem'})
+      setListDirectiob({ top: selectBtn.current.offsetHeight });
     }
-    setData(items)
-    setOpen(!open)
+    setData(items);
+    setOpen(!open);
   };
 
   const closeList = () => {
     setTimeout(() => {
-      setOpen(false)
-    }, 120)
+      setOpen(false);
+    }, 120);
   };
 
   const handleSelect = (e: React.MouseEvent<HTMLElement>) => {
-    setValue(e.currentTarget.textContent)
-    onChange(e)
+    setValue(e.currentTarget.textContent);
+    onChange(e);
   };
 
   const handleSearch = (value: string) => {
     const data = items.filter((item) => {
-      return item.title.includes(value)
-    })
+      return item.title.includes(value);
+    });
 
-    setData(data)
-  }
+    setData(data);
+  };
 
   return (
     <button
@@ -69,15 +71,16 @@ const Select: React.FC<IProps> = ({
       className={`border border-solid border-lightgray_300 rounded-md relative text-right p-XS ${className}`}
       onClick={toggleOpen}
     >
-      <div
-        className="flex items-center justify-between flex-row-reverse"
-      >
-        <span className={`text-sm ${value ? 'black' : 'text-lightgray'} font-b`}>{value || 'انتخاب کنید'}</span>
+      <div className="flex items-center justify-between flex-row-reverse">
+        <span
+          className={`text-sm ${value ? "black" : "text-lightgray"} font-b`}
+        >
+          {value || "انتخاب کنید"}
+        </span>
         <Icon icon="chevron_down" className="mr-auto" />
       </div>
-      <div onBlur={closeList}
-      >
-        {open &&
+      <div onBlur={closeList}>
+        {open && (
           <Selectlist
             listDirection={listDirection}
             items={data}
@@ -87,9 +90,8 @@ const Select: React.FC<IProps> = ({
             onSelect={handleSelect}
             onSearch={(value) => handleSearch(value)}
           />
-        }
+        )}
       </div>
-
     </button>
   );
 };

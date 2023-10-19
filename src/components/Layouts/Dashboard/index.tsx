@@ -10,7 +10,6 @@ import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { Link } from "react-router-dom";
 import NestedModals from "../../Common/Modal/NestedModals";
-import ProjectModal from "../../Dashboard/ProjectModal";
 import { logout, selectUser } from "../../../features/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import ProfileImage from "../../Common/ProfileImage";
@@ -18,14 +17,9 @@ import ProfileImage from "../../Common/ProfileImage";
 const DashboardLayout: React.FC = (): JSX.Element => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const portals = document.getElementById("portals") as Element;
-  const [projectModal, setProjectModal] = useState<boolean>(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector(selectUser);
-
-  const handleProjectModal = () => {
-    setProjectModal(!projectModal);
-  };
 
   const handleChange = (name: string, value: string) => {
     console.log(name, value);
@@ -78,12 +72,7 @@ const DashboardLayout: React.FC = (): JSX.Element => {
           }}
         />
         <List />
-        <Button
-          text="ساختن پروژه جدید"
-          onClick={handleProjectModal}
-          type="button"
-          className="text-brand-primary h-L text-sm font-bold leading-normal self-stretch rounded-md border border-brand-primary mb-L"
-        />
+
         <div className="mt-auto mb-L flex flex-col gap-S">
           <Link to="/account">
             <ProfileImage
@@ -110,9 +99,6 @@ const DashboardLayout: React.FC = (): JSX.Element => {
           setIsModalOpen={setIsModalOpen}
         />,
         portals
-      )}
-      {projectModal && (
-        <ProjectModal modal={projectModal} setModal={handleProjectModal} />
       )}
     </div>
   );

@@ -5,8 +5,9 @@ import Dropdown from "../../Dropdown";
 import DropdownItem from "../../Dropdown/DropdownItem";
 import { useNavigate, useParams } from "react-router-dom";
 import ProjectModal from "../../../Dashboard/ProjectModal";
-import { projectUpdate } from "../../../../features/updateSlice";
-import { useSelector } from "react-redux";
+import { addProject, projectUpdate } from "../../../../features/updateSlice";
+import { useSelector, useDispatch } from "react-redux";
+import Button from "../../Form/Button";
 
 interface IProps {
   id: number;
@@ -25,30 +26,34 @@ const ListItem: React.FC<IProps> = ({ id, name, color }): JSX.Element => {
 
   const toggleAccordion = () => {
     setIsOpen(!isOpen);
-    console.log(update);
     getProjects();
   };
 
   const getProjects = async () => {
-    if (!isOpen) {
+    if (!isOpen && !params.pid) {
       fetcher("get", `${API_URL.WorkSpaces}${id}/${API_URL.Projects}`);
+      navigate(`${API_URL.WorkSpaces}${id}/${API_URL.Projects}`);
     }
-    navigate(`${API_URL.WorkSpaces}${id}/${API_URL.Projects}`);
   };
 
   const handleBoards = (project_id) => {
+    window.scroll({
+      top: 0,
+      behavior: "smooth",
+    })
     navigate(
       `${API_URL.WorkSpaces}${id}/${API_URL.Projects}${project_id}/${API_URL.Boards}`
     );
   };
 
-  useEffect(() => {
-    getProjects();
-  }, [update]);
+  const handleProjectModal = () => {
+    setProjectModal(!projectModal);
+  };
 
   const handleAddProject = () => {
     setProjectModal(!projectModal);
   };
+
   const handleEditWsName = () => {};
   const handleeditWsColor = () => {};
   const handleCopyWsLink = () => {};
@@ -60,6 +65,11 @@ const ListItem: React.FC<IProps> = ({ id, name, color }): JSX.Element => {
   const handleCopyProLink = () => {};
   const handleProRemove = () => {};
   const HandleProShare = () => {};
+
+  useEffect(() => {
+    setIsOpen(false);
+    getProjects();
+  }, [update]);
 
   return (
     <li>
@@ -115,12 +125,12 @@ const ListItem: React.FC<IProps> = ({ id, name, color }): JSX.Element => {
           />
         </Dropdown>
       </div>
-      {response && (
-        <ul className={`${isOpen ? "block" : "hidden"}`}>
+      {isOpen && (
+        <ul>
           {response?.map((project) => (
             <li
               style={{
-                backgroundColor: project.id === params.pid ? "#D0EBFF" : "",
+                backgroundColor: project.id == params.pid ? "#D0EBFF" : "",
               }}
               key={project.id}
               className="flex rounded-md justify-between items-center flex-row-reverse p-[4px] h-[36px] pr-[30px] my-S"
@@ -167,8 +177,17 @@ const ListItem: React.FC<IProps> = ({ id, name, color }): JSX.Element => {
               </Dropdown>
             </li>
           ))}
+          {!response.length && (
+            <Button
+              text="ساختن پروژه جدید"
+              onClick={handleProjectModal}
+              type="button"
+              className="text-brand-primary h-L text-sm font-bold leading-normal self-stretch rounded-md border border-brand-primary mb-L w-full"
+            />
+          )}
         </ul>
       )}
+
       {projectModal && (
         <ProjectModal modal={projectModal} setModal={handleAddProject} />
       )}

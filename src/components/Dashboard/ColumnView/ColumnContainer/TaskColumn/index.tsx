@@ -2,8 +2,9 @@ import { useState } from "react";
 import AddMore from "./AddMore";
 interface ITaskColumnProps {
   title: string;
+  count: number;
 }
-const TaskColumn: React.FC<ITaskColumnProps> = ({ title }): JSX.Element => {
+const TaskColumn: React.FC<ITaskColumnProps> = ({ title, count }): JSX.Element => {
   const [isShown, setIsShown] = useState<boolean>(false);
 
   return (
@@ -16,7 +17,7 @@ const TaskColumn: React.FC<ITaskColumnProps> = ({ title }): JSX.Element => {
 
       <section className="flex items-center gap-1 ">
         <div className="flex pt-0.5 px-1 flex-col justify-center items-center gap-2.5 rounded-[100px] bg-[#F4F4F4] text-black text-xs font-normal">
-          ۰
+          {count}
         </div>
         <span className="text-black text-base font-medium">{title}</span>
       </section>

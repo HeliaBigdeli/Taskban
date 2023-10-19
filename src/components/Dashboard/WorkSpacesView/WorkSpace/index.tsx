@@ -6,6 +6,9 @@ import Icon from "../../../Common/Icon";
 import API_URL from "../../../../constants/api.url";
 import useAxios from "../../../../hooks/useAxios";
 import ProjectModal from "../../ProjectModal";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { projectUpdate } from "../../../../features/updateSlice";
 
 interface IWorkSpaceProps {
   name: string;
@@ -17,13 +20,12 @@ const WorkSpace: React.FC<IWorkSpaceProps> = ({
   color,
   id,
 }): JSX.Element => {
+  const { pathname } = useLocation();
   const [response, error, loading, fetcher] = useAxios();
-
+  const navigate = useNavigate();
   const [projectModal, setProjectModal] = useState<boolean>(false);
+  const update = useSelector(projectUpdate);
 
-  useEffect(() => {
-    fetcher("get", `${API_URL.WorkSpaces}${id}/${API_URL.Projects}`);
-  }, []);
   const ref =
     useRef<HTMLDivElement>() as React.MutableRefObject<HTMLInputElement>;
   const { events } = useDraggable(ref);
@@ -33,8 +35,17 @@ const WorkSpace: React.FC<IWorkSpaceProps> = ({
   };
 
   const handleNewProject = () => {
+    if (pathname === "/workspaces") {
+      navigate(`${id}/${API_URL.Projects}`);
+    } else {
+      navigate(`/${API_URL.WorkSpaces}${id}/${API_URL.Projects}`);
+    }
     setProjectModal(!projectModal);
   };
+
+  useEffect(() => {
+    fetcher("get", `${API_URL.WorkSpaces}${id}/${API_URL.Projects}`);
+  }, [update]);
 
   return (
     <div
@@ -54,6 +65,7 @@ const WorkSpace: React.FC<IWorkSpaceProps> = ({
         </div>
 
         <div className="flex items-start gap-L my-L">
+          {/* {loading ? 'در حال دریافت اطلاعات ...' : null} */}
           {response?.map((item) => {
             return (
               <WorkSpacesItem

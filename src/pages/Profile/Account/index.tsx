@@ -1,62 +1,52 @@
 import Button from "../../../components/Common/Form/Button";
 import Input from "../../../components/Common/Form/Input";
 import useAxios from "../../../hooks/useAxios";
-import { useState, useEffect } from 'react'
-import {
-  required,
-  email,
-  validate,
-  strong,
-  minLength,
-} from "../../../utils/validator/index";
-import {toast } from "react-toastify";
+import { useState, useEffect } from "react";
+import { required, email, validate } from "../../../utils/validator/index";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import API_URL from "../../../constants/api.url";
 import { selectUser } from "../../../features/authSlice";
-import {useSelector} from "react-redux"
+import { useSelector } from "react-redux";
+import { errorToaster } from "../../../utils/toaster";
 
 const rules = {
   email: [required, email],
   username: [required],
   old_password: [required],
-  new_password: [required, strong, minLength(8)],
-  new_password1: [required]
+  new_password: [required],
+  new_password1: [required],
 };
 
 type Values = {
   [key: string]: string;
 };
- 
+
 const Information: React.FC = (): JSX.Element => {
-  const user=useSelector(selectUser)
-  const [errors, setErrors] = useState<string[]>([]);
-  const [values, setValues] = useState<Values>({
-    email: "",
-    old_password: "",
-    username: "",
-    new_password: "",
-    new_password1: ""
-  });
-  
+  const user = useSelector(selectUser);
   const [response, error, loading, fetcher] = useAxios();
-  const [getUserResponse, getUserError, getUserLoading, getUserfetcher] = useAxios();
+  const [userResponse, userError, userLoading, userfetcher] = useAxios();
+
   const handleChange = (name: string, value: string) => {
     setValues({ ...values, [name]: value });
   };
 
- const getUser=async()=>{
-  await getUserfetcher("get",`${API_URL.Register}${user.user_id}/`)
- }
+  const [values, setValues] = useState<Values>({
+    email: "",
+    username: "",
+    old_password: "",
+    new_password: "",
+    new_password1: "",
+  });
 
-  const handleClick =async () => {
+  const handleClick = async () => {
     const resultErrors = validate(values, rules);
-    if(resultErrors.length){
-      setErrors(resultErrors)
+    if (resultErrors.length) {
+      errorToaster(resultErrors);
+    } else {
+      await fetcher("put", `${API_URL.ChangePassword}`, values);
     }
-    else{
-       await fetcher("put",`${API_URL.ChangePassword}`,values)
-    }
-    
+
     if (values.newPassword !== values.confirmNewPassword) {
       toast.error("تکرار رمز عبور جدید با رمز عبور جدید مطابقت ندارد", {
         position: "bottom-left",
@@ -66,23 +56,28 @@ const Information: React.FC = (): JSX.Element => {
   };
 
   useEffect(() => {
-    getUser()
-    if(getUserResponse){
-      setValues({...values,email:getUserResponse.email})
+    if (!userResponse?.username) {
+      userfetcher("get", `${API_URL.Register}${user.user_id}/`);
     }
+    setValues(userResponse);
+
     if (response) {
       toast.success(response, {
         position: "bottom-left",
         autoClose: 3000,
       });
-    }   
-  }, [response,errors])
+    }
+  }, [userResponse?.username, response, error]);
+
   return (
     <div className="flex flex-row-reverse">
-      <div className="w-[354px] mt-[160px] mr-[58px]">
-        <h2 className="text-[31px] text-bold text-right mb-[32px]" >اطلاعات حساب</h2>
+      <div className="w-[354px] mt-[125px] mr-[58px]">
+        <h2 className="text-[31px] text-bold text-right mb-[32px]">
+          اطلاعات حساب
+        </h2>
         <form className="flex flex-col gap-S">
           <Input
+            inputValue={values?.email || ""}
             name="email"
             id="email"
             type="email"
@@ -92,6 +87,7 @@ const Information: React.FC = (): JSX.Element => {
             onChange={(name, value) => handleChange(name, value)}
           />
           <Input
+            inputValue={values?.username || ""}
             name="username"
             id="username"
             type="text"
@@ -102,6 +98,7 @@ const Information: React.FC = (): JSX.Element => {
           />
 
           <Input
+            inputValue={values?.old_password || ""}
             name="old_password"
             id="old_password"
             type="password"
@@ -111,6 +108,7 @@ const Information: React.FC = (): JSX.Element => {
             onChange={(name, value) => handleChange(name, value)}
           />
           <Input
+            inputValue={values?.new_password || ""}
             name="new_password"
             id="new_password"
             type="password"
@@ -120,6 +118,7 @@ const Information: React.FC = (): JSX.Element => {
             onChange={(name, value) => handleChange(name, value)}
           />
           <Input
+            inputValue={values?.new_password1 || ""}
             name="new_password1"
             id="new_password1"
             type="password"
@@ -129,6 +128,7 @@ const Information: React.FC = (): JSX.Element => {
             onChange={(name, value) => handleChange(name, value)}
           />
           <Button
+            // loading={loading}
             text="ثبت تغییرات"
             type="button"
             onClick={handleClick}
@@ -136,9 +136,9 @@ const Information: React.FC = (): JSX.Element => {
             className="text-white text-sm font-black leading-normal h-XL self-stretch rounded-md bg-brand-primary w-full mt-M"
           />
         </form>
-      </div>      
+      </div>
     </div>
   );
-}
+};
 
 export default Information;

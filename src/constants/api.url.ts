@@ -1,4 +1,5 @@
 export const API_URL = {
+    Accounts: "accounts/",
     Login: "accounts/login/",
     Register: "accounts/",
     Refresh: "accounts/refresh/",

@@ -14,10 +14,7 @@ const Card: React.FC<ICardProps> = ({
 }): JSX.Element => {
   useEffect(() => {
     errors?.map((error) => {
-      toast.error(error, {
-        position: "bottom-left",
-        autoClose: 3000,
-      });
+      toast.error(error);
     });
   }, [errors]);
 

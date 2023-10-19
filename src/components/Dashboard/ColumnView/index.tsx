@@ -15,6 +15,7 @@ const ColumnView: React.FC<IProps> = ({ data }): JSX.Element => {
   const [newBoardModal, setNewBoardModal] = useState<boolean>(false);
   const [mouseDown, setMouseDown] = useState<boolean>(true);
   const [taskModal, setTaskModal] = useState<boolean>(false);
+  
   const ref =
     useRef<HTMLDivElement>() as React.MutableRefObject<HTMLInputElement>;
   const { events } = useDraggable(ref, {

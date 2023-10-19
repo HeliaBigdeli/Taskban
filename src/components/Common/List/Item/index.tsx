@@ -23,6 +23,8 @@ interface IProps {
   color: string;
 }
 
+const portals = document.getElementById("portals") as Element;
+
 const ListItem: React.FC<IProps> = ({ id, name, color }): JSX.Element => {
   const [listToggle, setListToggle] = useState(false);
   const [response, error, loading, fetcher] = useAxios();
@@ -30,7 +32,6 @@ const ListItem: React.FC<IProps> = ({ id, name, color }): JSX.Element => {
   const navigate = useNavigate();
   const params = useParams();
   const [projectModal, setProjectModal] = useState<boolean>(false);
-  const portals = document.getElementById("portals") as Element;
   const [nameEdit, setNameEdit] = useState<boolean>(false);
   const [colorEdit, setColorEdit] = useState<boolean>(false);
   const [alert, setAlert] = useState(false);
@@ -78,10 +79,7 @@ const ListItem: React.FC<IProps> = ({ id, name, color }): JSX.Element => {
   };
   const handleCopyWsLink = () => {
     navigator.clipboard.writeText(window.location.href);
-    toast.success("لینک با موفقیت در کلیپ بورد کپی شد.", {
-      position: "bottom-left",
-      autoClose: 3000,
-    });
+    toast.success("لینک با موفقیت در کلیپ بورد کپی شد.");
   };
   const handleAlert = () => {
     setAlert(!alert);
@@ -107,10 +105,8 @@ const ListItem: React.FC<IProps> = ({ id, name, color }): JSX.Element => {
     if (responseWSDelete) {
       dispatch(addWorkSpace());
       setAlert(false);
-      toast.success("ورک اسپیس با موفقیت حذف شد.", {
-        position: "bottom-left",
-        autoClose: 3000,
-      });
+      toast.success("ورک اسپیس با موفقیت حذف شد.");
+      navigate('workspaces');
     } else {
       getProjects();
     }
@@ -222,7 +218,7 @@ const ListItem: React.FC<IProps> = ({ id, name, color }): JSX.Element => {
               </Dropdown>
             </li>
           ))}
-          {!response.length && !loading && (
+          {!response?.length && !loading && (
             <Button
               text="ساختن پروژه جدید"
               onClick={handleProjectModal}

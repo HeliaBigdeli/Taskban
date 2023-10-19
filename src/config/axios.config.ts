@@ -28,10 +28,7 @@ AXIOS.interceptors.response.use(
     //   response.status === 201 ||
     //   response.status === 204
     // ) {
-    //   toast.info("عملیات با موفقیت انجام شد.", {
-    //     position: "bottom-left",
-    //     autoClose: 3000,
-    //   });
+    //   toast.info("عملیات با موفقیت انجام شد.");
     // }
     return response;
   },
@@ -57,18 +54,12 @@ AXIOS.interceptors.response.use(
 
       if (error.response.data?.detail) {
         // hande show error as a string
-        toast.error(error.response.data.detail, {
-          position: "bottom-left",
-          autoClose: 3000,
-        });
+        toast.error(error.response.data.detail);
       } else {
         // handle errors as array of objects
         Object.keys(error.response.data).map((item) => {
           error.response.data[item].map((error) => {
-            toast.error(error, {
-              position: "bottom-left",
-              autoClose: 3000,
-            });
+            toast.error(error);
           })
         })
       }

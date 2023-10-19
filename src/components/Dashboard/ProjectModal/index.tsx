@@ -79,6 +79,7 @@ const ProjectModal: React.FC<IProps> = ({ modal, setModal }): JSX.Element => {
               />
             </div>
             <Button
+              disabled={!values?.title}
               loading={loading}
               text="ادامه"
               type="button"

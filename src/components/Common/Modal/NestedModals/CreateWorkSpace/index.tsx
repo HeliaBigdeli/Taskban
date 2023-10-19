@@ -74,6 +74,7 @@ const CreateWorkSpace: React.FC<IProps> = ({
             />
           </div>
           <Button
+            disabled={!workSpaceInfo.name}
             text="ادامه"
             type="button"
             onClick={handleNewWorkspaceClick}

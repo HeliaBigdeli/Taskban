@@ -48,10 +48,7 @@ const Information: React.FC = (): JSX.Element => {
     }
 
     if (values.newPassword !== values.confirmNewPassword) {
-      toast.error("تکرار رمز عبور جدید با رمز عبور جدید مطابقت ندارد", {
-        position: "bottom-left",
-        autoClose: 3000,
-      });
+      toast.error("تکرار رمز عبور جدید با رمز عبور جدید مطابقت ندارد");
     }
   };
 
@@ -62,10 +59,7 @@ const Information: React.FC = (): JSX.Element => {
     setValues(userResponse);
 
     if (response) {
-      toast.success(response, {
-        position: "bottom-left",
-        autoClose: 3000,
-      });
+      toast.success(response);
     }
   }, [userResponse?.username, response, error]);
 

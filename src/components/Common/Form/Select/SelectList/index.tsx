@@ -2,7 +2,7 @@ import Input from "../../Input";
 
 interface IItem {
   id: number;
-  title: string;
+  name: string;
   color?: string;
 }
 
@@ -74,10 +74,10 @@ const Selectlist: React.FC<IProps> = ({
               <span
                 className={`bg-${item.color} text-${item.color} rounded-2xl px-2`}
               >
-                {item.title}
+                {item.name}
               </span>
             ) : (
-              item.title
+              item.name
             )}
           </div>
         ))

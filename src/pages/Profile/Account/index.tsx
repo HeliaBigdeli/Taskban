@@ -77,6 +77,7 @@ const Information: React.FC = (): JSX.Element => {
         </h2>
         <form className="flex flex-col gap-S">
           <Input
+            disabled={userLoading}
             inputValue={values?.email || ""}
             name="email"
             id="email"
@@ -87,6 +88,7 @@ const Information: React.FC = (): JSX.Element => {
             onChange={(name, value) => handleChange(name, value)}
           />
           <Input
+            disabled={userLoading}
             inputValue={values?.username || ""}
             name="username"
             id="username"
@@ -98,6 +100,7 @@ const Information: React.FC = (): JSX.Element => {
           />
 
           <Input
+            disabled={userLoading}
             inputValue={values?.old_password || ""}
             name="old_password"
             id="old_password"
@@ -108,6 +111,7 @@ const Information: React.FC = (): JSX.Element => {
             onChange={(name, value) => handleChange(name, value)}
           />
           <Input
+            disabled={userLoading}
             inputValue={values?.new_password || ""}
             name="new_password"
             id="new_password"
@@ -128,7 +132,7 @@ const Information: React.FC = (): JSX.Element => {
             onChange={(name, value) => handleChange(name, value)}
           />
           <Button
-            // loading={loading}
+            loading={loading || userLoading}
             text="ثبت تغییرات"
             type="button"
             onClick={handleClick}

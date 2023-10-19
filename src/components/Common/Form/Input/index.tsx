@@ -29,10 +29,12 @@ interface IProps {
   icon?: IIcon;
   className?: string;
   autoFocus?: boolean;
+  disabled?: boolean;
   onFocus?: (e: React.FocusEvent<HTMLInputElement>) => void;
 }
 
 const Input: React.FC<IProps> = ({
+  disabled = false,
   hidden = false,
   inputValue,
   autoFocus = false,
@@ -69,6 +71,7 @@ const Input: React.FC<IProps> = ({
         )}
         <div className="relative flex items-center justify-end">
           <input
+            disabled={disabled}
             autoComplete="false"
             hidden={hidden}
             onFocus={onFocus}

@@ -18,6 +18,7 @@ const AuthCheck: React.FC<IProps> = ({ children }): JSX.Element => {
     const controller = new AbortController();
     const refreshToken = Cookies.get("refresh");
 
+    console.log(pathname.endsWith('boards/') ? 1 : 2)
     if (pathname === "/Reset-password/") {
       setLoading(false);
       return

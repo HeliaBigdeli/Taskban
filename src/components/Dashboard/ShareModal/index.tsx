@@ -7,7 +7,7 @@ import Input from "../../Common/Form/Input";
 import CopyLink from "../../Common/CopyLink";
 import MemberList from "../../Common/MemberList/MemberList";
 import { email, validate } from "../../../utils/validator/";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 
 const rules = {
   shareWithEmail: [email],
@@ -15,11 +15,12 @@ const rules = {
 const portals = document.getElementById("portals") as Element;
 
 interface IProps {
+  title: string,
   modal: boolean;
   setModal: (value: boolean | ((prevVar: boolean) => boolean)) => void;
 }
 
-const ShareModal: React.FC<IProps> = ({ modal, setModal }): JSX.Element => {
+const ShareModal: React.FC<IProps> = ({ modal, setModal, title }): JSX.Element => {
   const [shareEmail, setShareEmail] = useState<{}>({
     shareWithEmail: "",
   });
@@ -49,7 +50,7 @@ const ShareModal: React.FC<IProps> = ({ modal, setModal }): JSX.Element => {
           modal={modal}
           setModal={handleShowModal}
           hasHeader={true}
-          header={{ text: "به اشتراک‌گذاری پروژه‌", order: 2 }}
+          header={{ text: title, order: 2 }}
           hasBackIcon={false}
           backIcon={{ order: 1 }}
           hasCloseIcon={true}

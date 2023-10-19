@@ -6,7 +6,7 @@ const MemberList: React.FC = (): JSX.Element => {
     {
       img: memberPhoto,
       email: "helya@gmail.com",
-      role: "workspace owner",
+      role: "is_super_access",
       firstName: "Helya",
       lastName: "Bigdeli",
     },

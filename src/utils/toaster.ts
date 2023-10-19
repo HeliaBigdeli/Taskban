@@ -8,3 +8,12 @@ export const errorToaster = (errors) => {
       });
     });
   };
+
+  export const successToaster = (messages) => {
+    messages.map((message) => {
+      toast.success(message, {
+        position: "bottom-left",
+        autoClose: 3000,
+      });
+    });
+  };

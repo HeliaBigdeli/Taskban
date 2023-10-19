@@ -10,6 +10,7 @@ import { tag } from "../../../constants/list";
 import Dropdown from "../../Common/Dropdown";
 import DropdownItem from "../../Common/Dropdown/DropdownItem";
 import File from "../../Common/Form/File";
+import Select from "../../Common/Form/Select";
 
 const portals = document.getElementById("portals") as Element;
 interface IProps {
@@ -63,7 +64,7 @@ const TaskModal: React.FC<IProps> = ({ modal, setModal }): JSX.Element => {
   const handleSearch = (name: string, value: string) => {
     setSearchValue(value);
     const data = tags.filter((item) => {
-      return item.title.includes(value);
+      return item.name.includes(value);
     });
     setData(data);
   };
@@ -91,6 +92,13 @@ const TaskModal: React.FC<IProps> = ({ modal, setModal }): JSX.Element => {
           <div className="flex flex-col w-[1153px] gap-M">
             <div className="flex flex-row-reverse items-center gap-[8px]">
               <span>در</span>
+              <Select
+                name="tag"
+                onChange={() => {}}
+                items={tag}
+                className="w-[200px]"
+                searchPlaceholder="جستجو"
+              />
               <span>برای</span>
               <div
                 className="border-dashed border-2 rounded-full border-[#c1c1c1] w-[34px] h-[34px] flex justify-center items-center cursor-pointer"
@@ -104,7 +112,7 @@ const TaskModal: React.FC<IProps> = ({ modal, setModal }): JSX.Element => {
             <Textarea
               className="w-full py-[19px] px-L rounded-xl text-right resize-none border border-[#E2E2E2] outline-none"
               id="description"
-              rows={5}
+              rows={1}
               name="description"
               onChange={() => {}}
               placeholder="توضیحاتی برای این تسک بنویسید"
@@ -135,7 +143,12 @@ const TaskModal: React.FC<IProps> = ({ modal, setModal }): JSX.Element => {
                   >
                     {tags?.map((item) => {
                       return (
-                        <DropdownItem title={item.title} bgcolor={item.color} />
+                        <DropdownItem
+                          key={item.id}
+                          title={item.name}
+                          bgcolor={item.color}
+                          id={item.id}
+                        />
                       );
                     })}
                   </Dropdown>
@@ -152,21 +165,25 @@ const TaskModal: React.FC<IProps> = ({ modal, setModal }): JSX.Element => {
                     icon={{ icon: "flag", color: "#c1c1c1" }}
                   >
                     <DropdownItem
+                      id={1}
                       title="فوری"
                       hasIcon={true}
                       icon={{ icon: "flag", color: "#FB0606" }}
                     />
                     <DropdownItem
+                      id={2}
                       title="بالا"
                       hasIcon={true}
                       icon={{ icon: "flag", color: "#FFE605" }}
                     />
                     <DropdownItem
+                      id={3}
                       title="متوسط"
                       hasIcon={true}
                       icon={{ icon: "flag", color: "#09DBCE" }}
                     />
                     <DropdownItem
+                      id={4}
                       title="پایین"
                       hasIcon={true}
                       icon={{ icon: "flag", color: "#B2ACAC" }}
@@ -192,7 +209,7 @@ const TaskModal: React.FC<IProps> = ({ modal, setModal }): JSX.Element => {
         />
       )}
       {shareModal && (
-        <ShareModal modal={shareModal} setModal={handleShareModal} />
+        <ShareModal modal={shareModal} setModal={handleShareModal} title="اشتراک گذاری تسک" />
       )}
     </>
   );

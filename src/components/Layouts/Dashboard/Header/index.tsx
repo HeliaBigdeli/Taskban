@@ -121,7 +121,7 @@ const Header: React.FC<IProps> = (): JSX.Element => {
       </div>
       {/*----------------------------------------------- Sharing & Filter Modal --------------------------------------------- */}
       {shareModal && (
-        <ShareModal modal={shareModal} setModal={handleShareModal} />
+        <ShareModal modal={shareModal} setModal={handleShareModal} title="اشتراک گذاری پروژه"/>
       )}
       {filterModal && (
         <FilterModal modal={filterModal} setModal={handleFilterModal} />

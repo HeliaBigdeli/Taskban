@@ -69,9 +69,10 @@ const Input: React.FC<IProps> = ({
         )}
         <div className="relative flex items-center justify-end">
           <input
+            autoComplete="false"
             hidden={hidden}
             onFocus={onFocus}
-            value={value}
+            value={inputValue}
             autoFocus={autoFocus}
             placeholder={placeholder}
             name={name}

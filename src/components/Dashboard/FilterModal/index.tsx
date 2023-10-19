@@ -4,24 +4,9 @@ import Modal from "../../Common/Modal";
 import uuid from "react-uuid";
 import Select from "../../Common/Form/Select";
 import Icon from "../../Common/Icon";
+import { where, tag, existance } from "../../../constants/list";
 
 const portals = document.getElementById("portals") as Element;
-
-const where = [
-  { id: 1, title: "تاریخ" },
-  { id: 2, title: "تگ" },
-  { id: 3, title: "اعضا" },
-  { id: 4, title: "اولویت" },
-];
-const tag = [
-  { id: 1, title: "درس", color: "indigo_secondary" },
-  { id: 2, title: "کار", color: "blue_secondary" },
-  { id: 3, title: "پروژه", color: "indigo_secondary" },
-];
-const existance = [
-  { id: 1, title: "است" },
-  { id: 2, title: "نیست" },
-];
 
 interface IProps {
   modal: boolean;

@@ -8,7 +8,7 @@ const Setting: React.FC = (): JSX.Element => {
 
   return (
     <div className="flex justify-end">
-      <div className="flex flex-col mt-[160px] mr-[58px]">
+      <div className="flex flex-col mt-[125px] mr-[58px]">
         <h2 className="text-[31px] text-bold text-right mb-L">تنظیمات</h2>
         <h3 className="text-right text-normal text-black mb-XS">انتخاب تم</h3>
         <div>

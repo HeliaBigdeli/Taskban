@@ -5,7 +5,7 @@ import API_URL from "../../../constants/api.url";
 import { workSpaceUpdate } from "../../../features/updateSlice";
 import { useSelector } from "react-redux";
 
-const WorkSpacesView: React.FC = (): JSX.Element => {
+const WorkSpaces: React.FC = (): JSX.Element => {
   const [response, error, loading, fetcher] = useAxios();
   const update = useSelector(workSpaceUpdate);
 
@@ -24,4 +24,4 @@ const WorkSpacesView: React.FC = (): JSX.Element => {
   );
 };
 
-export default WorkSpacesView;
+export default WorkSpaces;

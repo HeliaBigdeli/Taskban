@@ -15,7 +15,7 @@ interface IProps extends React.PropsWithChildren {
   hasIcon?: boolean;
 }
 
-const SelectBox: React.FC<IProps> = ({
+const Dropdown: React.FC<IProps> = ({
   children,
   className,
   type,
@@ -24,19 +24,28 @@ const SelectBox: React.FC<IProps> = ({
   icon,
 }): JSX.Element => {
   const dropdown = useRef<any>();
+  const dropdownList = useRef<any>();
   const [open, setOpen] = useState(false);
   const [listDirection, setListDirectiob] = useState({});
 
   const toggleOpen = () => {
-    const elementHeight =
-      dropdown.current.offsetParent + dropdown.current.offsetHeight + 240;
-
-    if (elementHeight > window.innerHeight) {
-      setListDirectiob({ bottom: type === "button" ? "2.60rem" : "1.5rem" });
-    } else {
-      setListDirectiob({ top: type === "button" ? "2.60rem" : "1.5rem" });
-    }
     setOpen(!open);
+    if (!open) {
+      // use setTimeout to make a delay showing dropdonw list to get it's heigth
+      setTimeout(() => {
+        const elementHeight =
+          dropdown.current.offsetTop +
+          dropdown.current.offsetHeight +
+          dropdownList.current.offsetHeight;
+
+
+          if (elementHeight > window.innerHeight) {
+          setListDirectiob({ bottom: dropdown.current.offsetHeight });
+        } else {
+          setListDirectiob({ top: dropdown.current.offsetHeight });
+        }
+      }, 0);
+    }
   };
 
   const closeList = () => {
@@ -47,10 +56,10 @@ const SelectBox: React.FC<IProps> = ({
 
   return (
     <div
+      ref={dropdown}
       tabIndex={0}
       className="relative flex items-center"
       onClick={toggleOpen}
-      ref={dropdown}
       onBlur={closeList}
     >
       {type === "button" ? (
@@ -73,9 +82,10 @@ const SelectBox: React.FC<IProps> = ({
       )}
       {open && (
         <div
+          ref={dropdownList}
           className={`${
-            type === "icon" ? "min-w-[200px]" : ""
-          } absolute w-full right-0 z-30 text-right p-2 rounded-lg shadow-md flex-col bg-white`}
+            type === "icon" ? "min-w-[200px]" : "min-w-[240px]"
+          } absolute w-full right-0 z-30 text-right p-2 rounded-lg shadow-select flex-col bg-white`}
           style={listDirection}
         >
           {children}
@@ -85,4 +95,4 @@ const SelectBox: React.FC<IProps> = ({
   );
 };
 
-export default SelectBox;
+export default Dropdown;

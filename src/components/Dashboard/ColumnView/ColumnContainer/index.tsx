@@ -2,12 +2,7 @@ import TaskCard from "./TaskCard";
 import TaskColumn from "./TaskColumn";
 import style from "../style.module.css";
 import { Droppable } from "react-beautiful-dnd";
-
-interface ITask {
-  id: number;
-  name: string;
-  img: string;
-}
+import { ITask } from "../../../../interfaces/task";
 
 interface IColumnContainerProps {
   setMouseDown: React.Dispatch<React.SetStateAction<boolean>>;
@@ -28,7 +23,6 @@ const ColumnContainer: React.FC<IColumnContainerProps> = ({
     if (e.target === e.currentTarget) setMouseDown(true);
     else setMouseDown(false);
   };
-
   return (
     <div
       className="flex shrink-0  flex-col items-center gap-S"
@@ -48,11 +42,10 @@ const ColumnContainer: React.FC<IColumnContainerProps> = ({
               return (
                 <TaskCard
                   boardId={id}
+                  boardTitle={name}
                   {...item}
-                  title={item.name}
                   key={item.id}
                   index={index}
-                  boardTitle={name}
                 />
               );
             })}

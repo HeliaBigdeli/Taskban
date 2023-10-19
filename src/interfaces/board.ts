@@ -1,18 +1,14 @@
-interface iTask {
-    id: number;
-    name: string;
-    img: string;
-}
+import { ITask } from "./task";
 
 export interface IData {
-    id: number,
-    is_archive: boolean,
-    name: string
-    order: number,
-    tasks: iTask[],
-    tasks_count: number
+  id: number;
+  is_archive: boolean;
+  name: string;
+  order: number;
+  tasks: ITask[];
+  tasks_count: number;
 }
 
 export interface IProps {
-    data: IData[]
+  data: IData[];
 }

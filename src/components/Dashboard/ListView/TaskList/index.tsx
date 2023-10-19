@@ -1,18 +1,19 @@
 import { useState } from "react";
 import ListHeader from "./ListHeader";
 import ListItem from "./ListItem";
-import {IData} from '../../../../interfaces/board'
+import { IData } from "../../../../interfaces/board";
 
 const TaskList: React.FC<IData> = ({
   name,
   tasks_count,
   tasks,
+  id,
 }): JSX.Element => {
   const [isShown, setIsShown] = useState<boolean>(true);
   const handleShow = () => {
     setIsShown(!isShown);
   };
-const height = `${70 * tasks_count}px`;
+  const height = `${65 * tasks_count - 40}px`;
   return (
     <div className={` flex w-full flex-col items-start gap-5`}>
       <ListHeader
@@ -25,7 +26,7 @@ const height = `${70 * tasks_count}px`;
         style={{ height: `${!isShown ? "0px" : height}` }}
       >
         {tasks?.map((item) => {
-          return <ListItem key={item.id} {...item} />;
+          return <ListItem key={item.id} {...item} boardId={id} />;
         })}
       </div>
     </div>

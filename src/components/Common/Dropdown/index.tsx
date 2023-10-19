@@ -51,6 +51,9 @@ const Dropdown: React.FC<IProps> = ({
 
   const closeList = () => {
     setTimeout(() => {
+      if(!value?.id) {
+        setOpen(false);
+      }
     }, 100);
   };
 

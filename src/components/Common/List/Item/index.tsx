@@ -24,9 +24,9 @@ interface IProps {
 }
 
 const ListItem: React.FC<IProps> = ({ id, name, color }): JSX.Element => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [listToggle, setListToggle] = useState(false);
   const [response, error, loading, fetcher] = useAxios();
-  const [responseDel, errorDel, loadingDel, fetcherDel] = useAxios();
+  const [responseWSDelete, errorDel, loadingDel, fetcherDel] = useAxios();
   const navigate = useNavigate();
   const params = useParams();
   const [projectModal, setProjectModal] = useState<boolean>(false);
@@ -43,11 +43,11 @@ const ListItem: React.FC<IProps> = ({ id, name, color }): JSX.Element => {
 
   const toggleAccordion = () => {
     getProjects();
-    setIsOpen(!isOpen);
+    setListToggle(!listToggle);
   };
 
   const getProjects = async () => {
-    if (!isOpen && !params.pid) {
+    if (!listToggle && !params.pid) {
       fetcher("get", `${API_URL.WorkSpaces}${id}/${API_URL.Projects}`);
       navigate(`${API_URL.WorkSpaces}${id}/${API_URL.Projects}`);
     }
@@ -102,17 +102,19 @@ const ListItem: React.FC<IProps> = ({ id, name, color }): JSX.Element => {
   const HandleProShare = () => {};
 
   useEffect(() => {
-    getProjects();
-    setIsOpen(false);
-    if (responseDel) {
+    setListToggle(false);
+
+    if (responseWSDelete) {
       dispatch(addWorkSpace());
       setAlert(false);
       toast.success("ورک اسپیس با موفقیت حذف شد.", {
         position: "bottom-left",
         autoClose: 3000,
       });
+    } else {
+      getProjects();
     }
-  }, [update, responseDel]);
+  }, [update, responseWSDelete]);
 
   return (
     <li>
@@ -168,7 +170,7 @@ const ListItem: React.FC<IProps> = ({ id, name, color }): JSX.Element => {
           />
         </Dropdown>
       </div>
-      {isOpen && (
+      {listToggle && (
         <ul>
           {response?.map((project: any) => (
             <li
@@ -220,7 +222,7 @@ const ListItem: React.FC<IProps> = ({ id, name, color }): JSX.Element => {
               </Dropdown>
             </li>
           ))}
-          {!response.length && (
+          {!response.length && !loading && (
             <Button
               text="ساختن پروژه جدید"
               onClick={handleProjectModal}
@@ -253,7 +255,11 @@ const ListItem: React.FC<IProps> = ({ id, name, color }): JSX.Element => {
             className=""
             handleYes={handleWsRemove}
           />
-          <ShareModal modal={shareWorkSpace} setModal={setShareWorkSpace} />
+          <ShareModal
+            modal={shareWorkSpace}
+            setModal={setShareWorkSpace}
+            title="اشتراک گذاری پروژه"
+          />
           <TaskModal modal={newTask} setModal={setNewTask} />
         </>,
         portals

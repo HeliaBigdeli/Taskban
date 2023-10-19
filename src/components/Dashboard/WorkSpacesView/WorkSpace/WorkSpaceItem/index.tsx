@@ -28,7 +28,7 @@ const WorkSpacesItem: React.FC<IWorkSpacesItemProps> = ({
   return (
     <div
       onClick={handleClick}
-      className="flex justify-center w-[200px] cursor-pointer h-20 py-[26px] pr-[71px] pl-[67px] items-center rounded-2xl shadow-taskColumn text-white text-base font-extrabold"
+      className="flex justify-center w-[200px] cursor-pointer shrink-0 h-20 py-[26px] pr-[71px] pl-[67px] items-center rounded-2xl shadow-taskColumn text-white text-base font-extrabold"
       style={{ background: `${color}` }}
     >
       {name}

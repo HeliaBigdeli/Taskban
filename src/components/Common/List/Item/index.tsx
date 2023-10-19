@@ -7,6 +7,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import ProjectModal from "../../../Dashboard/ProjectModal";
 import { projectUpdate } from "../../../../features/updateSlice";
 import { useSelector } from "react-redux";
+import { createPortal } from "react-dom";
+import NameEdit from "./modals/NameEdit";
 
 interface IProps {
   id: number;
@@ -20,6 +22,8 @@ const ListItem: React.FC<IProps> = ({ id, name, color }): JSX.Element => {
   const navigate = useNavigate();
   const params = useParams();
   const [projectModal, setProjectModal] = useState<boolean>(false);
+  const portals = document.getElementById("portals") as Element;
+  const [nameEdit, setNameEdit] = useState<boolean>(false);
 
   const update = useSelector(projectUpdate);
 
@@ -49,7 +53,9 @@ const ListItem: React.FC<IProps> = ({ id, name, color }): JSX.Element => {
   const handleAddProject = () => {
     setProjectModal(!projectModal);
   };
-  const handleEditWsName = () => {};
+  const handleEditWsName = () => {
+    setNameEdit(true);
+  };
   const handleeditWsColor = () => {};
   const handleCopyWsLink = () => {};
   const handleWsRemove = () => {};
@@ -171,6 +177,10 @@ const ListItem: React.FC<IProps> = ({ id, name, color }): JSX.Element => {
       )}
       {projectModal && (
         <ProjectModal modal={projectModal} setModal={handleAddProject} />
+      )}
+      {createPortal(
+        <NameEdit nameEdit={nameEdit} setNameEdit={setNameEdit} />,
+        portals
       )}
     </li>
   );

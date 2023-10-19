@@ -26,7 +26,7 @@ export const updateSlice = createSlice({
 
 export const { addWorkSpace, addProject } = updateSlice.actions;
 
-export const workSpaceUpdate = (state: RootState) => state.update;
-export const projectUpdate = (state: RootState) => state.update;
+export const workSpaceUpdate = (state: RootState) => state.update.workspace;
+export const projectUpdate = (state: RootState) => state.update.project;
 
 export default updateSlice.reducer;

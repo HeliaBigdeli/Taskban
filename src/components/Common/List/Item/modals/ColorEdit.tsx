@@ -1,0 +1,106 @@
+import Modal from "../../../Modal";
+import Button from "../../../Form/Button";
+import { useEffect, useState, useRef } from "react";
+import useAxios from "../../../../../hooks/useAxios";
+import API_URL from "../../../../../constants/api.url";
+import { useParams } from "react-router-dom";
+import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { addWorkSpace } from "../../../../../features/updateSlice";
+import { IEdit } from "../../../../../interfaces/modals";
+import ColorPicker from "../../../ColorPicker";
+
+const NameEdit: React.FC<IEdit> = ({
+  value,
+  setValue,
+  previousValue,
+}): JSX.Element => {
+  const [values, setVlaues] = useState({
+    title: previousValue,
+  });
+
+  const [selectedColor, setSelectedColor] = useState<string | undefined>(
+    previousValue
+  );
+
+  const [response, error, loading, fetcher] = useAxios();
+
+  const params = useParams();
+
+  const dispatch = useDispatch();
+
+  const ref = useRef<HTMLDivElement>(null);
+
+  const edit = async () => {
+    await fetcher("patch", `${API_URL.WorkSpaces}${params.wid}/`, {
+      color: values.title,
+    });
+  };
+
+  const handleDisableClick = () => {
+    if (ref.current) ref.current.style.backgroundColor = "#7D828C";
+    setVlaues({ title: "" });
+  };
+
+  const close = () => {
+    setVlaues({ title: previousValue });
+    setSelectedColor(previousValue);
+  };
+
+  useEffect(() => {
+    if (response) {
+      dispatch(addWorkSpace());
+      setValue(false);
+      toast.success("تغییر نام با موفقیت انجام شد.", {
+        position: "bottom-left",
+        autoClose: 3000,
+      });
+    }
+  }, [response]);
+
+  return (
+    <>
+      <Modal
+        modal={value}
+        setModal={setValue}
+        hasHeader={true}
+        header={{ text: "رنگ جدید را انتخاب کنید", order: 2 }}
+        hasBackIcon={false}
+        backIcon={{ order: 1 }}
+        hasCloseIcon={true}
+        closeIcon={{ order: 3, resetInputValue: close }}
+      >
+        <div className="flex flex-col gap-XL w-[500px] pt-0 items-end">
+          <div className="flex gap-S">
+            <div className="flex flex-col items-end gap-S">
+              <span className="text-sm text-black">رنگ ورک‌اسپیس</span>
+              <div className="flex w-[293px] flex-row-reverse gap-[8px] flex-wrap items-center">
+                <ColorPicker
+                  onClick={(data) => setVlaues({ title: data.code! })}
+                  hasDisableIcon={true}
+                  handleDisableClick={handleDisableClick}
+                  selected={selectedColor}
+                  setSelected={setSelectedColor}
+                />
+              </div>
+            </div>
+            <div
+              ref={ref}
+              className="flex text-center w-[80px] h-[80px] p-[10px] mb-[20px] justify-center items-center rounded-[8px] bg-[#7D828C] text-white text-2xl font-extrabold"
+              style={{ backgroundColor: values.title }}
+            ></div>
+          </div>
+
+          <Button
+            text={`${loading ? "Loading..." : "ثبت"}`}
+            type="button"
+            onClick={edit}
+            className="flex h-XL rounded-md bg-brand-primary text-white w-full"
+          />
+        </div>
+      </Modal>
+    </>
+  );
+};
+
+export default NameEdit;

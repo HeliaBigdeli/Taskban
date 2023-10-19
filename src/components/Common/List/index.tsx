@@ -19,18 +19,17 @@ const List: React.FC = (): JSX.Element => {
   const getWorkSpaces = async () => {
     await fetcher("get", API_URL.WorkSpaces);
   };
- 
+
   useEffect(() => {
     getWorkSpaces();
   }, [update]);
 
   return (
     <ul>
-      {/* {loading ? "Loading..." : ""} */}
       {error && !loading ? "ورک اسپیسی وجود ندارد" : ""}
       {response?.map((item: IData) => (
         <Item key={item.id} {...item} />
-      ))}      
+      ))}
     </ul>
   );
 };

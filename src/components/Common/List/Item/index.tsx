@@ -23,6 +23,8 @@ interface IProps {
   color: string;
 }
 
+const portals = document.getElementById("portals") as Element;
+
 const ListItem: React.FC<IProps> = ({ id, name, color }): JSX.Element => {
   const [listToggle, setListToggle] = useState(false);
   const [response, error, loading, fetcher] = useAxios();
@@ -30,7 +32,6 @@ const ListItem: React.FC<IProps> = ({ id, name, color }): JSX.Element => {
   const navigate = useNavigate();
   const params = useParams();
   const [projectModal, setProjectModal] = useState<boolean>(false);
-  const portals = document.getElementById("portals") as Element;
   const [nameEdit, setNameEdit] = useState<boolean>(false);
   const [colorEdit, setColorEdit] = useState<boolean>(false);
   const [alert, setAlert] = useState(false);

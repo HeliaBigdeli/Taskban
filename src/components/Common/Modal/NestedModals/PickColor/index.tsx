@@ -51,8 +51,8 @@ const PickColor: React.FC<IProps> = ({
     if (ref.current) ref.current.style.backgroundColor = "#7D828C";
     setWorkSpaceInfo({
       ...workSpaceInfo,
-      colorCode: "disabled",
-      colorName: "disabled",
+      colorCode: "",
+      colorName: "",
     });
     setSelectedColor("disabled");
   };

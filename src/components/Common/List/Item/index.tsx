@@ -105,6 +105,7 @@ const ListItem: React.FC<IProps> = ({ id, name, color }): JSX.Element => {
       dispatch(addWorkSpace());
       setAlert(false);
       toast.success("ورک اسپیس با موفقیت حذف شد.");
+      navigate(`${API_URL.WorkSpaces}`);
     } else {
       getProjects();
     }

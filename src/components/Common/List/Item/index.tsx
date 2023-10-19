@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import API_URL from "../../../../constants/api.url";
 import useAxios from "../../../../hooks/useAxios";
 import Dropdown from "../../Dropdown";
 import DropdownItem from "../../Dropdown/DropdownItem";
@@ -7,7 +6,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import ProjectModal from "../../../Dashboard/ProjectModal";
 import { createPortal } from "react-dom";
 import NameEdit from "./modals/NameEdit";
-import { addProject, projectUpdate } from "../../../../features/updateSlice";
+import { projectUpdate } from "../../../../features/updateSlice";
 import { useSelector, useDispatch } from "react-redux";
 import Button from "../../Form/Button";
 import ColorEdit from "./modals/ColorEdit";
@@ -16,6 +15,7 @@ import AlertModal from "./modals/AlertModal";
 import { addWorkSpace } from "../../../../features/updateSlice";
 import ShareModal from "../../../Dashboard/ShareModal";
 import TaskModal from "../../../Dashboard/TaskModal";
+import { workspaces, projects, boards } from "../../../../constants/url";
 
 interface IProps {
   id: number;
@@ -29,7 +29,6 @@ const ListItem: React.FC<IProps> = ({ id, name, color }): JSX.Element => {
   const [listToggle, setListToggle] = useState(false);
   const [response, error, loading, fetcher] = useAxios();
   const [responseDelete, errorDel, loadingDel, fetcherDel] = useAxios();
-  const navigate = useNavigate();
   const params = useParams();
   const [projectModal, setProjectModal] = useState<boolean>(false);
   const [nameEdit, setNameEdit] = useState<boolean>(false);
@@ -40,30 +39,27 @@ const ListItem: React.FC<IProps> = ({ id, name, color }): JSX.Element => {
   const [newTask, setNewTask] = useState<boolean>(false);
   const [proNameEdit, setProNameEdit] = useState(false);
 
+  const navigate = useNavigate();
   const update = useSelector(projectUpdate);
-
   const dispatch = useDispatch();
 
+  const changeUrl = (path: string, id: number) => {
+    switch (path) {
+      case "workspace":
+        return navigate(projects.gets({ wid: id }));
+      case "project":
+        return navigate(boards.gets({ wid: params.wid, pid: id }));
+      default:
+        return navigate(workspaces.gets());
+    }
+  };
+
   const toggleAccordion = () => {
-    getProjects();
     setListToggle(!listToggle);
   };
 
   const getProjects = async () => {
-    if (!listToggle && !params.pid) {
-      fetcher("get", `${API_URL.WorkSpaces}${id}/${API_URL.Projects}`);
-      navigate(`${API_URL.WorkSpaces}${id}/${API_URL.Projects}`);
-    }
-  };
-
-  const handleBoards = (project_id) => {
-    window.scroll({
-      top: 0,
-      behavior: "smooth",
-    });
-    navigate(
-      `${API_URL.WorkSpaces}${id}/${API_URL.Projects}${project_id}/${API_URL.Boards}`
-    );
+    fetcher("get", projects.gets({ wid: id }));
   };
 
   const handleProjectModal = () => {
@@ -84,10 +80,10 @@ const ListItem: React.FC<IProps> = ({ id, name, color }): JSX.Element => {
     toast.success("لینک با موفقیت در کلیپ بورد کپی شد.");
   };
   const handleAlert = () => {
-    setAlert(!alert);
+    setAlert(true);
   };
   const handleWsRemove = () => {
-    fetcherDel("delete", `${API_URL.WorkSpaces}${id}/`);
+    fetcherDel("delete", workspaces.delete({ wid: id }));
   };
   const HandleWsShare = () => {
     setShare(!share);
@@ -104,13 +100,10 @@ const ListItem: React.FC<IProps> = ({ id, name, color }): JSX.Element => {
     toast.success("لینک با موفقیت در کلیپ بورد کپی شد.");
   };
   const handleProRemove = () => {
-    fetcherDel(
-      "delete",
-      `${API_URL.WorkSpaces}${id}/${API_URL.Projects}${params.pid}/`
-    );
+    fetcherDel("delete", projects.delete({ wid: id, pid: params.pid }));
   };
   const handleProAlert = () => {
-    setProAlert(!alert);
+    setProAlert(true);
   };
   const HandleProShare = () => {
     setShare(!share);
@@ -119,9 +112,10 @@ const ListItem: React.FC<IProps> = ({ id, name, color }): JSX.Element => {
   useEffect(() => {
     setListToggle(false);
 
-    if (responseDelete) {
+    if ((alert || proAlert) && responseDelete) {
       dispatch(addWorkSpace());
       setAlert(false);
+      setProAlert(false);
       toast.success("آیتم مورد نظر با موفقیت حذف شد.");
       navigate("workspaces");
     } else {
@@ -131,7 +125,12 @@ const ListItem: React.FC<IProps> = ({ id, name, color }): JSX.Element => {
 
   return (
     <li>
-      <div className="flex justify-between items-center flex-row-reverse p-1 h-[36px] mt-S">
+      <div
+        className="flex justify-between items-center flex-row-reverse p-1 h-[36px] mt-S"
+        onClick={() => {
+          changeUrl("workspace", id);
+        }}
+      >
         <div
           className="flex justify-between items-center cursor-pointer"
           onClick={toggleAccordion}
@@ -187,16 +186,16 @@ const ListItem: React.FC<IProps> = ({ id, name, color }): JSX.Element => {
         <ul>
           {response?.map((project: any) => (
             <li
+              onClick={() => {
+                changeUrl("project", project.id);
+              }}
               style={{
                 backgroundColor: project.id === params.pid ? "#D0EBFF" : "",
               }}
               key={project.id}
               className="flex rounded-md justify-between items-center flex-row-reverse p-[4px] h-[36px] pr-[30px] my-S"
             >
-              <p
-                onClick={() => handleBoards(project.id)}
-                className="flex justify-between items-center cursor-pointer"
-              >
+              <p className="flex justify-between items-center cursor-pointer">
                 {project.name}
               </p>
               <Dropdown type="icon" icon={{ icon: "dots" }}>

@@ -5,9 +5,9 @@ import Button from "../../Common/Form/Button";
 import Input from "../../Common/Form/Input";
 import useAxios from "../../../hooks/useAxios";
 import { useDispatch } from "react-redux";
-import API_URL from "../../../constants/api.url";
 import { addProject } from "../../../features/updateSlice";
 import { useParams } from "react-router-dom";
+import { projects } from "../../../constants/url";
 
 const portals = document.getElementById("portals") as Element;
 
@@ -36,13 +36,9 @@ const ProjectModal: React.FC<IProps> = ({ modal, setModal }): JSX.Element => {
   };
 
   const postProject = async () => {
-    await fetcher(
-      "post",
-      `${API_URL.WorkSpaces}${params.wid}/${API_URL.Projects}`,
-      {
-        name: values.title,
-      }
-    );
+    await fetcher("post", projects.post({ wid: params.wid }), {
+      name: values.title,
+    });
   };
 
   useEffect(() => {

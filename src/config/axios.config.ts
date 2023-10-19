@@ -4,6 +4,7 @@ import { refresh } from "../features/authSlice";
 import Cookies from "js-cookie";
 import API_URL from "../constants/api.url";
 import { toast } from "react-toastify";
+import { login } from "../constants/url";
 
 export const AXIOS = axios.create({
   baseURL: "https://quera.iran.liara.run/",
@@ -35,7 +36,7 @@ AXIOS.interceptors.response.use(
   async (error) => {
     const request = error.config;
 
-    if (error.response.status === 401 && request.url !== API_URL.Login) {
+    if (error.response.status === 401 && request.url !== login.post()) {
       try {
         const refreshToken = Cookies.get("refresh");
         const refreshRequest = await AXIOS.post(API_URL.Refresh, {

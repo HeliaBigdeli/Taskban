@@ -1,28 +1,29 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import API_URL from "../../../../../constants/api.url";
+import { boards } from "../../../../../constants/url";
 
 interface IWorkSpacesItemProps {
   color: string;
   name: string;
   id: number;
-  workspace_id: number,
+  workspace_id: number;
 }
 const WorkSpacesItem: React.FC<IWorkSpacesItemProps> = ({
   color,
   name,
   id,
-  workspace_id
+  workspace_id,
 }): JSX.Element => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
 
   const handleClick = () => {
-    if (pathname === '/workspaces') {
-      navigate(`${workspace_id}/${API_URL.Projects}${id}/${API_URL.Boards}`);
+    if (pathname === "/workspaces") {
+      console.log(workspace_id)
+      navigate(`/${boards.gets({ wid: workspace_id, pid: id })}`);
     } else {
       navigate(`${id}/${API_URL.Boards}`);
     }
-
   };
 
   return (

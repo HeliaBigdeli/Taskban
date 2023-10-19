@@ -9,6 +9,7 @@ import ProjectModal from "../../ProjectModal";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { projectUpdate } from "../../../../features/updateSlice";
+import { projects } from "../../../../constants/url";
 
 interface IWorkSpaceProps {
   name: string;
@@ -34,17 +35,17 @@ const WorkSpace: React.FC<IWorkSpaceProps> = ({
     btn: color,
   };
 
-  const handleNewProject = () => {
+  const handleModal = () => {
     if (pathname === "/workspaces") {
       navigate(`${id}/${API_URL.Projects}`);
     } else {
-      navigate(`/${API_URL.WorkSpaces}${id}/${API_URL.Projects}`);
+      navigate(`/${projects.gets({ wid: id })}`);
     }
     setProjectModal(!projectModal);
   };
 
   useEffect(() => {
-    fetcher("get", `${API_URL.WorkSpaces}${id}/${API_URL.Projects}`);
+    fetcher("get", projects.gets({ wid: id }));
   }, [update]);
 
   return (
@@ -59,7 +60,7 @@ const WorkSpace: React.FC<IWorkSpaceProps> = ({
           <h4 className="text-right text-2xl leading-8 font-extrabold">
             {name}
           </h4>
-          <button className="mt-1.5" onClick={handleNewProject}>
+          <button className="mt-1.5" onClick={handleModal}>
             <Icon icon="plus_square" color={colorVariants.btn} size={24} />
           </button>
         </div>
@@ -80,7 +81,7 @@ const WorkSpace: React.FC<IWorkSpaceProps> = ({
         <div className=" w-full h-0.5 bg-gray-secondary"></div>
       </div>
       {projectModal && (
-        <ProjectModal modal={projectModal} setModal={handleNewProject} />
+        <ProjectModal modal={projectModal} setModal={handleModal} />
       )}
     </div>
   );

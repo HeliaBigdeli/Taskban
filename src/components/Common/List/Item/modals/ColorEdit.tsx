@@ -2,13 +2,13 @@ import Modal from "../../../Modal";
 import Button from "../../../Form/Button";
 import { useEffect, useState, useRef } from "react";
 import useAxios from "../../../../../hooks/useAxios";
-import API_URL from "../../../../../constants/api.url";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { addWorkSpace } from "../../../../../features/updateSlice";
 import { IEdit } from "../../../../../interfaces/modals";
 import ColorPicker from "../../../ColorPicker";
+import { workspaces } from "../../../../../constants/url";
 
 const NameEdit: React.FC<IEdit> = ({
   value,
@@ -32,7 +32,7 @@ const NameEdit: React.FC<IEdit> = ({
   const ref = useRef<HTMLDivElement>(null);
 
   const edit = async () => {
-    await fetcher("patch", `${API_URL.WorkSpaces}${params.wid}/`, {
+    await fetcher("patch", workspaces.patch({wid: params.wid}), {
       color: values.color,
     });
   };

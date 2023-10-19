@@ -5,10 +5,10 @@ import { useState, useEffect } from "react";
 import { required, email, validate } from "../../../utils/validator/index";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import API_URL from "../../../constants/api.url";
 import { selectUser } from "../../../features/authSlice";
 import { useSelector } from "react-redux";
 import { errorToaster } from "../../../utils/toaster";
+import { accounts, change_password } from "../../../constants/url";
 
 const rules = {
   email: [required, email],
@@ -44,7 +44,7 @@ const Information: React.FC = (): JSX.Element => {
     if (resultErrors.length) {
       errorToaster(resultErrors);
     } else {
-      await fetcher("put", `${API_URL.ChangePassword}`, values);
+      await fetcher("put", change_password.post(), values);
     }
 
     if (values.newPassword !== values.confirmNewPassword) {
@@ -54,7 +54,7 @@ const Information: React.FC = (): JSX.Element => {
 
   useEffect(() => {
     if (!userResponse?.username) {
-      userfetcher("get", `${API_URL.Register}${user.user_id}/`);
+      userfetcher("get", accounts.get({ uid: user.user_id }));
     }
     setValues(userResponse);
 

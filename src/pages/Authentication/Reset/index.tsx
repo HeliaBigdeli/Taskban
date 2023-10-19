@@ -9,8 +9,8 @@ import {
   validate,
 } from "../../../utils/validator";
 import useAxios from "../../../hooks/useAxios";
-import API_URL from "../../../constants/api.url";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { forget } from "../../../constants/url";
 
 const rules = {
   password: [required, strong, minLength(8)],
@@ -42,9 +42,9 @@ const Reset: React.FC = (): JSX.Element => {
       setErrors(resultErrors);
     } else {
       values.password1 = values.password;
-      values.token = searchParams.get('token') || ""
-      
-      await fetcher("patch", API_URL.SetPassword, values);
+      values.token = searchParams.get("token") || "";
+
+      await fetcher("patch", forget.patch(), values);
     }
   };
 

@@ -3,12 +3,12 @@ import Input from "../../../Form/Input";
 import Button from "../../../Form/Button";
 import { useEffect, useState } from "react";
 import useAxios from "../../../../../hooks/useAxios";
-import API_URL from "../../../../../constants/api.url";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { addWorkSpace } from "../../../../../features/updateSlice";
 import { IEdit } from "../../../../../interfaces/modals";
+import { projects, workspaces } from "../../../../../constants/url";
 
 const NameEdit: React.FC<IEdit> = ({
   value,
@@ -34,7 +34,7 @@ const NameEdit: React.FC<IEdit> = ({
   };
 
   const workSpaceEdit = async () => {
-    await fetcher("patch", `${API_URL.WorkSpaces}${params.wid}/`, {
+    await fetcher("patch", workspaces.patch({ wid: params.wid }), {
       name: values.title,
     });
   };
@@ -42,7 +42,7 @@ const NameEdit: React.FC<IEdit> = ({
   const projectEdit = async () => {
     await fetcher(
       "patch",
-      `${API_URL.WorkSpaces}${params.wid}/${API_URL.Projects}${params.pid}/`,
+      projects.patch({ wid: params.wid, pid: params.pid }),
       {
         name: values.title,
       }

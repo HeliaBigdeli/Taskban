@@ -1,12 +1,12 @@
 import Modal from "../..";
 import image from "../../../../../assets/images/member.png";
-import API_URL from "../../../../../constants/api.url";
 import Button from "../../../Form/Button";
 import { Dispatch, SetStateAction } from "react";
 import useAxios from "../../../../../hooks/useAxios";
 import { useDispatch } from "react-redux";
 import { addWorkSpace } from "../../../../../features/updateSlice";
 import { useEffect } from "react";
+import { workspaces } from "../../../../../constants/url";
 
 interface IProps {
   isReviewInfoOpen: boolean;
@@ -41,7 +41,7 @@ const ReviewInfo: React.FC<IProps> = ({
   const dispatch = useDispatch();
 
   const postWorkSpace = async () => {
-    await fetcher("post", API_URL.WorkSpaces, {
+    await fetcher("post", workspaces.post(), {
       name: workSpaceInfo.name,
       color: workSpaceInfo.colorCode,
     });

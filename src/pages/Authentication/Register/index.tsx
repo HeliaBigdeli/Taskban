@@ -12,8 +12,8 @@ import {
   strong,
 } from "../../../utils/validator/index";
 import useAxios from "../../../hooks/useAxios";
-import API_URL from "../../../constants/api.url";
 import { useNavigate } from "react-router-dom";
+import { register } from "../../../constants/url";
 
 type Values = {
   username: string,
@@ -50,7 +50,7 @@ const Register: React.FC = (): JSX.Element => {
     if (resultErrors.length) {
       setErrors(resultErrors);
     } else {
-      await fetcher("post", API_URL.Register, values);
+      await fetcher("post", register.post(), values);
     }
   };
 

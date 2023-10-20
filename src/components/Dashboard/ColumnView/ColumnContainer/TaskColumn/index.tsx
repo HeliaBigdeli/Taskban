@@ -5,10 +5,12 @@ import { useNavigate, useParams } from "react-router-dom";
 interface ITaskColumnProps {
   title: string;
   count: number;
+  boardId: number;
 }
 const TaskColumn: React.FC<ITaskColumnProps> = ({
   title,
   count,
+  boardId,
 }): JSX.Element => {
   const [isShown, setIsShown] = useState<boolean>(false);
   const navigate = useNavigate();
@@ -20,7 +22,7 @@ const TaskColumn: React.FC<ITaskColumnProps> = ({
       onMouseEnter={() => setIsShown(true)}
       onMouseLeave={() => setIsShown(false)}
     >
-      <AddMore isShown={isShown} />
+      <AddMore isShown={isShown} boardId={boardId} />
 
       <section
         //onClick={navigate(`${API_URL.WorkSpaces}${params.wid}/${API_URL.Projects}${params.pid}/${API_URL.Boards}${}`)}

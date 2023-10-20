@@ -1,4 +1,5 @@
 export interface IEdit {
+    currentID: number,
     value: boolean;
     setValue: (value: boolean | ((prevVar: boolean) => boolean)) => void;
     previousValue: string; 

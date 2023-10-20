@@ -3,7 +3,6 @@ import Input from "../../../Form/Input";
 import Button from "../../../Form/Button";
 import { useEffect, useState } from "react";
 import useAxios from "../../../../../hooks/useAxios";
-import API_URL from "../../../../../constants/api.url";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
@@ -13,12 +12,15 @@ import {
   addWorkSpace,
 } from "../../../../../features/updateSlice";
 import { IEdit } from "../../../../../interfaces/modals";
+import { boards, projects, workspaces } from "../../../../../constants/url";
+import API_URL from "../../../../../constants/api.url";
 
 const NameEdit: React.FC<IEdit> = ({
   value,
   setValue,
   previousValue,
   type,
+  currentID,
 }): JSX.Element => {
   const [values, setVlaues] = useState({
     title: previousValue,
@@ -38,15 +40,22 @@ const NameEdit: React.FC<IEdit> = ({
   };
 
   const workSpaceEdit = async () => {
-    await fetcher("patch", `${API_URL.WorkSpaces}${params.wid}/`, {
-      name: values.title,
-    });
+    await fetcher(
+      "patch",
+      workspaces.patch({ wid: params.wid ? params.wid : currentID }),
+      {
+        name: values.title,
+      }
+    );
   };
 
   const projectEdit = async () => {
     await fetcher(
       "patch",
-      `${API_URL.WorkSpaces}${params.wid}/${API_URL.Projects}${params.pid}/`,
+      projects.patch({
+        wid: params.wid,
+        pid: params.pid ? params.pid : currentID,
+      }),
       {
         name: values.title,
       }
@@ -56,7 +65,11 @@ const NameEdit: React.FC<IEdit> = ({
   const boardEdit = async () => {
     await fetcher(
       "patch",
-      `${API_URL.WorkSpaces}${params.wid}/${API_URL.Projects}${params.pid}/`,
+      boards.patch({
+        wid: params.wid,
+        pid: params.pid,
+        bid: params.bid ? params.bid : currentID,
+      }),
       {
         name: values.title,
       }

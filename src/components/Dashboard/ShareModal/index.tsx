@@ -1,5 +1,5 @@
 import { createPortal } from "react-dom";
-import { Dispatch, SetStateAction, useState, useRef } from "react";
+import { useState, useRef } from "react";
 import Modal from "../../Common/Modal";
 import Button from "../../Common/Form/Button";
 import Input from "../../Common/Form/Input";
@@ -8,9 +8,9 @@ import MemberList from "../../Common/MemberList/MemberList";
 import { email, validate } from "../../../utils/validator/";
 import { toast } from "react-toastify";
 import useAxios from "../../../hooks/useAxios";
-import API_URL from "../../../constants/api.url";
 import { useEffect } from "react";
 import { IAccount } from "../../../interfaces/accounts";
+import { accounts } from "../../../constants/url";
 
 const rules = {
   shareWithEmail: [email],
@@ -36,11 +36,11 @@ const ShareModal: React.FC<IProps> = ({
     email: "",
   });
 
-  const accounts = async () => {
-    await fetcher("get", `${API_URL.Accounts}`);
+  const getAccounts = async () => {
+    await fetcher("get", accounts.gets());
   };
 
-  const handleShareWithEmail = () => {
+  const handleSubmit = () => {
     const resultErrors = validate(values, rules);
     resultErrors.forEach((error) => {
       toast.error(error);
@@ -67,7 +67,7 @@ const ShareModal: React.FC<IProps> = ({
   };
 
   useEffect(() => {
-    accounts();
+    if (modal) getAccounts();
   }, []);
 
   return (
@@ -88,7 +88,7 @@ const ShareModal: React.FC<IProps> = ({
               disabled={!values.email}
               text="ارسال"
               type="submit"
-              onClick={handleShareWithEmail}
+              onClick={handleSubmit}
               className="h-XL bg-brand-primary rounded-l-lg text-white text-sm px-[30px]"
             />
             <div className="w-full">

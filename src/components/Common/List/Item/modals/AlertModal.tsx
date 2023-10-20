@@ -26,18 +26,18 @@ const AlertModal: React.FC<IAlert> = ({
         text: alertText,
       }}
     >
-      <div className="flex justify-evenly items-center">
+      <div className="flex justify-center gap-5 items-center">
         <Button
           type="button"
           onClick={handleYes}
           text="بله"
-          className="bg-green-primary px-5 py-1 rounded-lg text-white"
+          className="bg-green-primary px-16 py-1 rounded-lg text-white"
         />
         <Button
           type="button"
           onClick={handleNo}
           text="خیر"
-          className="bg-red-primary px-5 py-1 rounded-lg text-white"
+          className="bg-red-primary px-16 py-1 rounded-lg text-white"
         />
       </div>
     </Modal>

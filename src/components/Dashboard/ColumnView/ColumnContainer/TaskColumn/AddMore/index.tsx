@@ -3,19 +3,37 @@ import DropdownItem from "../../../../../Common/Dropdown/DropdownItem";
 import Icon from "../../../../../Common/Icon";
 import TaskModal from "../../../../TaskModal";
 import { useState } from "react";
+import { useReducer } from "react";
+import { detailsReducer } from "../../../../../../utils/reducer/reducer";
+import { createPortal } from "react-dom";
+import NameEdit from "../../../../../Common/List/Item/modals/NameEdit";
 
 interface IAddMoreProps {
   isShown: boolean;
-  boardId: number
+  boardId: number;
+  title: string;
 }
-const AddMore: React.FC<IAddMoreProps> = ({ isShown, boardId }): JSX.Element => {
+
+const portals = document.getElementById("portals") as Element;
+
+const AddMore: React.FC<IAddMoreProps> = ({
+  title,
+  isShown,
+  boardId,
+}): JSX.Element => {
   const [taskModal, setTaskModal] = useState<boolean>(false);
+  const [currentID, setCurrentID] = useState(0);
+  const [state, dispatch] = useReducer(detailsReducer, {
+    boardNameEdit: false,
+  });
 
   const handleTaskModal = () => {
     setTaskModal(!taskModal);
   };
 
-  const handleEditName = () => {};
+  const handleEditName = () => {
+    dispatch({ type: "boardNameEdit" });
+  };
   const handleCopyLink = () => {};
   const handleRemove = () => {};
 
@@ -31,7 +49,7 @@ const AddMore: React.FC<IAddMoreProps> = ({ isShown, boardId }): JSX.Element => 
         className="cursor-pointer"
         onClick={handleTaskModal}
       />
-      <Dropdown type="icon" icon={{ icon: "dots" }}>       
+      <Dropdown type="icon" icon={{ icon: "dots" }}>
         <DropdownItem
           title="ویرایش نام ستون "
           hasIcon={true}
@@ -53,11 +71,29 @@ const AddMore: React.FC<IAddMoreProps> = ({ isShown, boardId }): JSX.Element => 
         <DropdownItem
           title="حذف"
           hasIcon={true}
-          icon={{ icon: "trash"}}
+          icon={{ icon: "trash" }}
           onClick={handleRemove}
-        />      
+        />
       </Dropdown>
-      {taskModal && <TaskModal modal={taskModal} setModal={handleTaskModal} boardId={boardId} />}
+      {taskModal && (
+        <TaskModal
+          modal={taskModal}
+          setModal={handleTaskModal}
+          boardId={boardId}
+        />
+      )}
+      {createPortal(
+        <>
+          <NameEdit
+            currentID={currentID}
+            value={state.nameEdit}
+            setValue={handleEditName}
+            previousValue={title}
+            type="board"
+          />
+        </>,
+        portals
+      )}
     </section>
   );
 };

@@ -1,6 +1,6 @@
 import { toast } from "react-toastify";
 
-const detailsReducer = (state, action) => {
+export const detailsReducer = (state, action) => {
     switch ( action.type) {
         case "projectModal" :
             return {...state, projectModal : !state.projectModal};
@@ -24,9 +24,9 @@ const detailsReducer = (state, action) => {
             return {...state, newTask : !state.newTask};
         case "proNameEdit" :
             return {...state, proNameEdit : !state.proNameEdit};
+        case "boardNameEdit" :
+            return {...state, boardNameEdit : !state.boardNameEdit}
         default:
             return state;
     }
 }
-
-export {detailsReducer};

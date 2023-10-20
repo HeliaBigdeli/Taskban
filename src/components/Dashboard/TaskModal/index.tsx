@@ -35,8 +35,8 @@ const TaskModal: React.FC<IProps> = ({
   const [values, setVlaues] = useState<{}>({
     description: "",
     priority: 1,
-    // attachment: "",
-    // thumbnail: "",
+    attachment: "",
+    thumbnail: "",
     name: "test",
     order: 2,
   });

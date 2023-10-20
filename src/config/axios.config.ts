@@ -6,8 +6,10 @@ import API_URL from "../constants/api.url";
 import { toast } from "react-toastify";
 import { login } from "../constants/url";
 
+export const baseAppURL = "https://quera.iran.liara.run/";
+
 export const AXIOS = axios.create({
-  baseURL: "https://quera.iran.liara.run/",
+  baseURL: baseAppURL,
 });
 
 AXIOS.interceptors.request.use(
@@ -52,7 +54,6 @@ AXIOS.interceptors.response.use(
         window.location.href = "/Login";
       }
     } else {
-
       if (error.response.data?.detail) {
         // hande show error as a string
         toast.error(error.response.data.detail);
@@ -61,8 +62,8 @@ AXIOS.interceptors.response.use(
         Object.keys(error.response.data).map((item) => {
           error.response.data[item].map((error) => {
             toast.error(error);
-          })
-        })
+          });
+        });
       }
       return Promise.reject(error);
     }

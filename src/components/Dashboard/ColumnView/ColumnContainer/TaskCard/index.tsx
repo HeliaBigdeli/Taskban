@@ -6,6 +6,7 @@ import Icon from "../../../../Common/Icon";
 import { Draggable } from "react-beautiful-dnd";
 import { ITask } from "../../../../../interfaces/task";
 import MembersThumb from "../../../../Common/MembersThumb";
+import { baseAppURL } from "../../../../../config/axios.config";
 
 interface ITaskCardProps extends ITask {
   index: number;
@@ -63,9 +64,9 @@ const TaskCard: React.FC<ITaskCardProps> = ({
         >
           {thumbnail && (
             <img
-              src={thumbnail}
+              src={`${baseAppURL}${thumbnail}`}
               alt="task-img"
-              className={`h-[134px] self-stretch rounded-[4px] bg-lightgray  bg-cover bg-no-repeat`}
+              className={`h-[134px] self-stretch rounded-[4px] bg-lightgray object-cover bg-no-repeat`}
             />
           )}
           <section className="flex justify-between items-start gap-2.5 self-stretch">

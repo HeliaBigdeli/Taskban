@@ -3,11 +3,11 @@ import CalenderView from "../../../components/Dashboard/CalenderView";
 import ColumnView from "../../../components/Dashboard/ColumnView";
 import { useSelector } from "react-redux";
 import { selectView } from "../../../features/viewSlice";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import useAxios from "../../../hooks/useAxios";
 import Header from "../../../components/Layouts/Dashboard/Header";
-import { boardUpdate } from "../../../features/updateSlice";
+import { boardUpdate, taskUpdate } from "../../../features/updateSlice";
 import { boards, workspaces } from "../../../constants/url";
 
 const Boards: React.FC = (): JSX.Element => {
@@ -16,7 +16,7 @@ const Boards: React.FC = (): JSX.Element => {
   const [wsResponse, wsError, wsLoading, wsFetcher] = useAxios();
   const params = useParams();
   const update = useSelector(boardUpdate);
-  const [boardTitle, setBoardTitle] = useState("");
+  const updateByTask = useSelector(taskUpdate);
 
   useEffect(() => {
     wsFetcher("get", workspaces.get({ wid: params.wid }));
@@ -27,7 +27,7 @@ const Boards: React.FC = (): JSX.Element => {
         pid: params.pid,
       })
     );
-  }, [params.pid, view, update]);
+  }, [params.pid, view, update, updateByTask]);
 
   switch (view) {
     case "list":

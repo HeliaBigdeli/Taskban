@@ -2,14 +2,8 @@ import Icon from "../../Icon";
 import React, { useRef, useState } from "react";
 import Selectlist from "./SelectList";
 
-interface IItem {
-  id: number;
-  name: string;
-  color?: string;
-}
-
 interface IProps {
-  items: IItem[];
+  items: any[];
   name: string;
   className?: string;
   hasSearch?: boolean;

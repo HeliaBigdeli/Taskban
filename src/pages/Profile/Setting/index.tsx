@@ -12,10 +12,23 @@ const Setting: React.FC = (): JSX.Element => {
         <h2 className="text-[31px] text-bold text-right mb-L">تنظیمات</h2>
         <h3 className="text-right text-normal text-black mb-XS">انتخاب تم</h3>
         <div>
-          <ColorPicker
+          {/* <ColorPicker
             onClick={(e) => onClick()}
             hasDisableIcon={false}
-          ></ColorPicker>
+          ></ColorPicker> */}
+          {/* <ColorPicker
+                  onClick={(data) =>
+                    setWorkSpaceInfo({
+                      ...workSpaceInfo,
+                      colorName: data.name,
+                      colorCode: data.code,
+                    })
+                  }
+                  hasDisableIcon={true}
+                  handleDisableClick={handleDisableClick}
+                  selected={selectedColor}
+                  setSelected={setSelectedColor}
+                /> */}
         </div>
         <div className="my-M flex flex-row-reverse">
           <Switcher />

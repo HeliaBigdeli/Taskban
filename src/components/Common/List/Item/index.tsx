@@ -26,7 +26,8 @@ interface IProps {
 const portals = document.getElementById("portals") as Element;
 
 const ListItem: React.FC<IProps> = ({ id, name, color }): JSX.Element => {
-  const [currentID, setCurrentID] = useState(0);
+  const [workspaceId, setWorkspaceId] = useState(0);
+  const [projectId, setProjectId] = useState(0);
   const [listToggle, setListToggle] = useState(false);
   const [response, error, loading, fetcher] = useAxios();
   const [responseDelete, errorDel, loadingDel, fetcherDel] = useAxios();
@@ -44,19 +45,8 @@ const ListItem: React.FC<IProps> = ({ id, name, color }): JSX.Element => {
   const update = useSelector(projectUpdate);
   const dispatch = useDispatch();
 
-  const changeUrl = (path: string, id: number) => {
-    switch (path) {
-      case "workspace":
-        return navigate(projects.gets({ wid: id }));
-      case "project":
-        return navigate(boards.gets({ wid: params.wid, pid: id }));
-      default:
-        return navigate(workspaces.gets());
-    }
-  };
-
   const toggleAccordion = () => {
-    changeUrl("workspace", id);
+    navigate(projects.gets({ wid: id }));
     setListToggle(!listToggle);
   };
 
@@ -65,7 +55,7 @@ const ListItem: React.FC<IProps> = ({ id, name, color }): JSX.Element => {
   };
 
   const handleProjectModal = () => {
-    changeUrl("workspace", id);
+    navigate(projects.gets({ wid: id }));
     setProjectModal(!projectModal);
   };
 
@@ -86,7 +76,7 @@ const ListItem: React.FC<IProps> = ({ id, name, color }): JSX.Element => {
     setAlert(true);
   };
   const handleWsRemove = () => {
-    fetcherDel("delete", workspaces.delete({ wid: id ? id : currentID }));
+    fetcherDel("delete", workspaces.delete({ wid: id ? id : workspaceId }));
   };
   const HandleWsShare = () => {
     setShare(!share);
@@ -105,7 +95,7 @@ const ListItem: React.FC<IProps> = ({ id, name, color }): JSX.Element => {
   const handleProRemove = () => {
     fetcherDel(
       "delete",
-      projects.delete({ wid: id, pid: params.pid ? params.pid : currentID })
+      projects.delete({ wid: id, pid: params.pid ? params.pid : projectId })
     );
   };
   const handleProAlert = () => {
@@ -143,7 +133,7 @@ const ListItem: React.FC<IProps> = ({ id, name, color }): JSX.Element => {
 
         <span
           onClick={() => {
-            setCurrentID(id);
+            setWorkspaceId(id);
           }}
         >
           <Dropdown type="icon" icon={{ icon: "dots" }}>
@@ -201,14 +191,14 @@ const ListItem: React.FC<IProps> = ({ id, name, color }): JSX.Element => {
               <p
                 className="flex justify-between items-center cursor-pointer"
                 onClick={() => {
-                  changeUrl("project", project.id);
+                  navigate(boards.gets({ wid: params.wid, pid: id }));
                 }}
               >
                 {project.name}
               </p>
               <span
                 onClick={() => {
-                  setCurrentID(project.id);
+                  setProjectId(project.id);
                 }}
               >
                 <Dropdown type="icon" icon={{ icon: "dots" }}>
@@ -248,20 +238,12 @@ const ListItem: React.FC<IProps> = ({ id, name, color }): JSX.Element => {
               </span>
               {createPortal(
                 <>
-                  <TaskModal modal={newTask} setModal={setNewTask} />
                   <NameEdit
-                    currentID={currentID}
+                    currentID={project.id}
                     value={proNameEdit}
                     setValue={setProNameEdit}
                     previousValue={project.name}
                     type="project"
-                  />
-                  <AlertModal
-                    isAlertOpen={proAlert}
-                    setIsAlertOpen={setProAlert}
-                    alertText="آیا از حذف کردن این پروژه مطمئن هستید؟"
-                    className=""
-                    handleYes={handleProRemove}
                   />
                 </>,
                 portals
@@ -279,24 +261,30 @@ const ListItem: React.FC<IProps> = ({ id, name, color }): JSX.Element => {
         </ul>
       )}
 
-      {projectModal && (
-        <ProjectModal
-          modal={projectModal}
-          setModal={handleAddProject}
-          wid={currentID}
-        />
-      )}
       {createPortal(
         <>
+          <TaskModal modal={newTask} setModal={setNewTask} />
+          <AlertModal
+            isAlertOpen={proAlert}
+            setIsAlertOpen={setProAlert}
+            alertText="آیا از حذف کردن این پروژه مطمئن هستید؟"
+            className=""
+            handleYes={handleProRemove}
+          />
+          <ProjectModal
+            modal={projectModal}
+            setModal={handleAddProject}
+            wid={workspaceId}
+          />
           <NameEdit
-            currentID={currentID}
+            currentID={workspaceId}
             value={nameEdit}
             setValue={setNameEdit}
             previousValue={name}
             type="workSpace"
           />
           <ColorEdit
-            currentID={currentID}
+            currentID={projectId}
             value={colorEdit}
             setValue={setColorEdit}
             previousValue={color}

@@ -16,6 +16,8 @@ import AlertModal from "./modals/AlertModal";
 import { addWorkSpace } from "../../../../features/updateSlice";
 import ShareModal from "../../../Dashboard/ShareModal";
 import TaskModal from "../../../Dashboard/TaskModal";
+import { useReducer } from "react";
+import { detailsReducer } from "../../../../utils/reducer/reducer";
 
 interface IProps {
   id: number;
@@ -31,14 +33,15 @@ const ListItem: React.FC<IProps> = ({ id, name, color }): JSX.Element => {
   const [responseDelete, errorDel, loadingDel, fetcherDel] = useAxios();
   const navigate = useNavigate();
   const params = useParams();
-  const [projectModal, setProjectModal] = useState<boolean>(false);
-  const [nameEdit, setNameEdit] = useState<boolean>(false);
-  const [colorEdit, setColorEdit] = useState<boolean>(false);
-  const [alert, setAlert] = useState(false);
-  const [proAlert, setProAlert] = useState(false);
-  const [share, setShare] = useState(false);
-  const [newTask, setNewTask] = useState<boolean>(false);
-  const [proNameEdit, setProNameEdit] = useState(false);
+  const [state, stateDispatch] = useReducer(detailsReducer, {
+    projectModal: false,
+    nameEdit: false,
+    colorEdit: false,
+    alert: false,
+    proAlert: false,
+    share: false,
+    newTask: false,
+  });
 
   const update = useSelector(projectUpdate);
 
@@ -67,37 +70,33 @@ const ListItem: React.FC<IProps> = ({ id, name, color }): JSX.Element => {
   };
 
   const handleProjectModal = () => {
-    setProjectModal(!projectModal);
+    stateDispatch({ type: "projectModal" });
   };
 
-  const handleAddProject = () => {
-    setProjectModal(!projectModal);
-  };
   const handleEditWsName = () => {
-    setNameEdit(!nameEdit);
+    stateDispatch({ type: "nameEdit" });
   };
   const handleeditWsColor = () => {
-    setColorEdit(!colorEdit);
+    stateDispatch({ type: "colorEdit" });
   };
   const handleCopyWsLink = () => {
-    navigator.clipboard.writeText(window.location.href);
-    toast.success("لینک با موفقیت در کلیپ بورد کپی شد.");
+    stateDispatch({ type: "copyLink" });
   };
   const handleAlert = () => {
-    setAlert(!alert);
+    stateDispatch({ type: "alert" });
   };
   const handleWsRemove = () => {
     fetcherDel("delete", `${API_URL.WorkSpaces}${id}/`);
   };
   const HandleWsShare = () => {
-    setShare(!share);
+    stateDispatch({ type: "share" });
   };
 
   const handleAddProTask = () => {
-    setNewTask(!newTask);
+    stateDispatch({ type: "newTask" });
   };
   const handleEditProName = () => {
-    setProNameEdit(!proNameEdit);
+    stateDispatch({ type: "proNameEdit" });
   };
   const handleCopyProLink = () => {
     navigator.clipboard.writeText(window.location.href);
@@ -110,10 +109,10 @@ const ListItem: React.FC<IProps> = ({ id, name, color }): JSX.Element => {
     );
   };
   const handleProAlert = () => {
-    setProAlert(!alert);
+    stateDispatch({ type: "proAlert" });
   };
   const HandleProShare = () => {
-    setShare(!share);
+    stateDispatch({ type: "share" });
   };
 
   useEffect(() => {
@@ -121,7 +120,8 @@ const ListItem: React.FC<IProps> = ({ id, name, color }): JSX.Element => {
 
     if (responseDelete) {
       dispatch(addWorkSpace());
-      setAlert(false);
+      state.alert = false;
+      state.proAlert = false;
       toast.success("آیتم مورد نظر با موفقیت حذف شد.");
       navigate("workspaces");
     } else {
@@ -147,7 +147,7 @@ const ListItem: React.FC<IProps> = ({ id, name, color }): JSX.Element => {
             title="ساختن پروژه جدید"
             hasIcon={true}
             icon={{ icon: "plus" }}
-            onClick={handleAddProject}
+            onClick={handleProjectModal}
           />
           <DropdownItem
             title="ویرایش نام ورک اسپیس"
@@ -235,16 +235,19 @@ const ListItem: React.FC<IProps> = ({ id, name, color }): JSX.Element => {
               </Dropdown>
               {createPortal(
                 <>
-                  <TaskModal modal={newTask} setModal={setNewTask} />
+                  <TaskModal
+                    modal={state.newTask}
+                    setModal={handleAddProTask}
+                  />
                   <NameEdit
-                    value={proNameEdit}
-                    setValue={setProNameEdit}
+                    value={state.proNameEdit}
+                    setValue={handleEditProName}
                     previousValue={project.name}
                     type="project"
                   />
                   <AlertModal
-                    isAlertOpen={proAlert}
-                    setIsAlertOpen={setProAlert}
+                    isAlertOpen={state.proAlert}
+                    setIsAlertOpen={handleProAlert}
                     alertText="آیا از حذف کردن این پروژه مطمئن هستید؟"
                     className=""
                     handleYes={handleProRemove}
@@ -265,32 +268,35 @@ const ListItem: React.FC<IProps> = ({ id, name, color }): JSX.Element => {
         </ul>
       )}
 
-      {projectModal && (
-        <ProjectModal modal={projectModal} setModal={handleAddProject} />
+      {state.projectModal && (
+        <ProjectModal
+          modal={state.projectModal}
+          setModal={handleProjectModal}
+        />
       )}
       {createPortal(
         <>
           <NameEdit
-            value={nameEdit}
-            setValue={setNameEdit}
+            value={state.nameEdit}
+            setValue={handleEditWsName}
             previousValue={name}
             type="workSpace"
           />
           <ColorEdit
-            value={colorEdit}
-            setValue={setColorEdit}
+            value={state.colorEdit}
+            setValue={handleeditWsColor}
             previousValue={color}
           />
           <AlertModal
-            isAlertOpen={alert}
-            setIsAlertOpen={setAlert}
+            isAlertOpen={state.alert}
+            setIsAlertOpen={handleAlert}
             alertText="آیا از حذف کردن این ورک اسپیس مطمئن هستید؟"
             className=""
             handleYes={handleWsRemove}
           />
           <ShareModal
-            modal={share}
-            setModal={setShare}
+            modal={state.share}
+            setModal={HandleWsShare}
             title="اشتراک گذاری پروژه"
           />
         </>,

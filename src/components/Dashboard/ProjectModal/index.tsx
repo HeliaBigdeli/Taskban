@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 import API_URL from "../../../constants/api.url";
 import { addProject } from "../../../features/updateSlice";
 import { useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const portals = document.getElementById("portals") as Element;
 
@@ -49,6 +50,7 @@ const ProjectModal: React.FC<IProps> = ({ modal, setModal }): JSX.Element => {
     if (response) {
       dispatch(addProject());
       setModal(false);
+      toast.success("پروژه با موفقیت اضافه شد.");
     }
   }, [response]);
 

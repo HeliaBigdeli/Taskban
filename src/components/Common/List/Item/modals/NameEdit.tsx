@@ -7,7 +7,11 @@ import API_URL from "../../../../../constants/api.url";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
-import { addWorkSpace } from "../../../../../features/updateSlice";
+import {
+  addBoard,
+  addProject,
+  addWorkSpace,
+} from "../../../../../features/updateSlice";
 import { IEdit } from "../../../../../interfaces/modals";
 
 const NameEdit: React.FC<IEdit> = ({
@@ -49,9 +53,23 @@ const NameEdit: React.FC<IEdit> = ({
     );
   };
 
+  const boardEdit = async () => {
+    await fetcher(
+      "patch",
+      `${API_URL.WorkSpaces}${params.wid}/${API_URL.Projects}${params.pid}/`,
+      {
+        name: values.title,
+      }
+    );
+  };
+
   useEffect(() => {
     if (response) {
-      dispatch(addWorkSpace());
+      type === "workSpace"
+        ? dispatch(addWorkSpace())
+        : type === "project"
+        ? dispatch(addProject())
+        : dispatch(addBoard());
       setValue(false);
       setVlaues({ title: previousValue });
       toast.success("تغییر نام با موفقیت انجام شد.");
@@ -89,7 +107,13 @@ const NameEdit: React.FC<IEdit> = ({
           <Button
             text="ثبت"
             type="button"
-            onClick={type === "workSpace" ? workSpaceEdit : projectEdit}
+            onClick={
+              type === "workSpace"
+                ? workSpaceEdit
+                : type === "project"
+                ? projectEdit
+                : boardEdit
+            }
             className="flex h-XL rounded-md bg-brand-primary text-white"
             loading={loading}
             disabled={!values.title.trim()}

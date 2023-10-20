@@ -34,8 +34,14 @@ function App() {
                 <Route path="/Reset-password" element={<Reset />} />
               </Route>
               <Route path="/" element={<DashboardLayout />}>
-                <Route path="/workspaces/:wid/projects/:pid/boards/" element={<Boards />} />
-                <Route path="/workspaces/:wid?/projects?/" element={<WorkSpaces />} />
+                <Route
+                  path="/workspaces/:wid/projects/:pid/boards/:bid?"
+                  element={<Boards />}
+                />
+                <Route
+                  path="/workspaces/:wid?/projects?/"
+                  element={<WorkSpaces />}
+                />
               </Route>
               <Route path="/" element={<ProfileLayout />}>
                 <Route path="/account" element={<Account />} />
@@ -47,7 +53,12 @@ function App() {
           </AuthCheck>
         </BrowserRouter>
       </Provider>
-      <ToastContainer style={{ width: 340, fontSize: 14 }} rtl  position="bottom-left" autoClose={3000}/>
+      <ToastContainer
+        style={{ width: 340, fontSize: 14 }}
+        rtl
+        position="bottom-left"
+        autoClose={3000}
+      />
     </ContextProvider>
   );
 }

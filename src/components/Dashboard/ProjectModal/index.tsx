@@ -7,6 +7,7 @@ import useAxios from "../../../hooks/useAxios";
 import { useDispatch } from "react-redux";
 import { addProject } from "../../../features/updateSlice";
 import { useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 import { projects } from "../../../constants/url";
 
 const portals = document.getElementById("portals") as Element;
@@ -54,6 +55,7 @@ const ProjectModal: React.FC<IProps> = ({
     if (response) {
       dispatch(addProject());
       setModal(false);
+      toast.success("پروژه با موفقیت اضافه شد.");
     }
   }, [response]);
 

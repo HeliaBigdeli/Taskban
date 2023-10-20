@@ -15,6 +15,8 @@ import AlertModal from "./modals/AlertModal";
 import { addWorkSpace } from "../../../../features/updateSlice";
 import ShareModal from "../../../Dashboard/ShareModal";
 import TaskModal from "../../../Dashboard/TaskModal";
+import { useReducer } from "react";
+import { detailsReducer } from "../../../../utils/reducer/reducer";
 import { workspaces, projects, boards } from "../../../../constants/url";
 
 interface IProps {
@@ -26,37 +28,28 @@ interface IProps {
 const portals = document.getElementById("portals") as Element;
 
 const ListItem: React.FC<IProps> = ({ id, name, color }): JSX.Element => {
-  const [currentID, setCurrentID] = useState(0);
+  const navigate = useNavigate();
+  const update = useSelector(projectUpdate);
+  const dispatch = useDispatch();
+  const [workspaceId, setWorkspaceId] = useState(0);
+  const [project, setProject] = useState({ id: 0, name: "" });
   const [listToggle, setListToggle] = useState(false);
   const [response, error, loading, fetcher] = useAxios();
   const [responseDelete, errorDel, loadingDel, fetcherDel] = useAxios();
   const params = useParams();
-  const [projectModal, setProjectModal] = useState<boolean>(false);
-  const [nameEdit, setNameEdit] = useState<boolean>(false);
-  const [colorEdit, setColorEdit] = useState<boolean>(false);
-  const [alert, setAlert] = useState(false);
-  const [proAlert, setProAlert] = useState(false);
-  const [share, setShare] = useState(false);
-  const [newTask, setNewTask] = useState<boolean>(false);
-  const [proNameEdit, setProNameEdit] = useState(false);
-
-  const navigate = useNavigate();
-  const update = useSelector(projectUpdate);
-  const dispatch = useDispatch();
-
-  const changeUrl = (path: string, id: number) => {
-    switch (path) {
-      case "workspace":
-        return navigate(projects.gets({ wid: id }));
-      case "project":
-        return navigate(boards.gets({ wid: params.wid, pid: id }));
-      default:
-        return navigate(workspaces.gets());
-    }
-  };
+  const [state, stateDispatch] = useReducer(detailsReducer, {
+    projectModal: false,
+    workspaceNameEdit: false,
+    projectNameEdit: false,
+    colorEdit: false,
+    workspaceAlert: false,
+    projectAlert: false,
+    share: false,
+    newTask: false,
+  });
 
   const toggleAccordion = () => {
-    changeUrl("workspace", id);
+    navigate(projects.gets({ wid: id }));
     setListToggle(!listToggle);
   };
 
@@ -64,68 +57,43 @@ const ListItem: React.FC<IProps> = ({ id, name, color }): JSX.Element => {
     fetcher("get", projects.gets({ wid: id }));
   };
 
-  const handleProjectModal = () => {
-    changeUrl("workspace", id);
-    setProjectModal(!projectModal);
+  const handleActions = (type) => {
+    stateDispatch({ type });
+    if (type === "projectModal") {
+      navigate(projects.gets({ wid: id }));
+    }
   };
 
-  const handleAddProject = () => {
-    setProjectModal(!projectModal);
+  const handleWorkspaceRemove = () => {
+    fetcherDel("delete", workspaces.delete({ wid: id ? id : workspaceId }));
   };
-  const handleEditWsName = () => {
-    setNameEdit(!nameEdit);
-  };
-  const handleeditWsColor = () => {
-    setColorEdit(!colorEdit);
-  };
-  const handleCopyWsLink = () => {
+
+  const handleCopyProjectLink = () => {
     navigator.clipboard.writeText(window.location.href);
     toast.success("لینک با موفقیت در کلیپ بورد کپی شد.");
   };
-  const handleAlert = () => {
-    setAlert(true);
-  };
-  const handleWsRemove = () => {
-    fetcherDel("delete", workspaces.delete({ wid: id ? id : currentID }));
-  };
-  const HandleWsShare = () => {
-    setShare(!share);
-  };
 
-  const handleAddProTask = () => {
-    setNewTask(!newTask);
-  };
-  const handleEditProName = () => {
-    setProNameEdit(!proNameEdit);
-  };
-  const handleCopyProLink = () => {
-    navigator.clipboard.writeText(window.location.href);
-    toast.success("لینک با موفقیت در کلیپ بورد کپی شد.");
-  };
-  const handleProRemove = () => {
+  const handleProjectRemove = () => {
     fetcherDel(
       "delete",
-      projects.delete({ wid: id, pid: params.pid ? params.pid : currentID })
+      projects.delete({ wid: id, pid: params.pid ? params.pid : project.id })
     );
-  };
-  const handleProAlert = () => {
-    setProAlert(true);
-  };
-  const HandleProShare = () => {
-    setShare(!share);
   };
 
   useEffect(() => {
-    if ((alert || proAlert) && responseDelete) {
+    // check if workspace delete happend on not to prevent error getting projects
+    if (!state.workspaceAlert) {
+      getProjects();
+    }
+
+    if ((state.workspaceAlert || state.projectAlert) && responseDelete) {
       dispatch(addWorkSpace());
-      setAlert(false);
-      setProAlert(false);
+      state.workspaceAlert = false;
+      state.projectAlert = false;
       toast.success("آیتم مورد نظر با موفقیت حذف شد.");
       navigate("workspaces");
     }
-
-    getProjects();
-  }, [update, responseDelete]);
+  }, [update, responseDelete, project.id, workspaceId]);
 
   return (
     <li>
@@ -143,7 +111,7 @@ const ListItem: React.FC<IProps> = ({ id, name, color }): JSX.Element => {
 
         <span
           onClick={() => {
-            setCurrentID(id);
+            setWorkspaceId(id);
           }}
         >
           <Dropdown type="icon" icon={{ icon: "dots" }}>
@@ -151,39 +119,39 @@ const ListItem: React.FC<IProps> = ({ id, name, color }): JSX.Element => {
               title="ساختن پروژه جدید"
               hasIcon={true}
               icon={{ icon: "plus" }}
-              onClick={handleAddProject}
+              onClick={() => handleActions("projectModal")}
             />
             <DropdownItem
               title="ویرایش نام ورک اسپیس"
               hasIcon={true}
               icon={{ icon: "edit" }}
-              onClick={handleEditWsName}
+              onClick={() => handleActions("workspaceNameEdit")}
             />
             <DropdownItem
               title="ویرایش رنگ"
               hasIcon={true}
               icon={{ icon: "color" }}
-              onClick={handleeditWsColor}
+              onClick={() => handleActions("colorEdit")}
             />
             <DropdownItem
               title="کپی لینک"
               hasIcon={true}
               icon={{ icon: "link" }}
-              onClick={handleCopyWsLink}
+              onClick={() => handleActions("copyLink")}
             />
             <DropdownItem
               title="حذف"
               hasIcon={true}
               icon={{ icon: "trash", color: "red" }}
               color="red"
-              onClick={handleAlert}
+              onClick={() => handleActions("workspaceAlert")}
             />
             <DropdownItem
               title="اشتراک گذاری"
               hasIcon={true}
               icon={{ icon: "share" }}
               isButton={true}
-              onClick={HandleWsShare}
+              onClick={() => handleActions("share")}
             />
           </Dropdown>
         </span>
@@ -201,44 +169,44 @@ const ListItem: React.FC<IProps> = ({ id, name, color }): JSX.Element => {
               <p
                 className="flex justify-between items-center cursor-pointer"
                 onClick={() => {
-                  changeUrl("project", project.id);
+                  navigate(boards.gets({ wid: params.wid, pid: id }));
                 }}
               >
                 {project.name}
               </p>
               <span
                 onClick={() => {
-                  setCurrentID(project.id);
+                  setProject(project);
                 }}
               >
                 <Dropdown type="icon" icon={{ icon: "dots" }}>
                   <DropdownItem
-                    onClick={handleAddProTask}
+                    onClick={() => handleActions("newTask")}
                     title="ساختن تسک جدید"
                     hasIcon={true}
                     icon={{ icon: "plus" }}
                   />
                   <DropdownItem
-                    onClick={handleEditProName}
+                    onClick={() => handleActions("projectNameEdit")}
                     title="ویرایش نام پروژه"
                     hasIcon={true}
                     icon={{ icon: "edit" }}
                   />
                   <DropdownItem
-                    onClick={handleCopyProLink}
+                    onClick={handleCopyProjectLink}
                     title="کپی لینک"
                     hasIcon={true}
                     icon={{ icon: "link" }}
                   />
                   <DropdownItem
-                    onClick={handleProAlert}
+                    onClick={() => handleActions("projectAlert")}
                     title="حذف"
                     hasIcon={true}
                     icon={{ icon: "trash", color: "red" }}
                     color="red"
                   />
                   <DropdownItem
-                    onClick={HandleProShare}
+                    onClick={() => handleActions("share")}
                     title="اشتراک گذاری"
                     hasIcon={true}
                     icon={{ icon: "share" }}
@@ -246,71 +214,65 @@ const ListItem: React.FC<IProps> = ({ id, name, color }): JSX.Element => {
                   />
                 </Dropdown>
               </span>
-              {createPortal(
-                <>
-                  <TaskModal modal={newTask} setModal={setNewTask} />
-                  <NameEdit
-                    currentID={currentID}
-                    value={proNameEdit}
-                    setValue={setProNameEdit}
-                    previousValue={project.name}
-                    type="project"
-                  />
-                  <AlertModal
-                    isAlertOpen={proAlert}
-                    setIsAlertOpen={setProAlert}
-                    alertText="آیا از حذف کردن این پروژه مطمئن هستید؟"
-                    className=""
-                    handleYes={handleProRemove}
-                  />
-                </>,
-                portals
-              )}
             </li>
           ))}
           {!response?.length && !loading && (
             <Button
               text="ساختن پروژه جدید"
-              onClick={handleProjectModal}
+              onClick={() => handleActions("projectModal")}
               type="button"
               className="text-brand-primary h-L text-sm font-bold leading-normal self-stretch rounded-md border border-brand-primary mb-L w-full"
             />
           )}
         </ul>
       )}
-
-      {projectModal && (
-        <ProjectModal
-          modal={projectModal}
-          setModal={handleAddProject}
-          wid={currentID}
-        />
-      )}
       {createPortal(
         <>
           <NameEdit
-            currentID={currentID}
-            value={nameEdit}
-            setValue={setNameEdit}
+            currentID={project.id}
+            value={state.projectNameEdit}
+            setValue={() => handleActions("projectNameEdit")}
+            previousValue={project.name}
+            type="project"
+          />
+          <AlertModal
+            isAlertOpen={state.projectAlert}
+            setIsAlertOpen={() => handleActions("projectAlert")}
+            alertText="آیا از حذف کردن این پروژه مطمئن هستید؟"
+            className=""
+            handleYes={handleProjectRemove}
+          />
+          <TaskModal
+            modal={state.newTask}
+            setModal={() => handleActions("newTask")}
+          />
+          <ProjectModal
+            modal={state.projectModal}
+            setModal={() => handleActions("projectModal")}
+            wid={workspaceId}
+          />
+          <NameEdit
+            currentID={workspaceId}
+            value={state.workspaceNameEdit}
+            setValue={() => handleActions("workspaceNameEdit")}
             previousValue={name}
             type="workSpace"
           />
           <ColorEdit
-            currentID={currentID}
-            value={colorEdit}
-            setValue={setColorEdit}
+            currentID={id}
+            value={state.colorEdit}
+            setValue={() => handleActions("colorEdit")}
             previousValue={color}
           />
           <AlertModal
-            isAlertOpen={alert}
-            setIsAlertOpen={setAlert}
+            isAlertOpen={state.workspaceAlert}
+            setIsAlertOpen={() => handleActions("workspaceAlert")}
             alertText="آیا از حذف کردن این ورک اسپیس مطمئن هستید؟"
-            className=""
-            handleYes={handleWsRemove}
+            handleYes={handleWorkspaceRemove}
           />
           <ShareModal
-            modal={share}
-            setModal={setShare}
+            modal={state.share}
+            setModal={() => handleActions("share")}
             title="اشتراک گذاری پروژه"
           />
         </>,

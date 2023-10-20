@@ -93,6 +93,7 @@ const ListItem: React.FC<IProps> = ({ id, name, color }): JSX.Element => {
       toast.success("آیتم مورد نظر با موفقیت حذف شد.");
       navigate("workspaces");
     }
+
   }, [update, responseDelete, project.id, workspaceId]);
 
   return (
@@ -169,7 +170,7 @@ const ListItem: React.FC<IProps> = ({ id, name, color }): JSX.Element => {
               <p
                 className="flex justify-between items-center cursor-pointer"
                 onClick={() => {
-                  navigate(boards.gets({ wid: params.wid, pid: id }));
+                  navigate(boards.gets({ wid: id, pid: project.id }));
                 }}
               >
                 {project.name}

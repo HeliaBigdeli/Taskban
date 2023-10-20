@@ -13,7 +13,6 @@ import {
 } from "../../../../../features/updateSlice";
 import { IEdit } from "../../../../../interfaces/modals";
 import { boards, projects, workspaces } from "../../../../../constants/url";
-import API_URL from "../../../../../constants/api.url";
 
 const NameEdit: React.FC<IEdit> = ({
   value,
@@ -40,13 +39,9 @@ const NameEdit: React.FC<IEdit> = ({
   };
 
   const workSpaceEdit = async () => {
-    await fetcher(
-      "patch",
-      workspaces.patch({ wid: currentID || params.wid }),
-      {
-        name: values.title,
-      }
-    );
+    await fetcher("patch", workspaces.patch({ wid: currentID || params.wid }), {
+      name: values.title,
+    });
   };
 
   const projectEdit = async () => {
@@ -87,7 +82,8 @@ const NameEdit: React.FC<IEdit> = ({
       setVlaues({ title: previousValue });
       toast.success("تغییر نام با موفقیت انجام شد.");
     }
-  }, [response]);
+    setVlaues({ title: previousValue });
+  }, [response, previousValue]);
 
   const close = () => {
     setVlaues({ title: previousValue });

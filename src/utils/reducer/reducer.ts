@@ -24,8 +24,6 @@ export const detailsReducer = (state, action) => {
             return {...state, newTask : !state.newTask};
         case "proNameEdit" :
             return {...state, proNameEdit : !state.proNameEdit};
-        case "boardNameEdit" :
-            return {...state, boardNameEdit : !state.boardNameEdit}
         default:
             return state;
     }

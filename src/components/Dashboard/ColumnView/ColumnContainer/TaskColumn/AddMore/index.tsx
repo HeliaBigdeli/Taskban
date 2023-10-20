@@ -4,7 +4,7 @@ import Icon from "../../../../../Common/Icon";
 import TaskModal from "../../../../TaskModal";
 import { useState } from "react";
 import { useReducer } from "react";
-import { detailsReducer } from "../../../../../../utils/reducer/reducer";
+import { boardDetailsReducer } from "../../../../../../utils/reducer/boardDetails";
 import { createPortal } from "react-dom";
 import NameEdit from "../../../../../Common/List/Item/modals/NameEdit";
 
@@ -23,7 +23,7 @@ const AddMore: React.FC<IAddMoreProps> = ({
 }): JSX.Element => {
   const [taskModal, setTaskModal] = useState<boolean>(false);
   const [currentID, setCurrentID] = useState(0);
-  const [state, dispatch] = useReducer(detailsReducer, {
+  const [state, dispatch] = useReducer(boardDetailsReducer, {
     boardNameEdit: false,
   });
 

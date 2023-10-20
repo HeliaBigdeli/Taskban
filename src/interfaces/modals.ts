@@ -10,6 +10,6 @@ export interface IAlert {
     isAlertOpen:boolean;
     setIsAlertOpen: (value: boolean | ((prevVar: boolean) => boolean)) => void;
     alertText: string;
-    className: string;
+    className?: string;
     handleYes: () => void;
 }

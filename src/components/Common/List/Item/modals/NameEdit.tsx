@@ -42,7 +42,7 @@ const NameEdit: React.FC<IEdit> = ({
   const workSpaceEdit = async () => {
     await fetcher(
       "patch",
-      workspaces.patch({ wid: params.wid ? params.wid : currentID }),
+      workspaces.patch({ wid: currentID || params.wid }),
       {
         name: values.title,
       }
@@ -54,7 +54,7 @@ const NameEdit: React.FC<IEdit> = ({
       "patch",
       projects.patch({
         wid: params.wid,
-        pid: params.pid ? params.pid : currentID,
+        pid: currentID || params.pid,
       }),
       {
         name: values.title,
@@ -68,7 +68,7 @@ const NameEdit: React.FC<IEdit> = ({
       boards.patch({
         wid: params.wid,
         pid: params.pid,
-        bid: params.bid ? params.bid : currentID,
+        bid: currentID || params.bid,
       }),
       {
         name: values.title,

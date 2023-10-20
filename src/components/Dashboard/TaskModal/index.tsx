@@ -11,30 +11,34 @@ import Dropdown from "../../Common/Dropdown";
 import DropdownItem from "../../Common/Dropdown/DropdownItem";
 import File from "../../Common/Form/File";
 import Select from "../../Common/Form/Select";
+import useAxios from "../../../hooks/useAxios";
+import { useParams } from "react-router-dom";
+import { tasks } from "../../../constants/url";
 
 const portals = document.getElementById("portals") as Element;
 interface IProps {
+  boardId?: number;
   modal: boolean;
   setModal: (value: boolean | ((prevVar: boolean) => boolean)) => void;
 }
-interface Itag {
-  id: number;
-  title: string;
-  color: string;
-}
-const TaskModal: React.FC<IProps> = ({ modal, setModal }): JSX.Element => {
+
+const TaskModal: React.FC<IProps> = ({
+  modal,
+  setModal,
+  boardId,
+}): JSX.Element => {
+  const params = useParams();
   const [tags, setTags] = useState(tag);
   const [datePickerModal, setDatePickerModal] = useState<boolean>(false);
   const [shareModal, setShareModal] = useState<boolean>(false);
-  const [newTags, setNewTagsState] = useState<Itag>();
-  const [data, setData] = useState(tags);
-  const [searchValue, setSearchValue] = useState<string>("");
+  const [response, error, loading, fetcher] = useAxios();
   const [values, setVlaues] = useState<{}>({
     description: "",
-    priority: "",
-    tag: searchValue,
-    memebers: [],
-    projectName: "",
+    priority: 1,
+    // attachment: "",
+    // thumbnail: "",
+    name: "test",
+    order: 2,
   });
 
   const handleDatePickerModal = () => {
@@ -49,28 +53,14 @@ const TaskModal: React.FC<IProps> = ({ modal, setModal }): JSX.Element => {
     setShareModal(!shareModal);
   };
 
-  const keyDownHandler = (e) => {
-    if (e.key === "Enter") {
-      if (data.length === tags.length) {
-        setNewTagsState({
-          ...newTags,
-          id: tags.length + 1,
-          color: "blue_secondary",
-          title: searchValue,
-        });
-      }
-    }
-  };
-  const handleSearch = (name: string, value: string) => {
-    setSearchValue(value);
-    const data = tags.filter((item) => {
-      return item.name.includes(value);
-    });
-    setData(data);
-  };
+  const handleFile = (name, value) => {};
 
-  const getPriority = (value: string) => {
-    setVlaues({ ...values, priority: value });
+  const handleSubmit = async () => {
+    await fetcher(
+      "post",
+      tasks.post({ wid: params.wid, pid: params.pid, bid: boardId }),
+      values
+    );
   };
 
   return (
@@ -118,25 +108,26 @@ const TaskModal: React.FC<IProps> = ({ modal, setModal }): JSX.Element => {
               placeholder="توضیحاتی برای این تسک بنویسید"
             />
             <File
-              onChange={() => {}}
-              id="thumbnail"
-              name="thumbnail"
+              onChangeFile={(name, value) => {
+                handleFile(name, value);
+              }}
+              id="atachment"
+              name="atachment"
               hasLabel={true}
               label="افزودن پیوست"
             />
             <File
-              onChange={() => {}}
-              id="atachment"
-              name="atachment"
+              onChangeFile={(name, value) => {
+                handleFile(name, value);
+              }}
+              id="thumbnail"
+              name="thumbnail"
               hasLabel={true}
               label="افزودن کاور"
             />
             <div className="flex flex-row-reverse justify-between items-center">
               <div className="flex flex-row gap-M">
-                <div
-                  className="cursor-pointer border-dashed border-2 rounded-full border-[#c1c1c1] w-[50px] h-[50px] flex justify-center items-center"
-                  onKeyDown={(e) => keyDownHandler(e)}
-                >
+                <div className="cursor-pointer border-dashed border-2 rounded-full border-[#c1c1c1] w-[50px] h-[50px] flex justify-center items-center">
                   <Dropdown
                     type="icon"
                     icon={{ icon: "tag", color: "#c1c1c1" }}
@@ -193,7 +184,7 @@ const TaskModal: React.FC<IProps> = ({ modal, setModal }): JSX.Element => {
               </div>
               <Button
                 text="ساختن تسک"
-                onClick={() => {}}
+                onClick={handleSubmit}
                 type="button"
                 className="bg-brand-primary text-white h-L text-sm rounded-md px-M"
               />
@@ -209,7 +200,11 @@ const TaskModal: React.FC<IProps> = ({ modal, setModal }): JSX.Element => {
         />
       )}
       {shareModal && (
-        <ShareModal modal={shareModal} setModal={handleShareModal} title="اشتراک گذاری تسک" />
+        <ShareModal
+          modal={shareModal}
+          setModal={handleShareModal}
+          title="اشتراک گذاری تسک"
+        />
       )}
     </>
   );

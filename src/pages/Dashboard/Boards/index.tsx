@@ -3,20 +3,23 @@ import CalenderView from "../../../components/Dashboard/CalenderView";
 import ColumnView from "../../../components/Dashboard/ColumnView";
 import { useSelector } from "react-redux";
 import { selectView } from "../../../features/viewSlice";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import useAxios from "../../../hooks/useAxios";
 import Header from "../../../components/Layouts/Dashboard/Header";
 import { boardUpdate } from "../../../features/updateSlice";
-import { boards } from "../../../constants/url";
+import { boards, workspaces } from "../../../constants/url";
 
 const Boards: React.FC = (): JSX.Element => {
   const view: string = useSelector(selectView);
   const [response, error, loading, fetcher] = useAxios();
+  const [wsResponse, wsError, wsLoading, wsFetcher] = useAxios();
   const params = useParams();
   const update = useSelector(boardUpdate);
+  const [boardTitle, setBoardTitle] = useState("");
 
   useEffect(() => {
+    wsFetcher("get", workspaces.get({ wid: params.wid }));
     fetcher(
       "get",
       boards.gets({
@@ -30,21 +33,21 @@ const Boards: React.FC = (): JSX.Element => {
     case "list":
       return (
         <>
-          <Header />
+          <Header title={wsResponse} />
           <ListView data={response} />
         </>
       );
     case "calender":
       return (
         <>
-          <Header />
+          <Header title={wsResponse} />
           <CalenderView />
         </>
       );
     default:
       return (
         <>
-          <Header />
+          <Header title={wsResponse} />
           <ColumnView data={response} />
         </>
       );

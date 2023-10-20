@@ -35,7 +35,7 @@ const TaskModal: React.FC<IProps> = ({
   const [values, setVlaues] = useState<{}>({
     description: "",
     priority: 1,
-    attachment: "",
+    // attachment: "",
     thumbnail: "",
     name: "test",
     order: 2,
@@ -53,7 +53,9 @@ const TaskModal: React.FC<IProps> = ({
     setShareModal(!shareModal);
   };
 
-  const handleFile = (name, value) => {};
+  const handleFile = (name, value) => {
+    
+  };
 
   const handleSubmit = async () => {
     await fetcher(

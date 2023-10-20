@@ -10,10 +10,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { chengeView } from "../../../../features/viewSlice";
 
 interface IProps {
-  title?: string;
+  title: { name: string };
 }
 
-const Header: React.FC<IProps> = (): JSX.Element => {
+const Header: React.FC<IProps> = ({ title }): JSX.Element => {
   const { pathname } = useLocation();
   const [filterModal, setFilterModal] = useState<boolean>(false);
   const [shareModal, setShareModal] = useState<boolean>(false);
@@ -73,7 +73,7 @@ const Header: React.FC<IProps> = (): JSX.Element => {
             />
           </p>
           <span className="font-bold pl-S justify-end text-xl">
-            {/* {workspace_name} */}
+            {title?.name}
           </span>
         </div>
         <button
@@ -121,7 +121,11 @@ const Header: React.FC<IProps> = (): JSX.Element => {
       </div>
       {/*----------------------------------------------- Sharing & Filter Modal --------------------------------------------- */}
       {shareModal && (
-        <ShareModal modal={shareModal} setModal={handleShareModal} title="اشتراک گذاری پروژه"/>
+        <ShareModal
+          modal={shareModal}
+          setModal={handleShareModal}
+          title="اشتراک گذاری پروژه"
+        />
       )}
       {filterModal && (
         <FilterModal modal={filterModal} setModal={handleFilterModal} />

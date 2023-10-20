@@ -25,7 +25,7 @@ const ColumnContainer: React.FC<IColumnContainerProps> = ({
   };
   return (
     <div
-      className="flex shrink-0  flex-col items-center gap-S"
+      className="flex shrink-0 flex-col items-center gap-S"
       style={{ direction: "ltr" }}
     >
       <TaskColumn title={name} count={tasks.length} boardId={id} />
@@ -34,7 +34,7 @@ const ColumnContainer: React.FC<IColumnContainerProps> = ({
         {(provided) => (
           <div
             onMouseDownCapture={handleClick}
-            className={`flex w-[290px] pt-0.5 flex-col items-center gap-3 h-[750px] overflow-y-auto overflow-x-hidden ${style.customScrool} `}
+            className={`flex w-[290px] pt-0.5 flex-col items-center gap-3 overflow-y-auto overflow-x-hidden ${style.customScrool} `}
             {...provided.droppableProps}
             ref={provided.innerRef}
           >

@@ -10,6 +10,7 @@ import { DragDropContext } from "react-beautiful-dnd";
 import { IProps, IData } from "../../../interfaces/board";
 import { useDraggable } from "react-use-draggable-scroll";
 
+
 const ColumnView: React.FC<IProps> = ({ data }): JSX.Element => {
   const [boardTaks, setBoardTaks] = useState<IData[]>(data);
   const [newBoardModal, setNewBoardModal] = useState<boolean>(false);
@@ -75,7 +76,7 @@ const ColumnView: React.FC<IProps> = ({ data }): JSX.Element => {
       <div
         ref={ref}
         {...events}
-        className={`flex w-full px-S h-full  items-start gap-6 overflow-x-auto 
+        className={`flex w-full px-S h-full items-start gap-6 overflow-x-auto 
          ${style.scroll}`}
         style={{ direction: "rtl" }}
       >
@@ -95,7 +96,7 @@ const ColumnView: React.FC<IProps> = ({ data }): JSX.Element => {
 
         <button
           onClick={handleNewBoardModal}
-          className="flex w-[250px] h-[44px] py-XS px-[12px]  items-center rounded-2xl shrink-0  shadow-taskColumn text-base font-medium"
+          className="flex w-[250px] h-[44px] py-XS px-[12px] items-center rounded-2xl shrink-0 shadow-taskColumn text-base font-medium"
         >
           <Icon icon="plus" color="#1E1E1E" size={20} />
           ساختن برد جدید

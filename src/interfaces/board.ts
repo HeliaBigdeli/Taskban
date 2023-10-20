@@ -6,7 +6,7 @@ export interface IData {
   name: string;
   order: number;
   tasks: ITask[];
-  tasks_count: number;
+  tasks_count: number
 }
 
 export interface IProps {

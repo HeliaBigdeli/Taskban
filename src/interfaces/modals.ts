@@ -3,7 +3,7 @@ export interface IEdit {
     value: boolean;
     setValue: (value: boolean | ((prevVar: boolean) => boolean)) => void;
     previousValue: string; 
-    type?: "workSpace" | "project"
+    type?: "workSpace" | "project" | "board";
 }
 
 export interface IAlert {

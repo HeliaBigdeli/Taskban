@@ -64,10 +64,11 @@ const Information: React.FC = (): JSX.Element => {
     }
   };
   const uploadImage = (e) => {
-    console.log(e.target)
+    console.log(e.target.files[0])
     if (e.target.files && e.target.files[0]){
-        setValues({ ...values, thumbnail:e.target.files[0] });
-    }
+            setValues({ ...values, thumbnail:e.target.files[0]});
+    };
+    // }
     //  const formData=new FormData();
     //  const image= e.target.files[0];
     //  console.log(formData)
@@ -98,6 +99,7 @@ const Information: React.FC = (): JSX.Element => {
                 id="thumbnail"
                 name="thumbnail"
                 onChange={(e) => uploadImage(e)}
+                accept=".png, .jpg, .jpeg"
               />
             </label>
             <p className="text-lightgray text-xs text-center mt-S">

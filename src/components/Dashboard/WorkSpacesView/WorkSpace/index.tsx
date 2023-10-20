@@ -81,7 +81,7 @@ const WorkSpace: React.FC<IWorkSpaceProps> = ({
         <div className=" w-full h-0.5 bg-gray-secondary"></div>
       </div>
       {projectModal && (
-        <ProjectModal modal={projectModal} setModal={handleModal} />
+        <ProjectModal modal={projectModal} setModal={handleModal}  wid={id}/>
       )}
     </div>
   );

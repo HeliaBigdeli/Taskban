@@ -12,11 +12,16 @@ import { projects } from "../../../constants/url";
 const portals = document.getElementById("portals") as Element;
 
 interface IProps {
+  wid;
   modal: boolean;
   setModal: (value: boolean | ((prevVar: boolean) => boolean)) => void;
 }
 
-const ProjectModal: React.FC<IProps> = ({ modal, setModal }): JSX.Element => {
+const ProjectModal: React.FC<IProps> = ({
+  modal,
+  setModal,
+  wid,
+}): JSX.Element => {
   const params = useParams();
   const dispatch = useDispatch();
   const [response, error, loading, fetcher] = useAxios();
@@ -36,9 +41,13 @@ const ProjectModal: React.FC<IProps> = ({ modal, setModal }): JSX.Element => {
   };
 
   const postProject = async () => {
-    await fetcher("post", projects.post({ wid: params.wid }), {
-      name: values.title,
-    });
+    await fetcher(
+      "post",
+      projects.post({ wid: params.wid ? params.wid : wid }),
+      {
+        name: values.title,
+      }
+    );
   };
 
   useEffect(() => {

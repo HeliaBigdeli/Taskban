@@ -89,13 +89,13 @@ export const workspace_members = {
     return `${API_URL.WorkSpaces}${wid}/${API_URL.Members}`;
   },
   get: ({ wid, mid }) => {
-    return `${API_URL.WorkSpaces}${wid}/${API_URL.Members}${mid}`;
+    return `${API_URL.WorkSpaces}${wid}/${API_URL.Members}${mid}/`;
   },
   delete: ({ wid, mid }) => {
-    return `${API_URL.WorkSpaces}${wid}/${API_URL.Members}${mid}`;
+    return `${API_URL.WorkSpaces}${wid}/${API_URL.Members}${mid}/`;
   },
   patch: ({ wid, mid }) => {
-    return `${API_URL.WorkSpaces}${wid}/${API_URL.Members}${mid}`;
+    return `${API_URL.WorkSpaces}${wid}/${API_URL.Members}${mid}/`;
   },
 };
 
@@ -107,13 +107,13 @@ export const projects = {
     return `${API_URL.WorkSpaces}${wid}/${API_URL.Projects}`;
   },
   get: ({ wid, pid }) => {
-    return `${API_URL.WorkSpaces}${wid}/${API_URL.Projects}${pid}`;
+    return `${API_URL.WorkSpaces}${wid}/${API_URL.Projects}${pid}/`;
   },
   delete: ({ wid, pid }) => {
-    return `${API_URL.WorkSpaces}${wid}/${API_URL.Projects}${pid}`;
+    return `${API_URL.WorkSpaces}${wid}/${API_URL.Projects}${pid}/`;
   },
   patch: ({ wid, pid }) => {
-    return `${API_URL.WorkSpaces}${wid}/${API_URL.Projects}${pid}`;
+    return `${API_URL.WorkSpaces}${wid}/${API_URL.Projects}${pid}/`;
   },
 };
 
@@ -125,13 +125,13 @@ export const boards = {
     return `${API_URL.WorkSpaces}${wid}/${API_URL.Projects}${pid}/${API_URL.Boards}`;
   },
   get: ({ wid, pid, bid }) => {
-    return `${API_URL.WorkSpaces}${wid}/${API_URL.Projects}${pid}/${API_URL.Boards}${bid}`;
+    return `${API_URL.WorkSpaces}${wid}/${API_URL.Projects}${pid}/${API_URL.Boards}${bid}/`;
   },
   delete: ({ wid, pid, bid }) => {
-    return `${API_URL.WorkSpaces}${wid}/${API_URL.Projects}${pid}/${API_URL.Boards}${bid}`;
+    return `${API_URL.WorkSpaces}${wid}/${API_URL.Projects}${pid}/${API_URL.Boards}${bid}/`;
   },
   patch: ({ wid, pid, bid }) => {
-    return `${API_URL.WorkSpaces}${wid}/${API_URL.Projects}${pid}/${API_URL.Boards}${bid}`;
+    return `${API_URL.WorkSpaces}${wid}/${API_URL.Projects}${pid}/${API_URL.Boards}${bid}/`;
   },
 };
 
@@ -143,13 +143,13 @@ export const tasks = {
     return `${API_URL.WorkSpaces}${wid}/${API_URL.Projects}${pid}/${API_URL.Boards}${bid}/${API_URL.Tasks}`;
   },
   get: ({ wid, pid, bid, tid }) => {
-    return `${API_URL.WorkSpaces}${wid}/${API_URL.Projects}${pid}/${API_URL.Boards}${bid}/${API_URL.Tasks}${tid}`;
+    return `${API_URL.WorkSpaces}${wid}/${API_URL.Projects}${pid}/${API_URL.Boards}${bid}/${API_URL.Tasks}${tid}/`;
   },
   delete: ({ wid, pid, bid, tid }) => {
-    return `${API_URL.WorkSpaces}${wid}/${API_URL.Projects}${pid}/${API_URL.Boards}${bid}/${API_URL.Tasks}${tid}`;
+    return `${API_URL.WorkSpaces}${wid}/${API_URL.Projects}${pid}/${API_URL.Boards}${bid}/${API_URL.Tasks}${tid}/`;
   },
   patch: ({ wid, pid, bid, tid }) => {
-    return `${API_URL.WorkSpaces}${wid}/${API_URL.Projects}${pid}/${API_URL.Boards}${bid}/${API_URL.Tasks}${tid}`;
+    return `${API_URL.WorkSpaces}${wid}/${API_URL.Projects}${pid}/${API_URL.Boards}${bid}/${API_URL.Tasks}${tid}/`;
   },
 };
 
@@ -161,10 +161,10 @@ export const task_members = {
     return `${API_URL.WorkSpaces}${wid}/${API_URL.Projects}${pid}/${API_URL.Boards}${bid}/${API_URL.Tasks}${tid}/${API_URL.Assignee}`;
   },
   get: ({ wid, pid, bid, tid, aid }) => {
-    return `${API_URL.WorkSpaces}${wid}/${API_URL.Projects}${pid}/${API_URL.Boards}${bid}/${API_URL.Tasks}${tid}/${API_URL.Assignee}${aid}`;
+    return `${API_URL.WorkSpaces}${wid}/${API_URL.Projects}${pid}/${API_URL.Boards}${bid}/${API_URL.Tasks}${tid}/${API_URL.Assignee}${aid}/`;
   },
   delete: ({ wid, pid, bid, tid, aid }) => {
-    return `${API_URL.WorkSpaces}${wid}/${API_URL.Projects}${pid}/${API_URL.Boards}${bid}/${API_URL.Tasks}${tid}/${API_URL.Assignee}${aid}`;
+    return `${API_URL.WorkSpaces}${wid}/${API_URL.Projects}${pid}/${API_URL.Boards}${bid}/${API_URL.Tasks}${tid}/${API_URL.Assignee}${aid}/`;
   },
 };
 
@@ -176,10 +176,10 @@ export const task_comments = {
     return `${API_URL.WorkSpaces}${wid}/${API_URL.Projects}${pid}/${API_URL.Boards}${bid}/${API_URL.Tasks}${tid}/${API_URL.Comments}`;
   },
   get: ({ wid, pid, bid, tid, cid }) => {
-    return `${API_URL.WorkSpaces}${wid}/${API_URL.Projects}${pid}/${API_URL.Boards}${bid}/${API_URL.Tasks}${tid}/${API_URL.Comments}${cid}`;
+    return `${API_URL.WorkSpaces}${wid}/${API_URL.Projects}${pid}/${API_URL.Boards}${bid}/${API_URL.Tasks}${tid}/${API_URL.Comments}${cid}/`;
   },
   delete: ({ wid, pid, bid, tid, cid }) => {
-    return `${API_URL.WorkSpaces}${wid}/${API_URL.Projects}${pid}/${API_URL.Boards}${bid}/${API_URL.Tasks}${tid}/${API_URL.Comments}${cid}`;
+    return `${API_URL.WorkSpaces}${wid}/${API_URL.Projects}${pid}/${API_URL.Boards}${bid}/${API_URL.Tasks}${tid}/${API_URL.Comments}${cid}/`;
   },
 };
 
@@ -188,7 +188,7 @@ export const task_logs = {
     return `${API_URL.WorkSpaces}${wid}/${API_URL.Projects}${pid}/${API_URL.Boards}${bid}/${API_URL.Tasks}${tid}/${API_URL.Logs}`;
   },
   get: ({ wid, pid, bid, tid, lid }) => {
-    return `${API_URL.WorkSpaces}${wid}/${API_URL.Projects}${pid}/${API_URL.Boards}${bid}/${API_URL.Tasks}${tid}/${API_URL.Logs}${lid}`;
+    return `${API_URL.WorkSpaces}${wid}/${API_URL.Projects}${pid}/${API_URL.Boards}${bid}/${API_URL.Tasks}${tid}/${API_URL.Logs}${lid}/`;
   },
 };
 
@@ -200,10 +200,10 @@ export const project_members = {
     return `${API_URL.WorkSpaces}${wid}/${API_URL.Projects}${pid}/${API_URL.Members}`;
   },
   get: ({ wid, pid, mid }) => {
-    return `${API_URL.WorkSpaces}${wid}/${API_URL.Projects}${pid}/${API_URL.Members}${mid}`;
+    return `${API_URL.WorkSpaces}${wid}/${API_URL.Projects}${pid}/${API_URL.Members}${mid}/`;
   },
   delete: ({ wid, pid, mid }) => {
-    return `${API_URL.WorkSpaces}${wid}/${API_URL.Projects}${pid}/${API_URL.Members}${mid}`;
+    return `${API_URL.WorkSpaces}${wid}/${API_URL.Projects}${pid}/${API_URL.Members}${mid}/`;
   },
 };
 

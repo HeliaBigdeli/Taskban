@@ -20,21 +20,25 @@ const More: React.FC<IMoreProps> = ({
   const [comments, commentsError, commentsLoading, getComments] = useAxios();
   const params = useParams();
 
-  const handleProjectModal = () => { 
-    getTaskInfo("get", tasks.get({
-      wid: params.wid,
-      pid: params.pid,
-      bid: boardId,
-      tid: taskId,
-    }));
-    getComments("get", task_comments.gets({
-      wid: params.wid,
-      pid: params.pid,
-      bid: boardId,
-      tid: taskId,
-    }));
-
-    setProjectModal(!projectModal);
+  const handleProjectModal = () => {
+    getTaskInfo(
+      "get",
+      tasks.get({
+        wid: params.wid,
+        pid: params.pid,
+        bid: boardId,
+        tid: taskId,
+      })
+    );
+    getComments(
+      "get",
+      task_comments.gets({
+        wid: params.wid,
+        pid: params.pid,
+        bid: boardId,
+        tid: taskId,
+      })
+    );
   };
 
   useEffect(() => {}, [taskInfo, comments]);

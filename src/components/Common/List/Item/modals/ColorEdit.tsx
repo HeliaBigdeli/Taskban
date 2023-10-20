@@ -11,6 +11,7 @@ import ColorPicker from "../../../ColorPicker";
 import { workspaces } from "../../../../../constants/url";
 
 const NameEdit: React.FC<IEdit> = ({
+  currentID,
   value,
   setValue,
   previousValue,
@@ -32,7 +33,7 @@ const NameEdit: React.FC<IEdit> = ({
   const ref = useRef<HTMLDivElement>(null);
 
   const edit = async () => {
-    await fetcher("patch", workspaces.patch({wid: params.wid}), {
+    await fetcher("patch", workspaces.patch({wid: params.wid ? params.wid : currentID}), {
       color: values.color,
     });
   };

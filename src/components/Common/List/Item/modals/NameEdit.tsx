@@ -15,6 +15,7 @@ const NameEdit: React.FC<IEdit> = ({
   setValue,
   previousValue,
   type,
+  currentID,
 }): JSX.Element => {
   const [values, setVlaues] = useState({
     title: previousValue,
@@ -34,15 +35,22 @@ const NameEdit: React.FC<IEdit> = ({
   };
 
   const workSpaceEdit = async () => {
-    await fetcher("patch", workspaces.patch({ wid: params.wid }), {
-      name: values.title,
-    });
+    await fetcher(
+      "patch",
+      workspaces.patch({ wid: params.wid ? params.wid : currentID }),
+      {
+        name: values.title,
+      }
+    );
   };
 
   const projectEdit = async () => {
     await fetcher(
       "patch",
-      projects.patch({ wid: params.wid, pid: params.pid }),
+      projects.patch({
+        wid: params.wid,
+        pid: params.pid ? params.pid : currentID,
+      }),
       {
         name: values.title,
       }

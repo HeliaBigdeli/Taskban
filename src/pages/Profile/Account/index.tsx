@@ -59,8 +59,7 @@ const Account: React.FC = (): JSX.Element => {
     setValues(userResponse);
     console.log(values)
     if (response) {
-      console.log(response)
-      toast.success(response, {
+      toast.success(response.detail[0], {
         position: "bottom-left",
         autoClose: 3000,
       });

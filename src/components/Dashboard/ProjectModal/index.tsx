@@ -5,18 +5,23 @@ import Button from "../../Common/Form/Button";
 import Input from "../../Common/Form/Input";
 import useAxios from "../../../hooks/useAxios";
 import { useDispatch } from "react-redux";
-import API_URL from "../../../constants/api.url";
 import { addProject } from "../../../features/updateSlice";
 import { useParams } from "react-router-dom";
+import { projects } from "../../../constants/url";
 
 const portals = document.getElementById("portals") as Element;
 
 interface IProps {
+  wid;
   modal: boolean;
   setModal: (value: boolean | ((prevVar: boolean) => boolean)) => void;
 }
 
-const ProjectModal: React.FC<IProps> = ({ modal, setModal }): JSX.Element => {
+const ProjectModal: React.FC<IProps> = ({
+  modal,
+  setModal,
+  wid,
+}): JSX.Element => {
   const params = useParams();
   const dispatch = useDispatch();
   const [response, error, loading, fetcher] = useAxios();
@@ -38,7 +43,7 @@ const ProjectModal: React.FC<IProps> = ({ modal, setModal }): JSX.Element => {
   const postProject = async () => {
     await fetcher(
       "post",
-      `${API_URL.WorkSpaces}${params.wid}/${API_URL.Projects}`,
+      projects.post({ wid: params.wid ? params.wid : wid }),
       {
         name: values.title,
       }
@@ -79,6 +84,7 @@ const ProjectModal: React.FC<IProps> = ({ modal, setModal }): JSX.Element => {
               />
             </div>
             <Button
+              disabled={!values?.title}
               loading={loading}
               text="ادامه"
               type="button"

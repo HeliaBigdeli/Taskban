@@ -51,6 +51,22 @@ const icons: ListType = {
       </svg>
     );
   },
+  moon: (color: string, size: number) => {
+    return (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width={size}
+        height={size}
+        viewBox="-140 -150 750 850"
+      >
+        <path
+          stroke={color}
+          fill={color}
+          d="M448.964 365.617C348.188 384.809 255.14 307.765 255.14 205.419c0-58.893 31.561-112.832 82.574-141.862 25.83-14.7 19.333-53.859-10.015-59.28A258.114 258.114 0 0 0 280.947 0c-141.334 0-256 114.546-256 256 0 141.334 114.547 256 256 256 78.931 0 151.079-35.924 198.85-94.783 18.846-23.22-1.706-57.149-30.833-51.6zM280.947 480c-123.712 0-224-100.288-224-224s100.288-224 224-224c13.984 0 27.665 1.294 40.94 3.745-58.972 33.56-98.747 96.969-98.747 169.674 0 122.606 111.613 214.523 231.81 191.632C413.881 447.653 351.196 480 280.947 480z"
+        />
+      </svg>
+    );
+  },
   user_edit: (color: string, size: number) => {
     return (
       <svg
@@ -1510,24 +1526,33 @@ const icons: ListType = {
         height={size}
         viewBox="0 0 24 25"
         fill="none"
-        xmlns="http://www.w3.org/2000/svg">
-        <path d="M15 5.7C16.7 7.4 16.7 10.1 15 11.7C13.3 13.3 10.6 13.4 8.99999 11.7C7.39999 10 7.29999 7.3 8.99999 5.7C10.7 4.1 13.3 4.1 15 5.7" stroke={color}
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M15 5.7C16.7 7.4 16.7 10.1 15 11.7C13.3 13.3 10.6 13.4 8.99999 11.7C7.39999 10 7.29999 7.3 8.99999 5.7C10.7 4.1 13.3 4.1 15 5.7"
+          stroke={color}
           strokeWidth="1.5"
           strokeLinecap="round"
-          strokeLinejoin="round" />
-        <path d="M4 20.5C4 18 6 16 8.5 16H11.1"
+          strokeLinejoin="round"
+        />
+        <path
+          d="M4 20.5C4 18 6 16 8.5 16H11.1"
           stroke="#323232"
           strokeWidth="1.5"
           strokeLinecap="round"
-          strokeLinejoin="round" />
-        <path fillRule="evenodd"
+          strokeLinejoin="round"
+        />
+        <path
+          fillRule="evenodd"
           clipRule="evenodd"
-          d="M14 21.5H16.3L19.7 18.1C20.1 17.7 20.1 17.1 19.7 16.7L18.8 15.8C18.4 15.4 17.8 15.4 17.4 15.8L14 19.2V21.5V21.5H14Z" stroke="#323232" strokeWidth="1.5"
+          d="M14 21.5H16.3L19.7 18.1C20.1 17.7 20.1 17.1 19.7 16.7L18.8 15.8C18.4 15.4 17.8 15.4 17.4 15.8L14 19.2V21.5V21.5H14Z"
+          stroke="#323232"
+          strokeWidth="1.5"
           strokeLinecap="round"
-          strokeLinejoin="round" />
+          strokeLinejoin="round"
+        />
       </svg>
-
-    )
+    );
   },
   check_round_square: (color: string, size: number) => {
     return (
@@ -1559,75 +1584,91 @@ const icons: ListType = {
   },
   profile_check: (color: string, size: number) => {
     return (
-      <svg width={size}
+      <svg
+        width={size}
         height={size}
         viewBox="0 0 26 25"
         fill="none"
-        xmlns="http://www.w3.org/2000/svg">
-        <circle cx="13.0001"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <circle
+          cx="13.0001"
           cy="8.74835"
           r="4.25177"
           stroke="#323232"
           strokeWidth="1.5"
           strokeLinecap="round"
-          strokeLinejoin="round" />
-        <path d="M4.99683 20.5033C4.99683 18.0173 7.01267 16.0015 9.4987 16.0015H12.0828"
+          strokeLinejoin="round"
+        />
+        <path
+          d="M4.99683 20.5033C4.99683 18.0173 7.01267 16.0015 9.4987 16.0015H12.0828"
           stroke={color}
           strokeWidth="1.5"
           strokeLinecap="round"
-          strokeLinejoin="round" />
-        <path d="M20.0031 17.4399L17.0019 20.4412L15.2021 18.6404"
+          strokeLinejoin="round"
+        />
+        <path
+          d="M20.0031 17.4399L17.0019 20.4412L15.2021 18.6404"
           stroke="#323232"
           strokeWidth="1.5"
           strokeLinecap="round"
-          strokeLinejoin="round" />
+          strokeLinejoin="round"
+        />
       </svg>
-
-    )
+    );
   },
   arrow_right: (color: string, size: number) => {
     return (
-      <svg width={size}
+      <svg
+        width={size}
         height={size}
         viewBox="0 0 24 25"
         fill="none"
-        xmlns="http://www.w3.org/2000/svg">
-        <path d="M4.47998 12.48H19.47"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M4.47998 12.48H19.47"
           stroke={color}
           strokeWidth="1.5"
           strokeLinecap="round"
-          strokeLinejoin="round" />
-        <path d="M13.4829 6.48779L19.5199 12.4998L13.4829 18.5118"
+          strokeLinejoin="round"
+        />
+        <path
+          d="M13.4829 6.48779L19.5199 12.4998L13.4829 18.5118"
           stroke="white"
           strokeWidth="1.5"
           strokeLinecap="round"
-          strokeLinejoin="round" />
+          strokeLinejoin="round"
+        />
       </svg>
-
-    )
+    );
   },
-  attach:(color:string,size:number)=>{
-    return(
-      <svg width={size}
-       height={size}
-       viewBox="0 0 26 26"
-       fill="none"
-       xmlns="http://www.w3.org/2000/svg">
-
-      <path d="M10.9991 14.0006L11.9525 14.954C12.703 15.7045 13.7209 16.1262 14.7822 16.1262C15.8436 16.1262 16.8614 15.7045 17.6119 14.954L20.6442 11.9218C22.4571 10.1086 22.4571 7.16918 20.6442 5.35604V5.35604C18.831 3.5431 15.8916 3.5431 14.0784 5.35604L13.1911 6.24441" 
-       stroke={color}
-       strokeWidth="1.5" 
-       strokeLinecap="round" 
-       strokeLinejoin="round"/>
-      <path d="M15.0008 10.9993L14.0474 10.0459C13.297 9.29541 12.2791 8.87378 11.2177 8.87378C10.1564 8.87378 9.13852 9.29541 8.38806 10.0459L5.35579 13.0782C3.54286 14.8913 3.54286 17.8308 5.35579 19.6439V19.6439C7.16893 21.4568 10.1084 21.4568 11.9215 19.6439L12.8089 18.7555" 
-      stroke={color} 
-      strokeWidth="1.5" 
-      strokeLinecap="round" 
-      strokeLinejoin="round"/>
+  attach: (color: string, size: number) => {
+    return (
+      <svg
+        width={size}
+        height={size}
+        viewBox="0 0 26 26"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M10.9991 14.0006L11.9525 14.954C12.703 15.7045 13.7209 16.1262 14.7822 16.1262C15.8436 16.1262 16.8614 15.7045 17.6119 14.954L20.6442 11.9218C22.4571 10.1086 22.4571 7.16918 20.6442 5.35604V5.35604C18.831 3.5431 15.8916 3.5431 14.0784 5.35604L13.1911 6.24441"
+          stroke={color}
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        <path
+          d="M15.0008 10.9993L14.0474 10.0459C13.297 9.29541 12.2791 8.87378 11.2177 8.87378C10.1564 8.87378 9.13852 9.29541 8.38806 10.0459L5.35579 13.0782C3.54286 14.8913 3.54286 17.8308 5.35579 19.6439V19.6439C7.16893 21.4568 10.1084 21.4568 11.9215 19.6439L12.8089 18.7555"
+          stroke={color}
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
       </svg>
-
-    )
-  }, 
+    );
+  },
 };
 
 export default icons;

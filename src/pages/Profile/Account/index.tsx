@@ -5,10 +5,10 @@ import { useState, useEffect } from "react";
 import { required, email, validate } from "../../../utils/validator/index";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import API_URL from "../../../constants/api.url";
 import { selectUser } from "../../../features/authSlice";
 import { useSelector } from "react-redux";
 import { errorToaster } from "../../../utils/toaster";
+import { accounts, change_password } from "../../../constants/url";
 
 const rules = {
   email: [required, email],
@@ -44,20 +44,17 @@ const Account: React.FC = (): JSX.Element => {
     if (resultErrors.length) {
       errorToaster(resultErrors);
     } else {
-      await fetcher("put", `${API_URL.ChangePassword}`, values);
+      await fetcher("put", change_password.post(), values);
     }
 
     if (values.newPassword !== values.confirmNewPassword) {
-      toast.error("تکرار رمز عبور جدید با رمز عبور جدید مطابقت ندارد", {
-        position: "bottom-left",
-        autoClose: 3000,
-      });
+      toast.error("تکرار رمز عبور جدید با رمز عبور جدید مطابقت ندارد");
     }
   };
 
   useEffect(() => {
     if (!userResponse?.username) {
-      userfetcher("get", `${API_URL.Register}${user.user_id}/`);
+      userfetcher("get", accounts.get({ uid: user.user_id }));
     }
     setValues(userResponse);
     console.log(values)
@@ -78,6 +75,7 @@ const Account: React.FC = (): JSX.Element => {
         </h2>
         <form className="flex flex-col gap-S">
           <Input
+            disabled={userLoading}
             inputValue={values?.email || ""}
             name="email"
             id="email"
@@ -88,6 +86,7 @@ const Account: React.FC = (): JSX.Element => {
             onChange={(name, value) => handleChange(name, value)}
           />
           <Input
+            disabled={userLoading}
             inputValue={values?.username || ""}
             name="username"
             id="username"
@@ -99,6 +98,7 @@ const Account: React.FC = (): JSX.Element => {
           />
 
           <Input
+            disabled={userLoading}
             inputValue={values?.old_password || ""}
             name="old_password"
             id="old_password"
@@ -109,6 +109,7 @@ const Account: React.FC = (): JSX.Element => {
             onChange={(name, value) => handleChange(name, value)}
           />
           <Input
+            disabled={userLoading}
             inputValue={values?.new_password || ""}
             name="new_password"
             id="new_password"
@@ -129,7 +130,7 @@ const Account: React.FC = (): JSX.Element => {
             onChange={(name, value) => handleChange(name, value)}
           />
           <Button
-            // loading={loading}
+            loading={loading || userLoading}
             text="ثبت تغییرات"
             type="button"
             onClick={handleClick}

@@ -10,7 +10,7 @@ interface IIcon {
   style?: {};
 }
 
-interface IProps {
+interface IProps extends React.PropsWithChildren {
   inputValue?: string | number;
   name: string;
   id: string;
@@ -29,10 +29,13 @@ interface IProps {
   icon?: IIcon;
   className?: string;
   autoFocus?: boolean;
+  disabled?: boolean;
   onFocus?: (e: React.FocusEvent<HTMLInputElement>) => void;
+  ref?: any;
 }
 
 const Input: React.FC<IProps> = ({
+  disabled = false,
   hidden = false,
   inputValue,
   autoFocus = false,
@@ -48,6 +51,8 @@ const Input: React.FC<IProps> = ({
   hasIcon = false,
   className,
   icon,
+  children,
+  ref,
 }): JSX.Element => {
   const [value, setValue] = useState(inputValue);
 
@@ -69,6 +74,8 @@ const Input: React.FC<IProps> = ({
         )}
         <div className="relative flex items-center justify-end">
           <input
+            ref={ref}
+            disabled={disabled}
             autoComplete="false"
             hidden={hidden}
             onFocus={onFocus}
@@ -81,6 +88,7 @@ const Input: React.FC<IProps> = ({
             onChange={handleChange}
             className={`rounded-md border border-lightgray px-2 text-right w-full ${className}`}
           />
+          {children}
           {hasIcon && (
             <Icon
               icon={icon?.icon}

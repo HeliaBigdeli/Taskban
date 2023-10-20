@@ -3,29 +3,45 @@ import Icon from "../../../../../Common/Icon";
 import TaskInfoModal from "../../../../TaskInfoModal";
 import { useParams } from "react-router-dom";
 import useAxios from "../../../../../../hooks/useAxios";
-import API_URL from "../../../../../../constants/api.url";
+import { task_comments, tasks } from "../../../../../../constants/url";
 
 interface IMoreProps {
   isShown: boolean;
   taskId: number;
   boardId: number;
 }
-const More: React.FC<IMoreProps> = ({ isShown, taskId, boardId }): JSX.Element => {
+const More: React.FC<IMoreProps> = ({
+  isShown,
+  taskId,
+  boardId,
+}): JSX.Element => {
   const [projectModal, setProjectModal] = useState<boolean>(false);
-  const [taskInfo, taskInfoError, taskinfoLoading, getTaskInfo] = useAxios()
-  const [comments, commentsError, commentsLoading, getComments] = useAxios()
-  const params = useParams()
+  const [taskInfo, taskInfoError, taskinfoLoading, getTaskInfo] = useAxios();
+  const [comments, commentsError, commentsLoading, getComments] = useAxios();
+  const params = useParams();
 
   const handleProjectModal = () => {
-    const url = `${API_URL.WorkSpaces}${params.wid}/${API_URL.Projects}${params.pid}/${API_URL.Boards}${boardId}/${API_URL.Tasks}${taskId}/`;
-    getTaskInfo('get', url)
-    getComments('get', `${url}comments/`)
-
-    setProjectModal(!projectModal);
+    getTaskInfo(
+      "get",
+      tasks.get({
+        wid: params.wid,
+        pid: params.pid,
+        bid: boardId,
+        tid: taskId,
+      })
+    );
+    getComments(
+      "get",
+      task_comments.gets({
+        wid: params.wid,
+        pid: params.pid,
+        bid: boardId,
+        tid: taskId,
+      })
+    );
   };
 
-  useEffect(() => {   
-  }, [taskInfo, comments])
+  useEffect(() => {}, [taskInfo, comments]);
 
   return (
     <div
@@ -41,7 +57,12 @@ const More: React.FC<IMoreProps> = ({ isShown, taskId, boardId }): JSX.Element =
         </div>
       </section>
       {projectModal && taskInfo && (
-        <TaskInfoModal modal={projectModal} setModal={handleProjectModal} taskInfo={taskInfo} comments={comments} />
+        <TaskInfoModal
+          modal={projectModal}
+          setModal={handleProjectModal}
+          taskInfo={taskInfo}
+          comments={comments}
+        />
       )}
     </div>
   );

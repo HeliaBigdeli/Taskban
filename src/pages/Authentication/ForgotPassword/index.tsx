@@ -6,7 +6,7 @@ import { email, required, validate } from "../../../utils/validator";
 import useAxios from "../../../hooks/useAxios";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import API_URL from "../../../constants/api.url";
+import { forget } from "../../../constants/url";
 
 const rules = {
   email: [required, email],
@@ -36,7 +36,7 @@ const ForgotPassword: React.FC = (): JSX.Element => {
     if (resultErrors.length) {
       setErrors(resultErrors);
     } else {
-      await fetcher("post", API_URL.Reset, values);
+      await fetcher("post", forget.post(), values);
     }
   };
 

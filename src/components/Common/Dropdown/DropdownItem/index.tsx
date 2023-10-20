@@ -9,7 +9,8 @@ interface IProps {
   isButton?: boolean;
   hasDescription?: boolean;
   bgcolor?: string;
-  onClick?: (e: React.MouseEvent<HTMLInputElement>) => void;
+  id?: number;
+  onClick?: (id: number, title: string) => void;
 }
 
 interface IIcon {
@@ -19,6 +20,7 @@ interface IIcon {
 }
 
 const DropdownItem: React.FC<IProps> = ({
+  id = 0,
   title,
   color,
   description,
@@ -29,8 +31,8 @@ const DropdownItem: React.FC<IProps> = ({
   bgcolor,
   onClick = () => {},
 }): JSX.Element => {
-  const handleClick = (e) => {
-    onClick(e);
+  const handleClick = () => {
+    onClick(id, title);
   };
 
   return (

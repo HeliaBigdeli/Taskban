@@ -6,8 +6,9 @@ import { useState } from "react";
 
 interface IAddMoreProps {
   isShown: boolean;
+  boardId: number
 }
-const AddMore: React.FC<IAddMoreProps> = ({ isShown }): JSX.Element => {
+const AddMore: React.FC<IAddMoreProps> = ({ isShown, boardId }): JSX.Element => {
   const [taskModal, setTaskModal] = useState<boolean>(false);
 
   const handleTaskModal = () => {
@@ -56,7 +57,7 @@ const AddMore: React.FC<IAddMoreProps> = ({ isShown }): JSX.Element => {
           onClick={handleRemove}
         />      
       </Dropdown>
-      {taskModal && <TaskModal modal={taskModal} setModal={handleTaskModal} />}
+      {taskModal && <TaskModal modal={taskModal} setModal={handleTaskModal} boardId={boardId} />}
     </section>
   );
 };

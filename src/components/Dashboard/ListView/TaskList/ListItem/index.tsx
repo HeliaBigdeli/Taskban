@@ -1,46 +1,35 @@
+import { ITask } from "../../../../../interfaces/task";
 import Icon from "../../../../Common/Icon";
 import MembersThumb from "../../../../Common/MembersThumb";
+import Description from "./Description";
 import ListItemTitle from "./ListItemTitle";
 
-const members = [
-  {
-    id: 1,
-    email: "44243",
-    first_name: "Helya",
-    last_name: "Bigdeli",
-    username: "Bigdeli",
-    thumbnail: "Bigdeli",
-    phone_number: "0935165197"
-  },
-  {
-    id: 2,
-    email: "44243",
-    first_name: "Helya",
-    last_name: "Bigdeli",
-    username: "Bigdeli",
-    thumbnail: "Bigdeli",
-    phone_number: "0935165197"
-  }
-];
-
-interface IListItemProps {
-  color?: string;
-  name: string;
+interface IListItemProps extends ITask {
+  boardId: number;
 }
-const ListItem: React.FC<IListItemProps> = ({ color, name }): JSX.Element => {
-  const colorVariants = {
-    orange: "bg-orange-primary ",
-    green: "bg-green-primary",
+
+const ListItem: React.FC<IListItemProps> = ({
+  name,
+  priority,
+  deadline,
+  members,
+  id,
+  boardId,
+}): JSX.Element => {
+  const flagColor = {
+    1: "#82C91E",
+    2: "#15AABF",
+    3: "#FAB005",
+    4: "#FA5252",
   };
+  const d = new Date(deadline);
+  const month = new Intl.DateTimeFormat("fa-IR", { month: "short" }).format(d);
+  const day = new Intl.DateTimeFormat("fa-IR", { day: "numeric" }).format(d);
 
   return (
     <div className="flex w-full py-[7px] justify-between items-center">
       <section className="flex items-start gap-[7px]">
-        <div
-          className={`w-S h-S rounded-[3px] bg-[#F92E8F] ${
-            color && colorVariants[color as keyof typeof colorVariants]
-          }`}
-        ></div>
+        <div className={`w-S h-S rounded-[3px] bg-[#F92E8F] `}></div>
 
         <span className="text-[#0E0E0E] text-xs font-normal">{name}</span>
       </section>
@@ -48,11 +37,19 @@ const ListItem: React.FC<IListItemProps> = ({ color, name }): JSX.Element => {
         <div className="flex w-[70px] px-2.5 justify-center items-center gap-2.5 text-xs font-normal text-[#0E0E0E]">
           <MembersThumb members={members} />
         </div>
-        <ListItemTitle title="۶ آبان" />
-        <ListItemTitle title={<Icon icon="flag" size={16} color="#FA5252" />} />
         <ListItemTitle
-          title={<Icon icon="paragraph" size={16} color="#BDC0C6" />}
+          title={
+            <>
+              {day}
+              &nbsp;
+              {month}
+            </>
+          }
         />
+        <ListItemTitle
+          title={<Icon icon="flag" size={16} color={flagColor[priority]} />}
+        />
+        <Description taskId={id} boardId={boardId} />
       </section>
     </div>
   );

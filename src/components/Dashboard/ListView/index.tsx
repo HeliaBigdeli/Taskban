@@ -3,20 +3,23 @@ import Icon from "../../Common/Icon";
 import TaskList from "./TaskList";
 import Button from "../../Common/Form/Button";
 import TaskModal from "../TaskModal";
-import {IProps, IData} from '../../../interfaces/board'
+import { IProps, IData } from "../../../interfaces/board";
+import { boardUpdate } from "../../../features/updateSlice";
+import { useSelector } from "react-redux";
 
 const ListShow: React.FC<IProps> = ({ data }): JSX.Element => {
   const [listTasks, setListTaks] = useState<IData[]>(data);
   const [isShown, setIsShown] = useState<boolean>(true);
   const [taskModal, setTaskModal] = useState<boolean>(false);
+  const update = useSelector(boardUpdate);
 
   const handleTaskModal = () => {
     setTaskModal(!taskModal);
   };
 
   useEffect(() => {
-    setListTaks(data)
-  }, [data])
+    setListTaks(data);
+  }, [data, update]);
 
   return (
     <div style={{ direction: "rtl" }} className={`pr-S`}>
@@ -27,8 +30,9 @@ const ListShow: React.FC<IProps> = ({ data }): JSX.Element => {
         <span className="text-black text-xl font-extrabold">پروژه اول</span>
       </div>
       <div
-        className={`${!isShown ? "opacity-0 -z-10" : "opacity-100 z-10"
-          } relative flex flex-col items-end gap-XL mr-6 ml-12 transition-all duration-300 `}
+        className={`${
+          !isShown ? "opacity-0 -z-10" : "opacity-100 z-10"
+        } relative flex flex-col items-end gap-XL mr-6 ml-12 transition-all duration-300 `}
       >
         {listTasks?.map((item) => {
           return <TaskList key={item.id} {...item} />;

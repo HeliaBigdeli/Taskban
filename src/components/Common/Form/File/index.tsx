@@ -1,23 +1,22 @@
 import Icon from "../../Icon";
-import Input from "../Input";
 
 interface IProps {
   hasLabel?: boolean;
   label?: string;
   id: string;
   name: string;
-  onChange: (name: string, value: string) => void;
+  onChangeFile: (name: string, value: any) => void;
 }
 
 const File: React.FC<IProps> = ({
-  onChange,
+  onChangeFile,
   id,
   name,
   hasLabel,
   label,
 }): JSX.Element => {
-  const handleChange = (name: string, value: any) => {
-    onChange(name, value);
+  const handleChange = (e) => {
+    onChangeFile(e.target.name, e.target.files[0]);
   };
 
   return (
@@ -33,13 +32,7 @@ const File: React.FC<IProps> = ({
       <label className="flex flex-row items-center text-base font-medium border border-brand-primary h-[36px] rounded-lg w-[112px] py-[4px] px-[8px] gap-[4px] cursor-pointer text-center">
         آپلود فایل
         <Icon icon="attach" color="#208d8e" />
-        <Input
-          type="file"
-          id={id}
-          name={name}
-          hidden={true}
-          onChange={(name, value) => handleChange(name, value)}
-        />
+        <input type="file" id={id} name={name} hidden onChange={handleChange} />       
       </label>
     </div>
   );

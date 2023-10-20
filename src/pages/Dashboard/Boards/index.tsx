@@ -6,37 +6,48 @@ import { selectView } from "../../../features/viewSlice";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import useAxios from "../../../hooks/useAxios";
-import API_URL from "../../../constants/api.url";
 import Header from "../../../components/Layouts/Dashboard/Header";
+import { boardUpdate } from "../../../features/updateSlice";
+import { boards } from "../../../constants/url";
 
 const Boards: React.FC = (): JSX.Element => {
   const view: string = useSelector(selectView);
   const [response, error, loading, fetcher] = useAxios();
-  const params = useParams()
+  const params = useParams();
+  const update = useSelector(boardUpdate);
 
   useEffect(() => {
     fetcher(
       "get",
-      `${API_URL.WorkSpaces}${params.wid}/${API_URL.Projects}${params.pid}/${API_URL.Boards}`
+      boards.gets({
+        wid: params.wid,
+        pid: params.pid,
+      })
     );
-  }, [params.pid, view]);
+  }, [params.pid, view, update]);
 
   switch (view) {
     case "list":
-      return <>
-        <Header />
-        <ListView data={response} />
-      </>;
+      return (
+        <>
+          <Header />
+          <ListView data={response} />
+        </>
+      );
     case "calender":
-      return <>
-        <Header />
-        <CalenderView />
-      </>;
+      return (
+        <>
+          <Header />
+          <CalenderView />
+        </>
+      );
     default:
-      return <>
-        <Header />
-        <ColumnView data={response} />
-      </>;
+      return (
+        <>
+          <Header />
+          <ColumnView data={response} />
+        </>
+      );
   }
 };
 

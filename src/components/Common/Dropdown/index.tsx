@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import Icon from "../Icon";
 
 interface IIcon {
@@ -13,6 +13,7 @@ interface IProps extends React.PropsWithChildren {
   icon?: IIcon;
   buttonText?: string;
   hasIcon?: boolean;
+  value?: {id: number, title: string};
 }
 
 const Dropdown: React.FC<IProps> = ({
@@ -22,13 +23,14 @@ const Dropdown: React.FC<IProps> = ({
   buttonText,
   hasIcon = true,
   icon,
+  value,
 }): JSX.Element => {
   const dropdown = useRef<any>();
   const dropdownList = useRef<any>();
   const [open, setOpen] = useState(false);
   const [listDirection, setListDirectiob] = useState({});
 
-  const toggleOpen = () => {
+  const toggleList = () => {
     setOpen(!open);
     if (!open) {
       // use setTimeout to make a delay showing dropdonw list to get it's heigth
@@ -38,8 +40,7 @@ const Dropdown: React.FC<IProps> = ({
           dropdown.current.offsetHeight +
           dropdownList.current.offsetHeight;
 
-
-          if (elementHeight > window.innerHeight) {
+        if (elementHeight > window.innerHeight) {
           setListDirectiob({ bottom: dropdown.current.offsetHeight });
         } else {
           setListDirectiob({ top: dropdown.current.offsetHeight });
@@ -50,7 +51,9 @@ const Dropdown: React.FC<IProps> = ({
 
   const closeList = () => {
     setTimeout(() => {
-      setOpen(false);
+      if(!value?.id) {
+        setOpen(false);
+      }
     }, 100);
   };
 
@@ -59,7 +62,7 @@ const Dropdown: React.FC<IProps> = ({
       ref={dropdown}
       tabIndex={0}
       className="relative flex items-center"
-      onClick={toggleOpen}
+      onClick={toggleList}
       onBlur={closeList}
     >
       {type === "button" ? (
@@ -70,7 +73,7 @@ const Dropdown: React.FC<IProps> = ({
           type="button"
         >
           {hasIcon && type === "button" && <Icon icon="chevron_down" />}
-          {buttonText}
+          {value?.title || buttonText}
         </button>
       ) : (
         <Icon

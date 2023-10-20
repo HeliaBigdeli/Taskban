@@ -4,7 +4,7 @@ import Selectlist from "./SelectList";
 
 interface IItem {
   id: number;
-  title: string;
+  name: string;
   color?: string;
 }
 
@@ -57,7 +57,7 @@ const Select: React.FC<IProps> = ({
 
   const handleSearch = (value: string) => {
     const data = items.filter((item) => {
-      return item.title.includes(value);
+      return item.name.includes(value);
     });
 
     setData(data);

@@ -22,7 +22,7 @@ type Values = {
   [key: string]: string;
 };
 
-const Information: React.FC = (): JSX.Element => {
+const Account: React.FC = (): JSX.Element => {
   const user = useSelector(selectUser);
   const [response, error, loading, fetcher] = useAxios();
   const [userResponse, userError, userLoading, userfetcher] = useAxios();
@@ -60,8 +60,9 @@ const Information: React.FC = (): JSX.Element => {
       userfetcher("get", `${API_URL.Register}${user.user_id}/`);
     }
     setValues(userResponse);
-
+    console.log(values)
     if (response) {
+      console.log(response)
       toast.success(response, {
         position: "bottom-left",
         autoClose: 3000,
@@ -141,4 +142,4 @@ const Information: React.FC = (): JSX.Element => {
   );
 };
 
-export default Information;
+export default Account;

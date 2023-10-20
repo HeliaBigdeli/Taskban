@@ -7,6 +7,7 @@ type Auth = {
   user_id: number;
   first_name: string;
   last_name: string;
+  phone_number:string;
   refresh?: string;
   access: string;
   thumbnail: string;
@@ -20,6 +21,7 @@ const initialState: Auth = localStorage.getItem("user")
       last_name: "",
       access: "",
       thumbnail: "",
+      Phone_number:""
     };
 
 export const authSlice = createSlice({
@@ -54,10 +56,20 @@ export const authSlice = createSlice({
       };
       localStorage.setItem("user", JSON.stringify(state));
     },
+    updateAccount: (state, action: PayloadAction<Auth>) => {
+      state = {
+        ...state,
+        first_name: action.payload.first_name,
+        last_name: action.payload.last_name,
+        phone_number:action.payload.phone_number,
+        thumbnail:action.payload.thumbnail
+      };
+      localStorage.setItem("user", JSON.stringify(state));
+    },
   },
 });
 
-export const { login, logout, refresh } = authSlice.actions;
+export const { login, logout, refresh,updateAccount } = authSlice.actions;
 
 export const selectToken = (state: RootState) => state.auth.access;
 export const selectUser = (state: RootState) => state.auth;

@@ -13,8 +13,6 @@ const TaskColumn: React.FC<ITaskColumnProps> = ({
   boardId,
 }): JSX.Element => {
   const [isShown, setIsShown] = useState<boolean>(false);
-  const navigate = useNavigate();
-  const params = useParams();
 
   return (
     <div
@@ -22,12 +20,9 @@ const TaskColumn: React.FC<ITaskColumnProps> = ({
       onMouseEnter={() => setIsShown(true)}
       onMouseLeave={() => setIsShown(false)}
     >
-      <AddMore isShown={isShown} boardId={boardId} />
+      <AddMore isShown={isShown} boardId={boardId} title={title} />
 
-      <section
-        //onClick={navigate(`${API_URL.WorkSpaces}${params.wid}/${API_URL.Projects}${params.pid}/${API_URL.Boards}${}`)}
-        className="flex items-center gap-1 "
-      >
+      <section className="flex items-center gap-1 ">
         <div className="flex pt-0.5 px-1 flex-col justify-center items-center gap-2.5 rounded-[100px] bg-[#F4F4F4] text-black text-xs font-normal">
           {count}
         </div>

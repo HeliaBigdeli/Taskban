@@ -1,4 +1,6 @@
+import { useEffect } from "react";
 import Icon from "../Icon/";
+import styles from "./style.module.css";
 
 interface IHeader {
   text?: string;
@@ -54,7 +56,16 @@ const Modal: React.FC<IProps> = ({
   const handleClose = () => {
     if (closeIcon.resetInputValue) closeIcon.resetInputValue();
     setModal(false);
+    document.body.style.overflow = "unset";
   };
+
+  useEffect(() => {
+    if (modal) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+  }, [modal]);
 
   return (
     <>
@@ -68,16 +79,18 @@ const Modal: React.FC<IProps> = ({
             style={style}
           >
             <div
-              className={`flex justify-between items-center w-full h-L ${hasHeader === false &&
-                  hasBackIcon === false &&
-                  hasCloseIcon === false
+              className={`flex justify-between items-center w-full h-L ${
+                hasHeader === false &&
+                hasBackIcon === false &&
+                hasCloseIcon === false
                   ? "hidden"
                   : ""
-                }`}
+              }`}
             >
               <button
-                className={`flex items-center w-auto h-M ${hasBackIcon ? "" : "invisible"
-                  }`}
+                className={`flex items-center w-auto h-M ${
+                  hasBackIcon ? "" : "invisible"
+                }`}
                 style={{ order: backIcon.order }}
                 onClick={backIcon.handleBack}
               >
@@ -85,8 +98,9 @@ const Modal: React.FC<IProps> = ({
               </button>
               <h2
                 style={{ order: header.order }}
-                className={`flex items-center gap-[13px] font-extrabold text-xl text-black order-$ ${hasHeader ? "" : "invisible"
-                  }
+                className={`flex items-center gap-[13px] font-extrabold text-xl text-black order-$ ${
+                  hasHeader ? "" : "invisible"
+                }
                 `}
               >
                 {hasHeader ? header?.text : ""}
@@ -99,8 +113,9 @@ const Modal: React.FC<IProps> = ({
               </h2>
               <button
                 style={{ order: closeIcon.order }}
-                className={`flex items-center w-auto h-M ${hasCloseIcon ? "" : "invisible"
-                  }`}
+                className={`flex items-center w-auto h-M ${
+                  hasCloseIcon ? "" : "invisible"
+                }`}
                 onClick={handleClose}
               >
                 <Icon icon="close" color="#1e1e1ec4" size={32} />

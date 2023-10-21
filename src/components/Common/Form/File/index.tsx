@@ -5,10 +5,12 @@ interface IProps {
   label?: string;
   id: string;
   name: string;
+  inputValue: string,
   onChangeFile: (name: string, value: any) => void;
 }
 
 const File: React.FC<IProps> = ({
+  inputValue,
   onChangeFile,
   id,
   name,
@@ -16,7 +18,11 @@ const File: React.FC<IProps> = ({
   label,
 }): JSX.Element => {
   const handleChange = (e) => {
-    onChangeFile(e.target.name, e.target.files[0]);
+    if (inputValue) {
+      onChangeFile(name, "");
+    } else {
+      onChangeFile(e.target.name, e.target.files[0]);
+    }
   };
 
   return (
@@ -29,11 +35,17 @@ const File: React.FC<IProps> = ({
           {label}
         </label>
       )}
-      <label className="flex flex-row items-center text-base font-medium border border-brand-primary h-[36px] rounded-lg w-[112px] py-[4px] px-[8px] gap-[4px] cursor-pointer text-center">
-        آپلود فایل
-        <Icon icon="attach" color="#208d8e" />
-        <input type="file" id={id} name={name} hidden onChange={handleChange} />       
-      </label>
+      {!inputValue ?
+        <label className="flex flex-row items-center text-base font-medium border border-brand-primary h-[36px] rounded-lg py-[4px] px-[8px] gap-[4px] cursor-pointer text-center">
+          آپلود فایل
+          <Icon icon="attach" color="#208d8e" />
+          <input type="file" id={id} name={name} hidden onChange={handleChange} />
+        </label> :
+        <button className="flex flex-row items-center text-base font-medium border border-brand-primary h-[36px] rounded-lg py-[4px] px-[8px] gap-[4px] text-center">
+          .فایل با موفقیت دریافت شد
+          <Icon icon="trash" color="red" onClick={handleChange}/>
+        </button>
+      }
     </div>
   );
 };

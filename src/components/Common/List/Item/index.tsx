@@ -53,14 +53,14 @@ const ListItem: React.FC<IProps> = ({ id, name, color }): JSX.Element => {
     setListToggle(!listToggle);
   };
 
-  const getProjects = async () => {
+  const getProjects = async () => {    
     fetcher("get", projects.gets({ wid: id }));
   };
 
   const handleActions = (type) => {
     stateDispatch({ type });
     if (type === "projectModal") {
-      navigate(projects.gets({ wid: id }));
+      navigate(`${projects.gets({ wid: id })}`);
     }
   };
 
@@ -93,12 +93,16 @@ const ListItem: React.FC<IProps> = ({ id, name, color }): JSX.Element => {
       toast.success("آیتم مورد نظر با موفقیت حذف شد.");
       navigate("workspaces");
     }
-
   }, [update, responseDelete, project.id, workspaceId]);
 
   return (
     <li>
-      <div className="flex justify-between items-center flex-row-reverse p-1 h-[36px] mt-S">
+      <div
+        className="flex justify-between items-center flex-row-reverse p-1 h-[36px] mt-S rounded-md"
+        style={{
+          backgroundColor: id === Number(params.wid) ? "#f4f4f4" : "",
+        }}
+      >
         <div
           className="flex justify-between items-center cursor-pointer"
           onClick={toggleAccordion}
@@ -162,18 +166,19 @@ const ListItem: React.FC<IProps> = ({ id, name, color }): JSX.Element => {
           {response?.map((project: any) => (
             <li
               style={{
-                backgroundColor: project.id === params.pid ? "#D0EBFF" : "",
+                backgroundColor:
+                  project.id === Number(params.pid) ? "#D0EBFF" : "",
               }}
               key={project.id}
               className="flex rounded-md justify-between items-center flex-row-reverse p-[4px] h-[36px] pr-[30px] my-S"
             >
               <p
-                className="flex justify-between items-center cursor-pointer"
+                className="flex items-center cursor-pointer"
                 onClick={() => {
-                  navigate(boards.gets({ wid: id, pid: project.id }));
+                  navigate(`${boards.gets({ wid: id, pid: project.id })}?project_name=${project.name}`);
                 }}
               >
-                {project.name}
+               {project.name}
               </p>
               <span
                 onClick={() => {
@@ -222,7 +227,7 @@ const ListItem: React.FC<IProps> = ({ id, name, color }): JSX.Element => {
               text="ساختن پروژه جدید"
               onClick={() => handleActions("projectModal")}
               type="button"
-              className="text-brand-primary h-L text-sm font-bold leading-normal self-stretch rounded-md border border-brand-primary mb-L w-full"
+              className="text-brand-primary mt-2 h-L text-sm font-bold leading-normal self-stretch rounded-md border border-brand-primary mb-L w-full"
             />
           )}
         </ul>

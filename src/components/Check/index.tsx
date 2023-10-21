@@ -12,9 +12,10 @@ const AuthCheck: React.FC<IProps> = ({ children }): JSX.Element => {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { pathname } = useLocation()
+  const { pathname, search } = useLocation()
 
   useEffect(() => {
+
     const controller = new AbortController();
     const refreshToken = Cookies.get("refresh");
 
@@ -39,7 +40,7 @@ const AuthCheck: React.FC<IProps> = ({ children }): JSX.Element => {
           if (pathname === '/' || pathname === '/login' || pathname === '/register' || pathname === '/forgot') {
             navigate('workspaces');
           } else {
-            navigate(pathname);
+            navigate(pathname + search);
           }
         }
       })

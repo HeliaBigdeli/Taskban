@@ -38,7 +38,8 @@ AXIOS.interceptors.response.use(
   async (error) => {
     const request = error.config;
 
-    if (error.response.status === 401 && request.url !== login.post()) {
+    if ((error.response.status === 401 && request._retry) && request.url !== login.post()) {
+      request._retry = true
       try {
         const refreshToken = Cookies.get("refresh");
         const refreshRequest = await AXIOS.post(API_URL.Refresh, {
@@ -51,7 +52,7 @@ AXIOS.interceptors.response.use(
         request.headers.Authorization = `Bearer ${access}`;
         return axios(request);
       } catch (error) {
-        window.location.href = "/Login";
+        window.location.href = baseAppURL;
       }
     } else {
       if (error.response.data?.detail) {

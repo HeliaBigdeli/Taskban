@@ -66,7 +66,7 @@ const ShareModal: React.FC<IProps> = ({
   };
 
   useEffect(() => {
-    if (modal) getAccounts();
+    // if (modal) getAccounts();
   }, []);
 
   return (

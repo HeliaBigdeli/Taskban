@@ -1,8 +1,9 @@
 import Icon from "../../Icon";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Selectlist from "./SelectList";
 
 interface IProps {
+  selected?: number;
   items: any[];
   name: string;
   className?: string;
@@ -12,6 +13,7 @@ interface IProps {
 }
 
 const Select: React.FC<IProps> = ({
+  selected = 0,
   onChange,
   name,
   items,
@@ -56,6 +58,12 @@ const Select: React.FC<IProps> = ({
 
     setData(data);
   };
+
+  useEffect(() => {
+    if (selected && items) {     
+      setValue(items.find(x => x.id === Number(selected)).name)
+    }
+  }, [selected, items])
 
   return (
     <button

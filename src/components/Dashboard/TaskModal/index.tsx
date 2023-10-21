@@ -19,6 +19,12 @@ import { addTask } from "../../../features/updateSlice";
 import { useDispatch } from "react-redux";
 import useAxios from "../../../hooks/useAxios";
 import Input from "../../Common/Form/Input";
+import { validate, required } from "../../../utils/validator";
+
+const rules = {
+  board_id: [required],
+  name: [required]
+}
 
 const portals = document.getElementById("portals") as Element;
 interface IProps {
@@ -46,6 +52,7 @@ const TaskModal: React.FC<IProps> = ({
     thumbnail: "",
     name: "",
     order: 1,
+    board_id: boardId || ""
   });
 
   const handleDatePickerModal = () => {
@@ -65,7 +72,7 @@ const TaskModal: React.FC<IProps> = ({
     setBid(value);
     setVlaues({
       ...values,
-      [e.target.name]: value,
+      'board_id': value
     });
   };
 
@@ -91,30 +98,42 @@ const TaskModal: React.FC<IProps> = ({
   };
 
   const handleSubmit = async () => {
-    const url = tasks.post({ wid: params.wid, pid: params.pid, bid: bId });
-    try {
-      const res = await AXIOS.post(url, values, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
+    const resultErrors = validate(values, rules);
+
+    if (resultErrors.length) {
+      resultErrors.forEach(error => {
+        toast.error(error);
       });
-      if (res?.status === 201) {
-        toast.success("تسک جدید با موفقیت ثبت شد.");
-        setModal(!modal);
-        dispatch(addTask());
+    } else {
+      const url = tasks.post({ wid: params.wid, pid: params.pid, bid: bId });
+      try {
+        const res = await AXIOS.post(url, values, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+        if (res?.status === 201) {
+          toast.success("تسک جدید با موفقیت ثبت شد.");
+          setModal(!modal);
+          dispatch(addTask());
+        }
+      } catch (error) {
+        console.log(error)
       }
-    } catch (error) {}
+    }
   };
 
   useEffect(() => {
-    fetcher(
-      "get",
-      boards.gets({
-        wid: params.wid,
-        pid: params.pid,
-      })
-    );
-  }, []);
+    if (modal) {
+      fetcher(
+        "get",
+        boards.gets({
+          wid: params.wid,
+          pid: params.pid,
+        })
+      );
+    }
+  }, [modal]);
 
   return (
     <>
@@ -129,13 +148,17 @@ const TaskModal: React.FC<IProps> = ({
           backIcon={{ order: 2 }}
           hasCloseIcon={true}
           hasColor={true}
-          coloredSquare="lightgray_300"
+          coloredSquare={`${values.priority === 4 ? "#FB0606"
+            : values.priority === 3 ? '#FFE605'
+              : values.priority === 2 ? '#09DBCE'
+                : "#c1c1c1"}`}
           closeIcon={{ order: 1 }}
         >
           <div className="flex flex-col w-[1153px] gap-M">
             <div className="flex flex-row-reverse items-center gap-[8px]">
               <span>در</span>
               <Select
+                selected={bId}
                 name="board_id"
                 onChange={(e) => {
                   handleSelect(e);
@@ -172,6 +195,7 @@ const TaskModal: React.FC<IProps> = ({
               placeholder="توضیحاتی برای این تسک بنویسید"
             />
             <File
+              inputValue={values.attachment}
               onChangeFile={(name, value) => {
                 handleFile(name, value);
               }}
@@ -181,6 +205,7 @@ const TaskModal: React.FC<IProps> = ({
               label="افزودن پیوست"
             />
             <File
+              inputValue={values.thumbnail}
               onChangeFile={(name, value) => {
                 handleFile(name, value);
               }}
@@ -202,6 +227,7 @@ const TaskModal: React.FC<IProps> = ({
                           key={item.id}
                           title={item.name}
                           id={item.id}
+                          bgcolor={item.color}
                         />
                       );
                     })}
@@ -216,7 +242,12 @@ const TaskModal: React.FC<IProps> = ({
                 <div className="cursor-pointer border-dashed border-2 rounded-full border-[#c1c1c1] w-[50px] h-[50px] flex justify-center items-center">
                   <Dropdown
                     type="icon"
-                    icon={{ icon: "flag", color: "#c1c1c1" }}
+                    icon={{
+                      icon: "flag", color: values.priority === 4 ? "#FB0606"
+                        : values.priority === 3 ? '#FFE605'
+                          : values.priority === 2 ? '#09DBCE'
+                            : "#c1c1c1"
+                    }}
                   >
                     <DropdownItem
                       id={4}

@@ -53,14 +53,14 @@ const ListItem: React.FC<IProps> = ({ id, name, color }): JSX.Element => {
     setListToggle(!listToggle);
   };
 
-  const getProjects = async () => {
+  const getProjects = async () => {    
     fetcher("get", projects.gets({ wid: id }));
   };
 
   const handleActions = (type) => {
     stateDispatch({ type });
     if (type === "projectModal") {
-      navigate(projects.gets({ wid: id }));
+      navigate(`${projects.gets({ wid: id })}`);
     }
   };
 
@@ -175,7 +175,7 @@ const ListItem: React.FC<IProps> = ({ id, name, color }): JSX.Element => {
               <p
                 className="flex items-center cursor-pointer"
                 onClick={() => {
-                  navigate(boards.gets({ wid: id, pid: project.id }));
+                  navigate(`${boards.gets({ wid: id, pid: project.id })}?project_name=${project.name}`);
                 }}
               >
                {project.name}

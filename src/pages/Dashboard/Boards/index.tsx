@@ -8,18 +8,16 @@ import { useParams } from "react-router-dom";
 import useAxios from "../../../hooks/useAxios";
 import Header from "../../../components/Layouts/Dashboard/Header";
 import { boardUpdate, taskUpdate } from "../../../features/updateSlice";
-import { boards, workspaces } from "../../../constants/url";
+import { boards } from "../../../constants/url";
 
 const Boards: React.FC = (): JSX.Element => {
   const view: string = useSelector(selectView);
   const [response, error, loading, fetcher] = useAxios();
-  const [wsResponse, wsError, wsLoading, wsFetcher] = useAxios();
   const params = useParams();
   const update = useSelector(boardUpdate);
   const updateByTask = useSelector(taskUpdate);
 
   useEffect(() => {
-    wsFetcher("get", workspaces.get({ wid: params.wid }));
     fetcher(
       "get",
       boards.gets({
@@ -33,21 +31,21 @@ const Boards: React.FC = (): JSX.Element => {
     case "list":
       return (
         <>
-          <Header title={wsResponse} />
+          <Header />
           <ListView data={response} />
         </>
       );
     case "calender":
       return (
         <>
-          <Header title={wsResponse} />
+          <Header />
           <CalenderView />
         </>
       );
     default:
       return (
         <>
-          <Header title={wsResponse} />
+          <Header />
           <ColumnView data={response} />
         </>
       );

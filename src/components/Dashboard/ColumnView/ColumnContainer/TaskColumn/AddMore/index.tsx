@@ -7,6 +7,11 @@ import { useReducer } from "react";
 import { boardDetailsReducer } from "../../../../../../utils/reducer/boardDetails";
 import { createPortal } from "react-dom";
 import NameEdit from "../../../../../Common/List/Item/modals/NameEdit";
+import { toast } from "react-toastify";
+import useAxios from "../../../../../../hooks/useAxios";
+import { boards } from "../../../../../../constants/url";
+import { useParams } from "react-router-dom";
+import AlertModal from "../../../../../Common/List/Item/modals/AlertModal";
 
 interface IAddMoreProps {
   isShown: boolean;
@@ -25,7 +30,12 @@ const AddMore: React.FC<IAddMoreProps> = ({
   const [currentID, setCurrentID] = useState(0);
   const [state, dispatch] = useReducer(boardDetailsReducer, {
     boardNameEdit: false,
+    boardDelete: false,
   });
+
+  const [response, error, loading, fetcher] = useAxios();
+
+  const params = useParams();
 
   const handleTaskModal = () => {
     setTaskModal(!taskModal);
@@ -34,8 +44,24 @@ const AddMore: React.FC<IAddMoreProps> = ({
   const handleEditName = () => {
     dispatch({ type: "boardNameEdit" });
   };
-  const handleCopyLink = () => {};
-  const handleRemove = () => {};
+  const handleCopyLink = () => {
+    navigator.clipboard.writeText(window.location.href);
+    toast.success("لینک با موفقیت در کلیپ بورد کپی شد.");
+  };
+  const handleRemove = () => {
+    fetcher(
+      "delete",
+      boards.delete({
+        wid: params.wid,
+        pid: params.pid,
+        bid: params.bid ? params.bid : boardId,
+      })
+    );
+  };
+
+  const deleteAlert = () => {
+    dispatch({ type: "boardDelete" });
+  };
 
   return (
     <section
@@ -72,7 +98,7 @@ const AddMore: React.FC<IAddMoreProps> = ({
           title="حذف"
           hasIcon={true}
           icon={{ icon: "trash" }}
-          onClick={handleRemove}
+          onClick={deleteAlert}
         />
       </Dropdown>
       {taskModal && (
@@ -85,11 +111,18 @@ const AddMore: React.FC<IAddMoreProps> = ({
       {createPortal(
         <>
           <NameEdit
+            boardId={boardId}
             currentID={currentID}
             value={state.boardNameEdit}
             setValue={handleEditName}
             previousValue={title}
             type="board"
+          />
+          <AlertModal
+            alertText="آیا از حذف کردن این برد مطمئن هستید؟"
+            isAlertOpen={state.boardDelete}
+            setIsAlertOpen={deleteAlert}
+            handleYes={handleRemove}
           />
         </>,
         portals

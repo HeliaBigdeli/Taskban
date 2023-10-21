@@ -74,7 +74,7 @@ const DashboardLayout: React.FC = (): JSX.Element => {
         <List />
 
         <div className="mt-2XL mb-L flex flex-col gap-S">
-          <Link to="/account">
+          <Link to="/information">
             <ProfileImage
               firstName={user.first_name}
               lastName={user.last_name}

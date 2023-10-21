@@ -86,7 +86,7 @@ const AddMore: React.FC<IAddMoreProps> = ({
         <>
           <NameEdit
             currentID={currentID}
-            value={state.nameEdit}
+            value={state.boardNameEdit}
             setValue={handleEditName}
             previousValue={title}
             type="board"

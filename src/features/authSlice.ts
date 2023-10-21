@@ -36,7 +36,7 @@ export const authSlice = createSlice({
       state.thumbnail = action.payload?.thumbnail;
 
       // save refresh token in cookie and some user information in localstorage
-      Cookies.set("refresh", action.payload?.refresh, { expires: 365 });
+      Cookies.set("refresh", action.payload?.refresh, { expires: 1 });
       localStorage.setItem("user", JSON.stringify(state));
     },
     logout: (state) => {

@@ -19,7 +19,9 @@ const dictionary:Values = {
     thumbnail: "تصویر",
     old_password: 'رمز عبور',
     new_password: 'رمز عبور جدید',
-    new_password1: 'تکرار رمز عبور جدید'
+    new_password1: 'تکرار رمز عبور جدید',
+    board_id: 'ستون برای تسک',
+    name: 'عنوان'
 }
 
 const Translator = (input: string): string => {

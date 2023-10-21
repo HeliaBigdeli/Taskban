@@ -19,10 +19,9 @@ const WorkSpacesItem: React.FC<IWorkSpacesItemProps> = ({
 
   const handleClick = () => {
     if (pathname === "/workspaces") {
-      console.log(workspace_id)
-      navigate(`/${boards.gets({ wid: workspace_id, pid: id })}`);
+      navigate(`/${boards.gets({ wid: workspace_id, pid: id })}?project_name=${name}`);
     } else {
-      navigate(`${id}/${API_URL.Boards}`);
+      navigate(`${id}/${API_URL.Boards}?project_name=${name}`);
     }
   };
 

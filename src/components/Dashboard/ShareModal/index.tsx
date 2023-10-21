@@ -1,5 +1,5 @@
 import { createPortal } from "react-dom";
-import { useState, useRef } from "react";
+import { useState } from "react";
 import Modal from "../../Common/Modal";
 import Button from "../../Common/Form/Button";
 import Input from "../../Common/Form/Input";
@@ -28,7 +28,6 @@ const ShareModal: React.FC<IProps> = ({
   setModal,
   title,
 }): JSX.Element => {
-  const input = useRef<any>();
   const [listShow, setListShow] = useState(false);
   const [response, error, loading, fetcher] = useAxios();
   const [data, setData] = useState<IAccount[]>([]);
@@ -93,7 +92,6 @@ const ShareModal: React.FC<IProps> = ({
             />
             <div className="w-full">
               <Input
-                ref={input}
                 inputValue={values.email}
                 name="email"
                 id="email"

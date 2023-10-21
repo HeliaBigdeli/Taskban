@@ -7,7 +7,7 @@ export const store = configureStore({
   reducer: {
     auth: authReducer,
     update: updateReducer,
-    view: viewReducer,
+    view: viewReducer
   },
 });
 

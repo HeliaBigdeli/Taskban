@@ -1,4 +1,4 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useSearchParams } from "react-router-dom";
 import Input from "../../../Common/Form/Input";
 import Icon from "../../../Common/Icon";
 import { useState } from "react";
@@ -9,11 +9,8 @@ import { selectView } from "../../../../features/viewSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { chengeView } from "../../../../features/viewSlice";
 
-interface IProps {
-  title?: string;
-}
-
-const Header: React.FC<IProps> = (): JSX.Element => {
+const Header: React.FC = (): JSX.Element => {
+  const [searchParams] = useSearchParams();
   const { pathname } = useLocation();
   const [filterModal, setFilterModal] = useState<boolean>(false);
   const [shareModal, setShareModal] = useState<boolean>(false);
@@ -38,9 +35,8 @@ const Header: React.FC<IProps> = (): JSX.Element => {
         <div className="flex divide-x divide-lightgray_300 font-bold">
           <p
             onClick={() => handleView("calender")}
-            className={`px-S flex justify-center text-base items-center cursor-pointer ${
-              view === "calender" ? "text-brand-primary" : ""
-            }`}
+            className={`px-S flex justify-center text-base items-center cursor-pointer ${view === "calender" ? "text-brand-primary" : ""
+              }`}
           >
             تقویم
             <Icon
@@ -50,9 +46,8 @@ const Header: React.FC<IProps> = (): JSX.Element => {
           </p>
           <p
             onClick={() => handleView("column")}
-            className={`px-S flex justify-center text-base items-center cursor-pointer ${
-              view === "column" ? "text-brand-primary" : ""
-            }`}
+            className={`px-S flex justify-center text-base items-center cursor-pointer ${view === "column" ? "text-brand-primary" : ""
+              }`}
           >
             نمایش ستونی
             <Icon
@@ -62,9 +57,8 @@ const Header: React.FC<IProps> = (): JSX.Element => {
           </p>
           <p
             onClick={() => handleView("list")}
-            className={`px-S flex justify-center text-base items-center cursor-pointer ${
-              view === "list" ? "text-brand-primary" : ""
-            }`}
+            className={`px-S flex justify-center text-base items-center cursor-pointer ${view === "list" ? "text-brand-primary" : ""
+              }`}
           >
             نمایش لیستی
             <Icon
@@ -73,7 +67,7 @@ const Header: React.FC<IProps> = (): JSX.Element => {
             />
           </p>
           <span className="font-bold pl-S justify-end text-xl">
-            {/* {workspace_name} */}
+            {searchParams.get('project_name')}
           </span>
         </div>
         <button
@@ -121,7 +115,11 @@ const Header: React.FC<IProps> = (): JSX.Element => {
       </div>
       {/*----------------------------------------------- Sharing & Filter Modal --------------------------------------------- */}
       {shareModal && (
-        <ShareModal modal={shareModal} setModal={handleShareModal} title="اشتراک گذاری پروژه"/>
+        <ShareModal
+          modal={shareModal}
+          setModal={handleShareModal}
+          title="اشتراک گذاری پروژه"
+        />
       )}
       {filterModal && (
         <FilterModal modal={filterModal} setModal={handleFilterModal} />

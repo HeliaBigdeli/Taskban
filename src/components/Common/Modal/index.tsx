@@ -68,18 +68,16 @@ const Modal: React.FC<IProps> = ({
             style={style}
           >
             <div
-              className={`flex justify-between items-center w-full h-L ${
-                hasHeader === false &&
-                hasBackIcon === false &&
-                hasCloseIcon === false
+              className={`flex justify-between items-center w-full h-L ${hasHeader === false &&
+                  hasBackIcon === false &&
+                  hasCloseIcon === false
                   ? "hidden"
                   : ""
-              }`}
+                }`}
             >
               <button
-                className={`flex items-center w-auto h-M ${
-                  hasBackIcon ? "" : "invisible"
-                }`}
+                className={`flex items-center w-auto h-M ${hasBackIcon ? "" : "invisible"
+                  }`}
                 style={{ order: backIcon.order }}
                 onClick={backIcon.handleBack}
               >
@@ -87,23 +85,22 @@ const Modal: React.FC<IProps> = ({
               </button>
               <h2
                 style={{ order: header.order }}
-                className={`flex items-center gap-[13px] font-extrabold text-xl text-black order-$ ${
-                  hasHeader ? "" : "invisible"
-                }
+                className={`flex items-center gap-[13px] font-extrabold text-xl text-black order-$ ${hasHeader ? "" : "invisible"
+                  }
                 `}
               >
                 {hasHeader ? header?.text : ""}
                 {hasColor && (
                   <div
-                    className={`w-S h-S rounded-sm bg-${coloredSquare}`}
+                    style={{ backgroundColor: coloredSquare }}
+                    className={`w-S h-S rounded-sm`}
                   ></div>
                 )}
               </h2>
               <button
                 style={{ order: closeIcon.order }}
-                className={`flex items-center w-auto h-M ${
-                  hasCloseIcon ? "" : "invisible"
-                }`}
+                className={`flex items-center w-auto h-M ${hasCloseIcon ? "" : "invisible"
+                  }`}
                 onClick={handleClose}
               >
                 <Icon icon="close" color="#1e1e1ec4" size={32} />

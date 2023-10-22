@@ -5,7 +5,7 @@ import useAxios from "../../../../../../hooks/useAxios";
 import API_URL from "../../../../../../constants/api.url";
 import TaskInfoModal from "../../../../TaskInfoModal";
 import { useSelector } from "react-redux";
-import { taskUpdate } from "../../../../../../features/updateSlice";
+import { taskUpdate } from "../../../../../../features/update/updateSlice";
 interface IDescriptionProps {
   taskId: number;
   boardId: number;

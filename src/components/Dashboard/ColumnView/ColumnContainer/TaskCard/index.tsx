@@ -9,6 +9,7 @@ import MembersThumb from "../../../../Common/MembersThumb";
 import { baseAppURL } from "../../../../../config/axios.config";
 import { useSearchParams } from "react-router-dom";
 import { dateConvert } from '../../../../../utils/dateConvert'
+import { flagColor } from "../../../../../utils/flagColor";
 
 interface ITaskCardProps extends ITask {
   index: number;
@@ -30,12 +31,7 @@ const TaskCard: React.FC<ITaskCardProps> = ({
   const { fullDate, month, day, weekday } = dateConvert(deadline)
   const [searchParams] = useSearchParams();
   const [isShown, setIsShown] = useState<boolean>(false);
-  const flagColor = {
-    1: "#82C91E",
-    2: "#15AABF",
-    3: "#FAB005",
-    4: "#FA5252",
-  };
+  
 
   return (
     <Draggable draggableId={`${boardTitle + id} `} index={index}>
@@ -82,7 +78,7 @@ const TaskCard: React.FC<ITaskCardProps> = ({
                 &nbsp; &#45; &nbsp;
                 {weekday}
               </span>
-              <Icon icon="flag" size={14} color={flagColor[priority]} />
+              <Icon icon="flag" size={14} color={flagColor(priority)} />
             </div>
           </section>
           <section className="flex items-start gap-XS">

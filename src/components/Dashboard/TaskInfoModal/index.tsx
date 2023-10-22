@@ -4,6 +4,7 @@ import Button from "../../Common/Form/Button";
 import Icon from "../../Common/Icon";
 import { useEffect, useState } from "react";
 import DatePickerModal from "../DatePickerModal";
+import File from "../../Common/Form/File";
 import Textarea from "../../Common/Form/Textarea";
 import MembersThumb from "../../Common/MembersThumb";
 import { ITask } from "../../../interfaces/task";
@@ -11,11 +12,15 @@ import API_URL from "../../../constants/api.url";
 import { useParams } from "react-router-dom";
 import { AXIOS } from "../../../config/axios.config";
 import { useDispatch, useSelector } from "react-redux";
-import { addTask } from "../../../features/updateSlice";
+import { addTask } from "../../../features/update/updateSlice";
 import Input from "../../Common/Form/Input";
-import { selectUser } from "../../../features/authSlice";
+import { selectUser } from "../../../features/auth/authSlice";
 import { IComment } from "../../../interfaces/comments";
 import Comments from "./Comments";
+import { dateConvert } from "../../../utils/dateConvert";
+import { flagColor } from "../../../utils/flagColor";
+import Dropdown from "../../Common/Dropdown";
+import DropdownItem from "../../Common/Dropdown/DropdownItem";
 
 const portals = document.getElementById("portals") as Element;
 
@@ -50,11 +55,13 @@ const TaskInfoModal: React.FC<IProps> = ({
   const user = useSelector(selectUser);
 
   const fetch = async () => {
-    const res = await AXIOS.get(`${url}comments/`);
-    setCommentList(res.data);
-    
+    try {
+      const res = await AXIOS.get(`${url}comments/`);
+      setCommentList(res.data);
+    } catch (error) {
+      console.log(error);
+    }
   };
-  console.log(commentList);
   const handleDatePickerModal = () => {
     setDatePickerModal(!datePickerModal);
   };
@@ -62,52 +69,59 @@ const TaskInfoModal: React.FC<IProps> = ({
   const handleShowModal = async () => {
     setModal(!modal);
     const { members, id, deadline, ...data } = values;
-
-    await AXIOS.patch(url, {
-      ...data,
-    });
-    dispatch(addTask());
+    try {
+      await AXIOS.patch(
+        url,
+        {
+          ...data,
+        },
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      dispatch(addTask());
+    } catch (error) {
+      console.log(error);
+    }
   };
   const handleChange = (value: string) => {
     setValues({ ...values, description: value });
   };
+  const handleFile = (name, value) => {
+    setValues({
+      ...values,
+      [name]: value,
+    });
+  };
+  const handleRemoveAttachment = () => {
+    setValues({
+      ...values,
+      attachment: "",
+    });
+  };
   const handleSubmit = async () => {
     if (!commentText) return;
+    try {
+      await AXIOS.post(`${url}comments/`, {
+        attachment: null,
+        author: user.user_id,
+        text: commentText,
+      });
+      fetch();
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-    await AXIOS.post(`${url}comments/`, {
-      attachment: null,
-      author: user.user_id,
-      text: commentText,
+  const handleDropDown = (id, title) => {
+    setValues({
+      ...values,
+      priority: id,
     });
-    fetch();
   };
-  const flagColor = {
-    1: "#82C91E",
-    2: "#15AABF",
-    3: "#FAB005",
-    4: "#FA5252",
-  };
-  const d = new Date(taskInfo.deadline);
-  const currentDate = new Date().getTime();
-  const month = new Intl.DateTimeFormat("fa-IR", { month: "short" }).format(d);
-  const day = new Intl.DateTimeFormat("fa-IR", { day: "numeric" }).format(d);
-  const diffDays = Math.floor(
-    (d.getTime() - currentDate) / (1000 * 60 * 60 * 24)
-  );
-  const weekday =
-    diffDays === 0 ? (
-      "امروز"
-    ) : diffDays === 1 ? (
-      "فردا"
-    ) : diffDays === 2 ? (
-      "پس فردا"
-    ) : (
-      <>
-        {day}
-        &nbsp;
-        {month}
-      </>
-    );
+  const { weekday } = dateConvert(values.deadline);
 
   return (
     <>
@@ -151,18 +165,56 @@ const TaskInfoModal: React.FC<IProps> = ({
                 <div className="flex items-center gap-S">
                   <div
                     className="mr-S cursor-pointer border-dashed border-2 rounded-full  w-[40px] h-[40px] flex justify-center items-center"
-                    style={{ borderColor: flagColor[taskInfo.priority] }}
+                    style={{ borderColor: flagColor(values.priority) }}
                   >
-                    <Icon icon="flag" color={flagColor[taskInfo.priority]} />
+                    <Dropdown
+                      type="icon"
+                      icon={{
+                        icon: "flag",
+                        color: flagColor(values.priority),
+                      }}
+                    >
+                      <DropdownItem
+                        id={4}
+                        title="فوری"
+                        onClick={(id, title) => handleDropDown(id, title)}
+                        hasIcon={true}
+                        icon={{ icon: "flag", color: flagColor(4) }}
+                      />
+                      <DropdownItem
+                        id={3}
+                        title="بالا"
+                        onClick={(id, title) => handleDropDown(id, title)}
+                        hasIcon={true}
+                        icon={{ icon: "flag", color: flagColor(3) }}
+                      />
+                      <DropdownItem
+                        id={2}
+                        title="متوسط"
+                        onClick={(id, title) => handleDropDown(id, title)}
+                        hasIcon={true}
+                        icon={{ icon: "flag", color: flagColor(2) }}
+                      />
+                      <DropdownItem
+                        id={1}
+                        title="پایین"
+                        onClick={(id, title) => handleDropDown(id, title)}
+                        hasIcon={true}
+                        icon={{ icon: "flag", color: flagColor(1) }}
+                      />
+                    </Dropdown>
                   </div>
-                  <MembersThumb members={values.members} hasAddIcon={false} />
-                  <Button
-                    type="button"
-                    name="status"
-                    onClick={() => {}}
-                    text={boardTitle}
-                    className="bg-darkred p-1 rounded-md text-white w-[120px] h-[30px]"
-                  />
+                  <div className="flex gap-5">
+                    <MembersThumb members={values.members} hasAddIcon={true} />
+                    <Button
+                      type="button"
+                      name="status"
+                      onClick={() => {}}
+                      text={boardTitle}
+                      className={` p-1 rounded-md text-white w-[120px] h-[30px]`}
+                 
+                    />
+                  </div>
                 </div>
               </div>
             </div>
@@ -175,7 +227,11 @@ const TaskInfoModal: React.FC<IProps> = ({
                         return <Comments {...item} key={item.id} />;
                       })}
                     </div>
-                  ):<><div className="h-1/4"></div></>}
+                  ) : (
+                    <>
+                      <div className="h-1/4"></div>
+                    </>
+                  )}
                   <div className="relative  w-full shadow-comment rounded mt-auto flex  justify-end ">
                     <div className="  absolute left-4 top-2 z-10">
                       {" "}
@@ -225,7 +281,7 @@ const TaskInfoModal: React.FC<IProps> = ({
                       </div>
                     </div>
                     <h4 className="text-right mt-2 text-black text-2xl font-extrabold">
-                      {taskInfo.name}
+                      {values.name}
                     </h4>
                     <Textarea
                       className="my-S"
@@ -237,10 +293,31 @@ const TaskInfoModal: React.FC<IProps> = ({
                         handleChange(value);
                       }}
                     />
-                    <div className="flex justify-end text-brand-primary">
-                      اضافه کردن پیوست
-                      <Icon icon="plus_square" color="#208d8e" />
-                    </div>
+                    {values.attachment ? (
+                      <File
+                        inputValue={values.attachment}
+                        onChangeFile={(name, value) => {
+                          handleFile(name, value);
+                        }}
+                        id="attachment"
+                        name="attachment"
+                        hasLabel={true}
+                        label="افزودن پیوست"
+                      />
+                    ) : (
+                      <div className="flex">
+                        <a
+                          href={`${values.attachment}`}
+                          className="flex flex-row items-center text-base font-medium border border-brand-primary h-[36px] rounded-lg py-[4px] px-[8px] gap-[4px] cursor-pointer text-center"
+                        >
+                          پیوست فایل
+                          <Icon icon="attach" color="#208d8e" />
+                        </a>
+                        <button onClick={handleRemoveAttachment}>
+                          <Icon icon="trash" color="#FA5252" />
+                        </button>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>

@@ -1,7 +1,7 @@
 import Button from "../../../components/Common/Form/Button";
 import Input from "../../../components/Common/Form/Input";
 import ProfileImage from "../../../components/Common/ProfileImage";
-import { updateAccount, selectUser, login } from "../../../features/authSlice";
+import { updateAccount, selectUser, login } from "../../../features/auth/authSlice";
 import { required, validate } from "../../../utils/validator";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -85,13 +85,6 @@ const Information: React.FC = (): JSX.Element => {
              setValues({ ...values, thumbnail:String(base64)});
     };
     
-    // }
-    //  const formData=new FormData();
-    //  const image= e.target.files[0];
-    //  console.log(formData)
-    //  formData.append('thumbnail',image)
-    //  console.log("")
-     
   };
 
   return (

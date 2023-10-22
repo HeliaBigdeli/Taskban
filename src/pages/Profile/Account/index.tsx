@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import { required, email, validate } from "../../../utils/validator/index";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { selectUser } from "../../../features/authSlice";
+import { selectUser } from "../../../features/auth/authSlice";
 import { useSelector } from "react-redux";
 import { errorToaster } from "../../../utils/toaster";
 import { accounts, change_password } from "../../../constants/url";

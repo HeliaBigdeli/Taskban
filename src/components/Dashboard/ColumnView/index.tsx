@@ -113,8 +113,10 @@ const ColumnView: React.FC<IProps> = ({ data }): JSX.Element => {
           size: 24,
         }}
       />
-      <TaskModal modal={taskModal} setModal={handleTaskModal} />
-      <NewBoardModal modal={newBoardModal} setModal={handleNewBoardModal} />
+      {taskModal && <TaskModal modal={taskModal} setModal={handleTaskModal} />}
+      {newBoardModal && (
+        <NewBoardModal modal={newBoardModal} setModal={handleNewBoardModal} />
+      )}
     </>
   );
 };

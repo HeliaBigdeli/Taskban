@@ -3,7 +3,7 @@ import { createPortal } from "react-dom";
 import Modal from "../../../Common/Modal";
 import Button from "../../../Common/Form/Button";
 import Input from "../../../Common/Form/Input";
-import { addBoard } from "../../../../features/updateSlice";
+import { addBoard } from "../../../../features/update/updateSlice";
 import { useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import useAxios from "../../../../hooks/useAxios";

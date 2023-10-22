@@ -1,5 +1,7 @@
+import { toast } from "react-toastify";
 import Button from "../Form/Button";
 import Icon from "../Icon";
+import { useEffect } from "react";
 
 interface IProps {
   privateLink: string;
@@ -8,8 +10,9 @@ interface IProps {
 const CopyLink: React.FC<IProps> = ({ privateLink }): JSX.Element => {
   const handleCopyLink = () => {
     navigator.clipboard.writeText(privateLink);
+    toast.success("لینک با موفقیت در کلیپ بورد کپی شد.");
   };
-
+  
   return (
     <>
       <Button

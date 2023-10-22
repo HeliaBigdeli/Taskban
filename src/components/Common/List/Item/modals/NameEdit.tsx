@@ -20,6 +20,7 @@ const NameEdit: React.FC<IEdit> = ({
   previousValue,
   type,
   currentID,
+  boardId,
 }): JSX.Element => {
   const [values, setVlaues] = useState({
     title: previousValue,
@@ -61,7 +62,7 @@ const NameEdit: React.FC<IEdit> = ({
       boards.patch({
         wid: params.wid,
         pid: params.pid,
-        bid: currentID || params.bid,
+        bid: currentID || boardId,
       }),
       {
         name: values.title,

@@ -114,7 +114,7 @@ const ShareModal: React.FC<IProps> = ({
             <Button
               disabled={!values.email}
               text="ارسال"
-              type="submit"
+              type="button"
               onClick={handleSubmit}
               className="h-XL bg-brand-primary rounded-l-lg text-white text-sm px-[30px]"
             />

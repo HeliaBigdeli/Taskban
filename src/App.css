@@ -36,6 +36,6 @@
   border: 3px solid var(--primary);
 }
 
-html {
+body {
   overflow-y: scroll;
 }

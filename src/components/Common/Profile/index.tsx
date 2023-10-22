@@ -1,6 +1,6 @@
 import colors from "../ColorPicker/colors";
 import Icon from "../Icon";
-import {IProps} from '../../../interfaces/members'
+import {IProps} from '../../../interfaces/members_thumb'
 
 const ProfileThumb: React.FC<IProps> = ({
   size = 32,

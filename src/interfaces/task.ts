@@ -1,4 +1,4 @@
-import { IMember } from "./members";
+import { members_thumb } from "./members_thumb";
 
 export interface ITask {
     id: number,
@@ -9,5 +9,5 @@ export interface ITask {
     attachment: string,
     thumbnail: string,
     order: number,
-    members: IMember[]
+    members: members_thumb[]
 }

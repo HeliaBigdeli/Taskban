@@ -15,29 +15,28 @@ interface IMember {
 }
 
 interface IProps {
-  members: IMember[];
+  members?: IMember[];
 }
 
-const MemberList: React.FC= (): JSX.Element => {
-  useEffect(() => {
-    // console.log(members);
-  }, []);
+const MemberList: React.FC<IProps> = ({ members }): JSX.Element => {
+
+  useEffect(() => { }, [members]);
+
   return (
     <>
       <span className="text-sm text-[#7D828C] flex flex-row-reverse">
         اشتراک‌گذاشته شده با
       </span>
       <ul className="flex flex-col gap-XS">
-        {/* {members?.map((item) => (
+        {members?.map((item) => (
           <MemberRow
             key={item.id}
-            role={item.role}
-            email={item.email}
-            img={item.img}
-            firstName={item.firstName}
-            lastName={item.lastName}
+            email={item.user.email}
+            thumbnail={item.user.thumbnail}
+            first_name={item.user.first_name}
+            last_name={item.user.last_name}
           />
-        ))} */}
+        ))}
       </ul>
     </>
   );

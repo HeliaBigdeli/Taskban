@@ -9,11 +9,13 @@ interface IMoreProps {
   isShown: boolean;
   taskId: number;
   boardId: number;
+  boardTitle: string;
 }
 const More: React.FC<IMoreProps> = ({
   isShown,
   taskId,
   boardId,
+  boardTitle,
 }): JSX.Element => {
   const [projectModal, setProjectModal] = useState<boolean>(false);
   const [taskInfo, taskInfoError, taskinfoLoading, getTaskInfo] = useAxios();
@@ -61,7 +63,8 @@ const More: React.FC<IMoreProps> = ({
           modal={projectModal}
           setModal={handleProjectModal}
           taskInfo={taskInfo}
-          comments={comments}
+          boardTitle={boardTitle}
+          boardId={boardId}
         />
       )}
     </div>

@@ -49,6 +49,8 @@ const TaskCard: React.FC<ITaskCardProps> = ({
       ? "امروز"
       : diffDays === 1
       ? "فردا"
+      : diffDays === 2
+      ? "پس فردا"
       : new Intl.DateTimeFormat("fa-IR", { weekday: "short" }).format(d);
   return (
     <Draggable draggableId={`${boardTitle + id} `} index={index}>
@@ -102,7 +104,12 @@ const TaskCard: React.FC<ITaskCardProps> = ({
             <Tag color="grape" text="پروژه" />
             <Tag color="blue" text="درس" />
           </section>
-          <More isShown={isShown} taskId={id} boardId={boardId} />
+          <More
+            isShown={isShown}
+            taskId={id}
+            boardId={boardId}
+            boardTitle={boardTitle}
+          />
         </article>
       )}
     </Draggable>

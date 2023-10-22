@@ -26,7 +26,7 @@ const TaskList: React.FC<IData> = ({
         style={{ height: `${!isShown ? "0px" : height}` }}
       >
         {tasks?.map((item) => {
-          return <ListItem key={item.id} {...item} boardId={id} />;
+          return <ListItem key={item.id} {...item} boardId={id} boardTitle={name} />;
         })}
       </div>
     </div>

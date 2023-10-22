@@ -303,6 +303,7 @@ const TaskInfoModal: React.FC<IProps> = ({
                         name="attachment"
                         hasLabel={true}
                         label="افزودن پیوست"
+                        styles=""
                       />
                     ) : (
                       <div className="flex">

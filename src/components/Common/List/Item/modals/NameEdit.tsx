@@ -12,7 +12,10 @@ import {
 } from "../../../../../features/update/updateSlice";
 import { IEdit } from "../../../../../interfaces/modals";
 import { boards, projects, workspaces } from "../../../../../constants/url";
-import { project_update_name, update_name } from "../../../../../features/workspace/workspaceSlice";
+import {
+  project_update_name,
+  update_name,
+} from "../../../../../features/workspace/workspaceSlice";
 
 const NameEdit: React.FC<IEdit> = ({
   value,
@@ -75,9 +78,10 @@ const NameEdit: React.FC<IEdit> = ({
       type === "workSpace"
         ? dispatch(update_name(response))
         : type === "project"
-        ? dispatch(project_update_name({wid: params.wid, response}))
+        ? dispatch(project_update_name({ wid: params.wid, response }))
         : dispatch(addBoard());
       setValue(false);
+      document.body.style.overflow = "unset";
       toast.success("تغییر نام با موفقیت انجام شد.");
     }
     setVlaues({ title: previousValue });

@@ -17,7 +17,7 @@ export const register = {
 
 export const update = {
   patch: ({ aid }) => {
-    return `${API_URL.Accounts}${aid}`;
+    return `${API_URL.Accounts}${aid}/`;
   },
 };
 

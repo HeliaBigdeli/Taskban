@@ -54,6 +54,7 @@ const NewBoardModal: React.FC<IProps> = ({ modal, setModal }): JSX.Element => {
     if (response) {
       dispatch(addBoard());
       setModal(false);
+      document.body.style.overflow = "unset";
     }
   }, [response]);
 

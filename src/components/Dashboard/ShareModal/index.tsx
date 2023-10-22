@@ -64,7 +64,10 @@ const ShareModal: React.FC<IProps> = ({
     if (resultErrors.length) {
       toast.error(resultErrors[0]);
     } else {
-      await subsFetcher("post", subscription.post(), { email, url });
+      await subsFetcher("post", subscription.post(), {
+        email: values.email,
+        url,
+      });
     }
   };
 
@@ -92,10 +95,11 @@ const ShareModal: React.FC<IProps> = ({
       getMemebers();
       getAccounts();
     }
-    if (subsFetcher) {
+    if (subsFetcher && subsResponse) {
       setTid(subsResponse?.id);
+      toast.success("ایمیل با موفقیت ارسال شد.");
     }
-  }, [modal, shareType, tid]);
+  }, [modal, tid, subsResponse]);
 
   return (
     <>
@@ -156,7 +160,7 @@ const ShareModal: React.FC<IProps> = ({
             <CopyLink privateLink={url} />
           </div>
           <div className="flex flex-col w-[430px] gap-S">
-            <MemberList />
+            <MemberList members={memberResponse} />
           </div>
         </Modal>,
         portals

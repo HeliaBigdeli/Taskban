@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import Icon from "../Icon/";
-import styles from "./style.module.css";
 
 interface IHeader {
   text?: string;

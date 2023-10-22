@@ -215,7 +215,11 @@ const TaskModal: React.FC<IProps> = ({
               id="attachment"
               name="attachment"
               hasLabel={true}
+              hasIcon={true}
+              icon="attach"
+              text="افزودن فایل"
               label="افزودن پیوست"
+              styles="flex flex-row items-center text-base font-medium border border-brand-primary h-[36px] rounded-lg py-[4px] px-[8px] gap-[4px] cursor-pointer text-center"
             />
             <File
               inputValue={values.thumbnail}
@@ -225,7 +229,11 @@ const TaskModal: React.FC<IProps> = ({
               id="thumbnail"
               name="thumbnail"
               hasLabel={true}
+              hasIcon={true}
+              icon="attach"
+              text="افزودن فایل"
               label="افزودن کاور"
+              styles="flex flex-row items-center text-base font-medium border border-brand-primary h-[36px] rounded-lg py-[4px] px-[8px] gap-[4px] cursor-pointer text-center"
             />
             <div className="flex flex-row-reverse justify-between items-center">
               <div className="flex flex-row gap-M">

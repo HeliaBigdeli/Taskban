@@ -67,9 +67,11 @@ const Select: React.FC<IProps> = ({
 
   return (
     <button
+      disabled={!items?.length}
       data-name="selectBtn"
       ref={selectBtn}
       type="button"
+      style={{backgroundColor: !items?.length ? '#eee' : ''}}
       className={`border border-solid border-lightgray_300 rounded-md relative text-right p-XS ${className}`}
       onClick={toggleOpen}
     >

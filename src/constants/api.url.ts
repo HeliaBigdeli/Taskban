@@ -10,7 +10,7 @@ export const API_URL = {
   AccountDetails: "accounts/",
   ChangePassword: "accounts/change-password/",
   Settings: "settings/",
-  Subscription: "workspaces/subscriptions/",
+  Subscription: "workspaces/subscriptions",
   Reset: "accounts/reset-password/",
   SetPassword: "accounts/reset-password/set-password/",
   Members: "members/",

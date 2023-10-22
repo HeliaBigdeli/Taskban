@@ -17,7 +17,10 @@ import { useReducer } from "react";
 import { detailsReducer } from "../../../../utils/reducer/reducer";
 import { workspaces, projects, boards } from "../../../../constants/url";
 import { IProjects } from "../../../../interfaces/projects";
-import { removeProject, removeWorkspace } from "../../../../features/workspace/workspaceSlice";
+import {
+  removeProject,
+  removeWorkspace,
+} from "../../../../features/workspace/workspaceSlice";
 
 interface IProps {
   id: number;
@@ -70,6 +73,13 @@ const ListItem: React.FC<IProps> = ({
     toast.success("لینک با موفقیت در کلیپ بورد کپی شد.");
   };
 
+  const handleNewTaskBtn = () => {
+    handleActions("projectModal");
+
+    // force component rerender : )
+    setWorkspace({ id });
+  };
+
   const handleWorkspaceRemove = () => {
     fetcherDel("delete", workspaces.delete({ wid: id ? id : workspace.id }));
   };
@@ -87,14 +97,14 @@ const ListItem: React.FC<IProps> = ({
         dispatch(removeWorkspace(id));
         state.workspaceAlert = false;
       } else {
-        dispatch(removeProject({wid: id, pid: project.id}));
+        dispatch(removeProject({ wid: id, pid: project.id }));
         state.projectAlert = false;
       }
 
       toast.success("آیتم مورد نظر با موفقیت حذف شد.");
       navigate("workspaces");
     }
-  }, [responseDelete, project.id, workspace.id]);
+  }, [responseDelete, project.id, workspace.id, projectsData]);
 
   return (
     <li>
@@ -108,7 +118,7 @@ const ListItem: React.FC<IProps> = ({
           className="flex justify-between items-center cursor-pointer"
           onClick={toggleAccordion}
         >
-          {name}
+          {name.length > 20 ? " ..." : ""} {name.substring(0, 20)}
           <span
             className={`w-[20px] h-[20px] rounded-md ml-XS inline-block`}
             style={{ backgroundColor: color }}
@@ -184,7 +194,8 @@ const ListItem: React.FC<IProps> = ({
                   );
                 }}
               >
-                {project.name}
+                {project.name.length > 20 ? " ..." : ""}{" "}
+                {project.name.substring(0, 20)}
               </p>
               <span
                 onClick={() => {
@@ -231,7 +242,7 @@ const ListItem: React.FC<IProps> = ({
           {!projectsData?.length && (
             <Button
               text="ساختن پروژه جدید"
-              onClick={() => handleActions("projectModal")}
+              onClick={handleNewTaskBtn}
               type="button"
               className="text-brand-primary mt-2 h-L text-sm font-bold leading-normal self-stretch rounded-md border border-brand-primary mb-L w-full"
             />

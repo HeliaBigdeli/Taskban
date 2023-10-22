@@ -57,12 +57,9 @@ const Account: React.FC = (): JSX.Element => {
       userfetcher("get", accounts.get({ uid: user.user_id }));
     }
     setValues(userResponse);
-    console.log(values)
+
     if (response) {
-      toast.success(response.detail[0], {
-        position: "bottom-left",
-        autoClose: 3000,
-      });
+      toast.success(response.detail[0]);
     }
   }, [userResponse?.username, response, error]);
 

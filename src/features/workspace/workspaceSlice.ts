@@ -65,7 +65,9 @@ export const workspaceSlice = createSlice({
       state.workspaces.forEach((item) => {
         if (item.id === Number(action.payload.wid)) {
           item.projects?.forEach((pro) => {
-            pro.name = action.payload.response.name;
+            if (pro.id === action.payload.response.id) {
+              pro.name = action.payload.response.name;
+            }
           });
         }
       });

@@ -31,13 +31,13 @@ const AlertModal: React.FC<IAlert> = ({
           type="button"
           onClick={handleYes}
           text="بله"
-          className="bg-green-primary px-16 py-1 rounded-lg text-white"
+          className="bg-green-primary px-14 py-1 rounded-lg text-white"
         />
         <Button
           type="button"
           onClick={handleNo}
           text="خیر"
-          className="bg-red-primary px-16 py-1 rounded-lg text-white"
+          className="bg-red-primary px-14 py-1 rounded-lg text-white"
         />
       </div>
     </Modal>

@@ -1,27 +1,27 @@
 import WorkSpace from "./WorkSpace";
-import { useEffect } from "react";
-import useAxios from "../../../hooks/useAxios";
-import { workSpaceUpdate } from "../../../features/updateSlice";
+import { selectWorkspace } from "../../../features/workspace/workspaceSlice";
 import { useSelector } from "react-redux";
-import { workspaces } from "../../../constants/url";
+import { useEffect } from "react";
 
 const WorkSpaces: React.FC = (): JSX.Element => {
-  const [response, error, loading, fetcher] = useAxios();
-  const update = useSelector(workSpaceUpdate);
+  const state = useSelector(selectWorkspace);
 
-  useEffect(() => {
-    fetcher("get", workspaces.gets());
-  }, [update]);
+  useEffect(() => {}, [state]);
 
   return (
     <div className="w-full h-full pt-12 pr-8 ">
       <div className="flex flex-col items-end gap-L">
-        {response?.map((item) => {
-          return <WorkSpace key={item.id} {...item} />;
+        {state.workspaces?.map((item) => {
+          return (
+            <WorkSpace
+              key={item.id}
+              {...item}
+              projectsData={item.projects || []}
+            />
+          );
         })}
       </div>
     </div>
   );
 };
-
 export default WorkSpaces;

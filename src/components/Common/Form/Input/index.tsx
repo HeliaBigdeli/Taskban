@@ -32,9 +32,11 @@ interface IProps extends React.PropsWithChildren {
   disabled?: boolean;
   onFocus?: (e: React.FocusEvent<HTMLInputElement>) => void;
   ref?: any;
+  autoComplete? :string
 }
 
 const Input: React.FC<IProps> = ({
+  autoComplete = "off",
   disabled = false,
   hidden = false,
   inputValue,
@@ -76,7 +78,7 @@ const Input: React.FC<IProps> = ({
           <input
             ref={ref}
             disabled={disabled}
-            autoComplete="false"
+            autoComplete={autoComplete}
             hidden={hidden}
             onFocus={onFocus}
             value={inputValue}

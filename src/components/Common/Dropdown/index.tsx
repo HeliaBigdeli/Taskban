@@ -13,7 +13,7 @@ interface IProps extends React.PropsWithChildren {
   icon?: IIcon;
   buttonText?: string;
   hasIcon?: boolean;
-  value?: {id: number, title: string};
+  value?: { id: number; title: string };
 }
 
 const Dropdown: React.FC<IProps> = ({
@@ -51,7 +51,7 @@ const Dropdown: React.FC<IProps> = ({
 
   const closeList = () => {
     setTimeout(() => {
-      if(!value?.id) {
+      if (!value?.id) {
         setOpen(false);
       }
     }, 100);

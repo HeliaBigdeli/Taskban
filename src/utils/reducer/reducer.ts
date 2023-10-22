@@ -14,8 +14,10 @@ const detailsReducer = (state, action) => {
       return { ...state, projectAlert: !state.projectAlert };
     case "workspaceAlert":
       return { ...state, workspaceAlert: !state.workspaceAlert };
-    case "share":
-      return { ...state, share: !state.share };
+    case "shareProject":
+      return { ...state, shareProject: !state.shareProject };
+      case "shareWorkspace":
+        return { ...state, shareWorkspace: !state.shareWorkspace };
     case "newTask":
       return { ...state, newTask: !state.newTask };
     case "copyLink": {

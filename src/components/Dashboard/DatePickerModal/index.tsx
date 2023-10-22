@@ -28,7 +28,7 @@ const DatePickerModal: React.FC<IProps> = ({ modal, setModal }): JSX.Element => 
           hasBackIcon={false}
           hasColor={false}
           coloredSquare="lightgray_300"
-          header={{ order: 3, text: "عنوان تسک" }}
+          header={{ order: 3, text: "" }}
         >
           <DatePicker onClick={handleShowModal} />
         </Modal>,

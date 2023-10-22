@@ -12,7 +12,8 @@ const WorkSpacesItem: React.FC<IWorkSpacesItemProps> = ({
   color,
   name,
   id,
-  workspace_id,
+  workspace_id
+  
 }): JSX.Element => {
   const { pathname } = useLocation();
   const navigate = useNavigate();

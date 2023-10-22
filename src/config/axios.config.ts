@@ -1,6 +1,6 @@
 import axios from "axios";
 import { store } from "../app/store";
-import { refresh } from "../features/authSlice";
+import { refresh } from "../features/auth/authSlice";
 import Cookies from "js-cookie";
 import API_URL from "../constants/api.url";
 import { toast } from "react-toastify";

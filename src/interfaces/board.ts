@@ -2,6 +2,7 @@ import { ITask } from "./task";
 
 export interface IData {
   id: number;
+  color: string,
   is_archive: boolean;
   name: string;
   order: number;

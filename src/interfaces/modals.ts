@@ -4,6 +4,7 @@ export interface IEdit {
     setValue: (value: boolean | ((prevVar: boolean) => boolean)) => void;
     previousValue: string; 
     type?: "workSpace" | "project" | "board";
+    boardId?: number;
 }
 
 export interface IAlert {

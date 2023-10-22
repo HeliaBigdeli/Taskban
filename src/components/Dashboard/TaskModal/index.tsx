@@ -15,7 +15,7 @@ import { useParams } from "react-router-dom";
 import { boards, tasks } from "../../../constants/url";
 import { AXIOS } from "../../../config/axios.config";
 import { toast } from "react-toastify";
-import { addTask } from "../../../features/updateSlice";
+import { addTask } from "../../../features/update/updateSlice";
 import { useDispatch } from "react-redux";
 import useAxios from "../../../hooks/useAxios";
 import Input from "../../Common/Form/Input";
@@ -23,13 +23,15 @@ import { validate, required } from "../../../utils/validator";
 
 const rules = {
   board_id: [required],
-  name: [required]
-}
+  name: [required],
+};
 
 const portals = document.getElementById("portals") as Element;
 interface IProps {
   boardId?: number;
   modal: boolean;
+  wid?: number;
+  pid?: number;
   setModal: (value: boolean | ((prevVar: boolean) => boolean)) => void;
 }
 
@@ -37,6 +39,8 @@ const TaskModal: React.FC<IProps> = ({
   modal,
   setModal,
   boardId,
+  wid,
+  pid,
 }): JSX.Element => {
   const [bId, setBid] = useState(boardId);
   const params = useParams();
@@ -52,7 +56,7 @@ const TaskModal: React.FC<IProps> = ({
     thumbnail: "",
     name: "",
     order: 1,
-    board_id: boardId || ""
+    board_id: boardId || "",
   });
 
   const handleDatePickerModal = () => {
@@ -72,7 +76,7 @@ const TaskModal: React.FC<IProps> = ({
     setBid(value);
     setVlaues({
       ...values,
-      'board_id': value
+      board_id: value,
     });
   };
 
@@ -101,11 +105,15 @@ const TaskModal: React.FC<IProps> = ({
     const resultErrors = validate(values, rules);
 
     if (resultErrors.length) {
-      resultErrors.forEach(error => {
+      resultErrors.forEach((error) => {
         toast.error(error);
       });
     } else {
-      const url = tasks.post({ wid: params.wid, pid: params.pid, bid: bId });
+      const url = tasks.post({
+        wid: wid || params.wid,
+        pid: pid || params.pid,
+        bid: bId,
+      });
       try {
         const res = await AXIOS.post(url, values, {
           headers: {
@@ -118,7 +126,7 @@ const TaskModal: React.FC<IProps> = ({
           dispatch(addTask());
         }
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
     }
   };
@@ -128,8 +136,8 @@ const TaskModal: React.FC<IProps> = ({
       fetcher(
         "get",
         boards.gets({
-          wid: params.wid,
-          pid: params.pid,
+          wid: wid || params.wid,
+          pid: pid || params.pid,
         })
       );
     }
@@ -148,10 +156,15 @@ const TaskModal: React.FC<IProps> = ({
           backIcon={{ order: 2 }}
           hasCloseIcon={true}
           hasColor={true}
-          coloredSquare={`${values.priority === 4 ? "#FB0606"
-            : values.priority === 3 ? '#FFE605'
-              : values.priority === 2 ? '#09DBCE'
-                : "#c1c1c1"}`}
+          coloredSquare={`${
+            values.priority === 4
+              ? "#FB0606"
+              : values.priority === 3
+              ? "#FFE605"
+              : values.priority === 2
+              ? "#09DBCE"
+              : "#c1c1c1"
+          }`}
           closeIcon={{ order: 1 }}
         >
           <div className="flex flex-col w-[1153px] gap-M">
@@ -243,10 +256,15 @@ const TaskModal: React.FC<IProps> = ({
                   <Dropdown
                     type="icon"
                     icon={{
-                      icon: "flag", color: values.priority === 4 ? "#FB0606"
-                        : values.priority === 3 ? '#FFE605'
-                          : values.priority === 2 ? '#09DBCE'
-                            : "#c1c1c1"
+                      icon: "flag",
+                      color:
+                        values.priority === 4
+                          ? "#FB0606"
+                          : values.priority === 3
+                          ? "#FFE605"
+                          : values.priority === 2
+                          ? "#09DBCE"
+                          : "#c1c1c1",
                     }}
                   >
                     <DropdownItem
@@ -302,6 +320,7 @@ const TaskModal: React.FC<IProps> = ({
           modal={shareModal}
           setModal={handleShareModal}
           title="اشتراک گذاری تسک"
+          dataID={{ wid: params.wid, pid: params.pid, bid: bId }}
         />
       )}
     </>

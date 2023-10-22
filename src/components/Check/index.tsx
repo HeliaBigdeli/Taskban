@@ -4,7 +4,7 @@ import { AXIOS } from "../../config/axios.config";
 import API_URL from "../../constants/api.url";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { refresh } from "../../features/authSlice";
+import { refresh } from "../../features/auth/authSlice";
 
 interface IProps extends React.PropsWithChildren { }
 

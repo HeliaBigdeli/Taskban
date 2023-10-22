@@ -4,22 +4,20 @@ import Button from "../../../Form/Button";
 import { Dispatch, SetStateAction } from "react";
 import useAxios from "../../../../../hooks/useAxios";
 import { useDispatch } from "react-redux";
-import { addWorkSpace } from "../../../../../features/updateSlice";
 import { useEffect } from "react";
 import { workspaces } from "../../../../../constants/url";
+import { add } from "../../../../../features/workspace/workspaceSlice";
 
 interface IProps {
   isReviewInfoOpen: boolean;
   setIsReviewInfoOpen: (
     value: boolean | ((prevVar: boolean) => boolean)
   ) => void;
-  workSpaceInfo: { name?: string; colorName?: string; colorCode?: string };
+  workSpaceInfo: { name?: string; color?: string };
   setIsPickColorOpen: (
     value: boolean | ((prevVar: boolean) => boolean)
   ) => void;
-  setWorkSpaceInfo: Dispatch<
-    SetStateAction<{ name?: string; colorName?: string; colorCode?: string }>
-  >;
+  setWorkSpaceInfo: Dispatch<SetStateAction<{ name?: string; color?: string }>>;
   setSelected?: (
     value:
       | string
@@ -43,7 +41,7 @@ const ReviewInfo: React.FC<IProps> = ({
   const postWorkSpace = async () => {
     await fetcher("post", workspaces.post(), {
       name: workSpaceInfo.name,
-      color: workSpaceInfo.colorCode,
+      color: workSpaceInfo.color,
     });
   };
 
@@ -62,15 +60,14 @@ const ReviewInfo: React.FC<IProps> = ({
     setWorkSpaceInfo({
       ...workSpaceInfo,
       name: "",
-      colorCode: "",
-      colorName: "",
+      color: "",
     });
     if (setSelected) setSelected("disable");
   };
 
   useEffect(() => {
     if (response) {
-      dispatch(addWorkSpace());
+      dispatch(add(response));
     }
   }, [response]);
   return (
@@ -101,7 +98,7 @@ const ReviewInfo: React.FC<IProps> = ({
             <div className="flex justify-between items-center w-full">
               <div
                 className="w-[15px] h-[15px] rounded-[2px]"
-                style={{ backgroundColor: workSpaceInfo.colorCode }}
+                style={{ backgroundColor: workSpaceInfo.color }}
               ></div>
               <span className="text-black text-sm font-extrabold">
                 رنگ ورک‌اسپیس

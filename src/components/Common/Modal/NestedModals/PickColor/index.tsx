@@ -11,10 +11,8 @@ interface IProps {
     value: boolean | ((prevVar: boolean) => boolean)
   ) => void;
   setIsModalOpen: (value: boolean | ((prevVar: boolean) => boolean)) => void;
-  workSpaceInfo: { name?: string; colorName?: string; colorCode?: string };
-  setWorkSpaceInfo: Dispatch<
-    SetStateAction<{ name?: string; colorName?: string; colorCode?: string }>
-  >;
+  workSpaceInfo: { name?: string; color?: string };
+  setWorkSpaceInfo: Dispatch<SetStateAction<{ name?: string; color?: string }>>;
   selectedColor: string | undefined;
   setSelectedColor: (
     value:
@@ -51,8 +49,7 @@ const PickColor: React.FC<IProps> = ({
     if (ref.current) ref.current.style.backgroundColor = "#7D828C";
     setWorkSpaceInfo({
       ...workSpaceInfo,
-      colorCode: "",
-      colorName: "",
+      color: "",
     });
     setSelectedColor("disabled");
   };
@@ -61,8 +58,7 @@ const PickColor: React.FC<IProps> = ({
     setWorkSpaceInfo({
       ...workSpaceInfo,
       name: "",
-      colorCode: "",
-      colorName: "",
+      color: ""
     });
     setSelectedColor("disable");
   };
@@ -91,8 +87,7 @@ const PickColor: React.FC<IProps> = ({
                   onClick={(data) =>
                     setWorkSpaceInfo({
                       ...workSpaceInfo,
-                      colorName: data.name,
-                      colorCode: data.code,
+                      color: data.code,
                     })
                   }
                   hasDisableIcon={true}
@@ -105,7 +100,7 @@ const PickColor: React.FC<IProps> = ({
             <div
               ref={ref}
               className="flex text-center w-[80px] h-[80px] p-[10px] mb-[20px] justify-center items-center rounded-[8px] bg-[#7D828C] text-white text-2xl font-extrabold"
-              style={{ backgroundColor: workSpaceInfo.colorCode }}
+              style={{ backgroundColor: workSpaceInfo.color }}
             >
               {workSpaceInfo.name
                 ? workSpaceInfo.name.split(" ").map((item, index) => {
@@ -119,7 +114,7 @@ const PickColor: React.FC<IProps> = ({
           </div>
 
           <Button
-            disabled={!workSpaceInfo.colorCode}
+            disabled={!workSpaceInfo.color}
             text="ادامه"
             type="button"
             onClick={handlePickolorClick}

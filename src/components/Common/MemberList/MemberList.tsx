@@ -1,23 +1,26 @@
+import { useEffect } from "react";
 import MemberRow from "./MemberRow/MemberRow";
-import memberPhoto from "../../../assets/images/member.png";
 
-const MemberList: React.FC = (): JSX.Element => {
-  const members = [
-    {
-      img: memberPhoto,
-      email: "helya@gmail.com",
-      role: "is_super_access",
-      firstName: "Helya",
-      lastName: "Bigdeli",
-    },
-    {
-      img: "",
-      email: "sararahimi@gmail.com",
-      role: "",
-      firstName: "Sara",
-      lastName: "Rahimi",
-    },
-  ];
+interface IMember {
+  id: number;
+  user: {
+    id: number;
+    username: string;
+    email: string;
+    first_name: string;
+    last_name: string;
+    phone_number: string;
+    thumbnail: string;
+  };
+}
+
+interface IProps {
+  members?: IMember[];
+}
+
+const MemberList: React.FC<IProps> = ({ members }): JSX.Element => {
+
+  useEffect(() => { }, [members]);
 
   return (
     <>
@@ -25,14 +28,13 @@ const MemberList: React.FC = (): JSX.Element => {
         اشتراک‌گذاشته شده با
       </span>
       <ul className="flex flex-col gap-XS">
-        {members.map((item) => (
+        {members?.map((item) => (
           <MemberRow
-            key={item.email}
-            role={item.role}
-            email={item.email}
-            img={item.img}
-            firstName={item.firstName}
-            lastName={item.lastName}
+            key={item.id}
+            email={item.user.email}
+            thumbnail={item.user.thumbnail}
+            first_name={item.user.first_name}
+            last_name={item.user.last_name}
           />
         ))}
       </ul>

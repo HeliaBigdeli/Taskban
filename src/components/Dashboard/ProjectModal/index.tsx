@@ -4,11 +4,11 @@ import { useState, useEffect } from "react";
 import Button from "../../Common/Form/Button";
 import Input from "../../Common/Form/Input";
 import useAxios from "../../../hooks/useAxios";
-import { useDispatch } from "react-redux";
-import { addProject } from "../../../features/updateSlice";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { projects } from "../../../constants/url";
+import { addNewProject } from "../../../features/workspace/workspaceSlice";
+import { useDispatch } from "react-redux";
 
 const portals = document.getElementById("portals") as Element;
 
@@ -23,8 +23,8 @@ const ProjectModal: React.FC<IProps> = ({
   setModal,
   wid,
 }): JSX.Element => {
-  const params = useParams();
   const dispatch = useDispatch();
+  const params = useParams();
   const [response, error, loading, fetcher] = useAxios();
   const [values, setVlaues] = useState({
     title: "",
@@ -53,7 +53,7 @@ const ProjectModal: React.FC<IProps> = ({
 
   useEffect(() => {
     if (response) {
-      dispatch(addProject());
+      dispatch(addNewProject({id: wid, response}));
       setModal(false);
       toast.success("پروژه با موفقیت اضافه شد.");
     }

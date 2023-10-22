@@ -8,9 +8,9 @@ import Input from "../../../Form/Input";
 interface IProps {
   isModalOpen: boolean;
   setIsModalOpen: (value: boolean | ((prevState: boolean) => boolean)) => void;
-  workSpaceInfo: { name?: string; colorName?: string; colorCode?: string };
+  workSpaceInfo: { name?: string; color?: string };
   setWorkSpaceInfo: Dispatch<
-    SetStateAction<{ name?: string; colorName?: string; colorCode?: string }>
+    SetStateAction<{ name?: string; color?: string }>
   >;
 }
 
@@ -22,7 +22,7 @@ const CreateWorkSpace: React.FC<IProps> = ({
 }): JSX.Element => {
   const [isPickColorOpen, setIsPickColorOpen] = useState(false);
   const [selectedColor, setSelectedColor] = useState<string | undefined>(
-    workSpaceInfo?.colorCode
+    workSpaceInfo?.color
   );
 
   const handleChange = (name: string, value: string) => {
@@ -41,8 +41,7 @@ const CreateWorkSpace: React.FC<IProps> = ({
     setWorkSpaceInfo({
       ...workSpaceInfo,
       name: "",
-      colorCode: "",
-      colorName: "",
+      color: "",
     });
     if (selectedColor) setSelectedColor("disable");
   };

@@ -1,14 +1,14 @@
 import colors from "../ColorPicker/colors";
 import Icon from "../Icon";
 import { useState, useEffect } from "react";
-import {IMember, IProps} from '../../../interfaces/members'
+import {members_thumb, IProps} from '../../../interfaces/members_thumb'
 
 const MembersThumb: React.FC<IProps> = ({
   size = 32,
   members = [],
   hasAddIcon = false,
 }): JSX.Element => {
-  const [slicedData, setSlicedData] = useState<IMember[]>([]);
+  const [slicedData, setSlicedData] = useState<members_thumb[]>([]);
 
   const randomColor = () => {
     const max = 12;

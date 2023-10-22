@@ -5,19 +5,17 @@ import ProfileImage from "../../ProfileImage";
 import { useState } from "react";
 
 interface IProps {
-  role: string;
   email: string;
-  img?: string;
-  firstName: string;
-  lastName: string;
+  thumbnail?: string;
+  first_name: string;
+  last_name: string;
 }
 
 const MemberRow: React.FC<IProps> = ({
-  role,
   email,
-  img,
-  firstName,
-  lastName,
+  thumbnail,
+  first_name,
+  last_name,
 }): JSX.Element => {
   const [data, setData] = useState({ id: 0, title: "" });
   const handleSelect = (id: number, title: string) => {
@@ -27,7 +25,7 @@ const MemberRow: React.FC<IProps> = ({
   return (
     <>
       <div className="flex justify-between items-center mt-1 h-[37px]">
-        {role === "is_super_access" ? (
+        {true ? (
           <Button
             onClick={() => {}}
             text="دسترسی کامل"
@@ -82,7 +80,7 @@ const MemberRow: React.FC<IProps> = ({
         )}
 
         <div className="flex gap-[12px]">
-          {role === "workspace owner" ? (
+          {true ? (
             <span className="h-[29px] rounded-md px-2 py-1 gap-[10px] bg-blue-secondary text-xs text-blue-primary text-center mt-1">
               workspace owner
             </span>
@@ -90,12 +88,12 @@ const MemberRow: React.FC<IProps> = ({
             ""
           )}
           <span className="text-sm text-black mt-[5px]">
-            {role === "workspace owner" ? "من" : email}
+            {true ? "من" : email}
           </span>
           <ProfileImage
-            img={img}
-            firstName={firstName}
-            lastName={lastName}
+            img={thumbnail}
+            firstName={first_name}
+            lastName={last_name}
             size={35}
           />
         </div>

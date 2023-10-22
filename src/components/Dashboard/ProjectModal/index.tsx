@@ -53,9 +53,10 @@ const ProjectModal: React.FC<IProps> = ({
 
   useEffect(() => {
     if (response) {
-      dispatch(addNewProject({id: wid, response}));
+      dispatch(addNewProject({ id: wid, response }));
       setModal(false);
       toast.success("پروژه با موفقیت اضافه شد.");
+      document.body.style.overflow = "unset";
     }
   }, [response]);
 

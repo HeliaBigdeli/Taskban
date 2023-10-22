@@ -31,7 +31,7 @@ const NameEdit: React.FC<IEdit> = ({
   const ref = useRef<HTMLDivElement>(null);
 
   const edit = async () => {
-    await fetcher("patch", workspaces.patch({wid: currentID || params.wid}), {
+    await fetcher("patch", workspaces.patch({ wid: currentID || params.wid }), {
       color: values.color,
     });
   };
@@ -50,6 +50,7 @@ const NameEdit: React.FC<IEdit> = ({
     if (response) {
       dispatch(update_color(response));
       setValue(false);
+      document.body.style.overflow = "unset";
       toast.success("تغییر رنگ با موفقیت انجام شد.");
     }
   }, [response]);

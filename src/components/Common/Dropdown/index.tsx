@@ -86,7 +86,7 @@ const Dropdown: React.FC<IProps> = ({
       {open && (
         <div
           ref={dropdownList}
-          className={`${
+          className={`z-10 ${
             type === "icon" ? "min-w-[200px]" : "min-w-[240px]"
           } absolute w-full right-0 text-right p-2 rounded-lg shadow-select flex-col bg-white`}
           style={listDirection}

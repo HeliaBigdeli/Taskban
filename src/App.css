@@ -39,3 +39,8 @@
 body {
   overflow-y: scroll;
 }
+
+.dark {
+  background-color: #323232;
+  color: #bac4c8 ;
+}

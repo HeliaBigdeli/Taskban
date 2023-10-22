@@ -68,6 +68,7 @@ const ReviewInfo: React.FC<IProps> = ({
   useEffect(() => {
     if (response) {
       dispatch(add(response));
+      document.body.style.overflow = "unset";
     }
   }, [response]);
   return (

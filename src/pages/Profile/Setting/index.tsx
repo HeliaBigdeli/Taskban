@@ -15,7 +15,7 @@ const Setting: React.FC = (): JSX.Element => {
           <ColorPicker
             onClick={(e) => onClick()}
             hasDisableIcon={false}
-          ></ColorPicker>
+          ></ColorPicker> 
         </div>
         <div className="my-M flex flex-row-reverse">
           <Switcher />

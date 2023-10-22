@@ -9,11 +9,10 @@ import { useDispatch } from "react-redux";
 import {
   addBoard,
   addProject,
-  addWorkSpace,
-} from "../../../../../features/updateSlice";
+} from "../../../../../features/update/updateSlice";
 import { IEdit } from "../../../../../interfaces/modals";
 import { boards, projects, workspaces } from "../../../../../constants/url";
-import API_URL from "../../../../../constants/api.url";
+import { project_update_name, update_name } from "../../../../../features/workspace/workspaceSlice";
 
 const NameEdit: React.FC<IEdit> = ({
   value,
@@ -21,15 +20,14 @@ const NameEdit: React.FC<IEdit> = ({
   previousValue,
   type,
   currentID,
+  boardId,
 }): JSX.Element => {
   const [values, setVlaues] = useState({
     title: previousValue,
   });
 
   const [response, error, loading, fetcher] = useAxios();
-
   const params = useParams();
-
   const dispatch = useDispatch();
 
   const handleChange = (name, value) => {
@@ -40,13 +38,9 @@ const NameEdit: React.FC<IEdit> = ({
   };
 
   const workSpaceEdit = async () => {
-    await fetcher(
-      "patch",
-      workspaces.patch({ wid: params.wid ? params.wid : currentID }),
-      {
-        name: values.title,
-      }
-    );
+    await fetcher("patch", workspaces.patch({ wid: currentID || params.wid }), {
+      name: values.title,
+    });
   };
 
   const projectEdit = async () => {
@@ -54,7 +48,7 @@ const NameEdit: React.FC<IEdit> = ({
       "patch",
       projects.patch({
         wid: params.wid,
-        pid: params.pid ? params.pid : currentID,
+        pid: currentID || params.pid,
       }),
       {
         name: values.title,
@@ -68,7 +62,7 @@ const NameEdit: React.FC<IEdit> = ({
       boards.patch({
         wid: params.wid,
         pid: params.pid,
-        bid: params.bid ? params.bid : currentID,
+        bid: currentID || boardId,
       }),
       {
         name: values.title,
@@ -79,14 +73,14 @@ const NameEdit: React.FC<IEdit> = ({
   useEffect(() => {
     if (response) {
       type === "workSpace"
-        ? dispatch(addWorkSpace())
+        ? dispatch(update_name(response))
         : type === "project"
-        ? dispatch(addProject())
+        ? dispatch(project_update_name({wid: params.wid, response}))
         : dispatch(addBoard());
       setValue(false);
-      setVlaues({ title: previousValue });
       toast.success("تغییر نام با موفقیت انجام شد.");
     }
+    setVlaues({ title: previousValue });
   }, [response]);
 
   const close = () => {

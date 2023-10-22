@@ -6,6 +6,9 @@ import Icon from "../../../../Common/Icon";
 import { Draggable } from "react-beautiful-dnd";
 import { ITask } from "../../../../../interfaces/task";
 import MembersThumb from "../../../../Common/MembersThumb";
+import { baseAppURL } from "../../../../../config/axios.config";
+import { useSearchParams } from "react-router-dom";
+import { dateConvert } from '../../../../../utils/dateConvert'
 
 interface ITaskCardProps extends ITask {
   index: number;
@@ -24,6 +27,8 @@ const TaskCard: React.FC<ITaskCardProps> = ({
   deadline,
   members,
 }): JSX.Element => {
+  const { fullDate, month, day, weekday } = dateConvert(deadline)
+  const [searchParams] = useSearchParams();
   const [isShown, setIsShown] = useState<boolean>(false);
   const flagColor = {
     1: "#82C91E",
@@ -31,27 +36,7 @@ const TaskCard: React.FC<ITaskCardProps> = ({
     3: "#FAB005",
     4: "#FA5252",
   };
-  const d = new Date(deadline);
-  const currentDate = new Date().getTime();
-  const fullDate = new Intl.DateTimeFormat("fa-IR")
-    .format(d)
-    .substring(5, 9)
-    .replace("/", " / ");
-  const month = new Intl.DateTimeFormat("fa-IR", { month: "short" }).format(d);
-  const day = new Intl.DateTimeFormat("fa-IR", { day: "numeric" }).format(d);
 
-  const diffDays = Math.floor(
-    (d.getTime() - currentDate) / (1000 * 60 * 60 * 24)
-  );
-
-  const weekday =
-    diffDays === 0
-      ? "امروز"
-      : diffDays === 1
-      ? "فردا"
-      : diffDays === 2
-      ? "پس فردا"
-      : new Intl.DateTimeFormat("fa-IR", { weekday: "short" }).format(d);
   return (
     <Draggable draggableId={`${boardTitle + id} `} index={index}>
       {(provided) => (
@@ -65,9 +50,9 @@ const TaskCard: React.FC<ITaskCardProps> = ({
         >
           {thumbnail && (
             <img
-              src={thumbnail}
+              src={`${baseAppURL}${thumbnail}`}
               alt="task-img"
-              className={`h-[134px] self-stretch rounded-[4px] bg-lightgray  bg-cover bg-no-repeat`}
+              className={`h-[134px] self-stretch rounded-[4px] bg-lightgray object-cover bg-no-repeat`}
             />
           )}
           <section className="flex justify-between items-start gap-2.5 self-stretch">
@@ -76,7 +61,7 @@ const TaskCard: React.FC<ITaskCardProps> = ({
             </div>
             <div className="flex flex-col items-end gap-2.5 ">
               <span className="text-[#534D60] text-xs  font-normal">
-                اسم لیست
+                {searchParams.get('project_name')}
               </span>
               <span className=" text-[#0E0E0E] text-xs  font-normal">
                 {name}

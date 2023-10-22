@@ -12,17 +12,17 @@ const WorkSpacesItem: React.FC<IWorkSpacesItemProps> = ({
   color,
   name,
   id,
-  workspace_id,
+  workspace_id
+  
 }): JSX.Element => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
 
   const handleClick = () => {
     if (pathname === "/workspaces") {
-      console.log(workspace_id)
-      navigate(`/${boards.gets({ wid: workspace_id, pid: id })}`);
+      navigate(`/${boards.gets({ wid: workspace_id, pid: id })}?project_name=${name}`);
     } else {
-      navigate(`${id}/${API_URL.Boards}`);
+      navigate(`${id}/${API_URL.Boards}?project_name=${name}`);
     }
   };
 

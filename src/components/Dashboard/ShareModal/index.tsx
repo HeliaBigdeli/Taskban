@@ -1,5 +1,5 @@
 import { createPortal } from "react-dom";
-import { useState, useRef } from "react";
+import { useState } from "react";
 import Modal from "../../Common/Modal";
 import Button from "../../Common/Form/Button";
 import Input from "../../Common/Form/Input";
@@ -10,10 +10,11 @@ import { toast } from "react-toastify";
 import useAxios from "../../../hooks/useAxios";
 import { useEffect } from "react";
 import { IAccount } from "../../../interfaces/accounts";
-import { accounts } from "../../../constants/url";
+import { accounts, subscription } from "../../../constants/url";
+import { shareModal } from "../../../utils/shareModal";
 
 const rules = {
-  shareWithEmail: [email],
+  email: [email],
 };
 const portals = document.getElementById("portals") as Element;
 
@@ -21,16 +22,30 @@ interface IProps {
   title: string;
   modal: boolean;
   setModal: (value: boolean | ((prevVar: boolean) => boolean)) => void;
+  dataID?: {
+    wid?: number | string;
+    pid?: number | string;
+    bid?: number | string;
+    tid?: number | string;
+  };
 }
 
 const ShareModal: React.FC<IProps> = ({
   modal,
   setModal,
   title,
+  dataID,
 }): JSX.Element => {
-  const input = useRef<any>();
-  const [listShow, setListShow] = useState(false);
+  const [tid, setTid] = useState<string>();
   const [response, error, loading, fetcher] = useAxios();
+  const [subsResponse, subsError, subsLoading, subsFetcher] = useAxios();
+  const [memberResponse, memberError, memberLoading, memberFetcher] =
+    useAxios();
+  const { url, shareType, getMembersUrl, setMemberUrl } = shareModal({
+    ...dataID,
+    tid,
+  });
+  const [listShow, setListShow] = useState(false);
   const [data, setData] = useState<IAccount[]>([]);
   const [values, setValues] = useState({
     email: "",
@@ -40,11 +55,17 @@ const ShareModal: React.FC<IProps> = ({
     await fetcher("get", accounts.gets());
   };
 
-  const handleSubmit = () => {
+  const getMemebers = async () => {
+    await memberFetcher("get", getMembersUrl);
+  };
+
+  const handleSubmit = async () => {
     const resultErrors = validate(values, rules);
-    resultErrors.forEach((error) => {
-      toast.error(error);
-    });
+    if (resultErrors.length) {
+      toast.error(resultErrors[0]);
+    } else {
+      await subsFetcher("post", subscription.post(), { email, url });
+    }
   };
 
   const handleChange = (name: string, value: string) => {
@@ -67,8 +88,14 @@ const ShareModal: React.FC<IProps> = ({
   };
 
   useEffect(() => {
-    if (modal) getAccounts();
-  }, []);
+    if (modal) {
+      getMemebers();
+      getAccounts();
+    }
+    if (subsFetcher) {
+      setTid(subsResponse?.id);
+    }
+  }, [modal, shareType, tid]);
 
   return (
     <>
@@ -87,13 +114,12 @@ const ShareModal: React.FC<IProps> = ({
             <Button
               disabled={!values.email}
               text="ارسال"
-              type="submit"
+              type="button"
               onClick={handleSubmit}
               className="h-XL bg-brand-primary rounded-l-lg text-white text-sm px-[30px]"
             />
             <div className="w-full">
               <Input
-                ref={input}
                 inputValue={values.email}
                 name="email"
                 id="email"
@@ -108,6 +134,7 @@ const ShareModal: React.FC<IProps> = ({
                       data?.map((item) => {
                         return (
                           <div
+                            key={item.id}
                             className="cursor-pointer hover:bg-lightgray_200 p-1 text-left rounded-sm"
                             onClick={() => {
                               handleSelect(item);
@@ -126,7 +153,7 @@ const ShareModal: React.FC<IProps> = ({
             </div>
           </div>
           <div className="flex justify-between w-[430px] my-[25px]">
-            <CopyLink privateLink="hell@gmail.com" />
+            <CopyLink privateLink={url} />
           </div>
           <div className="flex flex-col w-[430px] gap-S">
             <MemberList />

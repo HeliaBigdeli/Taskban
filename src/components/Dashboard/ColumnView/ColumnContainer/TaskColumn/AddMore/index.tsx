@@ -3,21 +3,65 @@ import DropdownItem from "../../../../../Common/Dropdown/DropdownItem";
 import Icon from "../../../../../Common/Icon";
 import TaskModal from "../../../../TaskModal";
 import { useState } from "react";
+import { useReducer } from "react";
+import { boardDetailsReducer } from "../../../../../../utils/reducer/boardDetails";
+import { createPortal } from "react-dom";
+import NameEdit from "../../../../../Common/List/Item/modals/NameEdit";
+import { toast } from "react-toastify";
+import useAxios from "../../../../../../hooks/useAxios";
+import { boards } from "../../../../../../constants/url";
+import { useParams } from "react-router-dom";
+import AlertModal from "../../../../../Common/List/Item/modals/AlertModal";
 
 interface IAddMoreProps {
   isShown: boolean;
-  boardId: number
+  boardId: number;
+  title: string;
 }
-const AddMore: React.FC<IAddMoreProps> = ({ isShown, boardId }): JSX.Element => {
+
+const portals = document.getElementById("portals") as Element;
+
+const AddMore: React.FC<IAddMoreProps> = ({
+  title,
+  isShown,
+  boardId,
+}): JSX.Element => {
   const [taskModal, setTaskModal] = useState<boolean>(false);
+  const [currentID, setCurrentID] = useState(0);
+  const [state, dispatch] = useReducer(boardDetailsReducer, {
+    boardNameEdit: false,
+    boardDelete: false,
+  });
+
+  const [response, error, loading, fetcher] = useAxios();
+
+  const params = useParams();
 
   const handleTaskModal = () => {
     setTaskModal(!taskModal);
   };
 
-  const handleEditName = () => {};
-  const handleCopyLink = () => {};
-  const handleRemove = () => {};
+  const handleEditName = () => {
+    dispatch({ type: "boardNameEdit" });
+  };
+  const handleCopyLink = () => {
+    navigator.clipboard.writeText(window.location.href);
+    toast.success("لینک با موفقیت در کلیپ بورد کپی شد.");
+  };
+  const handleRemove = () => {
+    fetcher(
+      "delete",
+      boards.delete({
+        wid: params.wid,
+        pid: params.pid,
+        bid: params.bid ? params.bid : boardId,
+      })
+    );
+  };
+
+  const deleteAlert = () => {
+    dispatch({ type: "boardDelete" });
+  };
 
   return (
     <section
@@ -31,7 +75,7 @@ const AddMore: React.FC<IAddMoreProps> = ({ isShown, boardId }): JSX.Element => 
         className="cursor-pointer"
         onClick={handleTaskModal}
       />
-      <Dropdown type="icon" icon={{ icon: "dots" }}>       
+      <Dropdown type="icon" icon={{ icon: "dots" }}>
         <DropdownItem
           title="ویرایش نام ستون "
           hasIcon={true}
@@ -53,11 +97,36 @@ const AddMore: React.FC<IAddMoreProps> = ({ isShown, boardId }): JSX.Element => 
         <DropdownItem
           title="حذف"
           hasIcon={true}
-          icon={{ icon: "trash"}}
-          onClick={handleRemove}
-        />      
+          icon={{ icon: "trash" }}
+          onClick={deleteAlert}
+        />
       </Dropdown>
-      {taskModal && <TaskModal modal={taskModal} setModal={handleTaskModal} boardId={boardId} />}
+      {taskModal && (
+        <TaskModal
+          modal={taskModal}
+          setModal={handleTaskModal}
+          boardId={boardId}
+        />
+      )}
+      {createPortal(
+        <>
+          <NameEdit
+            boardId={boardId}
+            currentID={currentID}
+            value={state.boardNameEdit}
+            setValue={handleEditName}
+            previousValue={title}
+            type="board"
+          />
+          <AlertModal
+            alertText="آیا از حذف کردن این برد مطمئن هستید؟"
+            isAlertOpen={state.boardDelete}
+            setIsAlertOpen={deleteAlert}
+            handleYes={handleRemove}
+          />
+        </>,
+        portals
+      )}
     </section>
   );
 };

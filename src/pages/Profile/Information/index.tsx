@@ -1,10 +1,14 @@
 import Button from "../../../components/Common/Form/Button";
 import Input from "../../../components/Common/Form/Input";
 import ProfileImage from "../../../components/Common/ProfileImage";
-import { selectUser } from "../../../features/authSlice";
+import { updateAccount, selectUser, login } from "../../../features/auth/authSlice";
 import { required, validate } from "../../../utils/validator";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { errorToaster } from "../../../utils/toaster";
+import useAxios from "../../../hooks/useAxios";
+import API_URL from "../../../constants/api.url";
+import { useDispatch } from "react-redux";
 
 const rules = {
   first_name: [required],
@@ -15,24 +19,73 @@ const rules = {
 type Values = {
   [key: string]: string;
 };
-const Account: React.FC = (): JSX.Element => {
+
+const Information: React.FC = (): JSX.Element => {
+  const user = useSelector(selectUser);
+  const [response, error, loading, fetcher] = useAxios();
+  const [userResponse, userError, userLoading, userfetcher] = useAxios();
+
   const [errors, setErrors] = useState<string[]>([]);
+  const dispatch = useDispatch();
   const [values, setValues] = useState<Values>({
     first_name: "",
     last_name: "",
-    phone_number: "",  
+    phone_number: "",
+    thumbnail: "",
+    email: "",
+    username: "",
   });
-  const user = useSelector(selectUser);
+
+  useEffect(() => {
+    if (!userResponse?.username) {
+      userfetcher("get", `${API_URL.Register}${user.user_id}/`);
+    }
+    //setValues(userResponse)
+    if (response) {
+        dispatch(updateAccount(response))
+      }
+  }, [userResponse?.username,response]);
 
   const handleChange = (name: string, value: string) => {
     setValues({ ...values, [name]: value });
   };
-  const handleClick = () => {
+  
+  const handleClick = async () => {
     const resultErrors = validate(values, rules);
-    setErrors(resultErrors);
+    if (resultErrors.length) {
+      errorToaster(resultErrors);
+    } else {
+      await fetcher("patch", `${API_URL.Register}${user.user_id}/`, {
+        ...values,
+        email: userResponse.email,
+        username: userResponse.username,
+      });
+      
+    }
   };
 
-  useEffect(() => {}, [user]);
+  const convertBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(file)
+      fileReader.onload = () => {
+        resolve(fileReader.result);
+      }
+      fileReader.onerror = (error) => {
+        reject(error);
+      }
+    })
+  }
+  const uploadImage =async (e) => {
+    console.log(e.target.files[0])
+    if (e.target.files && e.target.files[0]){
+        const file = e.target.files[0]
+          const base64 = await convertBase64(file)
+          console.log(base64)
+             setValues({ ...values, thumbnail:String(base64)});
+    };
+    
+  };
 
   return (
     <div className="flex flex-row-reverse">
@@ -50,12 +103,13 @@ const Account: React.FC = (): JSX.Element => {
           <div className="py-[6px] flex flex-col">
             <label className="text-brand-primary text-xl font-medium border border-brand-primary h-[55px] rounded-lg w-[212px] p-[10px] cursor-pointer border-box text-center">
               ویرایش تصویر پروفایل
-              <Input
+              <input
                 hidden={true}
                 type="file"
                 id="thumbnail"
                 name="thumbnail"
-                onChange={() => {}}
+                onChange={(e) => uploadImage(e)}
+                accept=".png, .jpg, .jpeg"
               />
             </label>
             <p className="text-lightgray text-xs text-center mt-S">
@@ -108,4 +162,6 @@ const Account: React.FC = (): JSX.Element => {
   );
 };
 
-export default Account;
+export default Information;
+
+

@@ -4,7 +4,7 @@ import TaskList from "./TaskList";
 import Button from "../../Common/Form/Button";
 import TaskModal from "../TaskModal";
 import { IProps, IData } from "../../../interfaces/board";
-import { boardUpdate } from "../../../features/updateSlice";
+import { boardUpdate } from "../../../features/update/updateSlice";
 import { useSelector } from "react-redux";
 
 const ListShow: React.FC<IProps> = ({ data }): JSX.Element => {

@@ -4,7 +4,7 @@ import { AXIOS } from "../../config/axios.config";
 import API_URL from "../../constants/api.url";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { refresh } from "../../features/authSlice";
+import { refresh } from "../../features/auth/authSlice";
 
 interface IProps extends React.PropsWithChildren { }
 
@@ -12,9 +12,10 @@ const AuthCheck: React.FC<IProps> = ({ children }): JSX.Element => {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { pathname } = useLocation()
+  const { pathname, search } = useLocation()
 
   useEffect(() => {
+
     const controller = new AbortController();
     const refreshToken = Cookies.get("refresh");
 
@@ -39,7 +40,7 @@ const AuthCheck: React.FC<IProps> = ({ children }): JSX.Element => {
           if (pathname === '/' || pathname === '/login' || pathname === '/register' || pathname === '/forgot') {
             navigate('workspaces');
           } else {
-            navigate(pathname);
+            navigate(pathname + search);
           }
         }
       })

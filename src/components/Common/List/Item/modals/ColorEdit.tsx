@@ -5,10 +5,10 @@ import useAxios from "../../../../../hooks/useAxios";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
-import { addWorkSpace } from "../../../../../features/updateSlice";
 import { IEdit } from "../../../../../interfaces/modals";
 import ColorPicker from "../../../ColorPicker";
 import { workspaces } from "../../../../../constants/url";
+import { update_color } from "../../../../../features/workspace/workspaceSlice";
 
 const NameEdit: React.FC<IEdit> = ({
   currentID,
@@ -25,15 +25,13 @@ const NameEdit: React.FC<IEdit> = ({
   );
 
   const [response, error, loading, fetcher] = useAxios();
-
   const params = useParams();
-
   const dispatch = useDispatch();
 
   const ref = useRef<HTMLDivElement>(null);
 
   const edit = async () => {
-    await fetcher("patch", workspaces.patch({wid: params.wid ? params.wid : currentID}), {
+    await fetcher("patch", workspaces.patch({wid: currentID || params.wid}), {
       color: values.color,
     });
   };
@@ -50,7 +48,7 @@ const NameEdit: React.FC<IEdit> = ({
 
   useEffect(() => {
     if (response) {
-      dispatch(addWorkSpace());
+      dispatch(update_color(response));
       setValue(false);
       toast.success("تغییر رنگ با موفقیت انجام شد.");
     }

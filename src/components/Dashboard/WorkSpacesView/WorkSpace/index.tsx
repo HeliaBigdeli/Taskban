@@ -1,31 +1,29 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import WorkSpacesItem from "./WorkSpaceItem";
 import { useDraggable } from "react-use-draggable-scroll";
 import style from "./style.module.css";
 import Icon from "../../../Common/Icon";
 import API_URL from "../../../../constants/api.url";
-import useAxios from "../../../../hooks/useAxios";
 import ProjectModal from "../../ProjectModal";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { projectUpdate } from "../../../../features/updateSlice";
 import { projects } from "../../../../constants/url";
+import { IProjects } from "../../../../interfaces/projects";
 
 interface IWorkSpaceProps {
   name: string;
   color: string;
   id: number;
+  projectsData: IProjects[]
 }
 const WorkSpace: React.FC<IWorkSpaceProps> = ({
   name,
   color,
   id,
+  projectsData
 }): JSX.Element => {
   const { pathname } = useLocation();
-  const [response, error, loading, fetcher] = useAxios();
   const navigate = useNavigate();
   const [projectModal, setProjectModal] = useState<boolean>(false);
-  const update = useSelector(projectUpdate);
 
   const ref =
     useRef<HTMLDivElement>() as React.MutableRefObject<HTMLInputElement>;
@@ -43,10 +41,6 @@ const WorkSpace: React.FC<IWorkSpaceProps> = ({
     }
     setProjectModal(!projectModal);
   };
-
-  useEffect(() => {
-    fetcher("get", projects.gets({ wid: id }));
-  }, [update]);
 
   return (
     <div
@@ -67,7 +61,7 @@ const WorkSpace: React.FC<IWorkSpaceProps> = ({
 
         <div className="flex items-start gap-L my-L">
           {/* {loading ? 'در حال دریافت اطلاعات ...' : null} */}
-          {response?.map((item) => {
+          {projectsData?.map((item) => {
             return (
               <WorkSpacesItem
                 key={item.id}
@@ -81,7 +75,7 @@ const WorkSpace: React.FC<IWorkSpaceProps> = ({
         <div className=" w-full h-0.5 bg-gray-secondary"></div>
       </div>
       {projectModal && (
-        <ProjectModal modal={projectModal} setModal={handleModal}  wid={id}/>
+        <ProjectModal modal={projectModal} setModal={handleModal} wid={id} />
       )}
     </div>
   );

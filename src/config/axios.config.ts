@@ -1,13 +1,15 @@
 import axios from "axios";
 import { store } from "../app/store";
-import { refresh } from "../features/authSlice";
+import { refresh } from "../features/auth/authSlice";
 import Cookies from "js-cookie";
 import API_URL from "../constants/api.url";
 import { toast } from "react-toastify";
 import { login } from "../constants/url";
 
+export const baseAppURL = "https://quera.iran.liara.run/";
+
 export const AXIOS = axios.create({
-  baseURL: "https://quera.iran.liara.run/",
+  baseURL: baseAppURL,
 });
 
 AXIOS.interceptors.request.use(
@@ -36,7 +38,8 @@ AXIOS.interceptors.response.use(
   async (error) => {
     const request = error.config;
 
-    if (error.response.status === 401 && request.url !== login.post()) {
+    if ((error.response.status === 401 && request._retry) && request.url !== login.post()) {
+      request._retry = true
       try {
         const refreshToken = Cookies.get("refresh");
         const refreshRequest = await AXIOS.post(API_URL.Refresh, {
@@ -49,10 +52,9 @@ AXIOS.interceptors.response.use(
         request.headers.Authorization = `Bearer ${access}`;
         return axios(request);
       } catch (error) {
-        window.location.href = "/Login";
+        window.location.href = baseAppURL;
       }
     } else {
-
       if (error.response.data?.detail) {
         // hande show error as a string
         toast.error(error.response.data.detail);
@@ -61,8 +63,8 @@ AXIOS.interceptors.response.use(
         Object.keys(error.response.data).map((item) => {
           error.response.data[item].map((error) => {
             toast.error(error);
-          })
-        })
+          });
+        });
       }
       return Promise.reject(error);
     }

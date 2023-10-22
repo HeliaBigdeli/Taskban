@@ -1,4 +1,5 @@
 import { ITask } from "../../../../../interfaces/task";
+import { dateConvert } from "../../../../../utils/dateConvert";
 import Icon from "../../../../Common/Icon";
 import MembersThumb from "../../../../Common/MembersThumb";
 import Description from "./Description";
@@ -24,9 +25,7 @@ const ListItem: React.FC<IListItemProps> = ({
     3: "#FAB005",
     4: "#FA5252",
   };
-  const d = new Date(deadline);
-  const month = new Intl.DateTimeFormat("fa-IR", { month: "short" }).format(d);
-  const day = new Intl.DateTimeFormat("fa-IR", { day: "numeric" }).format(d);
+  const { month, day } = dateConvert(deadline)
 
   return (
     <div className="flex w-full py-[7px] justify-between items-center">

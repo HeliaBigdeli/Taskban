@@ -28,14 +28,12 @@ const NestedModals: React.FC<IProps> = ({
   }>(initialValue);
 
   return (
-    <>
       <CreateWorkSpace
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
         workSpaceInfo={workSpaceInfo}
         setWorkSpaceInfo={setWorkSpaceInfo}
       />
-    </>
   );
 };
 

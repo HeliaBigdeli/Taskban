@@ -1,19 +1,17 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams, useSearchParams } from "react-router-dom";
 import Input from "../../../Common/Form/Input";
 import Icon from "../../../Common/Icon";
 import { useState } from "react";
 import Navigator from "../../../Dashboard/CalenderView/Navigator";
 import FilterModal from "../../../Dashboard/FilterModal";
 import ShareModal from "../../../Dashboard/ShareModal";
-import { selectView } from "../../../../features/viewSlice";
+import { selectView } from "../../../../features/view/viewSlice";
 import { useSelector, useDispatch } from "react-redux";
-import { chengeView } from "../../../../features/viewSlice";
+import { chengeView } from "../../../../features/view/viewSlice";
 
-interface IProps {
-  title?: string;
-}
-
-const Header: React.FC<IProps> = (): JSX.Element => {
+const Header: React.FC = (): JSX.Element => {
+  const params = useParams();
+  const [searchParams] = useSearchParams();
   const { pathname } = useLocation();
   const [filterModal, setFilterModal] = useState<boolean>(false);
   const [shareModal, setShareModal] = useState<boolean>(false);
@@ -73,7 +71,7 @@ const Header: React.FC<IProps> = (): JSX.Element => {
             />
           </p>
           <span className="font-bold pl-S justify-end text-xl">
-            {/* {workspace_name} */}
+            {searchParams.get("project_name")}
           </span>
         </div>
         <button
@@ -121,7 +119,12 @@ const Header: React.FC<IProps> = (): JSX.Element => {
       </div>
       {/*----------------------------------------------- Sharing & Filter Modal --------------------------------------------- */}
       {shareModal && (
-        <ShareModal modal={shareModal} setModal={handleShareModal} title="اشتراک گذاری پروژه"/>
+        <ShareModal
+          modal={shareModal}
+          setModal={handleShareModal}
+          title="اشتراک گذاری پروژه"
+          dataID={{ wid: params.wid, pid: params.pid }}
+        />
       )}
       {filterModal && (
         <FilterModal modal={filterModal} setModal={handleFilterModal} />

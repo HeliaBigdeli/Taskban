@@ -1,13 +1,15 @@
 import { configureStore } from "@reduxjs/toolkit";
-import authReducer from "../features/authSlice";
-import updateReducer from "../features/updateSlice";
-import viewReducer from "../features/viewSlice";
+import authReducer from "../features/auth/authSlice";
+import updateReducer from "../features/update/updateSlice";
+import viewReducer from "../features/view/viewSlice";
+import workspaceSlice from "../features/workspace/workspaceSlice";
 
 export const store = configureStore({
   reducer: {
     auth: authReducer,
     update: updateReducer,
     view: viewReducer,
+    workspaces: workspaceSlice
   },
 });
 

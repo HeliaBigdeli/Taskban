@@ -2,7 +2,7 @@ import { createPortal } from "react-dom";
 import Modal from "../../Common/Modal";
 import Button from "../../Common/Form/Button";
 import Icon from "../../Common/Icon";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import DatePickerModal from "../DatePickerModal";
 import Textarea from "../../Common/Form/Textarea";
 import ShareModal from "../ShareModal";
@@ -11,14 +11,27 @@ import Dropdown from "../../Common/Dropdown";
 import DropdownItem from "../../Common/Dropdown/DropdownItem";
 import File from "../../Common/Form/File";
 import Select from "../../Common/Form/Select";
-import useAxios from "../../../hooks/useAxios";
 import { useParams } from "react-router-dom";
-import { tasks } from "../../../constants/url";
+import { boards, tasks } from "../../../constants/url";
+import { AXIOS } from "../../../config/axios.config";
+import { toast } from "react-toastify";
+import { addTask } from "../../../features/update/updateSlice";
+import { useDispatch } from "react-redux";
+import useAxios from "../../../hooks/useAxios";
+import Input from "../../Common/Form/Input";
+import { validate, required } from "../../../utils/validator";
+
+const rules = {
+  board_id: [required],
+  name: [required],
+};
 
 const portals = document.getElementById("portals") as Element;
 interface IProps {
   boardId?: number;
   modal: boolean;
+  wid?: number;
+  pid?: number;
   setModal: (value: boolean | ((prevVar: boolean) => boolean)) => void;
 }
 
@@ -26,19 +39,24 @@ const TaskModal: React.FC<IProps> = ({
   modal,
   setModal,
   boardId,
+  wid,
+  pid,
 }): JSX.Element => {
+  const [bId, setBid] = useState(boardId);
   const params = useParams();
-  const [tags, setTags] = useState(tag);
+  const dispatch = useDispatch();
+  const [tags] = useState(tag);
+  const [response, error, loading, fetcher] = useAxios();
   const [datePickerModal, setDatePickerModal] = useState<boolean>(false);
   const [shareModal, setShareModal] = useState<boolean>(false);
-  const [response, error, loading, fetcher] = useAxios();
-  const [values, setVlaues] = useState<{}>({
+  const [values, setVlaues] = useState({
     description: "",
     priority: 1,
-    // attachment: "",
-    // thumbnail: "",
-    name: "test",
-    order: 2,
+    attachment: "",
+    thumbnail: "",
+    name: "",
+    order: 1,
+    board_id: boardId || "",
   });
 
   const handleDatePickerModal = () => {
@@ -53,15 +71,77 @@ const TaskModal: React.FC<IProps> = ({
     setShareModal(!shareModal);
   };
 
-  const handleFile = (name, value) => {};
+  const handleSelect = (e) => {
+    const value = e.currentTarget.dataset.value;
+    setBid(value);
+    setVlaues({
+      ...values,
+      board_id: value,
+    });
+  };
+
+  const handleChange = (name, value) => {
+    setVlaues({
+      ...values,
+      [name]: value,
+    });
+  };
+
+  const handleFile = (name, value) => {
+    setVlaues({
+      ...values,
+      [name]: value,
+    });
+  };
+
+  const handleDropDown = (id, title) => {
+    setVlaues({
+      ...values,
+      priority: id,
+    });
+  };
 
   const handleSubmit = async () => {
-    await fetcher(
-      "post",
-      tasks.post({ wid: params.wid, pid: params.pid, bid: boardId }),
-      values
-    );
+    const resultErrors = validate(values, rules);
+
+    if (resultErrors.length) {
+      resultErrors.forEach((error) => {
+        toast.error(error);
+      });
+    } else {
+      const url = tasks.post({
+        wid: wid || params.wid,
+        pid: pid || params.pid,
+        bid: bId,
+      });
+      try {
+        const res = await AXIOS.post(url, values, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+        if (res?.status === 201) {
+          toast.success("تسک جدید با موفقیت ثبت شد.");
+          setModal(!modal);
+          dispatch(addTask());
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
   };
+
+  useEffect(() => {
+    if (modal) {
+      fetcher(
+        "get",
+        boards.gets({
+          wid: wid || params.wid,
+          pid: pid || params.pid,
+        })
+      );
+    }
+  }, [modal]);
 
   return (
     <>
@@ -71,21 +151,32 @@ const TaskModal: React.FC<IProps> = ({
           modal={modal}
           setModal={handleShowModal}
           hasHeader={true}
-          header={{ text: "عنوان تسک", order: 3 }}
+          header={{ text: values.name || "عنوان تسک", order: 3 }}
           hasBackIcon={false}
           backIcon={{ order: 2 }}
           hasCloseIcon={true}
           hasColor={true}
-          coloredSquare="lightgray_300"
+          coloredSquare={`${
+            values.priority === 4
+              ? "#FB0606"
+              : values.priority === 3
+              ? "#FFE605"
+              : values.priority === 2
+              ? "#09DBCE"
+              : "#c1c1c1"
+          }`}
           closeIcon={{ order: 1 }}
         >
           <div className="flex flex-col w-[1153px] gap-M">
             <div className="flex flex-row-reverse items-center gap-[8px]">
               <span>در</span>
               <Select
-                name="tag"
-                onChange={() => {}}
-                items={tag}
+                selected={bId}
+                name="board_id"
+                onChange={(e) => {
+                  handleSelect(e);
+                }}
+                items={response}
                 className="w-[200px]"
                 searchPlaceholder="جستجو"
               />
@@ -99,24 +190,35 @@ const TaskModal: React.FC<IProps> = ({
                 <Icon icon="user_add" color="#c1c1c1" />
               </div>
             </div>
+            <Input
+              placeholder="عنوان تسک را وار کنید"
+              type="text"
+              name="name"
+              id="name"
+              className="py-2"
+              inputValue={values?.name}
+              onChange={(name, value) => handleChange(name, value)}
+            />
             <Textarea
               className="w-full py-[19px] px-L rounded-xl text-right resize-none border border-[#E2E2E2] outline-none"
               id="description"
-              rows={1}
+              rows={3}
               name="description"
-              onChange={() => {}}
+              onChange={(name, value) => handleChange(name, value)}
               placeholder="توضیحاتی برای این تسک بنویسید"
             />
             <File
+              inputValue={values.attachment}
               onChangeFile={(name, value) => {
                 handleFile(name, value);
               }}
-              id="atachment"
-              name="atachment"
+              id="attachment"
+              name="attachment"
               hasLabel={true}
               label="افزودن پیوست"
             />
             <File
+              inputValue={values.thumbnail}
               onChangeFile={(name, value) => {
                 handleFile(name, value);
               }}
@@ -137,8 +239,8 @@ const TaskModal: React.FC<IProps> = ({
                         <DropdownItem
                           key={item.id}
                           title={item.name}
-                          bgcolor={item.color}
                           id={item.id}
+                          bgcolor={item.color}
                         />
                       );
                     })}
@@ -153,29 +255,43 @@ const TaskModal: React.FC<IProps> = ({
                 <div className="cursor-pointer border-dashed border-2 rounded-full border-[#c1c1c1] w-[50px] h-[50px] flex justify-center items-center">
                   <Dropdown
                     type="icon"
-                    icon={{ icon: "flag", color: "#c1c1c1" }}
+                    icon={{
+                      icon: "flag",
+                      color:
+                        values.priority === 4
+                          ? "#FB0606"
+                          : values.priority === 3
+                          ? "#FFE605"
+                          : values.priority === 2
+                          ? "#09DBCE"
+                          : "#c1c1c1",
+                    }}
                   >
                     <DropdownItem
-                      id={1}
+                      id={4}
                       title="فوری"
+                      onClick={(id, title) => handleDropDown(id, title)}
                       hasIcon={true}
                       icon={{ icon: "flag", color: "#FB0606" }}
                     />
                     <DropdownItem
-                      id={2}
+                      id={3}
                       title="بالا"
+                      onClick={(id, title) => handleDropDown(id, title)}
                       hasIcon={true}
                       icon={{ icon: "flag", color: "#FFE605" }}
                     />
                     <DropdownItem
-                      id={3}
+                      id={2}
                       title="متوسط"
+                      onClick={(id, title) => handleDropDown(id, title)}
                       hasIcon={true}
                       icon={{ icon: "flag", color: "#09DBCE" }}
                     />
                     <DropdownItem
-                      id={4}
+                      id={1}
                       title="پایین"
+                      onClick={(id, title) => handleDropDown(id, title)}
                       hasIcon={true}
                       icon={{ icon: "flag", color: "#B2ACAC" }}
                     />
@@ -204,6 +320,7 @@ const TaskModal: React.FC<IProps> = ({
           modal={shareModal}
           setModal={handleShareModal}
           title="اشتراک گذاری تسک"
+          dataID={{ wid: params.wid, pid: params.pid, bid: bId }}
         />
       )}
     </>

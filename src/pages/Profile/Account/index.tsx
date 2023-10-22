@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import { required, email, validate } from "../../../utils/validator/index";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { selectUser } from "../../../features/authSlice";
+import { selectUser } from "../../../features/auth/authSlice";
 import { useSelector } from "react-redux";
 import { errorToaster } from "../../../utils/toaster";
 import { accounts, change_password } from "../../../constants/url";
@@ -22,7 +22,7 @@ type Values = {
   [key: string]: string;
 };
 
-const Information: React.FC = (): JSX.Element => {
+const Account: React.FC = (): JSX.Element => {
   const user = useSelector(selectUser);
   const [response, error, loading, fetcher] = useAxios();
   const [userResponse, userError, userLoading, userfetcher] = useAxios();
@@ -57,9 +57,12 @@ const Information: React.FC = (): JSX.Element => {
       userfetcher("get", accounts.get({ uid: user.user_id }));
     }
     setValues(userResponse);
-
+    console.log(values)
     if (response) {
-      toast.success(response);
+      toast.success(response.detail[0], {
+        position: "bottom-left",
+        autoClose: 3000,
+      });
     }
   }, [userResponse?.username, response, error]);
 
@@ -139,4 +142,4 @@ const Information: React.FC = (): JSX.Element => {
   );
 };
 
-export default Information;
+export default Account;

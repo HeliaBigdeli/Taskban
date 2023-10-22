@@ -5,7 +5,7 @@ import Button from "../../../components/Common/Form/Button";
 import { useState, useEffect } from "react";
 import { required, validate } from "../../../utils/validator";
 import API_URL from "../../../constants/api.url";
-import { login } from "../../../features/authSlice";
+import { login } from "../../../features/auth/authSlice";
 import { useDispatch } from "react-redux";
 import useAxios from "../../../hooks/useAxios";
 const rules = {

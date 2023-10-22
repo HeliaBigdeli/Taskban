@@ -1,4 +1,6 @@
+import { useEffect } from "react";
 import Icon from "../Icon/";
+import styles from "./style.module.css";
 
 interface IHeader {
   text?: string;
@@ -54,7 +56,16 @@ const Modal: React.FC<IProps> = ({
   const handleClose = () => {
     if (closeIcon.resetInputValue) closeIcon.resetInputValue();
     setModal(false);
+    document.body.style.overflow = "unset";
   };
+
+  useEffect(() => {
+    if (modal) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+  }, [modal]);
 
   return (
     <>
@@ -95,7 +106,8 @@ const Modal: React.FC<IProps> = ({
                 {hasHeader ? header?.text : ""}
                 {hasColor && (
                   <div
-                    className={`w-S h-S rounded-sm bg-${coloredSquare}`}
+                    style={{ backgroundColor: coloredSquare }}
+                    className={`w-S h-S rounded-sm`}
                   ></div>
                 )}
               </h2>

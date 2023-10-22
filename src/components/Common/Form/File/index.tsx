@@ -6,6 +6,10 @@ interface IProps {
   id: string;
   name: string;
   inputValue: string,
+  hasIcon?:boolean,
+  icon?:string,
+  text?:string
+  styles:string
   onChangeFile: (name: string, value: any) => void;
 }
 
@@ -16,6 +20,10 @@ const File: React.FC<IProps> = ({
   name,
   hasLabel,
   label,
+  text,
+  hasIcon,
+  icon,
+  styles
 }): JSX.Element => {
   const handleChange = (e) => {
     if (inputValue) {
@@ -36,9 +44,10 @@ const File: React.FC<IProps> = ({
         </label>
       )}
       {!inputValue ?
-        <label className="flex flex-row items-center text-base font-medium border border-brand-primary h-[36px] rounded-lg py-[4px] px-[8px] gap-[4px] cursor-pointer text-center">
-          آپلود فایل
-          <Icon icon="attach" color="#208d8e" />
+        <label className={styles}>
+           {text}
+           {hasIcon&&
+          <Icon icon={icon} color="#208d8e" />}
           <input type="file" id={id} name={name} hidden onChange={handleChange} />
         </label> :
         <button className="flex flex-row items-center text-base font-medium border border-brand-primary h-[36px] rounded-lg py-[4px] px-[8px] gap-[4px] text-center">

@@ -94,7 +94,7 @@ const ListItem: React.FC<IProps> = ({
       toast.success("آیتم مورد نظر با موفقیت حذف شد.");
       navigate("workspaces");
     }
-  }, [responseDelete, project.id, workspace.id]);
+  }, [responseDelete, project.id, workspace.id, projectsData]);
 
   return (
     <li>

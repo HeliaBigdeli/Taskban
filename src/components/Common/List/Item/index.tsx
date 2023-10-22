@@ -118,7 +118,7 @@ const ListItem: React.FC<IProps> = ({
           className="flex justify-between items-center cursor-pointer"
           onClick={toggleAccordion}
         >
-          {name}
+          {name.length > 20 ? " ..." : ""} {name.substring(0, 20)}
           <span
             className={`w-[20px] h-[20px] rounded-md ml-XS inline-block`}
             style={{ backgroundColor: color }}
@@ -194,7 +194,8 @@ const ListItem: React.FC<IProps> = ({
                   );
                 }}
               >
-                {project.name}
+                {project.name.length > 20 ? " ..." : ""}{" "}
+                {project.name.substring(0, 20)}
               </p>
               <span
                 onClick={() => {

@@ -12,15 +12,16 @@ const WorkSpacesItem: React.FC<IWorkSpacesItemProps> = ({
   color,
   name,
   id,
-  workspace_id
-  
+  workspace_id,
 }): JSX.Element => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
 
   const handleClick = () => {
     if (pathname === "/workspaces") {
-      navigate(`/${boards.gets({ wid: workspace_id, pid: id })}?project_name=${name}`);
+      navigate(
+        `/${boards.gets({ wid: workspace_id, pid: id })}?project_name=${name}`
+      );
     } else {
       navigate(`${id}/${API_URL.Boards}?project_name=${name}`);
     }
@@ -29,10 +30,10 @@ const WorkSpacesItem: React.FC<IWorkSpacesItemProps> = ({
   return (
     <div
       onClick={handleClick}
-      className="flex justify-center w-[200px] cursor-pointer shrink-0 h-20 py-[26px] pr-[71px] pl-[67px] items-center rounded-2xl shadow-taskColumn text-white text-base font-extrabold"
+      className="flex justify-center w-[200px] cursor-pointer shrink-0 h-20 text-center items-center rounded-2xl shadow-taskColumn text-white text-base font-extrabold"
       style={{ background: `${color}` }}
     >
-      {name}
+      {name.substring(0, 20)} {name.length > 20 ? " ..." : ""}
     </div>
   );
 };

@@ -8,6 +8,7 @@ import { useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import useAxios from "../../../../hooks/useAxios";
 import { boards } from "../../../../constants/url";
+import ColorPicker from "../../../Common/ColorPicker";
 
 const portals = document.getElementById("portals") as Element;
 
@@ -21,7 +22,8 @@ const NewBoardModal: React.FC<IProps> = ({ modal, setModal }): JSX.Element => {
   const dispatch = useDispatch();
   const [response, error, loading, fetcher] = useAxios();
   const [values, setVlaues] = useState({
-    title: "",
+    color: "",
+    name: "",
     order: 0,
     is_archive: true,
   });
@@ -44,9 +46,7 @@ const NewBoardModal: React.FC<IProps> = ({ modal, setModal }): JSX.Element => {
         wid: params.wid,
         pid: params.pid,
       }),
-      {
-        name: values.title,
-      }
+      values
     );
   };
 
@@ -70,22 +70,31 @@ const NewBoardModal: React.FC<IProps> = ({ modal, setModal }): JSX.Element => {
           hasCloseIcon={true}
           closeIcon={{ order: 3 }}
         >
-          <div className="flex flex-col gap-XL w-[500px] pt-0">
+          <div className="flex flex-col gap-M w-[500px] pt-0">
+            <div className="flex flex-row-reverse items-center">
+              <ColorPicker
+                onClick={(data) =>
+                  setVlaues({ ...values, color: data.code || "" })
+                }
+                hasDisableIcon={true}
+                selected={values.color}
+              />
+            </div>
             <div className="flex flex-col gap-[8px]" dir="rtl">
               <Input
-                name="title"
-                id="title"
+                name="name"
+                id="name"
                 type="text"
                 label="نام برد جدید"
                 hasLabel={true}
                 className="h-XL rounded-md border border-[#aaaaaa] text-sm outline-none pr-1 bg-white"
                 onChange={(name, value) => handleChange(name, value)}
-                inputValue={values.title}
+                inputValue={values.name}
                 autoFocus={true}
               />
             </div>
             <Button
-              disabled={!values.title}
+              disabled={!values.name}
               text="ادامه"
               type="button"
               onClick={postBoard}

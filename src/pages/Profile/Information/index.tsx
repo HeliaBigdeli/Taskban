@@ -1,7 +1,7 @@
 import Button from "../../../components/Common/Form/Button";
 import Input from "../../../components/Common/Form/Input";
 import ProfileImage from "../../../components/Common/ProfileImage";
-import { updateAccount, selectUser, login } from "../../../features/auth/authSlice";
+import { updateAccount, selectUser} from "../../../features/auth/authSlice"
 import { required, validate } from "../../../utils/validator";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -9,7 +9,10 @@ import { errorToaster } from "../../../utils/toaster";
 import useAxios from "../../../hooks/useAxios";
 import API_URL from "../../../constants/api.url";
 import { useDispatch } from "react-redux";
-
+import { accounts,update } from "../../../constants/url";
+import { toast } from "react-toastify";
+import { AXIOS } from "../../../config/axios.config";
+import File from "../../../components/Common/Form/File"
 const rules = {
   first_name: [required],
   last_name: [required],
@@ -40,10 +43,10 @@ const Information: React.FC = (): JSX.Element => {
     if (!userResponse?.username) {
       userfetcher("get", `${API_URL.Register}${user.user_id}/`);
     }
-    //setValues(userResponse)
-    if (response) {
-        dispatch(updateAccount(response))
-      }
+    // if (response) {
+    //   console.log("response")
+    //     dispatch(updateAccount(response))
+    //   }
   }, [userResponse?.username,response]);
 
   const handleChange = (name: string, value: string) => {
@@ -55,36 +58,29 @@ const Information: React.FC = (): JSX.Element => {
     if (resultErrors.length) {
       errorToaster(resultErrors);
     } else {
-      await fetcher("patch", `${API_URL.Register}${user.user_id}/`, {
-        ...values,
-        email: userResponse.email,
-        username: userResponse.username,
-      });
-      
+      const url=update.patch({
+        aid:user.user_id
+      })
+         setValues({...values, email: userResponse.email, username: userResponse.username})
+          try{
+             const res=await AXIOS.patch(url,
+              values,
+              {headers: {"Content-Type": "multipart/form-data"}});
+              if (res?.status === 200) {
+                 toast.success(res?.statusText);
+                 dispatch(updateAccount(res.data))
+              }
+            }
+            catch(error){
+            console.log(error);
+            }
     }
   };
-
-  const convertBase64 = (file) => {
-    return new Promise((resolve, reject) => {
-      const fileReader = new FileReader();
-      fileReader.readAsDataURL(file)
-      fileReader.onload = () => {
-        resolve(fileReader.result);
-      }
-      fileReader.onerror = (error) => {
-        reject(error);
-      }
-    })
-  }
-  const uploadImage =async (e) => {
-    console.log(e.target.files[0])
-    if (e.target.files && e.target.files[0]){
-        const file = e.target.files[0]
-          const base64 = await convertBase64(file)
-          console.log(base64)
-             setValues({ ...values, thumbnail:String(base64)});
-    };
-    
+  const handleFile = (name, value) => {
+    setValues({
+      ...values,
+      [name]: value,
+    });
   };
 
   return (
@@ -101,17 +97,29 @@ const Information: React.FC = (): JSX.Element => {
             />
           </span>
           <div className="py-[6px] flex flex-col">
-            <label className="text-brand-primary text-xl font-medium border border-brand-primary h-[55px] rounded-lg w-[212px] p-[10px] cursor-pointer border-box text-center">
+            {/* <label className="text-brand-primary text-xl font-medium border border-brand-primary h-[55px] rounded-lg w-[212px] p-[10px] cursor-pointer border-box text-center">
               ویرایش تصویر پروفایل
               <input
                 hidden={true}
                 type="file"
                 id="thumbnail"
                 name="thumbnail"
-                onChange={(e) => uploadImage(e)}
+                onChange={(e)=>UploadImage(e)}
                 accept=".png, .jpg, .jpeg"
               />
-            </label>
+            </label> */}
+              <File
+              inputValue={values.thumbnail}
+              onChangeFile={(name, value) => {
+                handleFile(name, value);
+              } }
+              id="thumbnail"
+              name="thumbnail"
+              hasLabel={false}
+              text="ویرایش تصویر پروفایل"
+              hasIcon={false}
+              icon={""} 
+              styles="text-brand-primary text-xl font-medium border border-brand-primary h-[55px] rounded-lg w-[212px] p-[10px] cursor-pointer border-box text-center"/>
             <p className="text-lightgray text-xs text-center mt-S">
               این تصویر برای عموم قابل نمایش است
             </p>

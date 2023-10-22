@@ -1,7 +1,7 @@
 import Button from "../../../components/Common/Form/Button";
 import Input from "../../../components/Common/Form/Input";
 import ProfileImage from "../../../components/Common/ProfileImage";
-import { updateAccount, selectUser} from "../../../features/auth/authSlice"
+import { updateAccount, selectUser } from "../../../features/auth/authSlice";
 import { required, validate } from "../../../utils/validator";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -9,10 +9,10 @@ import { errorToaster } from "../../../utils/toaster";
 import useAxios from "../../../hooks/useAxios";
 import API_URL from "../../../constants/api.url";
 import { useDispatch } from "react-redux";
-import { accounts,update } from "../../../constants/url";
+import { accounts, update } from "../../../constants/url";
 import { toast } from "react-toastify";
 import { AXIOS } from "../../../config/axios.config";
-import File from "../../../components/Common/Form/File"
+import File from "../../../components/Common/Form/File";
 const rules = {
   first_name: [required],
   last_name: [required],
@@ -40,40 +40,41 @@ const Information: React.FC = (): JSX.Element => {
   });
 
   useEffect(() => {
-    if (!userResponse?.username) {
+    if (!userResponse?.first_name) {
       userfetcher("get", `${API_URL.Register}${user.user_id}/`);
     }
-    // if (response) {
-    //   console.log("response")
-    //     dispatch(updateAccount(response))
-    //   }
-  }, [userResponse?.username,response]);
+    setValues(userResponse);
+
+  }, [userResponse?.first_name, response]);
 
   const handleChange = (name: string, value: string) => {
     setValues({ ...values, [name]: value });
   };
-  
+
   const handleClick = async () => {
     const resultErrors = validate(values, rules);
     if (resultErrors.length) {
       errorToaster(resultErrors);
     } else {
-      const url=update.patch({
-        aid:user.user_id
-      })
-         setValues({...values, email: userResponse.email, username: userResponse.username})
-          try{
-             const res=await AXIOS.patch(url,
-              values,
-              {headers: {"Content-Type": "multipart/form-data"}});
-              if (res?.status === 200) {
-                 toast.success(res?.statusText);
-                 dispatch(updateAccount(res.data))
-              }
-            }
-            catch(error){
-            console.log(error);
-            }
+      const url = update.patch({
+        aid: user.user_id,
+      });
+      setValues({
+        ...values,
+        email: userResponse.email,
+        username: userResponse.username,
+      });
+      try {
+        const res = await AXIOS.patch(url, values, {
+          headers: { "Content-Type": "multipart/form-data" },
+        });
+        if (res?.status === 200) {
+          toast.success(res?.statusText);
+          dispatch(updateAccount(res.data));
+        }
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
   const handleFile = (name, value) => {
@@ -97,29 +98,18 @@ const Information: React.FC = (): JSX.Element => {
             />
           </span>
           <div className="py-[6px] flex flex-col">
-            {/* <label className="text-brand-primary text-xl font-medium border border-brand-primary h-[55px] rounded-lg w-[212px] p-[10px] cursor-pointer border-box text-center">
-              ویرایش تصویر پروفایل
-              <input
-                hidden={true}
-                type="file"
-                id="thumbnail"
-                name="thumbnail"
-                onChange={(e)=>UploadImage(e)}
-                accept=".png, .jpg, .jpeg"
-              />
-            </label> */}
-              <File
-              inputValue={values.thumbnail}
+            <File
+              inputValue={values?.thumbnail}
               onChangeFile={(name, value) => {
                 handleFile(name, value);
-              } }
+              }}
               id="thumbnail"
               name="thumbnail"
               hasLabel={false}
               text="ویرایش تصویر پروفایل"
               hasIcon={false}
-              icon={""} 
-              styles="text-brand-primary text-xl font-medium border border-brand-primary h-[55px] rounded-lg w-[212px] p-[10px] cursor-pointer border-box text-center"/>
+              styles="text-brand-primary text-xl font-medium border border-brand-primary h-[55px] rounded-lg w-[212px] p-[10px] cursor-pointer border-box text-center"
+            />
             <p className="text-lightgray text-xs text-center mt-S">
               این تصویر برای عموم قابل نمایش است
             </p>
@@ -127,7 +117,7 @@ const Information: React.FC = (): JSX.Element => {
         </div>
         <form className="flex flex-col gap-S w-full mt-L">
           <Input
-            inputValue={values.first_name}
+            inputValue={values?.first_name}
             name="first_name"
             id="first_name"
             type="text"
@@ -137,7 +127,7 @@ const Information: React.FC = (): JSX.Element => {
             onChange={(name, value) => handleChange(name, value)}
           />
           <Input
-            inputValue={values.last_name}
+            inputValue={values?.last_name}
             name="last_name"
             id="last_name"
             type="text"
@@ -148,7 +138,7 @@ const Information: React.FC = (): JSX.Element => {
           />
 
           <Input
-            inputValue={values.phone_number}
+            inputValue={values?.phone_number}
             name="phone_number"
             id="phone_number"
             type="tel"
@@ -171,5 +161,3 @@ const Information: React.FC = (): JSX.Element => {
 };
 
 export default Information;
-
-

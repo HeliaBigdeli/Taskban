@@ -13,6 +13,9 @@ import NestedModals from "../../Common/Modal/NestedModals";
 import { logout, selectUser } from "../../../features/auth/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import ProfileImage from "../../Common/ProfileImage";
+import { IWorkspace } from "../../../interfaces/workspace";
+import { selectWorkspace } from "../../../features/workspace/workspaceSlice";
+import { boards, projects } from "../../../constants/url";
 
 const DashboardLayout: React.FC = (): JSX.Element => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -20,9 +23,22 @@ const DashboardLayout: React.FC = (): JSX.Element => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector(selectUser);
+  const [data, setData] = useState<IWorkspace[]>([]);
+  const [query, setQuery] = useState<string>("");
+  const [listShow, setListShow] = useState(false);
+  const { workspaces } = useSelector(selectWorkspace);
 
   const handleChange = (name: string, value: string) => {
-    console.log(name, value);
+    setListShow(true);
+    setQuery(value);
+    const data = workspaces.filter((item) => {
+      return (
+        item.name.includes(value) ||
+        item.projects.find((x) => x.name.includes(value))
+      );
+    });
+
+    setData(data);
   };
 
   const handleClose = () => {
@@ -45,7 +61,8 @@ const DashboardLayout: React.FC = (): JSX.Element => {
           <span className="font-bold font-base">ورک‌ اسپیس‌ها</span>
         </div>
         <Input
-          className="pr-L my-5 border-none bg-lightgray_100 h-XL text-xs"
+          inputValue={query}
+          className="pr-L my-5 border-none bg-lightgray_100 h-XL text-xs relative"
           placeholder="جستجو کنید"
           name="search"
           id="search"
@@ -56,7 +73,53 @@ const DashboardLayout: React.FC = (): JSX.Element => {
             icon: "search",
           }}
           onChange={(name, value) => handleChange(name, value)}
-        />
+        >
+          {query && listShow && (
+            <div className="absolute left-0 bg-white w-full rounded-sm top-[64px] p-2 shadow-select z-30 max-h-[200px] overflow-y-auto overflow-x-hidden">
+              {data.length ? (
+                data?.map((item) => {
+                  return (
+                    <div className="flex flex-col">
+                      <div
+                        style={{ color: item.color }}
+                        key={item.id}
+                        className="cursor-pointer hover:bg-lightgray_200 p-1 rounded-sm"
+                      >
+                        {item.name}
+                      </div>
+                      <div>
+                        {item.projects.map((project) => {
+                          if (project.name.includes(query)) {
+                            return (
+                              <p
+                                onClick={() => {
+                                  navigate(
+                                    `${boards.gets({
+                                      wid: item.id,
+                                      pid: project.id,
+                                    })}`
+                                  );
+                                  setListShow(false)
+                                  setQuery("")
+                                }}
+                                className="flex flex-row-reverse items-center cursor-pointer hover:bg-lightgray_200 p-1 rounded-sm text-sm"
+                              >
+                                <Icon icon="chevron_left" />
+                                {project.name}
+                              </p>
+                            );
+                          }
+                        })}
+                      </div>
+                    </div>
+                  );
+                })
+              ) : (
+                <p>! موردی یافت نشد</p>
+              )}
+            </div>
+          )}
+        </Input>
         <Button
           text="ساختن اسپیس جدید"
           onClick={() => {

@@ -17,7 +17,10 @@ import { useReducer } from "react";
 import { detailsReducer } from "../../../../utils/reducer/reducer";
 import { workspaces, projects, boards } from "../../../../constants/url";
 import { IProjects } from "../../../../interfaces/projects";
-import { removeProject, removeWorkspace } from "../../../../features/workspace/workspaceSlice";
+import {
+  removeProject,
+  removeWorkspace,
+} from "../../../../features/workspace/workspaceSlice";
 
 interface IProps {
   id: number;
@@ -70,6 +73,13 @@ const ListItem: React.FC<IProps> = ({
     toast.success("لینک با موفقیت در کلیپ بورد کپی شد.");
   };
 
+  const handleNewTaskBtn = () => {
+    handleActions("projectModal");
+
+    // force component rerender : )
+    setWorkspace({ id });
+  };
+
   const handleWorkspaceRemove = () => {
     fetcherDel("delete", workspaces.delete({ wid: id ? id : workspace.id }));
   };
@@ -87,7 +97,7 @@ const ListItem: React.FC<IProps> = ({
         dispatch(removeWorkspace(id));
         state.workspaceAlert = false;
       } else {
-        dispatch(removeProject({wid: id, pid: project.id}));
+        dispatch(removeProject({ wid: id, pid: project.id }));
         state.projectAlert = false;
       }
 
@@ -231,7 +241,7 @@ const ListItem: React.FC<IProps> = ({
           {!projectsData?.length && (
             <Button
               text="ساختن پروژه جدید"
-              onClick={() => handleActions("projectModal")}
+              onClick={handleNewTaskBtn}
               type="button"
               className="text-brand-primary mt-2 h-L text-sm font-bold leading-normal self-stretch rounded-md border border-brand-primary mb-L w-full"
             />

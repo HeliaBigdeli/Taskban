@@ -1,14 +1,14 @@
 import { useState } from "react";
 import AddMore from "./AddMore";
-import API_URL from "../../../../../constants/api.url";
-import { useNavigate, useParams } from "react-router-dom";
 interface ITaskColumnProps {
   title: string;
+  color: string;
   count: number;
   boardId: number;
 }
 const TaskColumn: React.FC<ITaskColumnProps> = ({
   title,
+  color,
   count,
   boardId,
 }): JSX.Element => {
@@ -16,7 +16,8 @@ const TaskColumn: React.FC<ITaskColumnProps> = ({
 
   return (
     <div
-      className="flex w-[250px] py-XS px-[12px] justify-between items-center rounded-2xl border-t-2 border-[#FD7E14] shadow-taskColumn"
+      style={{ borderColor: color }}
+      className="flex w-[250px] py-XS px-[12px] justify-between items-center rounded-2xl border-t-2 shadow-taskColumn"
       onMouseEnter={() => setIsShown(true)}
       onMouseLeave={() => setIsShown(false)}
     >

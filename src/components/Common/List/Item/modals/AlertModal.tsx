@@ -10,6 +10,12 @@ const AlertModal: React.FC<IAlert> = ({
 }): JSX.Element => {
   const handleNo = () => {
     setIsAlertOpen(false);
+    document.body.style.overflow = "unset";
+  };
+
+  const handleYesClick = () => {
+    handleYes();
+    document.body.style.overflow = "unset";
   };
 
   return (
@@ -29,7 +35,7 @@ const AlertModal: React.FC<IAlert> = ({
       <div className="flex justify-center gap-5 items-center">
         <Button
           type="button"
-          onClick={handleYes}
+          onClick={handleYesClick}
           text="بله"
           className="bg-green-primary px-14 py-1 rounded-lg text-white"
         />

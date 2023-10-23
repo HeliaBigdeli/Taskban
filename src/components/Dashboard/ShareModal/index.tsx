@@ -64,7 +64,10 @@ const ShareModal: React.FC<IProps> = ({
     if (resultErrors.length) {
       toast.error(resultErrors[0]);
     } else {
-      await subsFetcher("post", subscription.post(), { email: values.email, url });
+      await subsFetcher("post", subscription.post(), {
+        email: values.email,
+        url,
+      });
     }
   };
 
@@ -94,7 +97,7 @@ const ShareModal: React.FC<IProps> = ({
     }
     if (subsFetcher && subsResponse) {
       setTid(subsResponse?.id);
-      toast.success('ایمیل با موفقیت ارسال شد.')
+      toast.success("ایمیل با موفقیت ارسال شد.");
     }
   }, [modal, tid, subsResponse]);
 

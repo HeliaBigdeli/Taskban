@@ -1,7 +1,7 @@
 import Button from "../../../components/Common/Form/Button";
 import Input from "../../../components/Common/Form/Input";
 import ProfileImage from "../../../components/Common/ProfileImage";
-import { updateAccount, selectUser} from "../../../features/auth/authSlice"
+import { updateAccount, selectUser } from "../../../features/auth/authSlice";
 import { required, validate } from "../../../utils/validator";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -12,7 +12,7 @@ import { useDispatch } from "react-redux";
 import { update } from "../../../constants/url";
 import { toast } from "react-toastify";
 import { AXIOS } from "../../../config/axios.config";
-import File from "../../../components/Common/Form/File"
+import File from "../../../components/Common/Form/File";
 const rules = {
   first_name: [required],
   last_name: [required],
@@ -39,7 +39,7 @@ const Information: React.FC = (): JSX.Element => {
   });
 
   useEffect(() => {
-    if (!userResponse?.username) {
+    if (!userResponse?.first_name) {
       userfetcher("get", `${API_URL.Register}${user.user_id}/`);
     }
     setValues({...values,username:userResponse?.username,email:userResponse?.email})
@@ -48,7 +48,7 @@ const Information: React.FC = (): JSX.Element => {
   const handleChange = (name: string, value: string) => {
     setValues({ ...values, [name]: value });
   };
-  
+
   const handleClick = async () => {
     const resultErrors = validate(values, rules);
     if (resultErrors.length) {
@@ -93,18 +93,18 @@ const Information: React.FC = (): JSX.Element => {
             />
           </span>
           <div className="py-[6px] flex flex-col">
-              <File
-              inputValue={values.thumbnail}
+            <File
+              inputValue={values?.thumbnail}
               onChangeFile={(name, value) => {
                 handleFile(name, value);
-              } }
+              }}
               id="thumbnail"
               name="thumbnail"
               hasLabel={false}
               text="ویرایش تصویر پروفایل"
               hasIcon={false}
-              icon={""} 
-              styles="text-brand-primary text-xl font-medium border border-brand-primary h-[55px] rounded-lg w-[212px] p-[10px] cursor-pointer border-box text-center"/>
+              styles="text-brand-primary text-xl font-medium border border-brand-primary h-[55px] rounded-lg w-[212px] p-[10px] cursor-pointer border-box text-center"
+            />
             <p className="text-lightgray text-xs text-center mt-S">
               این تصویر برای عموم قابل نمایش است
             </p>
@@ -112,7 +112,7 @@ const Information: React.FC = (): JSX.Element => {
         </div>
         <form className="flex flex-col gap-S w-full mt-L">
           <Input
-            inputValue={values.first_name}
+            inputValue={values?.first_name}
             name="first_name"
             id="first_name"
             type="text"
@@ -122,7 +122,7 @@ const Information: React.FC = (): JSX.Element => {
             onChange={(name, value) => handleChange(name, value)}
           />
           <Input
-            inputValue={values.last_name}
+            inputValue={values?.last_name}
             name="last_name"
             id="last_name"
             type="text"
@@ -133,7 +133,7 @@ const Information: React.FC = (): JSX.Element => {
           />
 
           <Input
-            inputValue={values.phone_number}
+            inputValue={values?.phone_number}
             name="phone_number"
             id="phone_number"
             type="tel"
@@ -156,5 +156,3 @@ const Information: React.FC = (): JSX.Element => {
 };
 
 export default Information;
-
-

@@ -17,6 +17,7 @@ const Header: React.FC = (): JSX.Element => {
   const [shareModal, setShareModal] = useState<boolean>(false);
   const view = useSelector(selectView);
   const dispatch = useDispatch();
+  const projectName: string = searchParams.get("project_name") || "";
 
   const handleFilterModal = () => {
     setFilterModal(!filterModal);
@@ -71,7 +72,8 @@ const Header: React.FC = (): JSX.Element => {
             />
           </p>
           <span className="font-bold pl-S justify-end text-xl">
-            {searchParams.get("project_name")}
+            {projectName?.length > 20 ? " ..." : ""}
+            {projectName?.substring(0, 20)}
           </span>
         </div>
         <button

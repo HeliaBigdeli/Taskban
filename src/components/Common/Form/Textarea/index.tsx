@@ -11,6 +11,7 @@ interface IProps {
   onChange: (name: string, value: string) => void;
   className?: string;
   autoFocus?: boolean
+  style?:{}
 }
 
 const Textarea: React.FC<IProps> = ({
@@ -24,6 +25,7 @@ const Textarea: React.FC<IProps> = ({
   placeholder,
   onChange,
   className,
+  style,
 }): JSX.Element => {
   const [value, setValue] = useState(inputValue);
 
@@ -51,8 +53,10 @@ const Textarea: React.FC<IProps> = ({
             name={name}
             id={id}
             rows={rows}
+            dir="rtl"
             onChange={handleChange}
-            className={`rounded-md border border-lightgray px-2 text-right w-full ${className}`}
+            className={`rounded-md border resize-none border-lightgray px-2 text-right w-full ${className}`}
+            style={style}
           />        
         </div>       
       </div>

@@ -4,7 +4,7 @@ export interface IWorkspace {
   id: number;
   name: string;
   color: string;
-  projects?: IProjects[]
+  projects: IProjects[]
 }
 
 export interface IData {

@@ -2,7 +2,7 @@ import { createPortal } from "react-dom";
 import Modal from "../../Common/Modal";
 import Button from "../../Common/Form/Button";
 import Icon from "../../Common/Icon";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import DatePickerModal from "../DatePickerModal";
 import Textarea from "../../Common/Form/Textarea";
 import ShareModal from "../ShareModal";
@@ -12,14 +12,15 @@ import DropdownItem from "../../Common/Dropdown/DropdownItem";
 import File from "../../Common/Form/File";
 import Select from "../../Common/Form/Select";
 import { useParams } from "react-router-dom";
-import { boards, tasks } from "../../../constants/url";
+import { tasks } from "../../../constants/url";
 import { AXIOS } from "../../../config/axios.config";
 import { toast } from "react-toastify";
-import { addTask } from "../../../features/update/updateSlice";
 import { useDispatch } from "react-redux";
-import useAxios from "../../../hooks/useAxios";
 import Input from "../../Common/Form/Input";
 import { validate, required } from "../../../utils/validator";
+import { addNewTask, selectBoard } from "../../../features/board/boardSlice";
+import { useSelector } from "react-redux";
+import { addTask } from "../../../features/update/updateSlice";
 
 const rules = {
   board_id: [required],
@@ -46,7 +47,7 @@ const TaskModal: React.FC<IProps> = ({
   const params = useParams();
   const dispatch = useDispatch();
   const [tags] = useState(tag);
-  const [response, error, loading, fetcher] = useAxios();
+  const boards = useSelector(selectBoard).boards;
   const [datePickerModal, setDatePickerModal] = useState<boolean>(false);
   const [shareModal, setShareModal] = useState<boolean>(false);
   const [values, setVlaues] = useState({
@@ -87,13 +88,6 @@ const TaskModal: React.FC<IProps> = ({
     });
   };
 
-  const handleFile = (name, value) => {
-    setVlaues({
-      ...values,
-      [name]: value,
-    });
-  };
-
   const handleDropDown = (id, title) => {
     setVlaues({
       ...values,
@@ -123,25 +117,14 @@ const TaskModal: React.FC<IProps> = ({
         if (res?.status === 201) {
           toast.success("تسک جدید با موفقیت ثبت شد.");
           setModal(!modal);
-          dispatch(addTask());
+          dispatch(addNewTask({ id: pid || params.pid, response: res.data }));
+          dispatch(addTask())
         }
       } catch (error) {
         console.log(error);
       }
     }
   };
-
-  useEffect(() => {
-    if (modal) {
-      fetcher(
-        "get",
-        boards.gets({
-          wid: wid || params.wid,
-          pid: pid || params.pid,
-        })
-      );
-    }
-  }, [modal]);
 
   return (
     <>
@@ -176,7 +159,7 @@ const TaskModal: React.FC<IProps> = ({
                 onChange={(e) => {
                   handleSelect(e);
                 }}
-                items={response}
+                items={boards}
                 className="w-[200px]"
                 searchPlaceholder="جستجو"
               />
@@ -210,7 +193,7 @@ const TaskModal: React.FC<IProps> = ({
             <File
               inputValue={values.attachment}
               onChangeFile={(name, value) => {
-                handleFile(name, value);
+                handleChange(name, value);
               }}
               id="attachment"
               name="attachment"
@@ -224,7 +207,7 @@ const TaskModal: React.FC<IProps> = ({
             <File
               inputValue={values.thumbnail}
               onChangeFile={(name, value) => {
-                handleFile(name, value);
+                handleChange(name, value);
               }}
               id="thumbnail"
               name="thumbnail"

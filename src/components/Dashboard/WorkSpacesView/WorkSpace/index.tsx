@@ -43,12 +43,7 @@ const WorkSpace: React.FC<IWorkSpaceProps> = ({
   };
 
   return (
-    <div
-      ref={ref}
-      {...events}
-      className={`overflow-auto w-full ${style.scroll}`}
-      style={{ direction: "rtl" }}
-    >
+    <div className={` w-full`} style={{ direction: "rtl" }}>
       <div className="shrink-0 ">
         <div className="flex items-center gap-2">
           <h4 className="text-right text-2xl leading-8 font-extrabold">
@@ -59,8 +54,11 @@ const WorkSpace: React.FC<IWorkSpaceProps> = ({
           </button>
         </div>
 
-        <div className="flex items-start gap-L my-L">
-          {/* {loading ? 'در حال دریافت اطلاعات ...' : null} */}
+        <div
+          ref={ref}
+          {...events}
+          className={`flex overflow-auto ${style.scroll} items-start gap-L py-L`}
+        >
           {projectsData?.map((item) => {
             return (
               <WorkSpacesItem

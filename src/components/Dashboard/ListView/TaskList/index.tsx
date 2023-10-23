@@ -8,6 +8,7 @@ const TaskList: React.FC<IBoard> = ({
   tasks_count,
   tasks,
   id,
+  color,
 }): JSX.Element => {
   const [isShown, setIsShown] = useState<boolean>(true);
   const handleShow = () => {
@@ -19,6 +20,7 @@ const TaskList: React.FC<IBoard> = ({
       <ListHeader
         handleShow={handleShow}
         title={name}
+        color={color}
         tasks_count={tasks_count}
       />
       <div
@@ -26,7 +28,7 @@ const TaskList: React.FC<IBoard> = ({
         style={{ height: `${!isShown ? "0px" : height}` }}
       >
         {tasks?.map((item) => {
-          return <ListItem key={item.id} {...item} boardId={id} boardTitle={name} />;
+          return <ListItem key={item.id} {...item} boardId={id} boardTitle={name} color={color}/>;
         })}
       </div>
     </div>

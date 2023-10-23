@@ -9,6 +9,7 @@ import ListItemTitle from "./ListItemTitle";
 interface IListItemProps extends ITask {
   boardId: number;
   boardTitle: string;
+  color: string
 }
 
 const ListItem: React.FC<IListItemProps> = ({
@@ -19,13 +20,14 @@ const ListItem: React.FC<IListItemProps> = ({
   id,
   boardId,
   boardTitle,
+  color,
 }): JSX.Element => {
   const { month, day } = dateConvert(deadline);
 
   return (
     <div className="flex w-full py-[7px] justify-between items-center">
       <section className="flex items-start gap-[7px] mr-6">
-        <div className={`w-S h-S rounded-[3px] bg-[#F92E8F] `}></div>
+        <div className={`w-S h-S rounded-[3px] bg-[#00000] `} style={{backgroundColor: color}}></div>
 
         <span className="text-[#0E0E0E] text-xs font-normal">{name}</span>
       </section>

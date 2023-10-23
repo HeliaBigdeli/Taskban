@@ -6,16 +6,14 @@ import useAxios from "../../../../../hooks/useAxios";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
-import {
-  addBoard,
-  addProject,
-} from "../../../../../features/update/updateSlice";
+import { addBoard } from "../../../../../features/update/updateSlice";
 import { IEdit } from "../../../../../interfaces/modals";
 import { boards, projects, workspaces } from "../../../../../constants/url";
 import {
   project_update_name,
   update_name,
 } from "../../../../../features/workspace/workspaceSlice";
+import { board_update_name } from "../../../../../features/board/boardSlice";
 
 const NameEdit: React.FC<IEdit> = ({
   value,
@@ -26,7 +24,7 @@ const NameEdit: React.FC<IEdit> = ({
   boardId,
 }): JSX.Element => {
   const [values, setVlaues] = useState({
-    title: previousValue,
+    name: previousValue,
   });
 
   const [response, error, loading, fetcher] = useAxios();
@@ -42,7 +40,7 @@ const NameEdit: React.FC<IEdit> = ({
 
   const workSpaceEdit = async () => {
     await fetcher("patch", workspaces.patch({ wid: currentID || params.wid }), {
-      name: values.title,
+      name: values.name,
     });
   };
 
@@ -54,7 +52,7 @@ const NameEdit: React.FC<IEdit> = ({
         pid: currentID || params.pid,
       }),
       {
-        name: values.title,
+        name: values.name,
       }
     );
   };
@@ -68,7 +66,7 @@ const NameEdit: React.FC<IEdit> = ({
         bid: currentID || boardId,
       }),
       {
-        name: values.title,
+        name: values.name,
       }
     );
   };
@@ -79,16 +77,16 @@ const NameEdit: React.FC<IEdit> = ({
         ? dispatch(update_name(response))
         : type === "project"
         ? dispatch(project_update_name({ wid: params.wid, response }))
-        : dispatch(addBoard());
+        : dispatch(board_update_name(response));
       setValue(false);
       document.body.style.overflow = "unset";
       toast.success("تغییر نام با موفقیت انجام شد.");
     }
-    setVlaues({ title: previousValue });
+    setVlaues({ name: previousValue });
   }, [response]);
 
   const close = () => {
-    setVlaues({ title: previousValue });
+    setVlaues({ name: previousValue });
   };
 
   return (
@@ -106,12 +104,12 @@ const NameEdit: React.FC<IEdit> = ({
         <div className="flex flex-col gap-XL w-[500px]">
           <div className="flex flex-col gap-[8px]" dir="rtl">
             <Input
-              name="title"
-              id="title"
+              name="name"
+              id="name"
               type="text"
               className="h-XL rounded-md border border-[#aaaaaa] text-sm outline-none pr-1 bg-white"
               onChange={(name, value) => handleChange(name, value)}
-              inputValue={values.title}
+              inputValue={values.name}
               autoFocus={true}
             />
           </div>
@@ -127,7 +125,7 @@ const NameEdit: React.FC<IEdit> = ({
             }
             className="flex h-XL rounded-md bg-brand-primary text-white"
             loading={loading}
-            disabled={!values.title.trim()}
+            disabled={!values?.name?.trim()}
           />
         </div>
       </Modal>

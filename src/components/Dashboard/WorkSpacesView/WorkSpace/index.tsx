@@ -59,7 +59,6 @@ const WorkSpace: React.FC<IWorkSpaceProps> = ({
           {...events}
           className={`flex overflow-auto ${style.scroll} items-start gap-L py-L`}
         >
-          {/* {loading ? 'در حال دریافت اطلاعات ...' : null} */}
           {projectsData?.map((item) => {
             return (
               <WorkSpacesItem

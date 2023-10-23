@@ -19,7 +19,7 @@ export const updateSlice = createSlice({
   name: "update",
   initialState,
   reducers: {
-    addWorkSpace: (state) => {
+    workSpaceEvent: (state) => {
       state.workspace += 1;
     },
     addProject: (state) => {
@@ -34,10 +34,10 @@ export const updateSlice = createSlice({
   },
 });
 
-export const { addWorkSpace, addProject, addTask, addBoard } =
+export const { workSpaceEvent, addProject, addTask, addBoard } =
   updateSlice.actions;
 
-export const workSpaceUpdate = (state: RootState) => state.update.workspace;
+export const workSpaceStatus = (state: RootState) => state.update.workspace;
 export const projectUpdate = (state: RootState) => state.update.project;
 export const taskUpdate = (state: RootState) => state.update.task;
 export const boardUpdate = (state: RootState) => state.update.board;

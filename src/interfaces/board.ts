@@ -1,6 +1,6 @@
 import { ITask } from "./task";
 
-export interface IData {
+export interface IBoard {
   id: number;
   color: string,
   is_archive: boolean;
@@ -10,6 +10,6 @@ export interface IData {
   tasks_count: number
 }
 
-export interface IProps {
-  data: IData[]
+export interface IBoardData {
+  boards: IBoard[]
 }

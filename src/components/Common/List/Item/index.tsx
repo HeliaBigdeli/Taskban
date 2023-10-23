@@ -57,7 +57,7 @@ const ListItem: React.FC<IProps> = ({
   });
 
   const toggleAccordion = () => {
-    navigate(projects.gets({ wid: id }));
+    // navigate(projects.gets({ wid: id }));
     setListToggle(!listToggle);
   };
 

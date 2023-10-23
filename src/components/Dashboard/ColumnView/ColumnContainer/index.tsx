@@ -30,7 +30,7 @@ const ColumnContainer: React.FC<IColumnContainerProps> = ({
       className="flex shrink-0 flex-col items-center gap-S"
       style={{ direction: "ltr" }}
     >
-      <TaskColumn title={name} count={tasks.length} boardId={id} color={color}/>
+      <TaskColumn title={name} count={tasks?.length} boardId={id} color={color}/>
 
       <Droppable droppableId={name} type="group">
         {(provided) => (
@@ -40,7 +40,7 @@ const ColumnContainer: React.FC<IColumnContainerProps> = ({
             {...provided.droppableProps}
             ref={provided.innerRef}
           >
-            {tasks.map((item, index) => {
+            {tasks?.map((item, index) => {
               return (
                 <TaskCard
                   boardId={id}

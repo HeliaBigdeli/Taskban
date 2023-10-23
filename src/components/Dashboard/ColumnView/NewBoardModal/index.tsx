@@ -3,12 +3,12 @@ import { createPortal } from "react-dom";
 import Modal from "../../../Common/Modal";
 import Button from "../../../Common/Form/Button";
 import Input from "../../../Common/Form/Input";
-import { addBoard } from "../../../../features/update/updateSlice";
 import { useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import useAxios from "../../../../hooks/useAxios";
 import { boards } from "../../../../constants/url";
 import ColorPicker from "../../../Common/ColorPicker";
+import { add } from "../../../../features/board/boardSlice";
 
 const portals = document.getElementById("portals") as Element;
 
@@ -52,7 +52,7 @@ const NewBoardModal: React.FC<IProps> = ({ modal, setModal }): JSX.Element => {
 
   useEffect(() => {
     if (response) {
-      dispatch(addBoard());
+      dispatch(add(response));
       setModal(false);
       document.body.style.overflow = "unset";
     }

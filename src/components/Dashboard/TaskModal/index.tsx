@@ -12,14 +12,15 @@ import DropdownItem from "../../Common/Dropdown/DropdownItem";
 import File from "../../Common/Form/File";
 import Select from "../../Common/Form/Select";
 import { useParams } from "react-router-dom";
-import { boards, tasks } from "../../../constants/url";
+import { tasks } from "../../../constants/url";
 import { AXIOS } from "../../../config/axios.config";
 import { toast } from "react-toastify";
 import { addTask } from "../../../features/update/updateSlice";
 import { useDispatch } from "react-redux";
-import useAxios from "../../../hooks/useAxios";
 import Input from "../../Common/Form/Input";
 import { validate, required } from "../../../utils/validator";
+import { addNewTask, selectBoard } from "../../../features/board/boardSlice";
+import { useSelector } from "react-redux";
 
 const rules = {
   board_id: [required],
@@ -46,7 +47,7 @@ const TaskModal: React.FC<IProps> = ({
   const params = useParams();
   const dispatch = useDispatch();
   const [tags] = useState(tag);
-  const [response, error, loading, fetcher] = useAxios();
+  const boards = useSelector(selectBoard).boards;
   const [datePickerModal, setDatePickerModal] = useState<boolean>(false);
   const [shareModal, setShareModal] = useState<boolean>(false);
   const [values, setVlaues] = useState({
@@ -123,25 +124,13 @@ const TaskModal: React.FC<IProps> = ({
         if (res?.status === 201) {
           toast.success("تسک جدید با موفقیت ثبت شد.");
           setModal(!modal);
-          dispatch(addTask());
+          dispatch(addNewTask(res.data));
         }
       } catch (error) {
         console.log(error);
       }
     }
   };
-
-  useEffect(() => {
-    if (modal) {
-      fetcher(
-        "get",
-        boards.gets({
-          wid: wid || params.wid,
-          pid: pid || params.pid,
-        })
-      );
-    }
-  }, [modal]);
 
   return (
     <>
@@ -176,7 +165,7 @@ const TaskModal: React.FC<IProps> = ({
                 onChange={(e) => {
                   handleSelect(e);
                 }}
-                items={response}
+                items={boards}
                 className="w-[200px]"
                 searchPlaceholder="جستجو"
               />

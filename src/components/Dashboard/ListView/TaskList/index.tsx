@@ -1,9 +1,9 @@
 import { useState } from "react";
 import ListHeader from "./ListHeader";
 import ListItem from "./ListItem";
-import { IData } from "../../../../interfaces/board";
+import { IBoard } from "../../../../interfaces/board";
 
-const TaskList: React.FC<IData> = ({
+const TaskList: React.FC<IBoard> = ({
   name,
   tasks_count,
   tasks,

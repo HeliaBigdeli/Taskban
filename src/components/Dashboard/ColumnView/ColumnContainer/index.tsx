@@ -9,11 +9,13 @@ interface IColumnContainerProps {
   name: string;
   is_archive: boolean;
   id: number;
+  color,
   tasks: ITask[];
 }
 
 const ColumnContainer: React.FC<IColumnContainerProps> = ({
   id,
+  color,
   name,
   tasks,
   is_archive,
@@ -28,7 +30,7 @@ const ColumnContainer: React.FC<IColumnContainerProps> = ({
       className="flex shrink-0 flex-col items-center gap-S"
       style={{ direction: "ltr" }}
     >
-      <TaskColumn title={name} count={tasks.length} boardId={id} />
+      <TaskColumn title={name} count={tasks.length} boardId={id} color={color}/>
 
       <Droppable droppableId={name} type="group">
         {(provided) => (

@@ -3,14 +3,13 @@ import CalenderView from "../../../components/Dashboard/CalenderView";
 import ColumnView from "../../../components/Dashboard/ColumnView";
 import { useSelector } from "react-redux";
 import { selectView } from "../../../features/view/viewSlice";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import useAxios from "../../../hooks/useAxios";
 import Header from "../../../components/Layouts/Dashboard/Header";
 import { boardUpdate, taskUpdate } from "../../../features/update/updateSlice";
 import { boards } from "../../../constants/url";
 import useWorkspace from "../../../hooks/workspace";
-import { selectWorkspace } from "../../../features/workspace/workspaceSlice";
 
 const Boards: React.FC = (): JSX.Element => {
   const view: string = useSelector(selectView);
@@ -18,7 +17,6 @@ const Boards: React.FC = (): JSX.Element => {
   const params = useParams();
   const update = useSelector(boardUpdate);
   const updateByTask = useSelector(taskUpdate);
-  const state = useSelector(selectWorkspace)
 
   useWorkspace()
   

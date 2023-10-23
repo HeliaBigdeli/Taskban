@@ -9,6 +9,7 @@ import useAxios from "../../../hooks/useAxios";
 import Header from "../../../components/Layouts/Dashboard/Header";
 import { boardUpdate, taskUpdate } from "../../../features/update/updateSlice";
 import { boards } from "../../../constants/url";
+import useWorkspace from "../../../hooks/workspace";
 
 const Boards: React.FC = (): JSX.Element => {
   const view: string = useSelector(selectView);
@@ -16,6 +17,7 @@ const Boards: React.FC = (): JSX.Element => {
   const params = useParams();
   const update = useSelector(boardUpdate);
   const updateByTask = useSelector(taskUpdate);
+  useWorkspace() 
 
   useEffect(() => {
     fetcher(

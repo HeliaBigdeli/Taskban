@@ -46,7 +46,7 @@ const DashboardLayout: React.FC = (): JSX.Element => {
     navigate("/login");
   };
 
-  useEffect(() => {}, [user]);
+  useEffect(() => { }, [user]);
   return (
     <div className="flex px-2XL">
       <div className="flex-grow flex-col w-full overflow-hidden">
@@ -79,7 +79,7 @@ const DashboardLayout: React.FC = (): JSX.Element => {
               {data.length ? (
                 data?.map((item) => {
                   return (
-                    <div className="flex flex-col">
+                    <div className="flex flex-col" key={item.id}>
                       <div
                         style={{ color: item.color }}
                         key={item.id}
@@ -92,6 +92,7 @@ const DashboardLayout: React.FC = (): JSX.Element => {
                           if (project.name.includes(query)) {
                             return (
                               <p
+                                key={project.id}
                                 onClick={() => {
                                   navigate(
                                     `${boards.gets({

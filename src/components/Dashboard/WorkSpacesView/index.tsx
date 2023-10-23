@@ -16,7 +16,7 @@ const WorkSpaces: React.FC = (): JSX.Element => {
             <WorkSpace
               key={item.id}
               {...item}
-              projectsData={item.projects || []}
+              projectsData={item.projects}
             />
           );
         })}

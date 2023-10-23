@@ -2,7 +2,7 @@ import { createPortal } from "react-dom";
 import Modal from "../../Common/Modal";
 import Button from "../../Common/Form/Button";
 import Icon from "../../Common/Icon";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import DatePickerModal from "../DatePickerModal";
 import Textarea from "../../Common/Form/Textarea";
 import ShareModal from "../ShareModal";
@@ -15,12 +15,12 @@ import { useParams } from "react-router-dom";
 import { tasks } from "../../../constants/url";
 import { AXIOS } from "../../../config/axios.config";
 import { toast } from "react-toastify";
-import { addTask } from "../../../features/update/updateSlice";
 import { useDispatch } from "react-redux";
 import Input from "../../Common/Form/Input";
 import { validate, required } from "../../../utils/validator";
 import { addNewTask, selectBoard } from "../../../features/board/boardSlice";
 import { useSelector } from "react-redux";
+import { addTask } from "../../../features/update/updateSlice";
 
 const rules = {
   board_id: [required],
@@ -88,13 +88,6 @@ const TaskModal: React.FC<IProps> = ({
     });
   };
 
-  const handleFile = (name, value) => {
-    setVlaues({
-      ...values,
-      [name]: value,
-    });
-  };
-
   const handleDropDown = (id, title) => {
     setVlaues({
       ...values,
@@ -124,7 +117,8 @@ const TaskModal: React.FC<IProps> = ({
         if (res?.status === 201) {
           toast.success("تسک جدید با موفقیت ثبت شد.");
           setModal(!modal);
-          dispatch(addNewTask(res.data));
+          dispatch(addNewTask({ id: pid || params.pid, response: res.data }));
+          dispatch(addTask())
         }
       } catch (error) {
         console.log(error);
@@ -199,7 +193,7 @@ const TaskModal: React.FC<IProps> = ({
             <File
               inputValue={values.attachment}
               onChangeFile={(name, value) => {
-                handleFile(name, value);
+                handleChange(name, value);
               }}
               id="attachment"
               name="attachment"
@@ -213,7 +207,7 @@ const TaskModal: React.FC<IProps> = ({
             <File
               inputValue={values.thumbnail}
               onChangeFile={(name, value) => {
-                handleFile(name, value);
+                handleChange(name, value);
               }}
               id="thumbnail"
               name="thumbnail"

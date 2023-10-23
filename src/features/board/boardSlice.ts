@@ -13,6 +13,9 @@ export const boardSlice = createSlice({
     all: (state, action: PayloadAction<IBoard[]>) => {
       state.boards = action.payload;
     },
+    clearState: (state) => {
+      state.boards = [];
+    },
     add: (state, action) => {
       state.boards.push({
         ...action.payload
@@ -62,6 +65,7 @@ export const {
   addNewTask,
   removeTask,
   archiveTask,
+  clearState
 } = boardSlice.actions;
 export const selectBoard = (state: RootState) => state.boards;
 export default boardSlice.reducer;

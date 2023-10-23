@@ -31,7 +31,6 @@ const TaskCard: React.FC<ITaskCardProps> = ({
   const { fullDate, month, day, weekday } = dateConvert(deadline)
   const [searchParams] = useSearchParams();
   const [isShown, setIsShown] = useState<boolean>(false);
-  
 
   return (
     <Draggable draggableId={`${boardTitle + id} `} index={index}>
@@ -56,7 +55,7 @@ const TaskCard: React.FC<ITaskCardProps> = ({
               <MembersThumb members={members} size={24} />
             </div>
             <div className="flex flex-col items-end gap-2.5 ">
-              <span className="text-[#534D60] text-xs  font-normal">
+              <span className="text-[#534D60] text-xs font-normal">
                 {searchParams.get('project_name')}
               </span>
               <span className=" text-[#0E0E0E] text-xs  font-normal">

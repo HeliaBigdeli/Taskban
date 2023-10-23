@@ -7,11 +7,16 @@ import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Header from "../../../components/Layouts/Dashboard/Header";
 import { boards } from "../../../constants/url";
-import { all } from "../../../features/board/boardSlice";
+import {
+  all,
+  clearState,
+} from "../../../features/board/boardSlice";
 import { useDispatch } from "react-redux";
 import { AXIOS } from "../../../config/axios.config";
+import { taskUpdate } from "../../../features/update/updateSlice";
 
 const Boards: React.FC = (): JSX.Element => {
+  const update = useSelector(taskUpdate);
   const view: string = useSelector(selectView);
   const params = useParams();
   const dispatch = useDispatch();
@@ -24,7 +29,10 @@ const Boards: React.FC = (): JSX.Element => {
         }
       }
     );
-  }, [params.pid]);
+    return () => {
+      dispatch(clearState());
+    };
+  }, [update, params.pid]);
 
   switch (view) {
     case "list":

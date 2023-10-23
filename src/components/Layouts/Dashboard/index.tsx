@@ -79,6 +79,7 @@ const DashboardLayout: React.FC = (): JSX.Element => {
               firstName={user.first_name}
               lastName={user.last_name}
               showName={true}
+              img={user.thumbnail}
             />
           </Link>
           <div className="flex justify-between items-center">

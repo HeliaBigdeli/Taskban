@@ -9,7 +9,7 @@ import { errorToaster } from "../../../utils/toaster";
 import useAxios from "../../../hooks/useAxios";
 import API_URL from "../../../constants/api.url";
 import { useDispatch } from "react-redux";
-import { accounts,update } from "../../../constants/url";
+import { update } from "../../../constants/url";
 import { toast } from "react-toastify";
 import { AXIOS } from "../../../config/axios.config";
 import File from "../../../components/Common/Form/File"
@@ -25,7 +25,6 @@ type Values = {
 
 const Information: React.FC = (): JSX.Element => {
   const user = useSelector(selectUser);
-  const [response, error, loading, fetcher] = useAxios();
   const [userResponse, userError, userLoading, userfetcher] = useAxios();
 
   const [errors, setErrors] = useState<string[]>([]);
@@ -43,11 +42,8 @@ const Information: React.FC = (): JSX.Element => {
     if (!userResponse?.username) {
       userfetcher("get", `${API_URL.Register}${user.user_id}/`);
     }
-    // if (response) {
-    //   console.log("response")
-    //     dispatch(updateAccount(response))
-    //   }
-  }, [userResponse?.username,response]);
+    setValues({...values,username:userResponse?.username,email:userResponse?.email})
+  }, [userResponse?.username]);
 
   const handleChange = (name: string, value: string) => {
     setValues({ ...values, [name]: value });
@@ -67,7 +63,7 @@ const Information: React.FC = (): JSX.Element => {
               values,
               {headers: {"Content-Type": "multipart/form-data"}});
               if (res?.status === 200) {
-                 toast.success(res?.statusText);
+                 toast.success('تغییرات به درستی انجام شد');
                  dispatch(updateAccount(res.data))
               }
             }
@@ -97,17 +93,6 @@ const Information: React.FC = (): JSX.Element => {
             />
           </span>
           <div className="py-[6px] flex flex-col">
-            {/* <label className="text-brand-primary text-xl font-medium border border-brand-primary h-[55px] rounded-lg w-[212px] p-[10px] cursor-pointer border-box text-center">
-              ویرایش تصویر پروفایل
-              <input
-                hidden={true}
-                type="file"
-                id="thumbnail"
-                name="thumbnail"
-                onChange={(e)=>UploadImage(e)}
-                accept=".png, .jpg, .jpeg"
-              />
-            </label> */}
               <File
               inputValue={values.thumbnail}
               onChangeFile={(name, value) => {

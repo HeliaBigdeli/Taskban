@@ -1,10 +1,43 @@
+import {useEffect,useState } from "react";
 import ColorPicker from "../../../components/Common/ColorPicker";
 import Button from "../../../components/Common/Form/Button";
 import Switcher from "../../../components/Theme/Switcher";
+import { useDispatch } from "react-redux";
+import { errorToaster } from "../../../utils/toaster";
+import { setting } from "../../../constants/url";
+import { AXIOS } from "../../../config/axios.config";
+import { toast } from "react-toastify";
+import { selectSetting, updateSetting } from "../../../features/setting/settingSlice";
 
 const Setting: React.FC = (): JSX.Element => {
-  const onClick = () => {};
-  const handleClick = () => {};
+  const [color,setColor]=useState("")
+  //const theme = useSelector(selectSetting);
+  //const dispatch = useDispatch();
+  // const getTheme=async()=>{
+  //   const url=setting.get()
+  //   const res=await AXIOS.get(url)
+  //   setColor(res.data[0].theme)
+  // }
+  // useEffect(() => {
+  //   getTheme()
+  // }, []);
+
+  const handleClick = async() => {
+    
+      const url=setting.post()
+      try{
+        const res=await AXIOS.post(url,{theme:color});
+         if (res?.status === 201) {
+            toast.success('تغییرات به درستی انجام شد');
+           // localStorage.setItem("color", JSON.stringify(color));
+             //dispatch(updateSetting(res.data[0].theme))
+           //return `--color-primary: ${res.data[0].theme}`
+         }
+       }catch(error){
+        console.log(error)
+       }
+    
+  };
 
   return (
     <div className="flex justify-end">
@@ -12,10 +45,19 @@ const Setting: React.FC = (): JSX.Element => {
         <h2 className="text-[31px] text-bold text-right mb-L">تنظیمات</h2>
         <h3 className="text-right text-normal text-black mb-XS">انتخاب تم</h3>
         <div>
-          <ColorPicker
+        <div className="flex flex-row-reverse items-center">
+        <ColorPicker
+                onClick={(data) =>
+                  setColor(data.code || "")
+                }
+                hasDisableIcon={false}
+                selected={color}
+              />
+              </div>
+          {/* <ColorPicker
             onClick={(e) => onClick()}
             hasDisableIcon={false}
-          ></ColorPicker> 
+          ></ColorPicker>  */}
         </div>
         <div className="my-M flex flex-row-reverse">
           <Switcher />
@@ -33,3 +75,7 @@ const Setting: React.FC = (): JSX.Element => {
 };
 
 export default Setting;
+function useSelector(selectUser: any) {
+  throw new Error("Function not implemented.");
+}
+

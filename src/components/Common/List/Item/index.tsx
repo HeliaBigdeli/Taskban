@@ -239,7 +239,7 @@ const ListItem: React.FC<IProps> = ({
               </span>
             </li>
           ))}
-          {!projectsData?.length && (
+          {!projectsData?.length && projectsData && (
             <Button
               text="ساختن پروژه جدید"
               onClick={handleNewTaskBtn}

@@ -295,9 +295,11 @@ const TaskInfoModal: React.FC<IProps> = ({
                           setCommentText(value);
                         }}
                         className={`w-full block  pt-2 pl-9 ${
-                          isShow ? " pb-20" : "pb-2"
-                        }  rounded-lg transition-all outline-none border-none   `}
-                        style={{ height: isShow ? "200px" : "40px" }}
+                          isShow ? " pb-20 h-32" : "pb-2 h-10"
+                        } lg:${isShow && "  h-44"} xl:${
+                          isShow && "  h-52"
+                        } rounded-lg transition-all outline-none border-none   `}
+                        // style={{ height: isShow ? "200px" : "40px" }}
                       />
                       {
                         <Button

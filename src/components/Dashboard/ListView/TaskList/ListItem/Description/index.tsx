@@ -6,6 +6,7 @@ import API_URL from "../../../../../../constants/api.url";
 import TaskInfoModal from "../../../../TaskInfoModal";
 import { useSelector } from "react-redux";
 import { taskUpdate } from "../../../../../../features/update/updateSlice";
+import { tasks } from "../../../../../../constants/url";
 interface IDescriptionProps {
   taskId: number;
   boardId: number;
@@ -19,14 +20,21 @@ const Description: React.FC<IDescriptionProps> = ({
   const [showTaskModal, setShowTaskModal] = useState<boolean>(false);
   const [taskInfo, taskInfoError, taskinfoLoading, getTaskInfo] = useAxios();
   const params = useParams();
-  const tasks = useSelector(taskUpdate);
+  const tasksList = useSelector(taskUpdate);
   const handleshowTaskModal = async () => {
-    const url = `${API_URL.WorkSpaces}${params.wid}/${API_URL.Projects}${params.pid}/${API_URL.Boards}${boardId}/${API_URL.Tasks}${taskId}/`;
-    await getTaskInfo("get", url);
+     getTaskInfo(
+       "get",
+       tasks.get({
+         wid: params.wid,
+         pid: params.pid,
+         bid: boardId,
+         tid: taskId,
+       })
+     );
   };
   useEffect(() => {
     handleshowTaskModal();
-  }, [tasks]);
+  }, [tasksList]);
 
   return (
     <>

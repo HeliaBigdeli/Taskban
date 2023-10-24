@@ -9,7 +9,7 @@ import ListItemTitle from "./ListItemTitle";
 interface IListItemProps extends ITask {
   boardId: number;
   boardTitle: string;
-  color: string
+  color: string;
 }
 
 const ListItem: React.FC<IListItemProps> = ({
@@ -27,12 +27,17 @@ const ListItem: React.FC<IListItemProps> = ({
   return (
     <div className="flex w-full py-[7px] justify-between items-center">
       <section className="flex items-start gap-[7px] mr-6">
-        <div className={`w-S h-S rounded-[3px] bg-[#00000] `} style={{backgroundColor: color}}></div>
+        <div
+          className={`w-S h-S rounded-[3px] bg-[#00000] `}
+          style={{ backgroundColor: color }}
+        ></div>
 
-        <span className="text-[#0E0E0E] text-xs font-normal">{name}</span>
+        <span className="dark:text-[#bac4c8] text-[#0E0E0E] text-xs font-normal">
+          {name}
+        </span>
       </section>
       <section className="flex items-center gap-[70px]">
-        <div className="flex w-[70px] px-2.5 justify-center items-center gap-2.5 text-xs font-normal text-[#0E0E0E]">
+        <div className="flex w-[70px] px-2.5 justify-center items-center gap-2.5 text-xs font-normal dark:text-[#bac4c8] text-[#0E0E0E]">
           <MembersThumb members={members} />
         </div>
         <ListItemTitle

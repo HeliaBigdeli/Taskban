@@ -68,7 +68,7 @@ const Input: React.FC<IProps> = ({
       <div className="text-right flex flex-col gap-XS">
         {hasLabel && (
           <label
-            className="text-black text-sm font-normal leading-normal"
+            className="text-black text-sm font-normal leading-normal dark:text-[#bac4c8]"
             htmlFor={id}
           >
             {label}

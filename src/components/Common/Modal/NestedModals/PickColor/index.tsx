@@ -1,5 +1,4 @@
 import { Dispatch, SetStateAction, useState, useRef } from "react";
-
 import Modal from "../..";
 import ColorPicker from "../../../ColorPicker";
 import Button from "../../../Form/Button";
@@ -81,7 +80,7 @@ const PickColor: React.FC<IProps> = ({
         <div className="flex flex-col gap-XL w-[500px] pt-0 items-end">
           <div className="flex gap-S">
             <div className="flex flex-col items-end gap-S">
-              <span className="dark:text-[#bac4c8] text-sm text-black">
+              <span className={`text-sm text-black dark:text-[#bac4c8]`}>
                 رنگ ورک‌اسپیس
               </span>
               <div className="flex w-[293px] flex-row-reverse gap-[8px] flex-wrap items-center">

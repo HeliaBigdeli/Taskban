@@ -28,7 +28,15 @@ const TaskList: React.FC<IBoard> = ({
         style={{ height: `${!isShown ? "0px" : height}` }}
       >
         {tasks?.map((item) => {
-          return <ListItem key={item.id} {...item} boardId={id} boardTitle={name} color={color}/>;
+          return (
+            <ListItem
+              key={item.id}
+              {...item}
+              boardId={id}
+              boardTitle={name}
+              color={color}
+            />
+          );
         })}
       </div>
     </div>

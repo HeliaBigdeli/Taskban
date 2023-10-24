@@ -8,7 +8,7 @@ import { ITask } from "../../../../../interfaces/task";
 import MembersThumb from "../../../../Common/MembersThumb";
 import { baseAppURL } from "../../../../../config/axios.config";
 import { useSearchParams } from "react-router-dom";
-import { dateConvert } from '../../../../../utils/dateConvert'
+import { dateConvert } from "../../../../../utils/dateConvert";
 import { flagColor } from "../../../../../utils/flagColor";
 
 interface ITaskCardProps extends ITask {
@@ -28,7 +28,7 @@ const TaskCard: React.FC<ITaskCardProps> = ({
   deadline,
   members,
 }): JSX.Element => {
-  const { fullDate, month, day, weekday } = dateConvert(deadline)
+  const { fullDate, month, day, weekday } = dateConvert(deadline);
   const [searchParams] = useSearchParams();
   const [isShown, setIsShown] = useState<boolean>(false);
 
@@ -39,7 +39,7 @@ const TaskCard: React.FC<ITaskCardProps> = ({
           {...provided.dragHandleProps}
           {...provided.draggableProps}
           ref={provided.innerRef}
-          className="flex w-[249px] mx-4 p-S flex-col items-end gap-S rounded-2xl bg-white shadow-taskCard"
+          className="dark:bg-[#323232] flex w-[249px] mx-4 p-S flex-col items-end gap-S rounded-2xl bg-white shadow-taskCard"
           onMouseEnter={() => setIsShown(true)}
           onMouseLeave={() => setIsShown(false)}
         >
@@ -55,10 +55,10 @@ const TaskCard: React.FC<ITaskCardProps> = ({
               <MembersThumb members={members} size={24} />
             </div>
             <div className="flex flex-col items-end gap-2.5 ">
-              <span className="text-[#534D60] text-xs font-normal">
-                {searchParams.get('project_name')}
+              <span className="dark:text-[#bac4c8] text-[#534D60] text-xs font-normal">
+                {searchParams.get("project_name")}
               </span>
-              <span className=" text-[#0E0E0E] text-xs  font-normal">
+              <span className="dark:text-white text-[#0E0E0E] text-xs  font-normal">
                 {name}
               </span>
             </div>
@@ -68,7 +68,7 @@ const TaskCard: React.FC<ITaskCardProps> = ({
             <Checkmark date={fullDate} />
             <div className="flex justify-end items-center gap-0.5">
               <span
-                className="text-[#343434] text-xs tracking-wide  font-normal"
+                className="dark:text-[#bac4c8] text-[#343434] text-xs tracking-wide  font-normal"
                 style={{ direction: "rtl" }}
               >
                 {day}

@@ -118,7 +118,7 @@ const TaskModal: React.FC<IProps> = ({
           toast.success("تسک جدید با موفقیت ثبت شد.");
           setModal(!modal);
           dispatch(addNewTask({ id: pid || params.pid, response: res.data }));
-          dispatch(addTask())
+          dispatch(addTask());
         }
       } catch (error) {
         console.log(error);
@@ -232,6 +232,7 @@ const TaskModal: React.FC<IProps> = ({
                           title={item.name}
                           id={item.id}
                           bgcolor={item.color}
+                          color="black"
                         />
                       );
                     })}

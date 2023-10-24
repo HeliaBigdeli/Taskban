@@ -35,7 +35,7 @@ const ListHeader: React.FC<IListHeaderProps> = ({
             {title}
           </div>
         </div>
-        <div className="text-black text-sm flex gap-1 h-[25px] justify-center font-normal">
+        <div className="dark:text-[#bac4c8] text-black text-sm flex gap-1 h-[25px] justify-center font-normal">
           <span>{PN.convertEnToPe(tasks_count)}</span>{" "}
           <span className="self-end">تسک</span>
         </div>

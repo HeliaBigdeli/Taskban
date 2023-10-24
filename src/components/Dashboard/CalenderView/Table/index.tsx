@@ -14,12 +14,12 @@ interface IDates {
   day: string;
   showBtn: boolean;
   value: string;
-  disable: boolean
+  disable: boolean;
 }
 
 interface IProps {
-  monthName: string,
-  type: string
+  monthName: string;
+  type: string;
   today: number;
   dates: IDates[];
   currentMonth: number;
@@ -39,10 +39,10 @@ const Table: React.FC<IProps> = ({
   onclick,
 }): JSX.Element => {
   const [modal, setModal] = useState<boolean>(false);
-  const [currentDay, setCurrentDay] = useState<number>(today)
+  const [currentDay, setCurrentDay] = useState<number>(today);
 
   const handleShowModal = (date) => {
-    setCurrentDay(date.day)
+    setCurrentDay(date.day);
     setModal(!modal);
   };
 
@@ -50,16 +50,17 @@ const Table: React.FC<IProps> = ({
     onclick({
       day,
       date,
-      convertedDate: type === 'jalali' 
-      ? moment(date, "jYYYY/jM/jD").format("YYYY-M-D HH:mm:ss") 
-        : moment(date, "YYYY/M/D").format("jYYYY/jM/jD HH:mm:ss"),
+      convertedDate:
+        type === "jalali"
+          ? moment(date, "jYYYY/jM/jD").format("YYYY-M-D HH:mm:ss")
+          : moment(date, "YYYY/M/D").format("jYYYY/jM/jD HH:mm:ss"),
     });
   };
 
   return (
     <div
       className="grid grid-cols-7 place-content-stretch h-screen mr-S mb-S"
-      dir={`${type === 'jalali' ? 'rtl' : 'ltr'}`}
+      dir={`${type === "jalali" ? "rtl" : "ltr"}`}
     >
       {dates?.map((date, index) => {
         return (
@@ -68,14 +69,16 @@ const Table: React.FC<IProps> = ({
             onMouseEnter={() => onMouseEnter(date.key, "show")}
             onMouseLeave={() => onMouseLeave(date.key, "hide")}
             key={date.key}
-            className={`flex items-center justify-center border min-h-max ${
+            className={`dark:bg-[#3b3b3b] flex items-center justify-center border min-h-max ${
               today === Number(date.day) && currentMonth === 0
                 ? "border-brand-primary"
                 : "border-lightgray_300"
             } relative`}
           >
             {index <= 6 ? (
-              <span className="absolute top-1 right-2">{dayOfWeek[type][index]}</span>
+              <span className="dark:text-white absolute top-1 right-2">
+                {dayOfWeek[type][index]}
+              </span>
             ) : null}
             {date.showBtn && (
               <span onClick={() => handleShowModal(date)}>
@@ -86,7 +89,15 @@ const Table: React.FC<IProps> = ({
                 />
               </span>
             )}
-            <span className={`absolute bottom-1 left-2 ${date.disable === true ? 'text-lightgray' : 'text-black font-bold'}`}>{date.day}</span>
+            <span
+              className={`absolute bottom-1 left-2 ${
+                date.disable === true
+                  ? "text-black"
+                  : "text-lightgray font-bold"
+              }`}
+            >
+              {date.day}
+            </span>
           </div>
         );
       })}

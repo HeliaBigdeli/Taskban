@@ -27,7 +27,9 @@ const TaskColumn: React.FC<ITaskColumnProps> = ({
         <div className="flex pt-0.5 px-1 flex-col justify-center items-center gap-2.5 rounded-[100px] bg-[#F4F4F4] text-black text-xs font-normal">
           {count}
         </div>
-        <span className="text-black text-base font-medium">{title}</span>
+        <span className="dark:text-[#bac4c8] text-black text-base font-medium">
+          {title}
+        </span>
       </section>
     </div>
   );

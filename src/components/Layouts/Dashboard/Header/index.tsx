@@ -104,7 +104,7 @@ const Header: React.FC = (): JSX.Element => {
           </div>
         )}
         <Input
-          className="pr-L border-none w-[200px] bg-white text-xs"
+          className="dark:ml-4 outline-none pr-L border-none w-[200px] bg-white text-xs"
           placeholder="جستجو بین تسک‌ها"
           name="search"
           id="task_search"

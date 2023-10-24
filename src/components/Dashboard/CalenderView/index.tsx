@@ -1,16 +1,33 @@
 import { useEffect, useState, useContext } from "react";
 import Table from "./Table";
 import { AppContext } from "../../../context/store";
-import { datesMaker } from '../../../utils/datesMaker'
+import { datesMaker } from "../../../utils/datesMaker";
+import { useSelector } from "react-redux";
+import { selectTask } from "../../../features/task/taskSlice";
 
 const CalenderView: React.FC = (): JSX.Element => {
   const [dates, setDates] = useState<any[]>([]);
   const { dateValues, setDateValues } = useContext(AppContext);
+  const tasks = useSelector(selectTask).tasks;
+
+  const addTasksToDates = (dates) => {
+    dates.map((date) => {
+      tasks?.map((task) => {
+        if (
+          new Date(date.value).getTime() === new Date(task.deadline).getTime()
+        ) {
+          date.task?.push(task);
+        }
+      });
+    });
+
+    return dates;
+  };
 
   const handleAddButton = (key, status) => {
     const dateIndex = dates.findIndex((x) => x.key === key);
 
-    if(!dates[dateIndex].disable) {
+    if (!dates[dateIndex].disable) {
       dates[dateIndex].showBtn = status === "show" ? true : false;
       setDates([...dates]);
     }
@@ -27,20 +44,17 @@ const CalenderView: React.FC = (): JSX.Element => {
       year: result.year,
       month: result.month,
       today: result.today,
-      monthName: result.monthName,   
-      type: result.type,     
-    });    
+      monthName: result.monthName,
+      type: result.type,
+    });
 
-    setDates(result.dates);
-
+    setDates(addTasksToDates(result.dates));
   }, [dateValues.currentMonth, dateValues.type]);
 
   return (
     <Table
-    monthName={dateValues.monthName}
-      onclick={(date) => {
-        console.log(date);
-      }}
+      monthName={dateValues.monthName}
+      onclick={() => {}}
       type={dateValues.type}
       today={dateValues.today}
       dates={dates}

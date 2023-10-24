@@ -24,13 +24,8 @@ type Values = {
 
 const Account: React.FC = (): JSX.Element => {
   const user = useSelector(selectUser);
-  const [response, error, loading, fetcher] = useAxios();
+  const [updateResponse, error, loading, fetcher] = useAxios();
   const [userResponse, userError, userLoading, userfetcher] = useAxios();
-
-  const handleChange = (name: string, value: string) => {
-    setValues({ ...values, [name]: value });
-  };
-
   const [values, setValues] = useState<Values>({
     email: "",
     username: "",
@@ -39,6 +34,10 @@ const Account: React.FC = (): JSX.Element => {
     new_password1: "",
   });
 
+  const handleChange = (name: string, value: string) => {
+    setValues({ ...values, [name]: value });
+  };
+  
   const handleClick = async () => {
     const resultErrors = validate(values, rules);
     if (resultErrors.length) {
@@ -53,15 +52,15 @@ const Account: React.FC = (): JSX.Element => {
   };
 
   useEffect(() => {
-    if (!userResponse?.username) {
+    if (!userResponse) {
       userfetcher("get", accounts.get({ uid: user.user_id }));
     }
     setValues(userResponse);
 
-    if (response) {
-      toast.success(response.detail[0]);
+    if (updateResponse) {
+      toast.success(updateResponse.detail[0]);
     }
-  }, [userResponse?.username, response, error]);
+  }, [userResponse, updateResponse, error]);
 
   return (
     <div className="flex flex-row-reverse">

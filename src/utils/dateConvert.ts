@@ -7,7 +7,7 @@ export const dateConvert = (date) => {
         .replace("/", " / ");
     const month = new Intl.DateTimeFormat("fa-IR", { month: "short" }).format(d);
     const day = new Intl.DateTimeFormat("fa-IR", { day: "numeric" }).format(d);
-
+    const year = new Intl.DateTimeFormat("fa-IR", { year: "numeric" }).format(d);
     const diffDays = Math.floor(
         (d.getTime() - currentDate) / (1000 * 60 * 60 * 24)
     );
@@ -22,5 +22,5 @@ export const dateConvert = (date) => {
         : new Intl.DateTimeFormat("fa-IR", { weekday: "short" }).format(d);
 
 
-    return { fullDate, month, day, weekday }
+    return { fullDate, month, day, weekday,year }
 }

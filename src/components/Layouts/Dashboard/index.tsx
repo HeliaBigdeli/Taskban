@@ -25,11 +25,9 @@ const DashboardLayout: React.FC = (): JSX.Element => {
   const user = useSelector(selectUser);
   const [data, setData] = useState<IWorkspace[]>([]);
   const [query, setQuery] = useState<string>("");
-  const [listShow, setListShow] = useState(false);
   const { workspaces } = useSelector(selectWorkspace);
 
-  const handleChange = (name: string, value: string) => {
-    setListShow(true);
+  const handleSearch = (name: string, value: string) => {
     setQuery(value);
     const data = workspaces.filter((item) => {
       return (
@@ -72,9 +70,9 @@ const DashboardLayout: React.FC = (): JSX.Element => {
           icon={{
             icon: "search",
           }}
-          onChange={(name, value) => handleChange(name, value)}
+          onChange={(name, value) => handleSearch(name, value)}
         >
-          {query && listShow && (
+          {query && (
             <div className="absolute left-0 bg-white w-full rounded-sm top-[64px] p-2 shadow-select z-30 max-h-[200px] overflow-y-auto overflow-x-hidden">
               {data.length ? (
                 data?.map((item) => {
@@ -100,7 +98,6 @@ const DashboardLayout: React.FC = (): JSX.Element => {
                                       pid: project.id,
                                     })}`
                                   );
-                                  setListShow(false)
                                   setQuery("")
                                 }}
                                 className="flex flex-row-reverse items-center cursor-pointer hover:bg-lightgray_200 p-1 rounded-sm text-sm"
@@ -143,6 +140,7 @@ const DashboardLayout: React.FC = (): JSX.Element => {
               firstName={user.first_name}
               lastName={user.last_name}
               showName={true}
+              img={user.thumbnail}
             />
           </Link>
           <div className="flex justify-between items-center">

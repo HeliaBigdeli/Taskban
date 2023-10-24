@@ -8,12 +8,10 @@ import File from "../../Common/Form/File";
 import Textarea from "../../Common/Form/Textarea";
 import MembersThumb from "../../Common/MembersThumb";
 import { ITask } from "../../../interfaces/task";
-import API_URL from "../../../constants/api.url";
-import { useParams } from "react-router-dom";
-import { AXIOS } from "../../../config/axios.config";
+import { Link, useParams } from "react-router-dom";
+import { AXIOS, baseAppURL } from "../../../config/axios.config";
 import { useDispatch, useSelector } from "react-redux";
 import { addTask } from "../../../features/update/updateSlice";
-import Input from "../../Common/Form/Input";
 import { selectUser } from "../../../features/auth/authSlice";
 import { IComment } from "../../../interfaces/comments";
 import Comments from "./Comments";
@@ -21,6 +19,9 @@ import { dateConvert } from "../../../utils/dateConvert";
 import { flagColor } from "../../../utils/flagColor";
 import Dropdown from "../../Common/Dropdown";
 import DropdownItem from "../../Common/Dropdown/DropdownItem";
+import { task_comments, tasks } from "../../../constants/url";
+import { toast } from "react-toastify";
+import { updateTask } from "../../../features/board/boardSlice";
 
 const portals = document.getElementById("portals") as Element;
 
@@ -43,76 +44,108 @@ const TaskInfoModal: React.FC<IProps> = ({
   const [values, setValues] = useState<ITask>(taskInfo);
   const [commentText, setCommentText] = useState<string>("");
   const [commentList, setCommentList] = useState<IComment[]>([]);
-  const [isShow, setisShow] = useState<boolean>(false);
-  useEffect(() => {
-    fetch();
-  }, []);
+  const [isShow, setIsShow] = useState<boolean>(false);
+  const { weekday, year, day, month } = dateConvert(values.deadline);
+  const [hasUpdated, setHasUpdateed] = useState(false);
   const params = useParams();
-
-  const url = `${API_URL.WorkSpaces}${params.wid}/${API_URL.Projects}${params.pid}/${API_URL.Boards}${boardId}/${API_URL.Tasks}${taskInfo.id}/`;
-
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
 
-  const fetch = async () => {
+  const getTaskInfo = async () => {
+    setHasUpdateed(false);
     try {
-      const res = await AXIOS.get(`${url}comments/`);
+      const res = await AXIOS.get(
+        task_comments.gets({
+          wid: params.wid,
+          pid: params.pid,
+          bid: boardId,
+          tid: taskInfo.id,
+        })
+      );
       setCommentList(res.data);
     } catch (error) {
       console.log(error);
     }
   };
+
   const handleDatePickerModal = () => {
     setDatePickerModal(!datePickerModal);
   };
 
   const handleShowModal = async () => {
-    setModal(!modal);
-    const { members, id, deadline, ...data } = values;
-    try {
-      await AXIOS.patch(
-        url,
-        {
-          ...data,
-        },
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
+    let data = {};
+    if (hasUpdated) {
+      data = {
+        name: values.name,
+        description: values.description,
+        priority: values.priority,
+      };
+
+      if (values.attachment && typeof values.attachment !== "string") {
+        data["attachment"] = values.attachment;
+      }
+    }
+
+    if (Object.keys(data).length) {
+      try {
+        const response = await AXIOS.patch(
+          tasks.patch({
+            wid: params.wid,
+            pid: params.pid,
+            bid: boardId,
+            tid: taskInfo.id,
+          }),
+          data,
+          { headers: { "Content-Type": "multipart/form-data" } }
+        );
+
+        if (response.status === 200) {
+          setModal(!modal);
+          toast.success("تسک با موفقیت ویرایش شد.");
+          dispatch(updateTask(response.data));
         }
-      );
-      dispatch(addTask());
-    } catch (error) {
-      console.log(error);
+      } catch (error) {
+        setModal(!modal);
+      }
+    } else{
+      setModal(!modal);
     }
   };
-  const handleChange = (value: string) => {
-    setValues({ ...values, description: value });
+
+  const handleChange = (name: string, value: string) => {
+    setHasUpdateed(true);
+    setValues({ ...values, [name]: value });
   };
-  const handleFile = (name, value) => {
-    setValues({
-      ...values,
-      [name]: value,
-    });
-  };
+
   const handleRemoveAttachment = () => {
+    setHasUpdateed(true);
     setValues({
       ...values,
       attachment: "",
     });
   };
+
   const handleSubmit = async () => {
     if (!commentText) return;
     try {
-      await AXIOS.post(`${url}comments/`, {
-        attachment: null,
-        author: user.user_id,
-        text: commentText,
-      });
-      fetch();
+      await AXIOS.post(
+        task_comments.post({
+          wid: params.wid,
+          pid: params.pid,
+          bid: boardId,
+          tid: taskInfo.id,
+        }),
+        {
+          attachment: null,
+          author: user.user_id,
+          text: commentText,
+        }
+      );
+      getTaskInfo();
     } catch (error) {
       console.log(error);
     }
+    setIsShow(false);
   };
 
   const handleDropDown = (id, title) => {
@@ -121,7 +154,10 @@ const TaskInfoModal: React.FC<IProps> = ({
       priority: id,
     });
   };
-  const { weekday } = dateConvert(values.deadline);
+
+  useEffect(() => {
+    getTaskInfo();
+  }, []);
 
   return (
     <>
@@ -139,7 +175,7 @@ const TaskInfoModal: React.FC<IProps> = ({
         >
           <div className="flex flex-col gap-M divide-y divide-lightgray_300 w-[1100px]">
             <div className="flex flex-row justify-between divide-x divide-lightgray_300">
-              <div className="flex w-[50%] justify-end px-S grow gap-M">
+              <div className="flex w-[50%] justify-end px-S grow gap-L">
                 <div className="flex flex-col">
                   <span className="text-sm text-right">ددلاین</span>
                   <span dir="rtl" className="font-bold">
@@ -149,7 +185,11 @@ const TaskInfoModal: React.FC<IProps> = ({
                 <div className="flex flex-col">
                   <span className="text-sm text-right">ساخته شده در</span>
                   <span dir="rtl" className="font-bold">
-                    1 اردیبهشت 1402
+                    {day}
+                    &nbsp;
+                    {month}
+                    &nbsp;
+                    {year}
                   </span>
                 </div>
               </div>
@@ -162,9 +202,9 @@ const TaskInfoModal: React.FC<IProps> = ({
                   hasIcon={true}
                   icon={{ icon: "share" }}
                 />
-                <div className="flex items-center gap-S">
+                <div className="flex items-center justify-between">
                   <div
-                    className="mr-S cursor-pointer border-dashed border-2 rounded-full  w-[40px] h-[40px] flex justify-center items-center"
+                    className="mr-2XL cursor-pointer border-dashed  border-2   rounded-full  w-[40px] h-[40px] flex justify-center items-center"
                     style={{ borderColor: flagColor(values.priority) }}
                   >
                     <Dropdown
@@ -204,49 +244,48 @@ const TaskInfoModal: React.FC<IProps> = ({
                       />
                     </Dropdown>
                   </div>
-                  <div className="flex gap-5">
-                    <MembersThumb members={values.members} hasAddIcon={true} />
-                    <Button
-                      type="button"
-                      name="status"
-                      onClick={() => {}}
-                      text={boardTitle}
-                      className={` p-1 rounded-md text-white w-[120px] h-[30px]`}
-                 
-                    />
-                  </div>
+
+                  <MembersThumb members={values.members} hasAddIcon={true} />
+                  <Button
+                    type="button"
+                    name="status"
+                    onClick={() => {}}
+                    text={boardTitle}
+                    className={` p-1 bg-darkred rounded-md text-white w-[120px] h-[30px]`}
+                  />
                 </div>
               </div>
             </div>
             <div>
               <div className="flex flex-row justify-between divide-x divide-lightgray_300">
-                <div className="flex flex-col  w-[50%] relative">
-                  {!isShow ? (
-                    <div className="h-1/4 overflow-hidden">
+                <div className="flex flex-col  h-[80vh] lg:h-[60vh] xl:h-[40vh]  w-[50%] relative">
+                  {!isShow && (
+                    <div className="h-3/4 overflow-auto flex flex-col items-end ">
                       {commentList?.map((item) => {
-                        return <Comments {...item} key={item.id} />;
+                        return (
+                          <Comments
+                            {...item}
+                            key={item.id}
+                            first_name={user.first_name}
+                            last_name={user.last_name}
+                          />
+                        );
                       })}
                     </div>
-                  ) : (
-                    <>
-                      <div className="h-1/4"></div>
-                    </>
                   )}
                   <div className="relative  w-full shadow-comment rounded mt-auto flex  justify-end ">
                     <div className="  absolute left-4 top-2 z-10">
-                      {" "}
                       <Icon icon="comment" color="#AEAEAE" />
                     </div>
                     <div
                       className="w-full"
                       onFocus={() => {
-                        setisShow(true);
+                        setIsShow(true);
                       }}
                       onBlur={() => {
-                        setisShow(false);
+                        setIsShow(false);
                       }}
                     >
-                      {" "}
                       <Textarea
                         name="comment"
                         id="comment"
@@ -256,9 +295,11 @@ const TaskInfoModal: React.FC<IProps> = ({
                           setCommentText(value);
                         }}
                         className={`w-full block  pt-2 pl-9 ${
-                          isShow ? " pb-20" : "pb-2"
-                        }  rounded-lg transition-all outline-none border-none   `}
-                        style={{ height: isShow ? "200px" : "40px" }}
+                          isShow ? " pb-20 h-32" : "pb-2 h-10"
+                        } lg:${isShow && "  h-44"} xl:${
+                          isShow && "  h-52"
+                        } rounded-lg transition-all outline-none border-none   `}
+                        // style={{ height: isShow ? "200px" : "40px" }}
                       />
                       {
                         <Button
@@ -290,31 +331,35 @@ const TaskInfoModal: React.FC<IProps> = ({
                       name="description"
                       id="description"
                       onChange={(name, value) => {
-                        handleChange(value);
+                        handleChange(name, value);
                       }}
                     />
-                    {values.attachment ? (
+                    {!values.attachment ? (
                       <File
-                        inputValue={values.attachment}
+                        inputValue={values.attachment || ""}
                         onChangeFile={(name, value) => {
-                          handleFile(name, value);
+                          handleChange(name, value);
                         }}
                         id="attachment"
                         name="attachment"
-                        hasLabel={true}
-                        label="افزودن پیوست"
-                        styles=""
+                        hasIcon={true}
+                        icon="attach"
+                        text="افزودن پیوست"
+                        styles="flex flex-row items-center text-base font-medium border border-brand-primary h-[36px] rounded-lg py-[4px] px-[8px] gap-[4px] cursor-pointer text-center"
                       />
                     ) : (
-                      <div className="flex">
-                        <a
-                          href={`${values.attachment}`}
+                      <div className="flex justify-end items-center gap-2">
+                        <Link
+                          target="_blank"
+                          to={`${baseAppURL}${values?.attachment}`}
                           className="flex flex-row items-center text-base font-medium border border-brand-primary h-[36px] rounded-lg py-[4px] px-[8px] gap-[4px] cursor-pointer text-center"
                         >
-                          پیوست فایل
-                          <Icon icon="attach" color="#208d8e" />
-                        </a>
-                        <button onClick={handleRemoveAttachment}>
+                          دریافت فایل پیوست
+                        </Link>
+                        <button
+                          onClick={handleRemoveAttachment}
+                          className="flex flex-row items-center text-base font-medium border border-brand-primary h-[36px] rounded-lg py-[4px] px-[8px] gap-[4px] cursor-pointer text-center"
+                        >
                           <Icon icon="trash" color="#FA5252" />
                         </button>
                       </div>
@@ -329,6 +374,7 @@ const TaskInfoModal: React.FC<IProps> = ({
       )}
       {DatePickerModal && (
         <DatePickerModal
+          onChangeDate={() => {}}
           modal={datePickerModal}
           setModal={handleDatePickerModal}
         />

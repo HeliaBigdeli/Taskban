@@ -16,7 +16,9 @@ const TaskList: React.FC<IBoard> = ({
   };
   const height = `${65 * tasks_count - 40}px`;
   return (
-    <div className={` flex w-full flex-col items-start gap-5`}>
+    <div
+      className={` flex w-full flex-col items-start gap-5 `}
+    >
       <ListHeader
         handleShow={handleShow}
         title={name}

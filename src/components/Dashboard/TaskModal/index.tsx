@@ -57,6 +57,7 @@ const TaskModal: React.FC<IProps> = ({
     thumbnail: "",
     name: "",
     order: 1,
+    deadline: "",
     board_id: boardId || "",
   });
 
@@ -139,15 +140,14 @@ const TaskModal: React.FC<IProps> = ({
           backIcon={{ order: 2 }}
           hasCloseIcon={true}
           hasColor={true}
-          coloredSquare={`${
-            values.priority === 4
-              ? "#FB0606"
-              : values.priority === 3
+          coloredSquare={`${values.priority === 4
+            ? "#FB0606"
+            : values.priority === 3
               ? "#FFE605"
               : values.priority === 2
-              ? "#09DBCE"
-              : "#c1c1c1"
-          }`}
+                ? "#09DBCE"
+                : "#c1c1c1"
+            }`}
           closeIcon={{ order: 1 }}
         >
           <div className="flex flex-col w-[1153px] gap-M">
@@ -253,10 +253,10 @@ const TaskModal: React.FC<IProps> = ({
                         values.priority === 4
                           ? "#FB0606"
                           : values.priority === 3
-                          ? "#FFE605"
-                          : values.priority === 2
-                          ? "#09DBCE"
-                          : "#c1c1c1",
+                            ? "#FFE605"
+                            : values.priority === 2
+                              ? "#09DBCE"
+                              : "#c1c1c1",
                     }}
                   >
                     <DropdownItem
@@ -303,6 +303,12 @@ const TaskModal: React.FC<IProps> = ({
       )}
       {datePickerModal && (
         <DatePickerModal
+          onChangeDate={(date) => {
+            setVlaues({
+              ...values,
+              deadline: date?.end.date
+            })
+          }}
           modal={datePickerModal}
           setModal={handleDatePickerModal}
         />

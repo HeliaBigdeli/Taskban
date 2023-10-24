@@ -9,9 +9,10 @@ import { datesBetween } from "../../../utils/datesBetween";
 
 interface IProps {
   onClick: (e: React.MouseEvent<HTMLElement>) => void;
+  onChangeDate: ({}) => void;
 }
 
-const CalenderView: React.FC<IProps> = ({ onClick }): JSX.Element => {
+const CalenderView: React.FC<IProps> = ({ onClick, onChangeDate }): JSX.Element => {
   const [dates, setDates] = useState<any[]>([]);
   const { dateValues, setDateValues } = useContext(AppContext);
   const [selecte, setSelecte] = useState({
@@ -37,6 +38,7 @@ const CalenderView: React.FC<IProps> = ({ onClick }): JSX.Element => {
       }
 
       setSelecte({ start, end });
+      onChangeDate({ start, end })
       setSelectedArray(datesBetween(start.date, end.date));
     }
   };

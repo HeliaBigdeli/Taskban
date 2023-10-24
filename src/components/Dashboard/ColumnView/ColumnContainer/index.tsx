@@ -1,11 +1,9 @@
 import TaskCard from "./TaskCard";
 import TaskColumn from "./TaskColumn";
 import style from "../style.module.css";
-import { Droppable } from "react-beautiful-dnd";
 import { ITask } from "../../../../interfaces/task";
 
 interface IColumnContainerProps {
-  setMouseDown: React.Dispatch<React.SetStateAction<boolean>>;
   name: string;
   is_archive: boolean;
   id: number;
@@ -19,12 +17,8 @@ const ColumnContainer: React.FC<IColumnContainerProps> = ({
   name,
   tasks,
   is_archive,
-  setMouseDown,
 }): JSX.Element => {
-  const handleClick = (e: React.MouseEvent<EventTarget>) => {
-    if (e.target === e.currentTarget) setMouseDown(true);
-    else setMouseDown(false);
-  };
+  
 
   return (
     <div
@@ -38,29 +32,23 @@ const ColumnContainer: React.FC<IColumnContainerProps> = ({
         color={color}
       />
 
-      <Droppable droppableId={name} type="group">
-        {(provided) => (
-          <div
-            onMouseDownCapture={handleClick}
-            className={`flex w-[290px] pt-0.5 flex-col items-center gap-3 overflow-y-auto overflow-x-hidden ${style.customScrool} `}
-            {...provided.droppableProps}
-            ref={provided.innerRef}
-          >
-            {tasks?.map((item, index) => {
-              return (
-                <TaskCard
-                  boardId={id}
-                  boardTitle={name}
-                  {...item}
-                  key={item.id}
-                  index={index}
-                />
-              );
-            })}
-            {provided.placeholder}
-          </div>
-        )}
-      </Droppable>
+      <div
+        
+        className={`flex w-[290px] pt-0.5 pb-10 flex-col items-center gap-3 overflow-y-auto overflow-x-hidden h-80 lg:h-[500px] xl:h-[750px]  ${style.customScrool} `}
+        
+      >
+        {tasks?.map((item, index) => {
+          return (
+            <TaskCard
+              boardId={id}
+              boardTitle={name}
+              {...item}
+              key={item.id}
+              index={index}
+            />
+          );
+        })}
+      </div>
     </div>
   );
 };

@@ -8,16 +8,31 @@ import ShareModal from "../../../Dashboard/ShareModal";
 import { selectView } from "../../../../features/view/viewSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { chengeView } from "../../../../features/view/viewSlice";
+import { selectTask } from "../../../../features/task/taskSlice";
+import { ITask } from "../../../../interfaces/task";
 
 const Header: React.FC = (): JSX.Element => {
   const params = useParams();
   const [searchParams] = useSearchParams();
-  const { pathname } = useLocation();
   const [filterModal, setFilterModal] = useState<boolean>(false);
   const [shareModal, setShareModal] = useState<boolean>(false);
   const view = useSelector(selectView);
   const dispatch = useDispatch();
   const projectName: string = searchParams.get("project_name") || "";
+  const [data, setData] = useState<ITask[]>([]);
+  const [query, setQuery] = useState<string>("");
+  const { tasks } = useSelector(selectTask);
+
+  const handleSearch = (name: string, value: string) => {
+    setQuery(value);
+    const data = tasks.filter((item) => {
+      return (
+        item.name.includes(value)
+      );
+    });
+
+    setData(data);
+  };
 
   const handleFilterModal = () => {
     setFilterModal(!filterModal);
@@ -104,7 +119,7 @@ const Header: React.FC = (): JSX.Element => {
           </div>
         )}
         <Input
-          className="pr-L border-none w-[240px] bg-white text-xs"
+          className="pr-L border-none w-[240px] bg-white text-xs relative"
           placeholder="جستجو بین تسک‌ها"
           name="search"
           id="task_search"
@@ -115,9 +130,30 @@ const Header: React.FC = (): JSX.Element => {
             icon: "search",
           }}
           onChange={(name, value) => {
-            console.log(name, value);
+            handleSearch(name, value);
           }}
-        />
+        >
+             {query && (
+            <div className="absolute left-0 bg-white w-full rounded-sm top-[40px] p-2 shadow-select z-30 max-h-[240px] overflow-y-auto overflow-x-hidden">
+              {data.length ? (
+                data?.map((item) => {
+                  return (
+                    <div className="flex flex-col" key={item.id}>
+                      <div
+                        key={item.id}
+                        className="cursor-pointer hover:bg-lightgray_200 p-1 rounded-sm"
+                      >
+                        {item.name}
+                      </div>                    
+                    </div>
+                  );
+                })
+              ) : (
+                <p>! موردی یافت نشد</p>
+              )}
+            </div>
+          )}
+          </Input>
       </div>
       {/*----------------------------------------------- Sharing & Filter Modal --------------------------------------------- */}
       {shareModal && (

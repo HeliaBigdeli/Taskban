@@ -1,32 +1,39 @@
 import { useEffect, useState, useContext } from "react";
 import Table from "./Table";
 import { AppContext } from "../../../context/store";
-import { datesMaker } from '../../../utils/datesMaker'
+import { datesMaker } from "../../../utils/datesMaker";
 import { selectBoard } from "../../../features/board/boardSlice";
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from "react-redux";
 import { ITask } from "../../../interfaces/task";
+import { all } from "../../../features/task/taskSlice";
 
 const CalenderView: React.FC = (): JSX.Element => {
+  const dispatch = useDispatch();
   const state = useSelector(selectBoard);
   const [dates, setDates] = useState<any[]>([]);
   const { dateValues, setDateValues } = useContext(AppContext);
 
   const addTasksToDates = (boards, dates) => {
-    let tasks: ITask[] = []
-    boards.forEach(board => {
-      tasks = [...tasks, board.tasks]
+    let tasks: ITask[] = [];
+    boards.forEach((board) => {
+      tasks = [...tasks, board.tasks];
     });
 
+    const flattedTasks = tasks.flat();
+    dispatch(all(flattedTasks));
+
     dates.map((date) => {
-      tasks.flat()?.map((task) => {
-        if (new Date(date.value).getTime() === new Date(task.deadline).getTime()) {
-          date.task?.push(task)
+      flattedTasks?.map((task) => {
+        if (
+          new Date(date.value).getTime() === new Date(task.deadline).getTime()
+        ) {
+          date.task?.push(task);
         }
-      })
-    })
+      });
+    });
 
     return dates;
-  }
+  };
 
   const handleAddButton = (key, status) => {
     const dateIndex = dates.findIndex((x) => x.key === key);

@@ -5,6 +5,7 @@ import viewReducer from "../features/view/viewSlice";
 import workspaceSlice from "../features/workspace/workspaceSlice";
 import settingSlice from "../features/setting/settingSlice";
 import boardSlice from "../features/board/boardSlice";
+import taskSlice from "../features/task/taskSlice";
 
 export const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ export const store = configureStore({
     workspaces: workspaceSlice,
     setting:settingSlice,
     boards: boardSlice,
+    tasks: taskSlice,
   },
 });
 

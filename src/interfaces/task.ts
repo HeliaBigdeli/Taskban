@@ -13,3 +13,8 @@ export interface ITask {
     color? :string,
     members: members_thumb[]
 }
+
+export interface ITaskData {
+    tasks: ITask[]
+  }
+  

@@ -33,13 +33,6 @@ export const boardSlice = createSlice({
         return item.id !== action.payload;
       });
     },
-    addtasks: (state, action) => {
-      state.boards.forEach((item) => {
-        if (item.id === action.payload.id) {
-          item.tasks = action.payload.response;
-        }
-      });
-    },
     addNewTask: (state, action) => {
       state.boards.forEach((item) => {
         if (item.id === action.payload.id) {
@@ -56,6 +49,7 @@ export const boardSlice = createSlice({
     archiveTask: (state, action) => {
      
     },
+  
   },
 });
 
@@ -64,7 +58,6 @@ export const {
   add,
   board_update_name,
   board_remove,
-  addtasks,
   addNewTask,
   removeTask,
   archiveTask,

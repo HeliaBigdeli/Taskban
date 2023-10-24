@@ -31,7 +31,7 @@ const Boards: React.FC = (): JSX.Element => {
     );
     return () => {
       dispatch(clearState());
-      // dispatch(chengeView({type: 'column'}))
+      dispatch(chengeView({type: 'column'}))
     };
   }, [update, params.pid]);
 

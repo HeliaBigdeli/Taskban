@@ -1,9 +1,6 @@
-import { useParams } from "react-router-dom";
 import Icon from "../../../../../Common/Icon";
-import { useEffect, useState } from "react";
-import useAxios from "../../../../../../hooks/useAxios";
+import {  useState } from "react";
 import TaskInfoModal from "../../../../TaskInfoModal";
-import { tasks } from "../../../../../../constants/url";
 interface IDescriptionProps {
   taskId: number;
   boardId: number;
@@ -15,25 +12,6 @@ const Description: React.FC<IDescriptionProps> = ({
   boardTitle,
 }): JSX.Element => {
   const [showTaskModal, setShowTaskModal] = useState<boolean>(false);
-  const [taskInfo, taskInfoError, taskinfoLoading, getTaskInfo] = useAxios();
-  const params = useParams();
-
-  const handleshowTaskModal = async () => {
-    if (showTaskModal) {
-      await getTaskInfo(
-        "get",
-        tasks.get({
-          wid: params.wid,
-          pid: params.pid,
-          bid: boardId,
-          tid: taskId,
-        })
-      );
-    }
-  };
-  useEffect(() => {
-    handleshowTaskModal();
-  }, [showTaskModal]);
 
   return (
     <>
@@ -45,13 +23,13 @@ const Description: React.FC<IDescriptionProps> = ({
       >
         <Icon icon="paragraph" size={16} color="#BDC0C6" />
       </div>
-      {showTaskModal && taskInfo && (
+      {showTaskModal && (
         <TaskInfoModal
           modal={showTaskModal}
           setModal={setShowTaskModal}
-          taskInfo={taskInfo}
           boardTitle={boardTitle}
           boardId={boardId}
+          taskId={taskId}
         />
       )}
     </>

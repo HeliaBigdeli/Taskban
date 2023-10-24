@@ -4,6 +4,8 @@ import TaskInfoModal from "../../../../TaskInfoModal";
 import { useParams } from "react-router-dom";
 import useAxios from "../../../../../../hooks/useAxios";
 import { task_comments, tasks } from "../../../../../../constants/url";
+import { taskUpdate } from "../../../../../../features/update/updateSlice";
+import { useSelector } from "react-redux";
 
 interface IMoreProps {
   isShown: boolean;
@@ -17,12 +19,12 @@ const More: React.FC<IMoreProps> = ({
   boardId,
   boardTitle,
 }): JSX.Element => {
-  const [projectModal, setProjectModal] = useState<boolean>(false);
+  const [showTaskModal, setShowTaskModal] = useState<boolean>(false);
   const [taskInfo, taskInfoError, taskinfoLoading, getTaskInfo] = useAxios();
-  const [comments, commentsError, commentsLoading, getComments] = useAxios();
   const params = useParams();
+  const tasksList = useSelector(taskUpdate);
 
-  const handleProjectModal = () => {
+  const handleshowTaskModal = async () => {
     getTaskInfo(
       "get",
       tasks.get({
@@ -32,18 +34,11 @@ const More: React.FC<IMoreProps> = ({
         tid: taskId,
       })
     );
-    getComments(
-      "get",
-      task_comments.gets({
-        wid: params.wid,
-        pid: params.pid,
-        bid: boardId,
-        tid: taskId,
-      })
-    );
   };
 
-  useEffect(() => {}, [taskInfo, comments]);
+   useEffect(() => {
+     handleshowTaskModal();
+   }, [tasksList]);
 
   return (
     <div
@@ -51,17 +46,22 @@ const More: React.FC<IMoreProps> = ({
     >
       <div className="w-[217px] h-[1px] bg-[#EFF0F0] mb-S" />
       <section className="flex justify-between items-center self-stretch ">
-        <span onClick={handleProjectModal} className="cursor-pointer">
+        <span
+          onClick={() => {
+            setShowTaskModal(!showTaskModal);
+          }}
+          className="cursor-pointer"
+        >
           <Icon size={20} icon="dots" />
         </span>
         <div className="flex w-4 h-4 justify-center items-center cursor-pointer">
           <Icon size={20} icon="check_circle" />
         </div>
       </section>
-      {projectModal && taskInfo && (
+      {showTaskModal && taskInfo && (
         <TaskInfoModal
-          modal={projectModal}
-          setModal={handleProjectModal}
+          modal={showTaskModal}
+          setModal={setShowTaskModal}
           taskInfo={taskInfo}
           boardTitle={boardTitle}
           boardId={boardId}

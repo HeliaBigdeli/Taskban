@@ -16,7 +16,9 @@ const TaskList: React.FC<IBoard> = ({
   };
   const height = `${65 * tasks_count - 40}px`;
   return (
-    <div className={` flex w-full flex-col items-start gap-5`}>
+    <div
+      className={` flex w-full flex-col items-start gap-5 `}
+    >
       <ListHeader
         handleShow={handleShow}
         title={name}
@@ -28,7 +30,15 @@ const TaskList: React.FC<IBoard> = ({
         style={{ height: `${!isShown ? "0px" : height}` }}
       >
         {tasks?.map((item) => {
-          return <ListItem key={item.id} {...item} boardId={id} boardTitle={name} color={color}/>;
+          return (
+            <ListItem
+              key={item.id}
+              {...item}
+              boardId={id}
+              boardTitle={name}
+              color={color}
+            />
+          );
         })}
       </div>
     </div>

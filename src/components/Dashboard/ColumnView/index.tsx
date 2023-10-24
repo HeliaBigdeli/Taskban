@@ -6,7 +6,6 @@ import Icon from "../../Common/Icon";
 import TaskModal from "../TaskModal";
 import React from "react";
 import NewBoardModal from "./NewBoardModal";
-import { DragDropContext } from "react-beautiful-dnd";
 import { IBoard } from "../../../interfaces/board";
 import { useDraggable } from "react-use-draggable-scroll";
 import { selectBoard } from "../../../features/board/boardSlice";
@@ -16,14 +15,11 @@ const ColumnView: React.FC = (): JSX.Element => {
   const state = useSelector(selectBoard);
   const [boardTasks, setBoardTasks] = useState<IBoard[]>(state.boards || []);
   const [newBoardModal, setNewBoardModal] = useState<boolean>(false);
-  const [mouseDown, setMouseDown] = useState<boolean>(true);
   const [taskModal, setTaskModal] = useState<boolean>(false);
 
   const ref =
     useRef<HTMLDivElement>() as React.MutableRefObject<HTMLInputElement>;
-  const { events } = useDraggable(ref, {
-    isMounted: mouseDown,
-  });
+  const { events } = useDraggable(ref);
 
   const handleTaskModal = () => {
     setTaskModal(!taskModal);
@@ -33,41 +29,7 @@ const ColumnView: React.FC = (): JSX.Element => {
     setNewBoardModal(!newBoardModal);
   };
 
-  const handleDragDrop = (results: any) => {
-    const { source, destination } = results;
-    if (!destination) return;
-    if (
-      source.droppableId === destination.droppableId &&
-      source.index === destination.index
-    )
-      return;
-
-    const columnSourceIndex = boardTasks.findIndex((item) => {
-      return item.name === source.droppableId;
-    });
-    const columnDestinationIndex = boardTasks.findIndex((item) => {
-      return item.name === destination.droppableId;
-    });
-    const newSourceItems = [...boardTasks[columnSourceIndex].tasks];
-    const newDestinationItems =
-      source.droppableId !== destination.droppableId
-        ? [...boardTasks[columnDestinationIndex].tasks]
-        : newSourceItems;
-
-    const [deletedItem] = newSourceItems.splice(source.index, 1);
-    newDestinationItems.splice(destination.index, 0, deletedItem);
-
-    const newTaskColumns = [...boardTasks];
-    newTaskColumns[columnSourceIndex] = {
-      ...boardTasks[columnSourceIndex],
-      tasks: newSourceItems,
-    };
-    newTaskColumns[columnDestinationIndex] = {
-      ...boardTasks[columnDestinationIndex],
-      tasks: newDestinationItems,
-    };
-    setBoardTasks(newTaskColumns);
-  };
+ 
 
   useEffect(() => {
     setBoardTasks(state.boards);
@@ -82,19 +44,16 @@ const ColumnView: React.FC = (): JSX.Element => {
          ${style.scroll}`}
         style={{ direction: "rtl" }}
       >
-        {
-          <DragDropContext onDragEnd={handleDragDrop}>
+        
             {boardTasks?.map((item) => {
               return (
                 <ColumnContainer
                   key={item.id}
                   {...item}
-                  setMouseDown={setMouseDown}
                 />
               );
             })}
-          </DragDropContext>
-        }
+         
 
         <button
           onClick={handleNewBoardModal}

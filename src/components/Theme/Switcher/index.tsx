@@ -1,16 +1,21 @@
 import Icon from "../../Common/Icon";
 import { useRef, useState } from "react";
 import styles from "./style.module.css";
+import { useContext } from "react";
+import { ThemeContext } from "../../../context/ThemeContext";
 
 const Switcher: React.FC = () => {
   const myIconRef = useRef<HTMLElement>(null);
   const myBtnRef = useRef<HTMLElement>(null);
   const [theme, setTheme] = useState(true);
+  const { isDarkTheme, toggleTheme } = useContext(ThemeContext);
 
   const handleClick = () => {
+    toggleTheme();
     setTheme(!theme);
     myIconRef.current?.classList.toggle(`${styles.darkBG}`);
     myBtnRef.current?.classList.toggle("justify-end");
+    document.body.classList.toggle("dark");
   };
 
   return (

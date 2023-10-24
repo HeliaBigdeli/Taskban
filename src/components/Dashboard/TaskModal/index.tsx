@@ -200,7 +200,7 @@ const TaskModal: React.FC<IProps> = ({
               onChange={(name, value) => handleChange(name, value)}
             />
             <Textarea
-              className="w-full py-[19px] px-L rounded-xl text-right resize-none border border-[#E2E2E2] outline-none"
+              className="dark:text-[#323232] w-full py-[19px] px-L rounded-xl text-right resize-none border border-[#E2E2E2] outline-none"
               id="description"
               rows={3}
               name="description"

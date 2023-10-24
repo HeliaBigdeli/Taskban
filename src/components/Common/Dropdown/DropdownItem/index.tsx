@@ -37,9 +37,9 @@ const DropdownItem: React.FC<IProps> = ({
 
   return (
     <div
-      className={`flex flex-col rounded-md font-bold ${
+      className={`flex flex-col rounded-md font-bold hover:dark:text-[#323232] ${
         isButton
-          ? "bg-brand-primary text-white rounded-md px-2 font-normal"
+          ? "bg-brand-primary text-white rounded-md px-2 font-normal hover:dark:text-white"
           : "hover:bg-lightgray_100"
       }`}
     >

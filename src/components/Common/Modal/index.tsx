@@ -1,5 +1,6 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import Icon from "../Icon/";
+import { ThemeContext } from "../../../context/ThemeContext";
 
 interface IHeader {
   text?: string;
@@ -58,6 +59,8 @@ const Modal: React.FC<IProps> = ({
     document.body.style.overflow = "unset";
   };
 
+  const { isDarkTheme, toggleTheme } = useContext(ThemeContext);
+
   useEffect(() => {
     if (modal) {
       document.body.style.overflow = "hidden";
@@ -74,7 +77,7 @@ const Modal: React.FC<IProps> = ({
           onClick={handleClick}
         >
           <div
-            className={`trans flex w-auto min-w-[30%] rounded-[12px] p-[20px] flex-col items-center bg-white ${contentTopGap}`}
+            className={`dark:bg-[#323232] trans flex w-auto min-w-[30%] rounded-[12px] p-[20px] flex-col items-center bg-white ${contentTopGap}`}
             style={style}
           >
             <div
@@ -93,11 +96,15 @@ const Modal: React.FC<IProps> = ({
                 style={{ order: backIcon.order }}
                 onClick={backIcon.handleBack}
               >
-                <Icon icon="back" color="#1e1e1ec4" size={32} />
+                <Icon
+                  icon="back"
+                  color={`${isDarkTheme === true ? "#bac4c8" : "#1e1e1ec4"}`}
+                  size={32}
+                />
               </button>
               <h2
                 style={{ order: header.order }}
-                className={`flex items-center gap-[13px] font-extrabold text-xl text-black order-$ ${
+                className={`dark:text-[#bac4c8] flex items-center gap-[13px] font-extrabold text-xl text-black order-$ ${
                   hasHeader ? "" : "invisible"
                 }
                 `}
@@ -117,7 +124,11 @@ const Modal: React.FC<IProps> = ({
                 }`}
                 onClick={handleClose}
               >
-                <Icon icon="close" color="#1e1e1ec4" size={32} />
+                <Icon
+                  icon="close"
+                  color={`${isDarkTheme === true ? "#bac4c8" : "#1e1e1ec4"}`}
+                  size={32}
+                />
               </button>
             </div>
             <div className="flex flex-col w-full mb[28px]">{children}</div>

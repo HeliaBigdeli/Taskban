@@ -1,6 +1,8 @@
 import list from "./list";
 import styles from "./style.module.css";
 import React from "react";
+import { useContext } from "react";
+import { ThemeContext } from "../../../context/ThemeContext";
 
 interface IProps {
   color?: string;
@@ -13,6 +15,8 @@ interface IProps {
 
 const Icon = React.forwardRef(
   (props: IProps, ref: React.LegacyRef<HTMLSpanElement> | undefined) => {
+    const { isDarkTheme, toggleTheme } = useContext(ThemeContext);
+
     return (
       <span
         ref={ref}
@@ -21,7 +25,11 @@ const Icon = React.forwardRef(
         onClick={props.onClick}
       >
         {list[`${props.icon}`](
-          props.color ? props.color : "#323232",
+          props.color
+            ? props.color
+            : isDarkTheme === true
+            ? "#bac4c8"
+            : "#323232",
           props.size ? props.size : 24
         )}
       </span>

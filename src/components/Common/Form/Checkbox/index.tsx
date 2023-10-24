@@ -5,7 +5,8 @@ interface IProps {
   label?: string;
   hasLabel: boolean;
   onChange: (name: string, value: boolean) => void;
-  onClick:()=>void
+  onClick:()=>void,
+  className
 }
 
 const Checkbox: React.FC<IProps> = ({
@@ -15,7 +16,8 @@ const Checkbox: React.FC<IProps> = ({
   label,
   hasLabel,
   onChange,
-  onClick
+  onClick,
+  className
 }): JSX.Element => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onChange(e.target.name, e.target.checked);
@@ -24,7 +26,7 @@ const Checkbox: React.FC<IProps> = ({
   return (
     <div className="flex justify-end items-center gap-XS">
       {hasLabel && (
-        <label onClick={onClick} className="text-black text-base font-medium" htmlFor={id}>
+        <label onClick={onClick} className={`text-base font-medium ${className}`}>
           {label}
         </label>
       )}
@@ -33,7 +35,7 @@ const Checkbox: React.FC<IProps> = ({
         id={id}
         type={type}
         onChange={handleChange}
-        className="w-5 h-5 rounded border border-[#999]"
+        className={`w-5 h-5 rounded border border-[#999]`}
       />
     </div>
   );

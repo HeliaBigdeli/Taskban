@@ -9,7 +9,7 @@ import { errorToaster } from "../../../utils/toaster";
 import useAxios from "../../../hooks/useAxios";
 import API_URL from "../../../constants/api.url";
 import { useDispatch } from "react-redux";
-import { update } from "../../../constants/url";
+import { user_update } from "../../../constants/url";
 import { toast } from "react-toastify";
 import { AXIOS } from "../../../config/axios.config";
 import File from "../../../components/Common/Form/File";
@@ -26,8 +26,7 @@ type Values = {
 const Information: React.FC = (): JSX.Element => {
   const user = useSelector(selectUser);
   const [userResponse, userError, userLoading, userfetcher] = useAxios();
-
-  const [errors, setErrors] = useState<string[]>([]);
+  const [thumbnial, setThumbnail] = useAxios();
   const dispatch = useDispatch();
   const [values, setValues] = useState<Values>({
     first_name: "",
@@ -38,14 +37,7 @@ const Information: React.FC = (): JSX.Element => {
     username: "",
   });
 
-  useEffect(() => {
-    if (!userResponse?.first_name) {
-      userfetcher("get", `${API_URL.Register}${user.user_id}/`);
-    }
-    setValues({...values,username:userResponse?.username,email:userResponse?.email})
-  }, [userResponse?.username]);
-
-  const handleChange = (name: string, value: string) => {
+  const handleChange = (name: string, value: string) => {   
     setValues({ ...values, [name]: value });
   };
 
@@ -54,30 +46,30 @@ const Information: React.FC = (): JSX.Element => {
     if (resultErrors.length) {
       errorToaster(resultErrors);
     } else {
-      const url=update.patch({
-        aid:user.user_id
-      })
-         setValues({...values, email: userResponse.email, username: userResponse.username})
-          try{
-             const res=await AXIOS.patch(url,
-              values,
-              {headers: {"Content-Type": "multipart/form-data"}});
-              if (res?.status === 200) {
-                 toast.success('تغییرات به درستی انجام شد');
-                 dispatch(updateAccount(res.data))
-              }
-            }
-            catch(error){
-            console.log(error);
-            }
+      try {
+        const res = await AXIOS.patch(user_update.patch({
+          uid: user.user_id
+        }),
+          values,
+          { headers: { "Content-Type": "multipart/form-data" } });
+        if (res?.status === 200) {
+          toast.success('تغییرات با موفقیت ثبت شد.');
+          setValues(res.data)
+          dispatch(updateAccount(res.data))
+        }
+      }
+      catch (error) {
+        console.log(error);
+      }
     }
   };
-  const handleFile = (name, value) => {
-    setValues({
-      ...values,
-      [name]: value,
-    });
-  };
+
+  useEffect(() => {
+    if (!userResponse) {
+      userfetcher("get", `${API_URL.Register}${user.user_id}/`);
+    }   
+    setValues(userResponse)
+  }, [userResponse]);
 
   return (
     <div className="flex flex-row-reverse">
@@ -87,16 +79,16 @@ const Information: React.FC = (): JSX.Element => {
           <span className="ml-S">
             <ProfileImage
               size={100}
-              firstName={user.first_name}
-              lastName={user.last_name}
-              img={user.thumbnail}
+              firstName={values?.first_name}
+              lastName={values?.last_name}
+              img={values?.thumbnail || thumbnial}
             />
           </span>
           <div className="py-[6px] flex flex-col">
             <File
               inputValue={values?.thumbnail}
               onChangeFile={(name, value) => {
-                handleFile(name, value);
+                handleChange(name, value);
               }}
               id="thumbnail"
               name="thumbnail"

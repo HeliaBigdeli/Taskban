@@ -104,6 +104,7 @@ const Register: React.FC = (): JSX.Element => {
           type="checkbox"
           label=".قوانین و مقررات را می‌پذیرم"
           hasLabel={true}
+          className="text-blue-primary cursor-pointer"
           onChange={(name, value) => handleChange(name, value)}
           onClick={clickRules}
         />

@@ -15,15 +15,15 @@ export const register = {
   },
 };
 
-export const update = {
-  patch: ({ aid }) => {
-    return `${API_URL.Accounts}${aid}/`;
+export const user_update = {
+  patch: ({ uid }) => {
+    return `${API_URL.Accounts}${uid}/`;
   },
 };
 
-export const remove = {
-  delete: ({ aid }) => {
-    return `${API_URL.Accounts}${aid}`;
+export const user_remove = {
+  delete: ({ uid }) => {
+    return `${API_URL.Accounts}${uid}`;
   },
 };
 

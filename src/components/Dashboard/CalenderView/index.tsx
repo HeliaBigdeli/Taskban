@@ -58,9 +58,7 @@ const CalenderView: React.FC = (): JSX.Element => {
   return (
     <Table
       monthName={dateValues.monthName}
-      onclick={(date) => {
-        console.log(date);
-      }}
+      onclick={() => {}}
       type={dateValues.type}
       today={dateValues.today}
       dates={dates}

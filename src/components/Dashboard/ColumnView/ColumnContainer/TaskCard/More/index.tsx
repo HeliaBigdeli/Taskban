@@ -3,7 +3,7 @@ import Icon from "../../../../../Common/Icon";
 import TaskInfoModal from "../../../../TaskInfoModal";
 import { useParams } from "react-router-dom";
 import useAxios from "../../../../../../hooks/useAxios";
-import { task_comments, tasks } from "../../../../../../constants/url";
+import { tasks } from "../../../../../../constants/url";
 import { taskUpdate } from "../../../../../../features/update/updateSlice";
 import { useSelector } from "react-redux";
 

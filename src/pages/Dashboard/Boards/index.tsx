@@ -14,6 +14,8 @@ import {
 import { useDispatch } from "react-redux";
 import { AXIOS } from "../../../config/axios.config";
 import { taskUpdate } from "../../../features/update/updateSlice";
+import { ITask } from "../../../interfaces/task";
+import { allTasks } from "../../../features/task/taskSlice";
 
 const Boards: React.FC = (): JSX.Element => {
   const update = useSelector(taskUpdate);
@@ -26,6 +28,12 @@ const Boards: React.FC = (): JSX.Element => {
       (response) => {
         if (response.status === 200) {
           dispatch(all(response.data));
+
+          let tasks: ITask[] = [];
+          response.data.forEach((board) => {
+            tasks = [...tasks, board.tasks];
+          });      
+          dispatch(allTasks(tasks.flat()));          
         }
       }
     );

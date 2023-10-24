@@ -1,4 +1,4 @@
-import { useLocation, useParams, useSearchParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import Input from "../../../Common/Form/Input";
 import Icon from "../../../Common/Icon";
 import { useState } from "react";
@@ -21,14 +21,12 @@ const Header: React.FC = (): JSX.Element => {
   const projectName: string = searchParams.get("project_name") || "";
   const [data, setData] = useState<ITask[]>([]);
   const [query, setQuery] = useState<string>("");
-  const { tasks } = useSelector(selectTask);
+  const tasks = useSelector(selectTask).tasks;
 
   const handleSearch = (name: string, value: string) => {
     setQuery(value);
     const data = tasks.filter((item) => {
-      return (
-        item.name.includes(value)
-      );
+      return item.name.includes(value);
     });
 
     setData(data);
@@ -133,8 +131,8 @@ const Header: React.FC = (): JSX.Element => {
             handleSearch(name, value);
           }}
         >
-             {query && (
-            <div className="absolute left-0 bg-white w-full rounded-sm top-[40px] p-2 shadow-select z-30 max-h-[240px] overflow-y-auto overflow-x-hidden">
+          {query && (
+            <div className="absolute left-0 bg-white w-full rounded-sm top-[24px] p-2 shadow-select z-30 max-h-[240px] overflow-y-auto overflow-x-hidden">
               {data.length ? (
                 data?.map((item) => {
                   return (
@@ -144,7 +142,7 @@ const Header: React.FC = (): JSX.Element => {
                         className="cursor-pointer hover:bg-lightgray_200 p-1 rounded-sm"
                       >
                         {item.name}
-                      </div>                    
+                      </div>
                     </div>
                   );
                 })
@@ -153,7 +151,7 @@ const Header: React.FC = (): JSX.Element => {
               )}
             </div>
           )}
-          </Input>
+        </Input>
       </div>
       {/*----------------------------------------------- Sharing & Filter Modal --------------------------------------------- */}
       {shareModal && (

@@ -5,11 +5,11 @@ interface IProps {
   label?: string;
   id: string;
   name: string;
-  inputValue: string,
-  hasIcon?:boolean,
-  icon?:string,
-  text?:string
-  styles:string
+  inputValue: string;
+  hasIcon?: boolean;
+  icon?: string;
+  text?: string;
+  styles: string;
   onChangeFile: (name: string, value: any) => void;
 }
 
@@ -23,7 +23,7 @@ const File: React.FC<IProps> = ({
   text,
   hasIcon,
   icon,
-  styles
+  styles,
 }): JSX.Element => {
   const handleChange = (e) => {
     if (inputValue) {
@@ -37,24 +37,30 @@ const File: React.FC<IProps> = ({
     <div className="flex flex-row-reverse items-center">
       {hasLabel && (
         <label
-          className="text-black text-sm font-normal leading-normal ml-S"
+          className="dark:text-[#bac4c8] text-black text-sm font-normal leading-normal ml-S"
           htmlFor={id}
         >
           {label}
         </label>
       )}
-      {!inputValue ?
-        <label className={styles}>
-           {text}
-           {hasIcon&&
-          <Icon icon={icon} color="#208d8e" />}
-          <input type="file" id={id} name={name} hidden onChange={handleChange} />
-        </label> :
+      {!inputValue ? (
+        <label className={`dark:text-[#bac4c8] ${styles}`}>
+          {text}
+          {hasIcon && <Icon icon={icon} color="#208d8e" />}
+          <input
+            type="file"
+            id={id}
+            name={name}
+            hidden
+            onChange={handleChange}
+          />
+        </label>
+      ) : (
         <button className="flex flex-row items-center text-base font-medium border border-brand-primary h-[36px] rounded-lg py-[4px] px-[8px] gap-[4px] text-center">
           .فایل با موفقیت دریافت شد
-          <Icon icon="trash" color="red" onClick={handleChange}/>
+          <Icon icon="trash" color="red" onClick={handleChange} />
         </button>
-      }
+      )}
     </div>
   );
 };

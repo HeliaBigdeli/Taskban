@@ -89,10 +89,10 @@ const ReviewInfo: React.FC<IProps> = ({
         <div className="flex flex-col gap-XL">
           <div className="flex flex-col w-[453px] p-[12px] items-start gap-S border-[0.5px] border-[#AAAAAA] rounded-[8px]">
             <div className="flex justify-between items-center w-full">
-              <span className="text-black text-sm font-extrabold">
+              <span className="text-black dark:text-[#bac4c8] text-sm font-extrabold">
                 {workSpaceInfo.name}
               </span>
-              <span className="text-black text-sm font-extrabold">
+              <span className="text-black dark:text-[#bac4c8] text-sm font-extrabold">
                 نام ورک‌اسپیس
               </span>
             </div>
@@ -101,7 +101,7 @@ const ReviewInfo: React.FC<IProps> = ({
                 className="w-[15px] h-[15px] rounded-[2px]"
                 style={{ backgroundColor: workSpaceInfo.color }}
               ></div>
-              <span className="text-black text-sm font-extrabold">
+              <span className="text-black dark:text-[#bac4c8] text-sm font-extrabold">
                 رنگ ورک‌اسپیس
               </span>
             </div>
@@ -111,7 +111,9 @@ const ReviewInfo: React.FC<IProps> = ({
                 alt="اعضاء ورک اسپیس"
                 className={`rounded-full flex justify-center items-center w-[35px] h-[35px]`}
               />
-              <span className="text-black text-sm font-extrabold">اعضا</span>
+              <span className="text-black dark:text-[#bac4c8] text-sm font-extrabold">
+                اعضا
+              </span>
             </div>
           </div>
           <Button

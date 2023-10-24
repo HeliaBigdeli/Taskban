@@ -21,6 +21,8 @@ import {
   removeProject,
   removeWorkspace,
 } from "../../../../features/workspace/workspaceSlice";
+import { useContext } from "react";
+import { ThemeContext } from "../../../../context/ThemeContext";
 
 interface IProps {
   id: number;
@@ -55,6 +57,7 @@ const ListItem: React.FC<IProps> = ({
     shareWorkspace: false,
     newTask: false,
   });
+  const { isDarkTheme, toggleTheme } = useContext(ThemeContext);
 
   const toggleAccordion = () => {
     // navigate(projects.gets({ wid: id }));
@@ -112,6 +115,8 @@ const ListItem: React.FC<IProps> = ({
         className="flex justify-between items-center flex-row-reverse p-1 h-[36px] mt-S rounded-md"
         style={{
           backgroundColor: id === Number(params.wid) ? "#f4f4f4" : "",
+          color:
+            isDarkTheme === true && id === Number(params.wid) ? "#323232" : "",
         }}
       >
         <div
@@ -130,7 +135,16 @@ const ListItem: React.FC<IProps> = ({
             setWorkspace({ id });
           }}
         >
-          <Dropdown type="icon" icon={{ icon: "dots" }}>
+          <Dropdown
+            type="icon"
+            icon={{
+              icon: "dots",
+              color:
+                isDarkTheme === true && id === Number(params.wid)
+                  ? "#323232"
+                  : "",
+            }}
+          >
             <DropdownItem
               title="ساختن پروژه جدید"
               hasIcon={true}
@@ -179,6 +193,10 @@ const ListItem: React.FC<IProps> = ({
               style={{
                 backgroundColor:
                   project.id === Number(params.pid) ? "#D0EBFF" : "",
+                color:
+                  isDarkTheme === true && project.id === Number(params.pid)
+                    ? "#323232"
+                    : "",
               }}
               key={project.id}
               className="flex rounded-md justify-between items-center flex-row-reverse p-[4px] h-[36px] pr-[30px] my-S"
@@ -202,7 +220,16 @@ const ListItem: React.FC<IProps> = ({
                   setProject(project);
                 }}
               >
-                <Dropdown type="icon" icon={{ icon: "dots" }}>
+                <Dropdown
+                  type="icon"
+                  icon={{
+                    icon: "dots",
+                    color:
+                      isDarkTheme === true && id === Number(params.wid)
+                        ? "#323232"
+                        : "",
+                  }}
+                >
                   <DropdownItem
                     onClick={() => handleActions("newTask")}
                     title="ساختن تسک جدید"

@@ -30,7 +30,7 @@ const MemberRow: React.FC<IProps> = ({
             onClick={() => {}}
             text="دسترسی کامل"
             type="button"
-            className="h-[30px] rounded-md border-[1px] px-2 pt-[5px] pb-1 gap-[10px] hover:bg-[#E9EBF0] border-[#E9EBF0] text-xs"
+            className="hover:dark:text-[#323232] h-[30px] rounded-md border-[1px] px-2 pt-[5px] pb-1 gap-[10px] hover:bg-[#E9EBF0] border-[#E9EBF0] text-xs"
           />
         ) : (
           <Dropdown
@@ -87,7 +87,7 @@ const MemberRow: React.FC<IProps> = ({
           ) : (
             ""
           )}
-          <span className="text-sm text-black mt-[5px]">
+          <span className="text-sm dark:text-[#bac4c8] text-black mt-[5px]">
             {true ? "من" : email}
           </span>
           <ProfileImage

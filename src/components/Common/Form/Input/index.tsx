@@ -32,7 +32,7 @@ interface IProps extends React.PropsWithChildren {
   disabled?: boolean;
   onFocus?: (e: React.FocusEvent<HTMLInputElement>) => void;
   ref?: any;
-  autoComplete? :string
+  autoComplete?: string;
 }
 
 const Input: React.FC<IProps> = ({
@@ -68,7 +68,7 @@ const Input: React.FC<IProps> = ({
       <div className="text-right flex flex-col gap-XS">
         {hasLabel && (
           <label
-            className="text-black text-sm font-normal leading-normal"
+            className="text-black text-sm font-normal leading-normal dark:text-[#bac4c8]"
             htmlFor={id}
           >
             {label}
@@ -88,7 +88,7 @@ const Input: React.FC<IProps> = ({
             id={id}
             type={type}
             onChange={handleChange}
-            className={`rounded-md border border-lightgray px-2 text-right w-full ${className}`}
+            className={`dark:text-[#323232] rounded-md border border-lightgray px-2 text-right w-full ${className}`}
           />
           {children}
           {hasIcon && (

@@ -19,8 +19,7 @@ const ListShow: React.FC = (): JSX.Element => {
     setTaskModal(!taskModal);
   };
 
-  useEffect(() => {
-  }, [boards]);
+  useEffect(() => {}, [boards]);
 
   return (
     <div style={{ direction: "rtl" }} className={`pr-S`}>
@@ -28,8 +27,13 @@ const ListShow: React.FC = (): JSX.Element => {
         <button className="h-6 inline" onClick={() => setIsShown(!isShown)}>
           <Icon icon="chevron_down_circle" size={24} />
         </button>
+<<<<<<< HEAD
+        <span className="dark:text-[#bac4c8] text-black text-xl font-extrabold">
+          پروژه اول
+=======
         <span className="text-black text-xl font-extrabold">
           {searchParams.get("project_name")}
+>>>>>>> 7476e1f04be0dd63dc87f1bc5338f195c01e6eb1
         </span>
       </div>
       <div

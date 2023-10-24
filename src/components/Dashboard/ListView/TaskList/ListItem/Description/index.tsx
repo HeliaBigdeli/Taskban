@@ -41,7 +41,7 @@ const Description: React.FC<IDescriptionProps> = ({
         onClick={() => {
           setShowTaskModal(!showTaskModal);
         }}
-        className="flex cursor-pointer w-[70px] px-2.5 justify-center items-center gap-2.5 text-xs font-normal text-[#0E0E0E]"
+        className="dark:text-[#bac4c8] flex cursor-pointer w-[70px] px-2.5 justify-center items-center gap-2.5 text-xs font-normal text-[#0E0E0E]"
       >
         <Icon icon="paragraph" size={16} color="#BDC0C6" />
       </div>

@@ -57,7 +57,7 @@ const CalenderView: React.FC<IProps> = ({ onClick, onChangeDate }): JSX.Element 
       monthName: result.monthName,
       type: result.type,
     });
-    setDates(result.dates);   
+    setDates(result.dates);
   }, [dateValues.currentMonth, dateValues.type]);
 
   return (
@@ -97,26 +97,26 @@ const CalenderView: React.FC<IProps> = ({ onClick, onChangeDate }): JSX.Element 
       <div className="flex flex-row-reverse">
         <div className="w-[200px] bg-lightgray_200 py-M px-XS rounded-br-[12px] rounded-bl-[12px]">
           <ul className="flex flex-col gap-XS text-right text-sm">
-            <li className="hover:bg-lightgray_300 p-1 transition-all duration-100 cursor-pointer rounded-md px-4 flex justify-between">
+            <li className="dark:text-[#323232] hover:bg-lightgray_300 p-1 transition-all duration-100 cursor-pointer rounded-md px-4 flex justify-between">
               <span></span>
               <span>امروز</span>
             </li>
-            <li className="hover:bg-lightgray_300 p-1 transition-all duration-100 cursor-pointer rounded-md px-4">
+            <li className="dark:text-[#323232] hover:bg-lightgray_300 p-1 transition-all duration-100 cursor-pointer rounded-md px-4">
               کمی بعد
             </li>
-            <li className="hover:bg-lightgray_300 p-1 transition-all duration-100 cursor-pointer rounded-md px-4">
+            <li className="dark:text-[#323232] hover:bg-lightgray_300 p-1 transition-all duration-100 cursor-pointer rounded-md px-4">
               فردا
             </li>
-            <li className="hover:bg-lightgray_300 p-1 transition-all duration-100 cursor-pointer rounded-md px-4">
+            <li className="dark:text-[#323232] hover:bg-lightgray_300 p-1 transition-all duration-100 cursor-pointer rounded-md px-4">
               این آخر هفته
             </li>
-            <li className="hover:bg-lightgray_300 p-1 transition-all duration-100 cursor-pointer rounded-md px-4">
+            <li className="dark:text-[#323232] hover:bg-lightgray_300 p-1 transition-all duration-100 cursor-pointer rounded-md px-4">
               آخر هفته بعد
             </li>
-            <li className="hover:bg-lightgray_300 p-1 transition-all duration-100 cursor-pointer rounded-md px-4">
+            <li className="dark:text-[#323232] hover:bg-lightgray_300 p-1 transition-all duration-100 cursor-pointer rounded-md px-4">
               دو هفته دیگر
             </li>
-            <li className="hover:bg-lightgray_300 p-1 transition-all duration-100 cursor-pointer rounded-md px-4">
+            <li className="dark:text-[#323232] hover:bg-lightgray_300 p-1 transition-all duration-100 cursor-pointer rounded-md px-4">
               چهار هفته دیگر
             </li>
           </ul>

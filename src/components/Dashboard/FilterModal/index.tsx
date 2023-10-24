@@ -78,21 +78,21 @@ const FilterModal: React.FC<IProps> = ({ modal, setModal }): JSX.Element => {
                     name="where"
                     onChange={(e) => handleFilter(e, filter.key)}
                     items={where}
-                    className="w-[182px]"
+                    className="dark:text-[#323232] w-[182px]"
                   />
                   <span>آن ها</span>
                   <Select
                     name="tag"
                     onChange={(e) => handleFilter(e, filter.key)}
                     items={tag}
-                    className="w-[142px]"
+                    className="dark:text-[#323232] w-[142px]"
                     searchPlaceholder="جستجو"
                   />
                   <Select
                     name="existance"
                     onChange={(e) => handleFilter(e, filter.key)}
                     items={existance}
-                    className="w-[107px]"
+                    className="dark:text-[#323232] w-[107px]"
                     hasSearch={false}
                   />
                   <Icon

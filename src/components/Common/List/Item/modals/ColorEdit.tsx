@@ -70,7 +70,9 @@ const NameEdit: React.FC<IEdit> = ({
         <div className="flex flex-col gap-XL w-[500px] pt-0 items-end">
           <div className="flex gap-S">
             <div className="flex flex-col items-end gap-S">
-              <span className="text-sm text-black">رنگ ورک‌اسپیس</span>
+              <span className="text-sm text-black dark:text-[#bac4c8]">
+                رنگ ورک‌اسپیس
+              </span>
               <div className="flex w-[293px] flex-row-reverse gap-[8px] flex-wrap items-center">
                 <ColorPicker
                   onClick={(data) => setVlaues({ color: data.code! })}

@@ -60,7 +60,7 @@ const Table: React.FC<IProps> = ({
                 ? "border-brand-primary border "
                 : "border-lightgray_300"
             } relative hover:bg-brand-primary transition-lg duration-200 rounded-lg hover:text-white my-1
-             ${date.disable === true ? "text-lightgray" : "text-black"}
+             ${date.disable === true ? "text-black" : "text-[#bac4c8]"}
              ${
                selectedArray[0] === date.uKey ||
                selectedArray[selectedArray.length - 1] === date.uKey
@@ -74,7 +74,7 @@ const Table: React.FC<IProps> = ({
                        : "rounded-l-none"
                    }`
                  : selectedArray.find((x) => x === date.uKey)
-                 ? "bg-brand-secondary rounded-none"
+                 ? "bg-brand-secondary rounded-none dark:text-[#323232] hover:dark:text-white"
                  : ""
              }          
              `}

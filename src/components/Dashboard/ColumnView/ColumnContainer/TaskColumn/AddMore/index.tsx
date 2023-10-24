@@ -13,6 +13,7 @@ import { boards } from "../../../../../../constants/url";
 import { useParams } from "react-router-dom";
 import AlertModal from "../../../../../Common/List/Item/modals/AlertModal";
 import { board_remove } from "../../../../../../features/board/boardSlice";
+import { useDispatch } from "react-redux";
 
 interface IAddMoreProps {
   isShown: boolean;
@@ -28,7 +29,7 @@ const AddMore: React.FC<IAddMoreProps> = ({
   boardId,
 }): JSX.Element => {
   const [taskModal, setTaskModal] = useState<boolean>(false);
-  const [state, dispatch] = useReducer(boardDetailsReducer, {
+  const [state, stateDispatch] = useReducer(boardDetailsReducer, {
     boardNameEdit: false,
     boardDelete: false,
   });
@@ -36,13 +37,14 @@ const AddMore: React.FC<IAddMoreProps> = ({
   const [deleteResponse, error, loading, fetcher] = useAxios();
 
   const params = useParams();
+  const dispatch = useDispatch();
 
   const handleTaskModal = () => {
     setTaskModal(!taskModal);
   };
 
   const handleEditName = () => {
-    dispatch({ type: "boardNameEdit" });
+    stateDispatch({ type: "boardNameEdit" });
   };
 
   const handleCopyLink = () => {
@@ -61,11 +63,11 @@ const AddMore: React.FC<IAddMoreProps> = ({
   };
 
   const deleteAlert = () => {
-    dispatch({ type: "boardDelete" });
+    stateDispatch({ type: "boardDelete" });
   };
 
   useEffect(() => {
-    if (state.boardDelete && deleteResponse) {
+    if (deleteResponse) {
       dispatch(board_remove({ id: params.bid ? params.bid : boardId }));
       state.boardDelete = false;
       toast.success("آیتم مورد نظر با موفقیت حذف شد.");
@@ -106,8 +108,9 @@ const AddMore: React.FC<IAddMoreProps> = ({
         <DropdownItem
           title="حذف"
           hasIcon={true}
-          icon={{ icon: "trash" }}
+          icon={{ icon: "trash", color: "red" }}
           onClick={deleteAlert}
+          color="red"
         />
       </Dropdown>
       {taskModal && (

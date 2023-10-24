@@ -40,7 +40,9 @@ const ProfileLayout: React.FC = (): JSX.Element => {
               url="information"
               icon="profile_edit"
               className={`${
-                pathname === "/information" ? "bg-blue_secondary font-bold" : ""
+                pathname === "/information"
+                  ? "bg-blue_secondary font-bold dark:text-[#323232]"
+                  : ""
               }`}
             ></IconItem>
             <IconItem
@@ -48,7 +50,9 @@ const ProfileLayout: React.FC = (): JSX.Element => {
               url="account"
               icon="profile_check"
               className={`${
-                pathname === "/account" ? "bg-blue_secondary font-bold" : ""
+                pathname === "/account"
+                  ? "bg-blue_secondary font-bold dark:text-[#323232]"
+                  : ""
               }`}
             ></IconItem>
             <IconItem
@@ -56,7 +60,9 @@ const ProfileLayout: React.FC = (): JSX.Element => {
               url="setting"
               icon="setting"
               className={`${
-                pathname === "/setting" ? "bg-blue_secondary font-bold" : ""
+                pathname === "/setting"
+                  ? "bg-blue_secondary font-bold dark:text-[#323232]"
+                  : ""
               }`}
             ></IconItem>
           </ul>

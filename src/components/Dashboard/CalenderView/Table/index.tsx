@@ -8,14 +8,14 @@ import Input from "../../../Common/Form/Input";
 import Button from "../../../Common/Form/Button";
 import { ITask } from "../../../../interfaces/task";
 import { selectBoard } from "../../../../features/board/boardSlice";
-import { useSelector } from 'react-redux'
+import { useSelector } from "react-redux";
 import Select from "../../../Common/Form/Select";
 import useAxios from "../../../../hooks/useAxios";
 import { tasks } from "../../../../constants/url";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { addProject, addTask } from "../../../../features/update/updateSlice";
-import { useDispatch } from 'react-redux'
+import { useDispatch } from "react-redux";
 
 const portals = document.getElementById("portals") as Element;
 
@@ -24,19 +24,19 @@ interface IDates {
   day: string;
   showBtn: boolean;
   value: string;
-  disable: boolean,
-  task?: ITask[]
+  disable: boolean;
+  task?: ITask[];
 }
 
 interface IProps {
-  monthName: string,
-  type: string
+  monthName: string;
+  type: string;
   today: number;
   dates: IDates[];
   currentMonth: number;
   onMouseEnter: (x: string, y: string) => void;
   onMouseLeave: (x: string, y: string) => void;
-  onclick: ({ }) => void;
+  onclick: ({}) => void;
 }
 
 const Table: React.FC<IProps> = ({
@@ -50,12 +50,12 @@ const Table: React.FC<IProps> = ({
   onclick,
 }): JSX.Element => {
   const [modal, setModal] = useState<boolean>(false);
-  const [currentDay, setCurrentDay] = useState<number>(today)
+  const [currentDay, setCurrentDay] = useState<number>(today);
   const boards = useSelector(selectBoard).boards;
-  const [response, error, loading, fetcher] = useAxios()
+  const [response, error, loading, fetcher] = useAxios();
   const [bId, setBid] = useState();
-  const params = useParams()
-  const dispatch = useDispatch()
+  const params = useParams();
+  const dispatch = useDispatch();
   const [values, setVlaues] = useState({
     priority: 1,
     name: "",
@@ -65,7 +65,7 @@ const Table: React.FC<IProps> = ({
   });
 
   const handleShowModal = (date) => {
-    setCurrentDay(date.day)
+    setCurrentDay(date.day);
     setModal(!modal);
   };
 
@@ -73,20 +73,24 @@ const Table: React.FC<IProps> = ({
     onclick({
       day,
       date,
-      convertedDate: type === 'jalali'
-        ? moment(date, "jYYYY/jM/jD").format("YYYY-M-D HH:mm:ss")
-        : moment(date, "YYYY/M/D").format("jYYYY/jM/jD HH:mm:ss"),
+      convertedDate:
+        type === "jalali"
+          ? moment(date, "jYYYY/jM/jD").format("YYYY-M-D HH:mm:ss")
+          : moment(date, "YYYY/M/D").format("jYYYY/jM/jD HH:mm:ss"),
     });
   };
 
-
   const handleSubmit = () => {
-    fetcher('post', tasks.post({
-      wid: params.wid,
-      pid: params.pid,
-      bid: bId,
-    }), values)
-  }
+    fetcher(
+      "post",
+      tasks.post({
+        wid: params.wid,
+        pid: params.pid,
+        bid: bId,
+      }),
+      values
+    );
+  };
 
   const handleSelect = (e) => {
     const value = e.currentTarget.dataset.value;
@@ -99,16 +103,16 @@ const Table: React.FC<IProps> = ({
 
   useEffect(() => {
     if (response) {
-      setModal(false)
-      dispatch(addTask(response))
-      toast.success('تسک با موفقیت ثبت شد.')
+      setModal(false);
+      dispatch(addTask(response));
+      toast.success("تسک با موفقیت ثبت شد.");
     }
-  }, [response])
+  }, [response]);
 
   return (
     <div
       className="grid grid-cols-7 place-content-stretch h-screen mr-S mb-S"
-      dir={`${type === 'jalali' ? 'rtl' : 'ltr'}`}
+      dir={`${type === "jalali" ? "rtl" : "ltr"}`}
     >
       {dates?.map((date, index) => {
         return (
@@ -117,23 +121,17 @@ const Table: React.FC<IProps> = ({
             onMouseEnter={() => onMouseEnter(date.key, "show")}
             onMouseLeave={() => onMouseLeave(date.key, "hide")}
             key={date.key}
-            className={`flex items-center justify-center border min-h-max ${today === Number(date.day) && currentMonth === 0
-              ? "border-brand-primary"
-              : "border-lightgray_300"
-              } relative`}
+            className={`dark:bg-[#3b3b3b] flex items-center justify-center border min-h-max ${
+              today === Number(date.day) && currentMonth === 0
+                ? "border-brand-primary"
+                : "border-lightgray_300"
+            } relative`}
           >
-            {index <= 6 ?
-              <span className="absolute top-1 right-2">{dayOfWeek[type][index]}</span>
-              : null
-            }
-            <div className="flex flex-wrap">
-              {date.task?.length
-                ? date.task.map((item) => {
-                  return (<span key={item.id} className="w-[18px] h-[18px] rounded-md m-1 bg-lightgray cursor-pointer">
-                  </span>)
-                }) : null
-              }
-            </div>
+            {index <= 6 ? (
+              <span className="dark:text-white absolute top-1 right-2">
+                {dayOfWeek[type][index]}
+              </span>
+            ) : null}
             {date.showBtn && (
               <span onClick={() => handleShowModal(date)}>
                 <Icon
@@ -143,7 +141,15 @@ const Table: React.FC<IProps> = ({
                 />
               </span>
             )}
-            <span className={`absolute bottom-1 left-2 ${date.disable === true ? 'text-lightgray' : 'text-black font-bold'}`}>{date.day}</span>
+            <span
+              className={`absolute bottom-1 left-2 ${
+                date.disable === true
+                  ? "text-black"
+                  : "text-lightgray font-bold"
+              }`}
+            >
+              {date.day}
+            </span>
           </div>
         );
       })}

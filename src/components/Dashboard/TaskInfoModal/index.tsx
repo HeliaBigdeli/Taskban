@@ -147,7 +147,8 @@ const TaskInfoModal: React.FC<IProps> = ({
   };
 
   const handleSubmit = async () => {
-    if (!commentText) return;
+
+    if (!commentText||!isShow) return;
     try {
       await AXIOS.post(
         task_comments.post({
@@ -329,7 +330,7 @@ const TaskInfoModal: React.FC<IProps> = ({
                           onClick={handleSubmit}
                           type="button"
                           className={`${
-                            !isShow && "hidden"
+                            !isShow ? "opacity-0 cursor-text ":"opacity-100 cursor-pointer "
                           } bg-brand-primary  text-white text-xs rounded-md absolute bottom-5 py-1.5 px-3  left-5 font-extrabold`}
                         />
                       }

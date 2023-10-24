@@ -18,7 +18,7 @@ const RulesModal: React.FC<IProps> = ({modal,setModal}): JSX.Element => {
      <>
      {createPortal(
         <Modal
-          style={{ padding: "32px"}}
+          style={{ padding: "24px"}}
           modal={modal}
           setModal={handleShowModal}
           hasHeader={true}
@@ -28,13 +28,14 @@ const RulesModal: React.FC<IProps> = ({modal,setModal}): JSX.Element => {
           hasCloseIcon={true}
           closeIcon={{ order: 1 }}
           backgroundStyle="backdrop-blur-md"
+          fontSize="text-[32px]"
         >
-            <div  className="w-[660px]" dir="rtl">
+            <div  className="w-[800px] text-base" dir="rtl">
     <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است، و برای شرایط فعلی تکنولوژی مورد نیاز، و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد، کتابهای زیادی در شصت و سه درصد گذشته حال و آینده، شناخت فراوان جامعه و متخصصان را می طلبد.
 
    </p>
-          <ul className="list-disc p-S gap-S">
-            <li >
+          <ul className="flex flex-col list-disc gap-S px-L pt-L pb-S">
+            <li>
             لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است.
             </li>
             <li>

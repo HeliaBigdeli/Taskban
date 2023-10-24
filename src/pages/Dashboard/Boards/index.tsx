@@ -2,7 +2,7 @@ import ListView from "../../../components/Dashboard/ListView";
 import CalenderView from "../../../components/Dashboard/CalenderView";
 import ColumnView from "../../../components/Dashboard/ColumnView";
 import { useSelector } from "react-redux";
-import { selectView } from "../../../features/view/viewSlice";
+import { chengeView, selectView } from "../../../features/view/viewSlice";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Header from "../../../components/Layouts/Dashboard/Header";
@@ -31,6 +31,7 @@ const Boards: React.FC = (): JSX.Element => {
     );
     return () => {
       dispatch(clearState());
+      dispatch(chengeView({type: 'column'}))
     };
   }, [update, params.pid]);
 

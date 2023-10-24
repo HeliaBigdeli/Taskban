@@ -164,7 +164,7 @@ const TaskInfoModal: React.FC<IProps> = ({
                 <Button
                   type="button"
                   text="اشتراک گذاری"
-                  onClick={() => {}}
+                  onClick={() => { }}
                   className="mr-auto font-bold items-center"
                   hasIcon={true}
                   icon={{ icon: "share" }}
@@ -263,9 +263,8 @@ const TaskInfoModal: React.FC<IProps> = ({
                         onChange={(name, value) => {
                           setCommentText(value);
                         }}
-                        className={`w-full block  pt-2 pl-9 ${
-                          isShow ? " pb-20" : "pb-2"
-                        }  rounded-lg transition-all outline-none border-none   `}
+                        className={`w-full block  pt-2 pl-9 ${isShow ? " pb-20" : "pb-2"
+                          }  rounded-lg transition-all outline-none border-none   `}
                         style={{ height: isShow ? "200px" : "40px" }}
                       />
                       {
@@ -273,9 +272,8 @@ const TaskInfoModal: React.FC<IProps> = ({
                           text="ثبت کامنت"
                           onClick={handleSubmit}
                           type="button"
-                          className={`${
-                            isShow ? "z-20" : "-z-20"
-                          } bg-brand-primary text-white text-xs rounded-md absolute bottom-5 py-1.5 px-3  left-5 font-extrabold`}
+                          className={`${isShow ? "z-20" : "-z-20"
+                            } bg-brand-primary text-white text-xs rounded-md absolute bottom-5 py-1.5 px-3  left-5 font-extrabold`}
                         />
                       }
                     </div>
@@ -341,6 +339,7 @@ const TaskInfoModal: React.FC<IProps> = ({
       )}
       {DatePickerModal && (
         <DatePickerModal
+          onChangeDate={() => { }}
           modal={datePickerModal}
           setModal={handleDatePickerModal}
         />

@@ -9,7 +9,7 @@ import { errorToaster } from "../../../utils/toaster";
 import useAxios from "../../../hooks/useAxios";
 import API_URL from "../../../constants/api.url";
 import { useDispatch } from "react-redux";
-import { accounts, update } from "../../../constants/url";
+import { update } from "../../../constants/url";
 import { toast } from "react-toastify";
 import { AXIOS } from "../../../config/axios.config";
 import File from "../../../components/Common/Form/File";
@@ -25,7 +25,6 @@ type Values = {
 
 const Information: React.FC = (): JSX.Element => {
   const user = useSelector(selectUser);
-  const [response, error, loading, fetcher] = useAxios();
   const [userResponse, userError, userLoading, userfetcher] = useAxios();
 
   const [errors, setErrors] = useState<string[]>([]);
@@ -43,9 +42,8 @@ const Information: React.FC = (): JSX.Element => {
     if (!userResponse?.first_name) {
       userfetcher("get", `${API_URL.Register}${user.user_id}/`);
     }
-    setValues(userResponse);
-
-  }, [userResponse?.first_name, response]);
+    setValues({...values,username:userResponse?.username,email:userResponse?.email})
+  }, [userResponse?.username]);
 
   const handleChange = (name: string, value: string) => {
     setValues({ ...values, [name]: value });
@@ -56,25 +54,22 @@ const Information: React.FC = (): JSX.Element => {
     if (resultErrors.length) {
       errorToaster(resultErrors);
     } else {
-      const url = update.patch({
-        aid: user.user_id,
-      });
-      setValues({
-        ...values,
-        email: userResponse.email,
-        username: userResponse.username,
-      });
-      try {
-        const res = await AXIOS.patch(url, values, {
-          headers: { "Content-Type": "multipart/form-data" },
-        });
-        if (res?.status === 200) {
-          toast.success(res?.statusText);
-          dispatch(updateAccount(res.data));
-        }
-      } catch (error) {
-        console.log(error);
-      }
+      const url=update.patch({
+        aid:user.user_id
+      })
+         setValues({...values, email: userResponse.email, username: userResponse.username})
+          try{
+             const res=await AXIOS.patch(url,
+              values,
+              {headers: {"Content-Type": "multipart/form-data"}});
+              if (res?.status === 200) {
+                 toast.success('تغییرات به درستی انجام شد');
+                 dispatch(updateAccount(res.data))
+              }
+            }
+            catch(error){
+            console.log(error);
+            }
     }
   };
   const handleFile = (name, value) => {

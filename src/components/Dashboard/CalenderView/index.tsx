@@ -2,28 +2,17 @@ import { useEffect, useState, useContext } from "react";
 import Table from "./Table";
 import { AppContext } from "../../../context/store";
 import { datesMaker } from "../../../utils/datesMaker";
-import { selectBoard } from "../../../features/board/boardSlice";
-import { useSelector, useDispatch } from "react-redux";
-import { ITask } from "../../../interfaces/task";
-import { all } from "../../../features/task/taskSlice";
+import { useSelector } from "react-redux";
+import { selectTask } from "../../../features/task/taskSlice";
 
 const CalenderView: React.FC = (): JSX.Element => {
-  const dispatch = useDispatch();
-  const state = useSelector(selectBoard);
   const [dates, setDates] = useState<any[]>([]);
   const { dateValues, setDateValues } = useContext(AppContext);
+  const tasks = useSelector(selectTask).tasks;
 
-  const addTasksToDates = (boards, dates) => {
-    let tasks: ITask[] = [];
-    boards.forEach((board) => {
-      tasks = [...tasks, board.tasks];
-    });
-
-    const flattedTasks = tasks.flat();
-    dispatch(all(flattedTasks));
-
+  const addTasksToDates = (dates) => {
     dates.map((date) => {
-      flattedTasks?.map((task) => {
+      tasks?.map((task) => {
         if (
           new Date(date.value).getTime() === new Date(task.deadline).getTime()
         ) {
@@ -59,7 +48,7 @@ const CalenderView: React.FC = (): JSX.Element => {
       type: result.type,
     });
 
-    setDates(addTasksToDates(state.boards, result.dates));
+    setDates(addTasksToDates(result.dates));
   }, [dateValues.currentMonth, dateValues.type]);
 
   return (

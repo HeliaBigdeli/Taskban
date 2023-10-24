@@ -14,7 +14,6 @@ export const store = configureStore({
     workspaces: workspaceSlice,
     setting:settingSlice,
     boards: boardSlice,
-
   },
 });
 

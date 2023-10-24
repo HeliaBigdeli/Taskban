@@ -34,7 +34,6 @@ const Login: React.FC = (): JSX.Element => {
 
   const handleClick = async () => {
     const resultErrors = validate(values, rules);
-
     if (resultErrors.length) {
       setErrors(resultErrors);
     } else {

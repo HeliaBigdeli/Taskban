@@ -6,7 +6,7 @@ export interface ITask {
     description: string,
     deadline: string,
     priority: number,
-    attachment: string,
+    attachment: string|null,
     thumbnail: string,
     order: number,
     members: members_thumb[]

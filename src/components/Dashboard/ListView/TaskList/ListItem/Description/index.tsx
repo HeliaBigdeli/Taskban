@@ -18,17 +18,15 @@ const Description: React.FC<IDescriptionProps> = ({
 }): JSX.Element => {
   const [showTaskModal, setShowTaskModal] = useState<boolean>(false);
   const [taskInfo, taskInfoError, taskinfoLoading, getTaskInfo] = useAxios();
-  const [comments, commentsError, commentsLoading, getComments] = useAxios();
   const params = useParams();
-
+  const tasks = useSelector(taskUpdate);
   const handleshowTaskModal = async () => {
     const url = `${API_URL.WorkSpaces}${params.wid}/${API_URL.Projects}${params.pid}/${API_URL.Boards}${boardId}/${API_URL.Tasks}${taskId}/`;
     await getTaskInfo("get", url);
-    await getComments("get", `${url}comments/`);
   };
   useEffect(() => {
     handleshowTaskModal();
-  }, []);
+  }, [tasks]);
 
   return (
     <>

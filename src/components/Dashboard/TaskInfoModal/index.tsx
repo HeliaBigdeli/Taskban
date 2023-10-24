@@ -9,10 +9,10 @@ import Textarea from "../../Common/Form/Textarea";
 import MembersThumb from "../../Common/MembersThumb";
 import { ITask } from "../../../interfaces/task";
 import API_URL from "../../../constants/api.url";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { AXIOS } from "../../../config/axios.config";
 import { useDispatch, useSelector } from "react-redux";
-import { addTask } from "../../../features/update/updateSlice";
+import { addBoard, addTask } from "../../../features/update/updateSlice";
 import Input from "../../Common/Form/Input";
 import { selectUser } from "../../../features/auth/authSlice";
 import { IComment } from "../../../interfaces/comments";
@@ -65,10 +65,9 @@ const TaskInfoModal: React.FC<IProps> = ({
   const handleDatePickerModal = () => {
     setDatePickerModal(!datePickerModal);
   };
-
   const handleShowModal = async () => {
-    setModal(!modal);
     const { members, id, deadline, ...data } = values;
+
     try {
       await AXIOS.patch(
         url,
@@ -81,9 +80,11 @@ const TaskInfoModal: React.FC<IProps> = ({
           },
         }
       );
+      setModal(!modal);
       dispatch(addTask());
     } catch (error) {
       console.log(error);
+      setModal(!modal);
     }
   };
   const handleChange = (value: string) => {
@@ -95,6 +96,7 @@ const TaskInfoModal: React.FC<IProps> = ({
       [name]: value,
     });
   };
+  console.log(user);
   const handleRemoveAttachment = () => {
     setValues({
       ...values,
@@ -113,6 +115,7 @@ const TaskInfoModal: React.FC<IProps> = ({
     } catch (error) {
       console.log(error);
     }
+    setisShow(false);
   };
 
   const handleDropDown = (id, title) => {
@@ -121,7 +124,7 @@ const TaskInfoModal: React.FC<IProps> = ({
       priority: id,
     });
   };
-  const { weekday } = dateConvert(values.deadline);
+  const { weekday, year, day, month } = dateConvert(values.deadline);
 
   return (
     <>
@@ -139,7 +142,7 @@ const TaskInfoModal: React.FC<IProps> = ({
         >
           <div className="flex flex-col gap-M divide-y divide-lightgray_300 w-[1100px]">
             <div className="flex flex-row justify-between divide-x divide-lightgray_300">
-              <div className="flex w-[50%] justify-end px-S grow gap-M">
+              <div className="flex w-[50%] justify-end px-S grow gap-L">
                 <div className="flex flex-col">
                   <span className="text-sm text-right">ددلاین</span>
                   <span dir="rtl" className="font-bold">
@@ -149,7 +152,11 @@ const TaskInfoModal: React.FC<IProps> = ({
                 <div className="flex flex-col">
                   <span className="text-sm text-right">ساخته شده در</span>
                   <span dir="rtl" className="font-bold">
-                    1 اردیبهشت 1402
+                    {day}
+                    &nbsp;
+                    {month}
+                    &nbsp;
+                    {year}
                   </span>
                 </div>
               </div>
@@ -162,9 +169,9 @@ const TaskInfoModal: React.FC<IProps> = ({
                   hasIcon={true}
                   icon={{ icon: "share" }}
                 />
-                <div className="flex items-center gap-S">
+                <div className="flex items-center justify-between">
                   <div
-                    className="mr-S cursor-pointer border-dashed border-2 rounded-full  w-[40px] h-[40px] flex justify-center items-center"
+                    className="mr-2XL cursor-pointer border-dashed  border-2   rounded-full  w-[40px] h-[40px] flex justify-center items-center"
                     style={{ borderColor: flagColor(values.priority) }}
                   >
                     <Dropdown
@@ -204,33 +211,34 @@ const TaskInfoModal: React.FC<IProps> = ({
                       />
                     </Dropdown>
                   </div>
-                  <div className="flex gap-5">
-                    <MembersThumb members={values.members} hasAddIcon={true} />
-                    <Button
-                      type="button"
-                      name="status"
-                      onClick={() => {}}
-                      text={boardTitle}
-                      className={` p-1 rounded-md text-white w-[120px] h-[30px]`}
-                 
-                    />
-                  </div>
+
+                  <MembersThumb members={values.members} hasAddIcon={true} />
+                  <Button
+                    type="button"
+                    name="status"
+                    onClick={() => {}}
+                    text={boardTitle}
+                    className={` p-1 bg-darkred rounded-md text-white w-[120px] h-[30px]`}
+                  />
                 </div>
               </div>
             </div>
             <div>
               <div className="flex flex-row justify-between divide-x divide-lightgray_300">
-                <div className="flex flex-col  w-[50%] relative">
-                  {!isShow ? (
-                    <div className="h-1/4 overflow-hidden">
+                <div className="flex flex-col  h-[80vh] lg:h-[60vh] xl:h-[40vh]  w-[50%] relative">
+                  {!isShow && (
+                    <div className="h-3/4 overflow-auto flex flex-col items-end ">
                       {commentList?.map((item) => {
-                        return <Comments {...item} key={item.id} />;
+                        return (
+                          <Comments
+                            {...item}
+                            key={item.id}
+                            first_name={user.first_name}
+                            last_name={user.last_name}
+                          />
+                        );
                       })}
                     </div>
-                  ) : (
-                    <>
-                      <div className="h-1/4"></div>
-                    </>
                   )}
                   <div className="relative  w-full shadow-comment rounded mt-auto flex  justify-end ">
                     <div className="  absolute left-4 top-2 z-10">
@@ -293,28 +301,32 @@ const TaskInfoModal: React.FC<IProps> = ({
                         handleChange(value);
                       }}
                     />
-                    {values.attachment ? (
+                    {!values.attachment ? (
                       <File
-                        inputValue={values.attachment}
+                        inputValue={values.attachment || ""}
                         onChangeFile={(name, value) => {
                           handleFile(name, value);
                         }}
                         id="attachment"
                         name="attachment"
-                        hasLabel={true}
-                        label="افزودن پیوست"
-                        styles=""
+                        hasIcon={true}
+                        icon="attach"
+                        text="افزودن پیوست"
+                        styles="flex flex-row items-center text-base font-medium border border-brand-primary h-[36px] rounded-lg py-[4px] px-[8px] gap-[4px] cursor-pointer text-center"
                       />
                     ) : (
-                      <div className="flex">
-                        <a
-                          href={`${values.attachment}`}
+                      <div className="flex justify-end items-center gap-2">
+                        <Link
+                          to={values.attachment}
                           className="flex flex-row items-center text-base font-medium border border-brand-primary h-[36px] rounded-lg py-[4px] px-[8px] gap-[4px] cursor-pointer text-center"
                         >
                           پیوست فایل
                           <Icon icon="attach" color="#208d8e" />
-                        </a>
-                        <button onClick={handleRemoveAttachment}>
+                        </Link>
+                        <button
+                          onClick={handleRemoveAttachment}
+                          className="mt-1"
+                        >
                           <Icon icon="trash" color="#FA5252" />
                         </button>
                       </div>

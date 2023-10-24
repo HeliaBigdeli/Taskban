@@ -38,9 +38,7 @@ const ListItem: React.FC<IListItemProps> = ({
         <ListItemTitle
           title={
             <>
-              {day}
-              &nbsp;
-              {month}
+              {day} {month}
             </>
           }
         />

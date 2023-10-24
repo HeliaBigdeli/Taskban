@@ -47,6 +47,9 @@ export const boardSlice = createSlice({
         }
       });
     },
+    updateTask: (state, action) => {
+      
+    },
     removeTask: (state, action) => {
      
     },
@@ -65,7 +68,8 @@ export const {
   addNewTask,
   removeTask,
   archiveTask,
-  clearState
+  clearState,
+  updateTask
 } = boardSlice.actions;
 export const selectBoard = (state: RootState) => state.boards;
 export default boardSlice.reducer;

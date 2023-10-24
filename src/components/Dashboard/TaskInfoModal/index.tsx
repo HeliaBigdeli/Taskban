@@ -8,12 +8,10 @@ import File from "../../Common/Form/File";
 import Textarea from "../../Common/Form/Textarea";
 import MembersThumb from "../../Common/MembersThumb";
 import { ITask } from "../../../interfaces/task";
-import API_URL from "../../../constants/api.url";
 import { Link, useParams } from "react-router-dom";
-import { AXIOS } from "../../../config/axios.config";
+import { AXIOS, baseAppURL } from "../../../config/axios.config";
 import { useDispatch, useSelector } from "react-redux";
-import { addBoard, addTask } from "../../../features/update/updateSlice";
-import Input from "../../Common/Form/Input";
+import { addTask } from "../../../features/update/updateSlice";
 import { selectUser } from "../../../features/auth/authSlice";
 import { IComment } from "../../../interfaces/comments";
 import Comments from "./Comments";
@@ -21,6 +19,9 @@ import { dateConvert } from "../../../utils/dateConvert";
 import { flagColor } from "../../../utils/flagColor";
 import Dropdown from "../../Common/Dropdown";
 import DropdownItem from "../../Common/Dropdown/DropdownItem";
+import { task_comments, tasks } from "../../../constants/url";
+import { toast } from "react-toastify";
+import { updateTask } from "../../../features/board/boardSlice";
 
 const portals = document.getElementById("portals") as Element;
 
@@ -43,79 +44,108 @@ const TaskInfoModal: React.FC<IProps> = ({
   const [values, setValues] = useState<ITask>(taskInfo);
   const [commentText, setCommentText] = useState<string>("");
   const [commentList, setCommentList] = useState<IComment[]>([]);
-  const [isShow, setisShow] = useState<boolean>(false);
-  useEffect(() => {
-    fetch();
-  }, []);
+  const [isShow, setIsShow] = useState<boolean>(false);
+  const { weekday, year, day, month } = dateConvert(values.deadline);
+  const [hasUpdated, setHasUpdateed] = useState(false);
   const params = useParams();
-
-  const url = `${API_URL.WorkSpaces}${params.wid}/${API_URL.Projects}${params.pid}/${API_URL.Boards}${boardId}/${API_URL.Tasks}${taskInfo.id}/`;
-
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
 
-  const fetch = async () => {
+  const getTaskInfo = async () => {
+    setHasUpdateed(false);
     try {
-      const res = await AXIOS.get(`${url}comments/`);
+      const res = await AXIOS.get(
+        task_comments.gets({
+          wid: params.wid,
+          pid: params.pid,
+          bid: boardId,
+          tid: taskInfo.id,
+        })
+      );
       setCommentList(res.data);
     } catch (error) {
       console.log(error);
     }
   };
+
   const handleDatePickerModal = () => {
     setDatePickerModal(!datePickerModal);
   };
-  const handleShowModal = async () => {
-    const { members, id, deadline, ...data } = values;
 
-    try {
-      await AXIOS.patch(
-        url,
-        {
-          ...data,
-        },
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
+  const handleShowModal = async () => {
+    let data = {};
+    if (hasUpdated) {
+      data = {
+        name: values.name,
+        description: values.description,
+        priority: values.priority,
+      };
+
+      if (values.attachment && typeof values.attachment !== "string") {
+        data["attachment"] = values.attachment;
+      }
+    }
+
+    if (Object.keys(data).length) {
+      try {
+        const response = await AXIOS.patch(
+          tasks.patch({
+            wid: params.wid,
+            pid: params.pid,
+            bid: boardId,
+            tid: taskInfo.id,
+          }),
+          data,
+          { headers: { "Content-Type": "multipart/form-data" } }
+        );
+
+        if (response.status === 200) {
+          setModal(!modal);
+          toast.success("تسک با موفقیت ویرایش شد.");
+          dispatch(updateTask(response.data));
         }
-      );
-      setModal(!modal);
-      dispatch(addTask());
-    } catch (error) {
-      console.log(error);
+      } catch (error) {
+        setModal(!modal);
+      }
+    } else{
       setModal(!modal);
     }
   };
-  const handleChange = (value: string) => {
-    setValues({ ...values, description: value });
+
+  const handleChange = (name: string, value: string) => {
+    setHasUpdateed(true);
+    setValues({ ...values, [name]: value });
   };
-  const handleFile = (name, value) => {
-    setValues({
-      ...values,
-      [name]: value,
-    });
-  };
-  console.log(user);
+
   const handleRemoveAttachment = () => {
+    setHasUpdateed(true);
     setValues({
       ...values,
       attachment: "",
     });
   };
+
   const handleSubmit = async () => {
     if (!commentText) return;
     try {
-      await AXIOS.post(`${url}comments/`, {
-        attachment: null,
-        author: user.user_id,
-        text: commentText,
-      });
-      fetch();
+      await AXIOS.post(
+        task_comments.post({
+          wid: params.wid,
+          pid: params.pid,
+          bid: boardId,
+          tid: taskInfo.id,
+        }),
+        {
+          attachment: null,
+          author: user.user_id,
+          text: commentText,
+        }
+      );
+      getTaskInfo();
     } catch (error) {
       console.log(error);
     }
-    setisShow(false);
+    setIsShow(false);
   };
 
   const handleDropDown = (id, title) => {
@@ -124,7 +154,10 @@ const TaskInfoModal: React.FC<IProps> = ({
       priority: id,
     });
   };
-  const { weekday, year, day, month } = dateConvert(values.deadline);
+
+  useEffect(() => {
+    getTaskInfo();
+  }, []);
 
   return (
     <>
@@ -164,7 +197,7 @@ const TaskInfoModal: React.FC<IProps> = ({
                 <Button
                   type="button"
                   text="اشتراک گذاری"
-                  onClick={() => { }}
+                  onClick={() => {}}
                   className="mr-auto font-bold items-center"
                   hasIcon={true}
                   icon={{ icon: "share" }}
@@ -242,19 +275,17 @@ const TaskInfoModal: React.FC<IProps> = ({
                   )}
                   <div className="relative  w-full shadow-comment rounded mt-auto flex  justify-end ">
                     <div className="  absolute left-4 top-2 z-10">
-                      {" "}
                       <Icon icon="comment" color="#AEAEAE" />
                     </div>
                     <div
                       className="w-full"
                       onFocus={() => {
-                        setisShow(true);
+                        setIsShow(true);
                       }}
                       onBlur={() => {
-                        setisShow(false);
+                        setIsShow(false);
                       }}
                     >
-                      {" "}
                       <Textarea
                         name="comment"
                         id="comment"
@@ -263,8 +294,9 @@ const TaskInfoModal: React.FC<IProps> = ({
                         onChange={(name, value) => {
                           setCommentText(value);
                         }}
-                        className={`w-full block  pt-2 pl-9 ${isShow ? " pb-20" : "pb-2"
-                          }  rounded-lg transition-all outline-none border-none   `}
+                        className={`w-full block  pt-2 pl-9 ${
+                          isShow ? " pb-20" : "pb-2"
+                        }  rounded-lg transition-all outline-none border-none   `}
                         style={{ height: isShow ? "200px" : "40px" }}
                       />
                       {
@@ -272,8 +304,9 @@ const TaskInfoModal: React.FC<IProps> = ({
                           text="ثبت کامنت"
                           onClick={handleSubmit}
                           type="button"
-                          className={`${isShow ? "z-20" : "-z-20"
-                            } bg-brand-primary text-white text-xs rounded-md absolute bottom-5 py-1.5 px-3  left-5 font-extrabold`}
+                          className={`${
+                            isShow ? "z-20" : "-z-20"
+                          } bg-brand-primary text-white text-xs rounded-md absolute bottom-5 py-1.5 px-3  left-5 font-extrabold`}
                         />
                       }
                     </div>
@@ -296,14 +329,14 @@ const TaskInfoModal: React.FC<IProps> = ({
                       name="description"
                       id="description"
                       onChange={(name, value) => {
-                        handleChange(value);
+                        handleChange(name, value);
                       }}
                     />
                     {!values.attachment ? (
                       <File
                         inputValue={values.attachment || ""}
                         onChangeFile={(name, value) => {
-                          handleFile(name, value);
+                          handleChange(name, value);
                         }}
                         id="attachment"
                         name="attachment"
@@ -315,15 +348,15 @@ const TaskInfoModal: React.FC<IProps> = ({
                     ) : (
                       <div className="flex justify-end items-center gap-2">
                         <Link
-                          to={values.attachment}
+                          target="_blank"
+                          to={`${baseAppURL}${values?.attachment}`}
                           className="flex flex-row items-center text-base font-medium border border-brand-primary h-[36px] rounded-lg py-[4px] px-[8px] gap-[4px] cursor-pointer text-center"
                         >
-                          پیوست فایل
-                          <Icon icon="attach" color="#208d8e" />
+                          دریافت فایل پیوست
                         </Link>
                         <button
                           onClick={handleRemoveAttachment}
-                          className="mt-1"
+                          className="flex flex-row items-center text-base font-medium border border-brand-primary h-[36px] rounded-lg py-[4px] px-[8px] gap-[4px] cursor-pointer text-center"
                         >
                           <Icon icon="trash" color="#FA5252" />
                         </button>
@@ -339,7 +372,7 @@ const TaskInfoModal: React.FC<IProps> = ({
       )}
       {DatePickerModal && (
         <DatePickerModal
-          onChangeDate={() => { }}
+          onChangeDate={() => {}}
           modal={datePickerModal}
           setModal={handleDatePickerModal}
         />

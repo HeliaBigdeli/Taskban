@@ -7,9 +7,10 @@ const portals = document.getElementById("portals") as Element;
 interface IProps {
   modal: boolean;
   setModal: (value: boolean | ((prevVar: boolean) => boolean)) => void;
+  onChangeDate: (date) => void;
 }
 
-const DatePickerModal: React.FC<IProps> = ({ modal, setModal }): JSX.Element => {
+const DatePickerModal: React.FC<IProps> = ({ modal, setModal, onChangeDate }): JSX.Element => {
   const handleShowModal = () => {
     setModal(!modal);
   };
@@ -30,7 +31,7 @@ const DatePickerModal: React.FC<IProps> = ({ modal, setModal }): JSX.Element => 
           coloredSquare="lightgray_300"
           header={{ order: 3, text: "" }}
         >
-          <DatePicker onClick={handleShowModal} />
+          <DatePicker onClick={handleShowModal} onChangeDate={(date) => onChangeDate(date)}/>
         </Modal>,
         portals
       )}

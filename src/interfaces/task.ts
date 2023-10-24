@@ -4,10 +4,12 @@ export interface ITask {
     id: number,
     name: string,
     description: string,
+    created_at: string;
     deadline: string,
     priority: number,
     attachment: string,
     thumbnail: string,
     order: number,
+    color? :string,
     members: members_thumb[]
 }

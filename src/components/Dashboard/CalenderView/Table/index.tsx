@@ -2,10 +2,20 @@ import { dayOfWeek } from "../../../../constants/dayOfWeek";
 import Icon from "../../../Common/Icon";
 import moment from "moment-jalaali";
 import Modal from "../../../Common/Modal";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import Input from "../../../Common/Form/Input";
 import Button from "../../../Common/Form/Button";
+import { ITask } from "../../../../interfaces/task";
+import { selectBoard } from "../../../../features/board/boardSlice";
+import { useSelector } from 'react-redux'
+import Select from "../../../Common/Form/Select";
+import useAxios from "../../../../hooks/useAxios";
+import { tasks } from "../../../../constants/url";
+import { useParams } from "react-router-dom";
+import { toast } from "react-toastify";
+import { addProject, addTask } from "../../../../features/update/updateSlice";
+import { useDispatch } from 'react-redux'
 
 const portals = document.getElementById("portals") as Element;
 
@@ -14,7 +24,8 @@ interface IDates {
   day: string;
   showBtn: boolean;
   value: string;
-  disable: boolean
+  disable: boolean,
+  task?: ITask[]
 }
 
 interface IProps {
@@ -25,7 +36,7 @@ interface IProps {
   currentMonth: number;
   onMouseEnter: (x: string, y: string) => void;
   onMouseLeave: (x: string, y: string) => void;
-  onclick: ({}) => void;
+  onclick: ({ }) => void;
 }
 
 const Table: React.FC<IProps> = ({
@@ -40,6 +51,18 @@ const Table: React.FC<IProps> = ({
 }): JSX.Element => {
   const [modal, setModal] = useState<boolean>(false);
   const [currentDay, setCurrentDay] = useState<number>(today)
+  const boards = useSelector(selectBoard).boards;
+  const [response, error, loading, fetcher] = useAxios()
+  const [bId, setBid] = useState();
+  const params = useParams()
+  const dispatch = useDispatch()
+  const [values, setVlaues] = useState({
+    priority: 1,
+    name: "",
+    order: 1,
+    deadline: "",
+    board_id: "",
+  });
 
   const handleShowModal = (date) => {
     setCurrentDay(date.day)
@@ -50,11 +73,37 @@ const Table: React.FC<IProps> = ({
     onclick({
       day,
       date,
-      convertedDate: type === 'jalali' 
-      ? moment(date, "jYYYY/jM/jD").format("YYYY-M-D HH:mm:ss") 
+      convertedDate: type === 'jalali'
+        ? moment(date, "jYYYY/jM/jD").format("YYYY-M-D HH:mm:ss")
         : moment(date, "YYYY/M/D").format("jYYYY/jM/jD HH:mm:ss"),
     });
   };
+
+
+  const handleSubmit = () => {
+    fetcher('post', tasks.post({
+      wid: params.wid,
+      pid: params.pid,
+      bid: bId,
+    }), values)
+  }
+
+  const handleSelect = (e) => {
+    const value = e.currentTarget.dataset.value;
+    setBid(value);
+    setVlaues({
+      ...values,
+      board_id: value,
+    });
+  };
+
+  useEffect(() => {
+    if (response) {
+      setModal(false)
+      dispatch(addTask(response))
+      toast.success('تسک با موفقیت ثبت شد.')
+    }
+  }, [response])
 
   return (
     <div
@@ -68,15 +117,23 @@ const Table: React.FC<IProps> = ({
             onMouseEnter={() => onMouseEnter(date.key, "show")}
             onMouseLeave={() => onMouseLeave(date.key, "hide")}
             key={date.key}
-            className={`flex items-center justify-center border min-h-max ${
-              today === Number(date.day) && currentMonth === 0
-                ? "border-brand-primary"
-                : "border-lightgray_300"
-            } relative`}
+            className={`flex items-center justify-center border min-h-max ${today === Number(date.day) && currentMonth === 0
+              ? "border-brand-primary"
+              : "border-lightgray_300"
+              } relative`}
           >
-            {index <= 6 ? (
+            {index <= 6 ?
               <span className="absolute top-1 right-2">{dayOfWeek[type][index]}</span>
-            ) : null}
+              : null
+            }
+            <div className="flex flex-wrap">
+              {date.task?.length
+                ? date.task.map((item) => {
+                  return (<span key={item.id} className="w-[18px] h-[18px] rounded-md m-1 bg-lightgray cursor-pointer">
+                  </span>)
+                }) : null
+              }
+            </div>
             {date.showBtn && (
               <span onClick={() => handleShowModal(date)}>
                 <Icon
@@ -102,6 +159,17 @@ const Table: React.FC<IProps> = ({
           header={{ order: 3 }}
         >
           <div className="flex flex-col gap-S">
+            <div className="flex flex-row-reverse items-center gap-[8px]">
+              <Select
+                name="board_id"
+                onChange={(e) => {
+                  handleSelect(e);
+                }}
+                items={boards}
+                className="w-full"
+                searchPlaceholder="جستجو"
+              />
+            </div>
             <Input
               name="email"
               id="email"
@@ -109,7 +177,7 @@ const Table: React.FC<IProps> = ({
               className="h-XL w-[420px]"
               placeholder="نام تسک را وارد کنید"
               hasLabel={false}
-              onChange={() => {}}
+              onChange={(name, value) => setVlaues({ ...values, name: value })}
             />
             <div className="flex flex-row-reverse justify-between items-center">
               <div className="flex justify-center items-center gap-3">
@@ -122,7 +190,7 @@ const Table: React.FC<IProps> = ({
               <Button
                 text="ساختن تسک"
                 type="button"
-                onClick={() => {}}
+                onClick={handleSubmit}
                 hasIcon={false}
                 className="text-white text-sm leading-normal h-8 self-stretch rounded-md bg-brand-primary px-L py-S"
               />

@@ -85,7 +85,7 @@ const Header: React.FC = (): JSX.Element => {
         </button>
       </div>
       <div className="border-b-2 border-lightgray_300 py-S mb-S flex divide-x justify-end items-center divide-lightgray_300">
-        {pathname === "/calender" ? (
+        {view === "calender" ? (
           <div className="px-S">
             <Navigator />
           </div>

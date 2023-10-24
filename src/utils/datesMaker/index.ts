@@ -13,6 +13,8 @@ type DateList = {
   value: string;
   disable: boolean;
   uKey: number;
+  month: number
+  task?: []
 };
 
 export const datesMaker = (currentMonth = 0, type = "gregorian") => {
@@ -45,7 +47,7 @@ const createArray = (
   today: number,
   date: Date,
   monthName: string,
-  type: string
+  type: string,
 ) => {
   let firstDayOfWeekIndex: number = 0;
   // get first day of week to start array from there
@@ -89,34 +91,38 @@ const createArray = (
     if (i < firstDayOfWeekIndex) {
       const value =
         type === "jalali"
-          ? moment(`${year}-${prevMonth}-${prevMothDays} 00:00:00`, "jYYYY-jM-jD HH:mm:ss").format(
-              "YYYY-M-D HH:mm:ss"
+          ? moment(`${year}-${prevMonth}-${prevMothDays}`, "jYYYY-jM-jD").format(
+              "YYYY-M-D"
             )
-          : `${year}-${prevMonth}-${prevMothDays} 00:00:00`;
+          : `${year}-${prevMonth}-${prevMothDays}`;
 
       dates[i] = {
         key: uuid(),
         day: String(prevMothDays),
         value,
+        month: prevMonth,
         showBtn: false,
         disable: true,
         uKey: new Date(value).getTime(),
+        task: []
       };
       prevMothDays += 1;
     }
     // fill current month dates start from first day of week index
     const value =
       type === "jalali"
-        ? moment(`${year}-${month}-${i + 1} 00:00:00`, "jYYYY-jM-jD ").format("YYYY-M-D HH:mm:ss")
-        : `${year}-${month}-${i + 1} 00:00:00`;
+        ? moment(`${year}-${month}-${i + 1}`, "jYYYY-jM-jD").format("YYYY-M-D")
+        : `${year}-${month}-${i + 1}`;
 
     dates[index] = {
       key: uuid(),
       day: String(i + 1),
       value,
+      month: month,
       showBtn: false,
       disable: false,
       uKey: new Date(value).getTime(),
+      task: []
     };
     index += 1;
   }

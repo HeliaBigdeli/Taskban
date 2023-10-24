@@ -2,6 +2,7 @@ import Card from "../../../components/Layouts/Auth/Card";
 import Input from "../../../components/Common/Form/Input";
 import Button from "../../../components/Common/Form/Button";
 import Checkbox from "../../../components/Common/Form/Checkbox";
+import { createPortal } from "react-dom";
 import { useEffect, useState } from "react";
 import {
   required,
@@ -14,6 +15,7 @@ import {
 import useAxios from "../../../hooks/useAxios";
 import { useNavigate } from "react-router-dom";
 import { register } from "../../../constants/url";
+import RulesModal from "../../../components/Layouts/Auth/RulesModal";
 
 type Values = {
   username: string,
@@ -32,6 +34,7 @@ const rules = {
 const Register: React.FC = (): JSX.Element => {
   const navigate = useNavigate();
   const [errors, setErrors] = useState<string[]>([]);
+  const [rulesModal,setrulesModal]=useState(false)
   const [values, setValues] = useState<Values>({
     username: "",
     email: "",
@@ -53,7 +56,9 @@ const Register: React.FC = (): JSX.Element => {
       await fetcher("post", register.post(), values);
     }
   };
-
+    const clickRules=()=>{
+     setrulesModal(!rulesModal)
+     }
   useEffect(() => {
     if (response) {
       navigate("/login");
@@ -100,6 +105,7 @@ const Register: React.FC = (): JSX.Element => {
           label=".قوانین و مقررات را می‌پذیرم"
           hasLabel={true}
           onChange={(name, value) => handleChange(name, value)}
+          onClick={clickRules}
         />
         <Button
           loading={loading}
@@ -110,7 +116,9 @@ const Register: React.FC = (): JSX.Element => {
           className="text-white text-sm leading-normal font-extrabold h-12 self-stretch rounded-md bg-brand-primary"
         />
       </form>
+      {rulesModal && <RulesModal modal={rulesModal} setModal={clickRules} />}
     </Card>
+    
   );
 };
 

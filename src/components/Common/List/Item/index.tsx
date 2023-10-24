@@ -60,7 +60,7 @@ const ListItem: React.FC<IProps> = ({
   const { isDarkTheme, toggleTheme } = useContext(ThemeContext);
 
   const toggleAccordion = () => {
-    navigate(projects.gets({ wid: id }));
+    // navigate(projects.gets({ wid: id }));
     setListToggle(!listToggle);
   };
 
@@ -266,7 +266,7 @@ const ListItem: React.FC<IProps> = ({
               </span>
             </li>
           ))}
-          {!projectsData?.length && (
+          {!projectsData?.length && projectsData && (
             <Button
               text="ساختن پروژه جدید"
               onClick={handleNewTaskBtn}

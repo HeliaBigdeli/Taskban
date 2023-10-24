@@ -5,6 +5,7 @@ import API_URL from "../../constants/api.url";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { refresh } from "../../features/auth/authSlice";
+import { workSpaceEvent } from "../../features/update/updateSlice";
 
 interface IProps extends React.PropsWithChildren { }
 

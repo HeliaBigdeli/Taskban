@@ -5,34 +5,41 @@ import { useSelector } from "react-redux";
 import { selectView } from "../../../features/view/viewSlice";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import useAxios from "../../../hooks/useAxios";
 import Header from "../../../components/Layouts/Dashboard/Header";
-import { boardUpdate, taskUpdate } from "../../../features/update/updateSlice";
 import { boards } from "../../../constants/url";
+import {
+  all,
+  clearState,
+} from "../../../features/board/boardSlice";
+import { useDispatch } from "react-redux";
+import { AXIOS } from "../../../config/axios.config";
+import { taskUpdate } from "../../../features/update/updateSlice";
 
 const Boards: React.FC = (): JSX.Element => {
+  const update = useSelector(taskUpdate);
   const view: string = useSelector(selectView);
-  const [response, error, loading, fetcher] = useAxios();
   const params = useParams();
-  const update = useSelector(boardUpdate);
-  const updateByTask = useSelector(taskUpdate);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    fetcher(
-      "get",
-      boards.gets({
-        wid: params.wid,
-        pid: params.pid,
-      })
+    AXIOS.get(boards.gets({ wid: params.wid, pid: params.pid })).then(
+      (response) => {
+        if (response.status === 200) {
+          dispatch(all(response.data));
+        }
+      }
     );
-  }, [params.pid, view, update, updateByTask]);
+    return () => {
+      dispatch(clearState());
+    };
+  }, [update, params.pid]);
 
   switch (view) {
     case "list":
       return (
         <>
           <Header />
-          <ListView data={response} />
+          <ListView />
         </>
       );
     case "calender":
@@ -46,7 +53,7 @@ const Boards: React.FC = (): JSX.Element => {
       return (
         <>
           <Header />
-          <ColumnView data={response} />
+          <ColumnView />
         </>
       );
   }

@@ -2,7 +2,7 @@ import Dropdown from "../../../../../Common/Dropdown";
 import DropdownItem from "../../../../../Common/Dropdown/DropdownItem";
 import Icon from "../../../../../Common/Icon";
 import TaskModal from "../../../../TaskModal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useReducer } from "react";
 import { boardDetailsReducer } from "../../../../../../utils/reducer/boardDetails";
 import { createPortal } from "react-dom";
@@ -12,6 +12,7 @@ import useAxios from "../../../../../../hooks/useAxios";
 import { boards } from "../../../../../../constants/url";
 import { useParams } from "react-router-dom";
 import AlertModal from "../../../../../Common/List/Item/modals/AlertModal";
+import { board_remove } from "../../../../../../features/board/boardSlice";
 
 interface IAddMoreProps {
   isShown: boolean;
@@ -27,13 +28,12 @@ const AddMore: React.FC<IAddMoreProps> = ({
   boardId,
 }): JSX.Element => {
   const [taskModal, setTaskModal] = useState<boolean>(false);
-  const [currentID, setCurrentID] = useState(0);
   const [state, dispatch] = useReducer(boardDetailsReducer, {
     boardNameEdit: false,
     boardDelete: false,
   });
 
-  const [response, error, loading, fetcher] = useAxios();
+  const [deleteResponse, error, loading, fetcher] = useAxios();
 
   const params = useParams();
 
@@ -44,6 +44,7 @@ const AddMore: React.FC<IAddMoreProps> = ({
   const handleEditName = () => {
     dispatch({ type: "boardNameEdit" });
   };
+
   const handleCopyLink = () => {
     navigator.clipboard.writeText(window.location.href);
     toast.success("لینک با موفقیت در کلیپ بورد کپی شد.");
@@ -62,6 +63,14 @@ const AddMore: React.FC<IAddMoreProps> = ({
   const deleteAlert = () => {
     dispatch({ type: "boardDelete" });
   };
+
+  useEffect(() => {
+    if (state.boardDelete && deleteResponse) {
+      dispatch(board_remove({ id: params.bid ? params.bid : boardId }));
+      state.boardDelete = false;
+      toast.success("آیتم مورد نظر با موفقیت حذف شد.");
+    }
+  }, [deleteResponse]);
 
   return (
     <section
@@ -112,7 +121,6 @@ const AddMore: React.FC<IAddMoreProps> = ({
         <>
           <NameEdit
             boardId={boardId}
-            currentID={currentID}
             value={state.boardNameEdit}
             setValue={handleEditName}
             previousValue={title}

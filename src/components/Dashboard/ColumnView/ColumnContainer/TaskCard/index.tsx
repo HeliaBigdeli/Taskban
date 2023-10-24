@@ -9,6 +9,7 @@ import MembersThumb from "../../../../Common/MembersThumb";
 import { baseAppURL } from "../../../../../config/axios.config";
 import { useSearchParams } from "react-router-dom";
 import { dateConvert } from '../../../../../utils/dateConvert'
+import { flagColor } from "../../../../../utils/flagColor";
 
 interface ITaskCardProps extends ITask {
   index: number;
@@ -30,12 +31,6 @@ const TaskCard: React.FC<ITaskCardProps> = ({
   const { fullDate, month, day, weekday } = dateConvert(deadline)
   const [searchParams] = useSearchParams();
   const [isShown, setIsShown] = useState<boolean>(false);
-  const flagColor = {
-    1: "#82C91E",
-    2: "#15AABF",
-    3: "#FAB005",
-    4: "#FA5252",
-  };
 
   return (
     <Draggable draggableId={`${boardTitle + id} `} index={index}>
@@ -60,7 +55,7 @@ const TaskCard: React.FC<ITaskCardProps> = ({
               <MembersThumb members={members} size={24} />
             </div>
             <div className="flex flex-col items-end gap-2.5 ">
-              <span className="text-[#534D60] text-xs  font-normal">
+              <span className="text-[#534D60] text-xs font-normal">
                 {searchParams.get('project_name')}
               </span>
               <span className=" text-[#0E0E0E] text-xs  font-normal">
@@ -82,14 +77,19 @@ const TaskCard: React.FC<ITaskCardProps> = ({
                 &nbsp; &#45; &nbsp;
                 {weekday}
               </span>
-              <Icon icon="flag" size={14} color={flagColor[priority]} />
+              <Icon icon="flag" size={14} color={flagColor(priority)} />
             </div>
           </section>
           <section className="flex items-start gap-XS">
             <Tag color="grape" text="پروژه" />
             <Tag color="blue" text="درس" />
           </section>
-          <More isShown={isShown} taskId={id} boardId={boardId} />
+          <More
+            isShown={isShown}
+            taskId={id}
+            boardId={boardId}
+            boardTitle={boardTitle}
+          />
         </article>
       )}
     </Draggable>

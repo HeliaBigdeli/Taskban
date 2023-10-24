@@ -13,11 +13,13 @@ export const dateConvert = (date) => {
     );
 
     const weekday =
-        diffDays === 0
-            ? "امروز"
-            : diffDays === 1
-                ? "فردا"
-                : new Intl.DateTimeFormat("fa-IR", { weekday: "short" }).format(d);
+      diffDays === 0
+        ? "امروز"
+        : diffDays === 1
+        ? "فردا"
+        : diffDays === 2
+        ? "پس فردا"
+        : new Intl.DateTimeFormat("fa-IR", { weekday: "short" }).format(d);
 
 
     return { fullDate, month, day, weekday }

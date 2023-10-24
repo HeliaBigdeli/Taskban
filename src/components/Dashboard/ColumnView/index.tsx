@@ -7,11 +7,14 @@ import TaskModal from "../TaskModal";
 import React from "react";
 import NewBoardModal from "./NewBoardModal";
 import { DragDropContext } from "react-beautiful-dnd";
-import { IProps, IData } from "../../../interfaces/board";
+import { IBoard } from "../../../interfaces/board";
 import { useDraggable } from "react-use-draggable-scroll";
+import { selectBoard } from "../../../features/board/boardSlice";
+import { useSelector } from "react-redux";
 
-const ColumnView: React.FC<IProps> = ({ data }): JSX.Element => {
-  const [boardTaks, setBoardTaks] = useState<IData[]>(data);
+const ColumnView: React.FC = (): JSX.Element => {
+  const state = useSelector(selectBoard);
+  const [boardTasks, setBoardTasks] = useState<IBoard[]>(state.boards || []);
   const [newBoardModal, setNewBoardModal] = useState<boolean>(false);
   const [mouseDown, setMouseDown] = useState<boolean>(true);
   const [taskModal, setTaskModal] = useState<boolean>(false);
@@ -39,36 +42,36 @@ const ColumnView: React.FC<IProps> = ({ data }): JSX.Element => {
     )
       return;
 
-    const columnSourceIndex = boardTaks.findIndex((item) => {
+    const columnSourceIndex = boardTasks.findIndex((item) => {
       return item.name === source.droppableId;
     });
-    const columnDestinationIndex = boardTaks.findIndex((item) => {
+    const columnDestinationIndex = boardTasks.findIndex((item) => {
       return item.name === destination.droppableId;
     });
-    const newSourceItems = [...boardTaks[columnSourceIndex].tasks];
+    const newSourceItems = [...boardTasks[columnSourceIndex].tasks];
     const newDestinationItems =
       source.droppableId !== destination.droppableId
-        ? [...boardTaks[columnDestinationIndex].tasks]
+        ? [...boardTasks[columnDestinationIndex].tasks]
         : newSourceItems;
 
     const [deletedItem] = newSourceItems.splice(source.index, 1);
     newDestinationItems.splice(destination.index, 0, deletedItem);
 
-    const newTaskColumns = [...boardTaks];
+    const newTaskColumns = [...boardTasks];
     newTaskColumns[columnSourceIndex] = {
-      ...boardTaks[columnSourceIndex],
+      ...boardTasks[columnSourceIndex],
       tasks: newSourceItems,
     };
     newTaskColumns[columnDestinationIndex] = {
-      ...boardTaks[columnDestinationIndex],
+      ...boardTasks[columnDestinationIndex],
       tasks: newDestinationItems,
     };
-    setBoardTaks(newTaskColumns);
+    setBoardTasks(newTaskColumns);
   };
 
   useEffect(() => {
-    setBoardTaks(data);
-  }, [data]);
+    setBoardTasks(state.boards);
+  }, [state]);
 
   return (
     <>
@@ -81,7 +84,7 @@ const ColumnView: React.FC<IProps> = ({ data }): JSX.Element => {
       >
         {
           <DragDropContext onDragEnd={handleDragDrop}>
-            {boardTaks?.map((item) => {
+            {boardTasks?.map((item) => {
               return (
                 <ColumnContainer
                   key={item.id}

@@ -27,7 +27,8 @@ const ListHeader: React.FC<IListHeaderProps> = ({
             <Icon icon="chevron_down_circle" size={20} />
           </button>
           <div
-            className={`flex py-1 px-1.5 items-start gap-2.5 rounded-[4px] bg-[#F92E8F] text-white text-center text-base font-medium ${
+            style={{ backgroundColor: color }}
+            className={`flex py-1 px-1.5 items-start gap-2.5 rounded-[4px] text-white text-center text-base font-medium ${
               color && colorVariants[color as keyof typeof colorVariants]
             }`}
           >

@@ -1,12 +1,9 @@
 import WorkSpace from "./WorkSpace";
 import { selectWorkspace } from "../../../features/workspace/workspaceSlice";
 import { useSelector } from "react-redux";
-import { useEffect } from "react";
 
 const WorkSpaces: React.FC = (): JSX.Element => {
   const state = useSelector(selectWorkspace);
-
-  useEffect(() => {}, [state]);
 
   return (
     <div className="w-full h-full pt-12 pr-8 ">
@@ -16,7 +13,7 @@ const WorkSpaces: React.FC = (): JSX.Element => {
             <WorkSpace
               key={item.id}
               {...item}
-              projectsData={item.projects || []}
+              projectsData={item.projects}
             />
           );
         })}

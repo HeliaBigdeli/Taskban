@@ -3,13 +3,15 @@ import authReducer from "../features/auth/authSlice";
 import updateReducer from "../features/update/updateSlice";
 import viewReducer from "../features/view/viewSlice";
 import workspaceSlice from "../features/workspace/workspaceSlice";
+import boardSlice from "../features/board/boardSlice";
 
 export const store = configureStore({
   reducer: {
     auth: authReducer,
     update: updateReducer,
     view: viewReducer,
-    workspaces: workspaceSlice
+    workspaces: workspaceSlice,
+    boards: boardSlice,
   },
 });
 

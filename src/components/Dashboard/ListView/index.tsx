@@ -3,23 +3,22 @@ import Icon from "../../Common/Icon";
 import TaskList from "./TaskList";
 import Button from "../../Common/Form/Button";
 import TaskModal from "../TaskModal";
-import { IProps, IData } from "../../../interfaces/board";
-import { boardUpdate } from "../../../features/update/updateSlice";
+import { IBoard } from "../../../interfaces/board";
 import { useSelector } from "react-redux";
+import { selectBoard } from "../../../features/board/boardSlice";
 
-const ListShow: React.FC<IProps> = ({ data }): JSX.Element => {
-  const [listTasks, setListTaks] = useState<IData[]>(data);
+const ListShow: React.FC = (): JSX.Element => {
+  const boards = useSelector(selectBoard).boards;
+  const [listTasks, setListTaks] = useState<IBoard[]>(boards);
   const [isShown, setIsShown] = useState<boolean>(true);
   const [taskModal, setTaskModal] = useState<boolean>(false);
-  const update = useSelector(boardUpdate);
 
   const handleTaskModal = () => {
     setTaskModal(!taskModal);
   };
 
   useEffect(() => {
-    setListTaks(data);
-  }, [data, update]);
+  }, [boards]);
 
   return (
     <div style={{ direction: "rtl" }} className={`pr-S`}>

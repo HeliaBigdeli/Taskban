@@ -1,6 +1,7 @@
 import { useContext, useEffect } from "react";
 import Icon from "../Icon/";
 import { ThemeContext } from "../../../context/ThemeContext";
+import Button from "../Form/Button";
 
 interface IHeader {
   text?: string;
@@ -16,7 +17,7 @@ interface ICloseIcon {
 interface IBackIcon {
   color?: string;
   order: number;
-  handleBack?: () => void;
+  handleBack?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }
 
 interface IProps extends React.PropsWithChildren {
@@ -32,8 +33,8 @@ interface IProps extends React.PropsWithChildren {
   coloredSquare?: string;
   style?: {};
   contentTopGap?: string;
-  backgroundStyle?:string;
-  fontSize?:string
+  backgroundStyle?: string;
+  fontSize?: string;
 }
 
 const Modal: React.FC<IProps> = ({
@@ -51,7 +52,7 @@ const Modal: React.FC<IProps> = ({
   coloredSquare,
   contentTopGap = " gap-XL",
   backgroundStyle,
-  fontSize
+  fontSize,
 }): JSX.Element => {
   const handleClick = (e: React.SyntheticEvent<EventTarget>) => {
     if (e.target === e.currentTarget) handleClose();
@@ -93,47 +94,52 @@ const Modal: React.FC<IProps> = ({
                   : ""
               }`}
             >
-              <button
-                className={`flex items-center w-auto h-M ${
-                  hasBackIcon ? "" : "invisible"
-                }`}
-                style={{ order: backIcon.order }}
-                onClick={backIcon.handleBack}
-              >
-                <Icon
-                  icon="back"
-                  color={`${isDarkTheme === true ? "#bac4c8" : "#1e1e1ec4"}`}
-                  size={32}
+              <div style={{ order: backIcon.order }}>
+                <Button
+                  type="button"
+                  className={`flex items-center w-auto h-M ${
+                    hasBackIcon ? "" : "invisible"
+                  }`}
+                  onClick={backIcon.handleBack!}
+                  hasIcon={true}
+                  icon={{
+                    icon: "back",
+                    color: `${isDarkTheme === true ? "#bac4c8" : "#1e1e1ec4"}`,
+                    size: 32,
+                  }}
                 />
-              </button>
-              <h2
-                style={{ order: header.order }}
-                className={`flex items-center gap-[13px] font-extrabold ${fontSize? fontSize : "text-xl"} text-black order-$ ${
-                  hasHeader ? "" : "invisible"
-                }
+              </div>
+              <div style={{ order: header.order }}>
+                <h2
+                  className={`dark:text-[#bac4c8] flex items-center gap-[13px] font-extrabold text-xl text-black order-$ ${
+                    hasHeader ? "" : "invisible"
+                  }
                 `}
-              >
-                {hasHeader ? header?.text : ""}
-                {hasColor && (
-                  <div
-                    style={{ backgroundColor: coloredSquare }}
-                    className={`w-S h-S rounded-sm`}
-                  ></div>
-                )}
-              </h2>
-              <button
-                style={{ order: closeIcon.order }}
-                className={`flex items-center w-auto h-M ${
-                  hasCloseIcon ? "" : "invisible"
-                }`}
-                onClick={handleClose}
-              >
-                <Icon
-                  icon="close"
-                  color={`${isDarkTheme === true ? "#bac4c8" : "#1e1e1ec4"}`}
-                  size={32}
-                />
-              </button>
+                >
+                  {hasHeader ? header?.text : ""}
+                  {hasColor && (
+                    <div
+                      style={{ backgroundColor: coloredSquare }}
+                      className={`w-S h-S rounded-sm`}
+                    ></div>
+                  )}
+                </h2>
+              </div>
+              <div style={{ order: closeIcon.order }}>
+                <Button
+                  type="button"
+                  className={`flex items-center w-auto h-M ${
+                    hasCloseIcon ? "" : "invisible"
+                  }`}
+                  onClick={handleClose}
+                >
+                  <Icon
+                    icon="close"
+                    color={`${isDarkTheme === true ? "#bac4c8" : "#1e1e1ec4"}`}
+                    size={32}
+                  />
+                </Button>
+              </div>
             </div>
             <div className="flex flex-col w-full mb[28px]">{children}</div>
           </div>

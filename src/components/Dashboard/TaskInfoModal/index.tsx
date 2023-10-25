@@ -147,8 +147,7 @@ const TaskInfoModal: React.FC<IProps> = ({
   };
 
   const handleSubmit = async () => {
-
-    if (!commentText||!isShow) return;
+    if (!commentText || !isShow) return;
     try {
       await AXIOS.post(
         task_comments.post({
@@ -318,9 +317,9 @@ const TaskInfoModal: React.FC<IProps> = ({
                         onChange={(name, value) => {
                           setCommentText(value);
                         }}
-                        className={`w-full block  pt-2 pl-9 ${
-                          isShow ? " pb-20 h-28" : "pb-2 h-10"
-                        } lg:${isShow && "  h-40"} xl:${
+                        className={`dark:mr-4 dark:text-black w-full block  pt-2 pl-9 ${
+                          isShow ? " pb-20 h-32" : "pb-2 h-10"
+                        } lg:${isShow && "  h-44"} xl:${
                           isShow && "  h-52"
                         } rounded-lg transition-all outline-none border-none   `}
                       />
@@ -330,7 +329,9 @@ const TaskInfoModal: React.FC<IProps> = ({
                           onClick={handleSubmit}
                           type="button"
                           className={`${
-                            !isShow ? "opacity-0 cursor-text ":"opacity-100 cursor-pointer "
+                            !isShow
+                              ? "opacity-0 cursor-text "
+                              : "opacity-100 cursor-pointer "
                           } bg-brand-primary  text-white text-xs rounded-md absolute bottom-5 py-1.5 px-3  left-5 font-extrabold`}
                         />
                       }
@@ -344,12 +345,12 @@ const TaskInfoModal: React.FC<IProps> = ({
                         <Icon icon="tag" color="#c1c1c1" />
                       </div>
                     </div>
-                    <h4 className="text-right mt-2 text-black text-2xl font-extrabold">
+                    <h4 className="dark:text-[#bac4c8] text-right mt-2 text-black text-2xl font-extrabold">
                       {values.name}
                     </h4>
                     {values.id && (
                       <Textarea
-                        className="my-S"
+                        className="my-S dark:text-black"
                         rows={6}
                         inputValue={values.description}
                         name="description"
@@ -381,12 +382,13 @@ const TaskInfoModal: React.FC<IProps> = ({
                         >
                           دریافت فایل پیوست
                         </Link>
-                        <button
+                        <Button
+                          type="button"
+                          hasIcon={true}
+                          icon={{ icon: "trash", color: "#FA5252" }}
                           onClick={handleRemoveAttachment}
                           className="flex flex-row items-center text-base font-medium border border-brand-primary h-[36px] rounded-lg py-[4px] px-[8px] gap-[4px] cursor-pointer text-center"
-                        >
-                          <Icon icon="trash" color="#FA5252" />
-                        </button>
+                        />
                       </div>
                     )}
                   </div>

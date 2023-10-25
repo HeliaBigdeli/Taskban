@@ -1,3 +1,4 @@
+import Button from "../../../../Common/Form/Button";
 import Icon from "../../../../Common/Icon";
 import HeaderTitle from "./HeaderTitle";
 import PN from "persian-number";
@@ -23,9 +24,13 @@ const ListHeader: React.FC<IListHeaderProps> = ({
     <div className="flex w-full justify-between items-center self-stretch">
       <section className="flex justify-end items-center gap-XS">
         <div className="flex justify-end items-center gap-[5px]">
-          <button onClick={handleShow} className="h-5">
-            <Icon icon="chevron_down_circle" size={20} />
-          </button>
+          <Button
+            type="button"
+            hasIcon={true}
+            icon={{ icon: "chevron_down_circle", size: 20 }}
+            onClick={handleShow}
+            className="h-5"
+          />
           <div
             style={{ backgroundColor: color }}
             className={`flex py-1 px-1.5 items-start gap-2.5 rounded-[4px] text-white text-center text-base font-medium ${

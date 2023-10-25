@@ -1,4 +1,4 @@
-import {  useState } from "react";
+import { useState } from "react";
 import Icon from "../../../../../Common/Icon";
 import TaskInfoModal from "../../../../TaskInfoModal";
 interface IMoreProps {
@@ -33,7 +33,7 @@ const More: React.FC<IMoreProps> = ({
           <Icon size={20} icon="check_circle" />
         </div>
       </section>
-      {showTaskModal && (
+      {showTaskModal && (document.body.style.overflow = "hidden") && (
         <TaskInfoModal
           modal={showTaskModal}
           setModal={setShowTaskModal}

@@ -8,18 +8,19 @@ import ProjectModal from "../../ProjectModal";
 import { useLocation, useNavigate } from "react-router-dom";
 import { projects } from "../../../../constants/url";
 import { IProjects } from "../../../../interfaces/projects";
+import Button from "../../../Common/Form/Button";
 
 interface IWorkSpaceProps {
   name: string;
   color: string;
   id: number;
-  projectsData: IProjects[]
+  projectsData: IProjects[];
 }
 const WorkSpace: React.FC<IWorkSpaceProps> = ({
   name,
   color,
   id,
-  projectsData
+  projectsData,
 }): JSX.Element => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
@@ -49,9 +50,17 @@ const WorkSpace: React.FC<IWorkSpaceProps> = ({
           <h4 className="text-right text-2xl leading-8 font-extrabold">
             {name}
           </h4>
-          <button className="mt-1.5" onClick={handleModal}>
-            <Icon icon="plus_square" color={colorVariants.btn} size={24} />
-          </button>
+          <Button
+            type="button"
+            hasIcon={true}
+            icon={{
+              icon: "plus_square",
+              color: `${colorVariants.btn}`,
+              size: 24,
+            }}
+            className="mt-1.5"
+            onClick={handleModal}
+          />
         </div>
 
         <div

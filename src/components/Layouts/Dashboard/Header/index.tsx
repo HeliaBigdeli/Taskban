@@ -10,6 +10,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { chengeView } from "../../../../features/view/viewSlice";
 import { selectTask } from "../../../../features/task/taskSlice";
 import { ITask } from "../../../../interfaces/task";
+import Button from "../../../Common/Form/Button";
 import TaskInfoModal from "../../../Dashboard/TaskInfoModal";
 import { selectBoard } from "../../../../features/board/boardSlice";
 import { IBoard } from "../../../../interfaces/board";
@@ -27,7 +28,11 @@ const Header: React.FC = (): JSX.Element => {
   const [query, setQuery] = useState<string>("");
   const boards = useSelector(selectBoard).boards;
   const [showTaskModal, setShowTaskModal] = useState<boolean>(false);
-  const [values, setValues] = useState({ boardId: 0, taskId: 0, boardTitle: "" });
+  const [values, setValues] = useState({
+    boardId: 0,
+    taskId: 0,
+    boardTitle: "",
+  });
 
   const handleSearch = (name: string, value: string) => {
     setQuery(value);
@@ -54,18 +59,19 @@ const Header: React.FC = (): JSX.Element => {
   };
 
   const handleShowTaskInfo = (board, task) => {
-    setValues({boardId: board.id, taskId: task.id, boardTitle: board.name})
-    setShowTaskModal(!showTaskModal)
-    setQuery("")
-  }
+    setValues({ boardId: board.id, taskId: task.id, boardTitle: board.name });
+    setShowTaskModal(!showTaskModal);
+    setQuery("");
+  };
   return (
     <div className="mt-XL mr-S">
       <div className="flex flex-between flex-row-reverse border-b-2 border-lightgray_300 py-S gap-S">
         <div className="flex divide-x divide-lightgray_300 font-bold">
           <p
             onClick={() => handleView("calender")}
-            className={`px-S flex justify-center text-base items-center cursor-pointer ${view === "calender" ? "text-brand-primary" : ""
-              }`}
+            className={`px-S flex justify-center text-base items-center cursor-pointer ${
+              view === "calender" ? "text-brand-primary" : ""
+            }`}
           >
             تقویم
             <Icon
@@ -75,8 +81,9 @@ const Header: React.FC = (): JSX.Element => {
           </p>
           <p
             onClick={() => handleView("column")}
-            className={`px-S flex justify-center text-base items-center cursor-pointer ${view === "column" ? "text-brand-primary" : ""
-              }`}
+            className={`px-S flex justify-center text-base items-center cursor-pointer ${
+              view === "column" ? "text-brand-primary" : ""
+            }`}
           >
             نمایش ستونی
             <Icon
@@ -86,8 +93,9 @@ const Header: React.FC = (): JSX.Element => {
           </p>
           <p
             onClick={() => handleView("list")}
-            className={`px-S flex justify-center text-base items-center cursor-pointer ${view === "list" ? "text-brand-primary" : ""
-              }`}
+            className={`px-S flex justify-center text-base items-center cursor-pointer ${
+              view === "list" ? "text-brand-primary" : ""
+            }`}
           >
             نمایش لیستی
             <Icon
@@ -100,13 +108,14 @@ const Header: React.FC = (): JSX.Element => {
             {projectName?.substring(0, 20)}
           </span>
         </div>
-        <button
+        <Button
+          type="button"
+          text="اشتراک گذاری"
+          hasIcon={true}
+          icon={{ icon: "share" }}
           onClick={handleShareModal}
           className="mr-auto font-bold flex justify-center text-base items-center"
-        >
-          اشتراک گذاری
-          <Icon icon="share" />
-        </button>
+        />
       </div>
       <div className="border-b-2 border-lightgray_300 py-S mb-S flex divide-x justify-end items-center divide-lightgray_300">
         {view === "calender" ? (
@@ -118,13 +127,14 @@ const Header: React.FC = (): JSX.Element => {
             <p className="text-xs bg-blue_secondary p-1 px-S text-blue_primary">
               دسته بندی شده با : وضعیت
             </p>
-            <button
+            <Button
+              type="button"
+              text="فیلترها"
+              hasIcon={true}
+              icon={{ icon: "filter" }}
               onClick={handleFilterModal}
               className="px-S flex justify-center items-center text-xs"
-            >
-              فیلترها
-              <Icon icon="filter" />
-            </button>
+            />
           </div>
         )}
         <Input
@@ -146,22 +156,20 @@ const Header: React.FC = (): JSX.Element => {
             <div className="absolute left-0 bg-white w-full rounded-sm top-[30px] p-2 shadow-select z-30 max-h-[200px] overflow-y-auto overflow-x-hidden">
               {data.length ? (
                 data?.map((board) => {
-                  return (
-                    board.tasks.map((task) => {
-                      if (task.name.includes(query)) {
-                        return (
-                          <p
-                            onClick={() => handleShowTaskInfo(board, task)}
-                            key={task.id}
-                            className="flex flex-row-reverse items-center cursor-pointer hover:bg-lightgray_200 p-1 rounded-sm text-sm"
-                          >
-                            <Icon icon="chevron_left" />
-                            {task.name}
-                          </p>
-                        );
-                      }
-                    })
-                  );
+                  return board.tasks.map((task) => {
+                    if (task.name.includes(query)) {
+                      return (
+                        <p
+                          onClick={() => handleShowTaskInfo(board, task)}
+                          key={task.id}
+                          className="flex flex-row-reverse items-center cursor-pointer hover:bg-lightgray_200 p-1 rounded-sm text-sm"
+                        >
+                          <Icon icon="chevron_left" />
+                          {task.name}
+                        </p>
+                      );
+                    }
+                  });
                 })
               ) : (
                 <p>! موردی یافت نشد</p>

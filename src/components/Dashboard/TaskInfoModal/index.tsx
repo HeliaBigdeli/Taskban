@@ -21,7 +21,8 @@ import Dropdown from "../../Common/Dropdown";
 import DropdownItem from "../../Common/Dropdown/DropdownItem";
 import { task_comments, tasks } from "../../../constants/url";
 import { toast } from "react-toastify";
-import { updateTask } from "../../../features/board/boardSlice";
+import { selectBoard, updateTask } from "../../../features/board/boardSlice";
+import Select from "../../Common/Form/Select";
 
 const portals = document.getElementById("portals") as Element;
 
@@ -54,11 +55,14 @@ const TaskInfoModal: React.FC<IProps> = ({
   const [commentText, setCommentText] = useState<string>("");
   const [commentList, setCommentList] = useState<IComment[]>([]);
   const [isShow, setIsShow] = useState<boolean>(false);
+
   const { weekday, year, day, month } = dateConvert(values.deadline);
   const [hasUpdated, setHasUpdateed] = useState(false);
   const params = useParams();
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
+  const boards = useSelector(selectBoard).boards;
+
   const getTask = async () => {
     try {
       const res = await AXIOS.get(
@@ -90,8 +94,29 @@ const TaskInfoModal: React.FC<IProps> = ({
     }
   };
 
-  const handleDatePickerModal = () => {
-    setDatePickerModal(!datePickerModal);
+  const handleSelect = async (e) => {
+    const valueId = Number(e.currentTarget.dataset.value);
+    if (valueId === boardId) return;
+
+    setModal(!modal);
+    try {
+      await AXIOS.delete(
+        tasks.delete({
+          wid: params.wid,
+          pid: params.pid,
+          bid: boardId,
+          tid: taskId,
+        })
+      );
+      await AXIOS.post(
+        tasks.post({ wid: params.wid, pid: params.pid, bid: valueId }),
+        { ...values, attachment: "", thumbnail: "" },
+        { headers: { "Content-Type": "multipart/form-data" } }
+      );
+      toast.success("برد تسک با موفقیت ویرایش شد.");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleShowModal = async () => {
@@ -176,12 +201,10 @@ const TaskInfoModal: React.FC<IProps> = ({
     });
     setHasUpdateed(true);
   };
-
   useEffect(() => {
     getTask();
     getTaskComments();
   }, []);
-  console.log(values.description);
   return (
     <>
       {createPortal(
@@ -269,12 +292,15 @@ const TaskInfoModal: React.FC<IProps> = ({
                   </div>
 
                   <MembersThumb members={values.members} hasAddIcon={true} />
-                  <Button
-                    type="button"
-                    name="status"
-                    onClick={() => {}}
-                    text={boardTitle}
-                    className={` p-1 bg-darkred rounded-md text-white w-[120px] h-[30px]`}
+                  <Select
+                    selected={boardId}
+                    name="board_id"
+                    onChange={(e) => {
+                      handleSelect(e);
+                    }}
+                    items={boards}
+                    className="w-[125px] bg-brand-primary text-white"
+                    searchPlaceholder="جستجو"
                   />
                 </div>
               </div>
@@ -398,13 +424,6 @@ const TaskInfoModal: React.FC<IProps> = ({
           </div>
         </Modal>,
         portals
-      )}
-      {DatePickerModal && (
-        <DatePickerModal
-          onChangeDate={() => {}}
-          modal={datePickerModal}
-          setModal={handleDatePickerModal}
-        />
       )}
     </>
   );

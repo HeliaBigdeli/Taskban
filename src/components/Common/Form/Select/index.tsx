@@ -1,6 +1,7 @@
 import Icon from "../../Icon";
 import React, { useEffect, useRef, useState } from "react";
 import Selectlist from "./SelectList";
+import Button from "../Button";
 
 interface IProps {
   selected?: number;
@@ -21,7 +22,7 @@ const Select: React.FC<IProps> = ({
   hasSearch = true,
   searchPlaceholder = "جستجو بین فیلترها",
 }): JSX.Element => {
-  const selectBtn = useRef<any>();
+  const selectBtn = useRef<any>(null);
   const [value, setValue] = useState<string | null>("");
   const [open, setOpen] = useState(false);
   const [data, setData] = useState(items);
@@ -60,20 +61,20 @@ const Select: React.FC<IProps> = ({
   };
 
   useEffect(() => {
-    if (selected && items) {     
-      setValue(items.find(x => x.id === Number(selected)).name)
+    if (selected && items) {
+      setValue(items.find((x) => x.id === Number(selected)).name);
     }
-  }, [selected, items])
+  }, [selected, items]);
 
   return (
-    <button
+    <Button
       disabled={!items?.length}
       data-name="selectBtn"
-      ref={selectBtn}
       type="button"
-      style={{backgroundColor: !items?.length ? '#eee' : ''}}
+      style={{ backgroundColor: !items?.length ? "#eee" : "" }}
       className={`border border-solid border-lightgray_300 rounded-md relative text-right p-XS ${className}`}
       onClick={toggleOpen}
+      ref={selectBtn}
     >
       <div className="flex items-center justify-between flex-row-reverse">
         <span
@@ -96,7 +97,7 @@ const Select: React.FC<IProps> = ({
           />
         )}
       </div>
-    </button>
+    </Button>
   );
 };
 

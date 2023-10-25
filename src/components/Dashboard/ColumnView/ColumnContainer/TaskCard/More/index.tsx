@@ -36,9 +36,9 @@ const More: React.FC<IMoreProps> = ({
     );
   };
 
-   useEffect(() => {
-     handleshowTaskModal();
-   }, [tasksList]);
+  useEffect(() => {
+    handleshowTaskModal();
+  }, [tasksList]);
 
   return (
     <div
@@ -58,15 +58,17 @@ const More: React.FC<IMoreProps> = ({
           <Icon size={20} icon="check_circle" />
         </div>
       </section>
-      {showTaskModal && taskInfo && (
-        <TaskInfoModal
-          modal={showTaskModal}
-          setModal={setShowTaskModal}
-          taskInfo={taskInfo}
-          boardTitle={boardTitle}
-          boardId={boardId}
-        />
-      )}
+      {showTaskModal &&
+        taskInfo &&
+        (document.body.style.overflow = "hidden") && (
+          <TaskInfoModal
+            modal={showTaskModal}
+            setModal={setShowTaskModal}
+            taskInfo={taskInfo}
+            boardTitle={boardTitle}
+            boardId={boardId}
+          />
+        )}
     </div>
   );
 };

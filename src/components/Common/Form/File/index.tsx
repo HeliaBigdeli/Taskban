@@ -1,4 +1,5 @@
 import Icon from "../../Icon";
+import Button from "../Button";
 
 interface IProps {
   hasLabel?: boolean;
@@ -56,10 +57,14 @@ const File: React.FC<IProps> = ({
           />
         </label>
       ) : (
-        <button className="flex flex-row items-center text-base font-medium border border-brand-primary h-[36px] rounded-lg py-[4px] px-[8px] gap-[4px] text-center">
-          .فایل با موفقیت دریافت شد
+        <Button
+          text=".فایل با موفقیت دریافت شد"
+          type="button"
+          onClick={() => {}}
+          className="flex flex-row items-center text-base font-medium border border-brand-primary h-[36px] rounded-lg py-[4px] px-[8px] gap-[4px] text-center"
+        >
           <Icon icon="trash" color="red" onClick={handleChange} />
-        </button>
+        </Button>
       )}
     </div>
   );

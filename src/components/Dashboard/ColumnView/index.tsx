@@ -29,8 +29,6 @@ const ColumnView: React.FC = (): JSX.Element => {
     setNewBoardModal(!newBoardModal);
   };
 
- 
-
   useEffect(() => {
     setBoardTasks(state.boards);
   }, [state]);
@@ -44,24 +42,18 @@ const ColumnView: React.FC = (): JSX.Element => {
          ${style.scroll}`}
         style={{ direction: "rtl" }}
       >
-        
-            {boardTasks?.map((item) => {
-              return (
-                <ColumnContainer
-                  key={item.id}
-                  {...item}
-                />
-              );
-            })}
-         
+        {boardTasks?.map((item) => {
+          return <ColumnContainer key={item.id} {...item} />;
+        })}
 
-        <button
+        <Button
+          type="button"
+          text="ساختن برد جدید"
+          hasIcon={true}
+          icon={{ icon: "plus", size: 20 }}
           onClick={handleNewBoardModal}
-          className="flex w-[250px] h-[44px] py-XS px-[12px] items-center rounded-2xl shrink-0 shadow-taskColumn text-base font-medium"
-        >
-          <Icon icon="plus" size={20} />
-          ساختن برد جدید
-        </button>
+          className="flex flex-row-reverse w-[250px] h-[44px] py-XS px-[12px] items-center rounded-2xl shrink-0 shadow-taskColumn text-base font-medium"
+        />
       </div>
       <Button
         text="تسک جدید"

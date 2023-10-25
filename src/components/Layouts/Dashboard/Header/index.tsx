@@ -10,6 +10,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { chengeView } from "../../../../features/view/viewSlice";
 import { selectTask } from "../../../../features/task/taskSlice";
 import { ITask } from "../../../../interfaces/task";
+import Button from "../../../Common/Form/Button";
 
 const Header: React.FC = (): JSX.Element => {
   const params = useParams();
@@ -89,13 +90,14 @@ const Header: React.FC = (): JSX.Element => {
             {projectName?.substring(0, 20)}
           </span>
         </div>
-        <button
+        <Button
+          type="button"
+          text="اشتراک گذاری"
+          hasIcon={true}
+          icon={{ icon: "share" }}
           onClick={handleShareModal}
           className="mr-auto font-bold flex justify-center text-base items-center"
-        >
-          اشتراک گذاری
-          <Icon icon="share" />
-        </button>
+        />
       </div>
       <div className="border-b-2 border-lightgray_300 py-S mb-S flex divide-x justify-end items-center divide-lightgray_300">
         {view === "calender" ? (
@@ -107,13 +109,14 @@ const Header: React.FC = (): JSX.Element => {
             <p className="text-xs bg-blue_secondary p-1 px-S text-blue_primary">
               دسته بندی شده با : وضعیت
             </p>
-            <button
+            <Button
+              type="button"
+              text="فیلترها"
+              hasIcon={true}
+              icon={{ icon: "filter" }}
               onClick={handleFilterModal}
               className="px-S flex justify-center items-center text-xs"
-            >
-              فیلترها
-              <Icon icon="filter" />
-            </button>
+            />
           </div>
         )}
         <Input

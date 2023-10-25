@@ -1,5 +1,6 @@
+import React from "react";
 import Icon from "../../Icon/";
-import {useEffect} from 'react'
+import { ReactNode, useEffect } from "react";
 
 interface IIcon {
   icon: string;
@@ -7,59 +8,56 @@ interface IIcon {
   size?: number;
   className?: string;
   style?: {};
+  onClick?: (e: any) => void;
 }
 
 interface IProps {
-  name?: string,
+  name?: string;
   text?: string;
   type: "submit" | "button" | "reset";
   onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
   hasIcon?: boolean;
   className?: string;
   icon?: IIcon;
-  autoFocus?: boolean,
-  loading?: boolean,
-  disabled?: boolean
+  autoFocus?: boolean;
+  loading?: boolean;
+  disabled?: boolean;
+  children?: ReactNode;
+  style?: {};
 }
 
-const Button: React.FC<IProps> = ({
-  name,
-  type,
-  text,
-  hasIcon,
-  className,
-  icon,
-  autoFocus = false,
-  onClick,
-  loading = false,
-  disabled = false
-}): JSX.Element => {
-
-  useEffect(() => {
-
-  }, [disabled])
+const Button = (props: IProps, ref: any): JSX.Element => {
+  useEffect(() => {}, [props.disabled]);
 
   return (
     <button
-      disabled={loading || disabled}
-      autoFocus={autoFocus}
-      name={name}
-      onClick={(e) => onClick(e)}
-      type={type}
-      className={`flex items-center justify-center ${className} ${loading ? 'cursor-wait' : ''} ${disabled ? 'cursor-not-allowed' : ''}`} 
+      ref={ref}
+      disabled={props.loading || props.disabled}
+      autoFocus={props.autoFocus}
+      name={props.name}
+      onClick={(e) => props.onClick(e)}
+      type={props.type}
+      className={`flex items-center justify-center ${props.className} ${
+        props.loading ? "cursor-wait" : ""
+      } ${props.disabled ? "cursor-not-allowed" : ""}`}
     >
-      {loading ? <span dir="rtl">لطفا منتظر بمانید ...</span> : text}
-      {hasIcon && (
+      {props.loading ? (
+        <span dir="rtl">لطفا منتظر بمانید ...</span>
+      ) : (
+        props.text
+      )}
+      {props.hasIcon && (
         <Icon
-          icon={icon?.icon}
-          color={icon?.color}
-          size={icon?.size}
-          style={icon?.style}
-          className={icon?.className}
+          icon={props.icon?.icon}
+          color={props.icon?.color}
+          size={props.icon?.size}
+          style={props.icon?.style}
+          className={props.icon?.className}
         />
       )}
+      {props.children}
     </button>
   );
 };
 
-export default Button;
+export default React.forwardRef(Button);

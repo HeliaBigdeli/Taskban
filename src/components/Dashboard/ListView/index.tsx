@@ -24,9 +24,13 @@ const ListShow: React.FC = (): JSX.Element => {
   return (
     <div style={{ direction: "rtl" }} className={`pr-S`}>
       <div className="flex items-center gap-XS my-L">
-        <button className="h-6 inline" onClick={() => setIsShown(!isShown)}>
-          <Icon icon="chevron_down_circle" size={24} />
-        </button>
+        <Button
+          hasIcon={true}
+          icon={{ icon: "chevron_down_circle", size: 24 }}
+          type="button"
+          className="h-6 inline"
+          onClick={() => setIsShown(!isShown)}
+        />
         <span className="dark:text-[#bac4c8] text-black text-xl font-extrabold">
           {searchParams.get("project_name")}
         </span>

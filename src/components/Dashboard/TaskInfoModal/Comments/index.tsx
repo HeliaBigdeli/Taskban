@@ -4,7 +4,7 @@ import { members_thumb } from "../../../../interfaces/members_thumb";
 import ProfileImage from "../../../Common/ProfileImage";
 interface ICommentProps extends IComment {
   first_name: string;
-  last_name:string
+  last_name: string;
 }
 const Comments: React.FC<ICommentProps> = ({
   author,
@@ -21,7 +21,9 @@ const Comments: React.FC<ICommentProps> = ({
           </span>
           &nbsp;&nbsp;کامنت گذاشتید
         </div>
-        <div className="text-black font-normal text-xs">{text}</div>
+        <div className="dark:text-[#bac4c8] text-black font-normal text-xs">
+          {text}
+        </div>
       </div>
       <div>
         <ProfileImage firstName={first_name} lastName={last_name} />

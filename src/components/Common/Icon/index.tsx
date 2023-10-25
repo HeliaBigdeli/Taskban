@@ -10,7 +10,7 @@ interface IProps {
   size?: number;
   style?: {};
   className?: string;
-  onClick?: (e: React.MouseEvent<HTMLElement>) => void;
+  onClick?: (e: any) => void;
 }
 
 const Icon = React.forwardRef(

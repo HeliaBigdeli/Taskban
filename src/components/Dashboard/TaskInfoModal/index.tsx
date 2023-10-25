@@ -3,7 +3,6 @@ import Modal from "../../Common/Modal";
 import Button from "../../Common/Form/Button";
 import Icon from "../../Common/Icon";
 import { useEffect, useState } from "react";
-import DatePickerModal from "../DatePickerModal";
 import File from "../../Common/Form/File";
 import Textarea from "../../Common/Form/Textarea";
 import MembersThumb from "../../Common/MembersThumb";
@@ -11,7 +10,6 @@ import { ITask } from "../../../interfaces/task";
 import { Link, useParams } from "react-router-dom";
 import { AXIOS, baseAppURL } from "../../../config/axios.config";
 import { useDispatch, useSelector } from "react-redux";
-import { addTask } from "../../../features/update/updateSlice";
 import { selectUser } from "../../../features/auth/authSlice";
 import { IComment } from "../../../interfaces/comments";
 import Comments from "./Comments";
@@ -41,7 +39,6 @@ const TaskInfoModal: React.FC<IProps> = ({
   boardId,
   taskId,
 }): JSX.Element => {
-  const [datePickerModal, setDatePickerModal] = useState<boolean>(false);
   const [values, setValues] = useState<ITask>({
     id: 0,
     name: "",
@@ -55,7 +52,6 @@ const TaskInfoModal: React.FC<IProps> = ({
   const [commentText, setCommentText] = useState<string>("");
   const [commentList, setCommentList] = useState<IComment[]>([]);
   const [isShow, setIsShow] = useState<boolean>(false);
-
   const { weekday, year, day, month } = dateConvert(values.deadline);
   const [hasUpdated, setHasUpdateed] = useState(false);
   const params = useParams();
@@ -193,6 +189,23 @@ const TaskInfoModal: React.FC<IProps> = ({
     }
     setIsShow(false);
   };
+  const handleRemoveComment = async (id: number) => {
+    try {
+      await AXIOS.delete(
+        task_comments.delete({
+          wid: params.wid,
+          pid: params.pid,
+          bid: boardId,
+          tid: taskId,
+          cid: id,
+        })
+      );
+      toast.success("حذف کامنت با موفقیت انجام شد.");
+      getTaskComments();
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handleDropDown = (id, title) => {
     setValues({
@@ -314,6 +327,7 @@ const TaskInfoModal: React.FC<IProps> = ({
                         return (
                           <Comments
                             {...item}
+                            remove={handleRemoveComment}
                             key={item.id}
                             first_name={user.first_name}
                             last_name={user.last_name}
@@ -356,10 +370,24 @@ const TaskInfoModal: React.FC<IProps> = ({
                           type="button"
                           className={`${
                             !isShow
-                              ? "opacity-0 cursor-text "
-                              : "opacity-100 cursor-pointer "
-                          } bg-brand-primary  text-white text-xs rounded-md absolute bottom-5 py-1.5 px-3  left-5 font-extrabold`}
+                              ? "opacity-0 cursor-text  "
+                              : "opacity-100 cursor-pointer bottom-4 left-5 "
+                          } bg-brand-primary  text-white text-xs rounded-md absolute  py-1.5 px-3   font-extrabold`}
                         />
+                      }
+                      {
+                        <div
+                          className={`flex gap-2 absolute  ${
+                            !isShow
+                              ? "opacity-0 cursor-text "
+                              : "opacity-100 cursor-pointer right-4 bottom-6 "
+                          }`}
+                        >
+                          <Icon icon="emoji" color="#C9CBDA" />
+                          <Icon icon="paper" color="#C9CBDA" />
+                          <Icon icon="attach" color="#C9CBDA" />
+                          <Icon icon="email" color="#C9CBDA" />
+                        </div>
                       }
                     </div>
                   </div>

@@ -2,47 +2,44 @@ import { useEffect, useState } from "react";
 import ColorPicker from "../../../components/Common/ColorPicker";
 import Button from "../../../components/Common/Form/Button";
 import Switcher from "../../../components/Theme/Switcher";
-import { useContext } from "react";
-import { ThemeContext } from "../../../context/ThemeContext";
 import { useDispatch } from "react-redux";
-import { errorToaster } from "../../../utils/toaster";
 import { setting } from "../../../constants/url";
 import { AXIOS } from "../../../config/axios.config";
 import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
 import {
   selectSetting,
   updateSetting,
 } from "../../../features/setting/settingSlice";
 
 const Setting: React.FC = (): JSX.Element => {
-  const [color, setColor] = useState("");
-  //const theme = useSelector(selectSetting);
-  //const dispatch = useDispatch();
-  // const getTheme=async()=>{
-  //   const url=setting.get()
-  //   const res=await AXIOS.get(url)
-  //   setColor(res.data[0].theme)
-  // }
-  // useEffect(() => {
-  //   getTheme()
-  // }, []);
+  const appSetting = useSelector(selectSetting);
+  const [color, setColor] = useState(appSetting.theme);
+  const [themeUpdate, setThemeUpdate] = useState(false);
+  const dispatch = useDispatch();
+  const root = document.documentElement;
 
   const handleClick = async () => {
-    const url = setting.post();
+    setThemeUpdate(false);
     try {
-      const res = await AXIOS.post(url, { theme: color });
+      const res = await AXIOS.post(setting.post(), { theme: color });
       if (res?.status === 201) {
-        toast.success("تغییرات به درستی انجام شد");
-        // localStorage.setItem("color", JSON.stringify(color));
-        //dispatch(updateSetting(res.data[0].theme))
-        //return `--color-primary: ${res.data[0].theme}`
+        setThemeUpdate(true);
+        dispatch(updateSetting(res.data));
+        setColor(res.data.theme);
       }
     } catch (error) {
       console.log(error);
     }
   };
 
-  const { isDarkTheme, toggleTheme } = useContext(ThemeContext);
+  useEffect(() => {
+    root.style.setProperty("--color-primary", color);
+    if (themeUpdate) {
+      window.location.reload();
+    }
+    setThemeUpdate(false);
+  }, [appSetting]);
 
   return (
     <div className="flex justify-end">
@@ -59,10 +56,6 @@ const Setting: React.FC = (): JSX.Element => {
               selected={color}
             />
           </div>
-          {/* <ColorPicker
-            onClick={(e) => onClick()}
-            hasDisableIcon={false}
-          ></ColorPicker>  */}
         </div>
         <div className="my-M flex flex-row-reverse">
           <Switcher />
@@ -80,6 +73,3 @@ const Setting: React.FC = (): JSX.Element => {
 };
 
 export default Setting;
-function useSelector(selectUser: any) {
-  throw new Error("Function not implemented.");
-}

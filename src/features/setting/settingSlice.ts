@@ -3,24 +3,20 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
 
 type Setting = {
-  color:string,
   theme:string
 };
 
-const initialState: Setting = localStorage.getItem("color")
-  ? JSON.parse(localStorage.getItem("color") || "{}")
-  : {
-      color:"",
-      theme:""
-    };
+const initialState: Setting = localStorage.getItem("setting")
+  ? JSON.parse(localStorage.getItem("setting") || "{}")
+  : {theme:""};
 
 export const settingSlice = createSlice({
   name: "setting",
   initialState,
-  reducers: {
+  reducers: {   
     updateSetting: (state, action: PayloadAction<Setting>) => {
-      state.color= action.payload?.color;
-      localStorage.setItem("color", JSON.stringify(state));
+      state.theme= action.payload?.theme;
+      localStorage.setItem("setting", JSON.stringify(state));
     },
   },
 });

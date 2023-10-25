@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+
 module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
@@ -11,7 +12,7 @@ module.exports = {
       "2xl": "1536px",
     },
     colors: {
-      "brand-primary": "#208d8e",
+      "brand-primary":'var(--color-primary, #208D8E)',
       "brand-secondary": "#E3FDFB",
       "red-primary": "#FA5252",
       "blue-primary": "#228BE6",

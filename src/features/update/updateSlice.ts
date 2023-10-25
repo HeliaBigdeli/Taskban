@@ -6,6 +6,7 @@ interface ISection {
   task: number;
   project: number;
   board: number;
+  theme: number;
 }
 
 const initialState: ISection = {
@@ -13,6 +14,7 @@ const initialState: ISection = {
   task: 0,
   project: 0,
   board: 0,
+  theme: 0,
 };
 
 export const updateSlice = createSlice({
@@ -21,6 +23,9 @@ export const updateSlice = createSlice({
   reducers: {
     workSpaceEvent: (state) => {
       state.workspace += 1;
+    },
+    themeEvent: (state) => {
+      state.task += 1;
     },
     addProject: (state) => {
       state.project += 1;
@@ -34,10 +39,11 @@ export const updateSlice = createSlice({
   },
 });
 
-export const { workSpaceEvent, addProject, addTask, addBoard } =
+export const { workSpaceEvent, addProject, addTask, addBoard, themeEvent } =
   updateSlice.actions;
 
 export const workSpaceStatus = (state: RootState) => state.update.workspace;
+export const themeStatus = (state: RootState) => state.update.theme;
 export const projectUpdate = (state: RootState) => state.update.project;
 export const taskUpdate = (state: RootState) => state.update.task;
 export const boardUpdate = (state: RootState) => state.update.board;

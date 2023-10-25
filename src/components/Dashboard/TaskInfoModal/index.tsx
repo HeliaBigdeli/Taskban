@@ -21,7 +21,6 @@ import { task_comments, tasks } from "../../../constants/url";
 import { toast } from "react-toastify";
 import { selectBoard, updateTask } from "../../../features/board/boardSlice";
 import Select from "../../Common/Form/Select";
-import EmojiPicker from "emoji-picker-react";
 
 const portals = document.getElementById("portals") as Element;
 
@@ -40,7 +39,6 @@ const TaskInfoModal: React.FC<IProps> = ({
   boardId,
   taskId,
 }): JSX.Element => {
-  const [datePickerModal, setDatePickerModal] = useState<boolean>(false);
   const [values, setValues] = useState<ITask>({
     id: 0,
     name: "",
@@ -54,7 +52,6 @@ const TaskInfoModal: React.FC<IProps> = ({
   const [commentText, setCommentText] = useState<string>("");
   const [commentList, setCommentList] = useState<IComment[]>([]);
   const [isShow, setIsShow] = useState<boolean>(false);
-  const [showEmoji, setShowEmoji] = useState<boolean>(false);
   const { weekday, year, day, month } = dateConvert(values.deadline);
   const [hasUpdated, setHasUpdateed] = useState(false);
   const params = useParams();
@@ -355,27 +352,17 @@ const TaskInfoModal: React.FC<IProps> = ({
                           type="button"
                           className={`${
                             !isShow
-                              ? "opacity-0 cursor-text "
-                              : "opacity-100 cursor-pointer "
-                          } bg-brand-primary  text-white text-xs rounded-md absolute bottom-5 py-1.5 px-3  left-5 font-extrabold`}
+                              ? "opacity-0 cursor-text  "
+                              : "opacity-100 cursor-pointer bottom-4 left-5 "
+                          } bg-brand-primary  text-white text-xs rounded-md absolute  py-1.5 px-3   font-extrabold`}
                         />
                       }
-                      {showEmoji ? (
-                        <EmojiPicker
-                          onEmojiClick={(e) => {
-                            setCommentText((prev) => prev + e.emoji);
-                            setShowEmoji(false);
-                          }}
-                          width={250}
-                          height={250}
-                          searchDisabled
-                        />
-                      ) : (
+                      {
                         <div
-                          className={`flex gap-2 absolute right-4 bottom-6 ${
+                          className={`flex gap-2 absolute  ${
                             !isShow
                               ? "opacity-0 cursor-text "
-                              : "opacity-100 cursor-pointer "
+                              : "opacity-100 cursor-pointer right-4 bottom-6 "
                           }`}
                         >
                           <Icon icon="emoji" color="#C9CBDA" />
@@ -383,7 +370,7 @@ const TaskInfoModal: React.FC<IProps> = ({
                           <Icon icon="attach" color="#C9CBDA" />
                           <Icon icon="email" color="#C9CBDA" />
                         </div>
-                      )}
+                      }
                     </div>
                   </div>
                 </div>

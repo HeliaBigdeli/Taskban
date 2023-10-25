@@ -30,7 +30,7 @@ export const boardSlice = createSlice({
     },
     board_remove: (state, action) => {
       state.boards = state.boards.filter((item) => {
-        return item.id !== action.payload;
+        return item.id !== action.payload.id;
       });
     },
     addNewTask: (state, action) => {

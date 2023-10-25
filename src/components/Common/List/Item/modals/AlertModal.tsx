@@ -15,6 +15,7 @@ const AlertModal: React.FC<IAlert> = ({
 
   const handleYesClick = () => {
     handleYes();
+    setIsAlertOpen(false);
     document.body.style.overflow = "unset";
   };
 

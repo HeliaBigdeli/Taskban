@@ -51,9 +51,8 @@ const AuthCheck: React.FC<IProps> = ({ children }): JSX.Element => {
       }
     )
       .then((response) => {
-        if (response.status === 200) {
+        if (response.status === 200) {          
           dispatch(refresh(response.data));
-          getTheme();
           if (
             pathname === "/" ||
             pathname === "/login" ||
@@ -65,6 +64,7 @@ const AuthCheck: React.FC<IProps> = ({ children }): JSX.Element => {
           } else {
             navigate(pathname + search);
           }
+          getTheme();
         }
       })
       .catch((error) => {

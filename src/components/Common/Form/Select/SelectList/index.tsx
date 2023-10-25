@@ -72,7 +72,7 @@ const Selectlist: React.FC<IProps> = ({
           >
             {item.color ? (
               <span
-                className={`bg-${item.color} text-${item.color} rounded-2xl px-2`}
+                className={`bg-${item.color} text-black rounded-2xl px-2`}
               >
                 {item.name}
               </span>

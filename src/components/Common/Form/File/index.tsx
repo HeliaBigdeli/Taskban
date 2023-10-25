@@ -49,6 +49,7 @@ const File: React.FC<IProps> = ({
           {text}
           {hasIcon && <Icon icon={icon} color="#208d8e" />}
           <input
+            value={inputValue}
             type="file"
             id={id}
             name={name}
@@ -60,7 +61,7 @@ const File: React.FC<IProps> = ({
         <Button
           text=".فایل با موفقیت دریافت شد"
           type="button"
-          onClick={() => {}}
+          onClick={() => { }}
           className="flex flex-row items-center text-base font-medium border border-brand-primary h-[36px] rounded-lg py-[4px] px-[8px] gap-[4px] text-center"
         >
           <Icon icon="trash" color="red" onClick={handleChange} />

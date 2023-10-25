@@ -137,7 +137,7 @@ const Table: React.FC<IProps> = ({
               {allTasks.map((task) => {
                 if (new Date(task.deadline).getTime() === new Date(date.value).getTime()) {
                   return (
-                    <span className="w-4 h-4 bg-darkred rounded-md m-[1px]">
+                    <span key={task.id} className="w-4 h-4 bg-darkred rounded-md m-[1px]">
                     </span>
                   )
                 }

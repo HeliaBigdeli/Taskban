@@ -35,7 +35,6 @@ const AddMore: React.FC<IAddMoreProps> = ({
   });
 
   const [deleteResponse, error, loading, fetcher] = useAxios();
-
   const params = useParams();
   const dispatch = useDispatch();
 
@@ -69,7 +68,6 @@ const AddMore: React.FC<IAddMoreProps> = ({
   useEffect(() => {
     if (deleteResponse) {
       dispatch(board_remove({ id: params.bid ? params.bid : boardId }));
-      state.boardDelete = false;
       toast.success("آیتم مورد نظر با موفقیت حذف شد.");
     }
   }, [deleteResponse]);

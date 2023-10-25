@@ -3,7 +3,6 @@ import Modal from "../../Common/Modal";
 import Button from "../../Common/Form/Button";
 import Icon from "../../Common/Icon";
 import { useEffect, useState } from "react";
-import DatePickerModal from "../DatePickerModal";
 import File from "../../Common/Form/File";
 import Textarea from "../../Common/Form/Textarea";
 import MembersThumb from "../../Common/MembersThumb";
@@ -11,7 +10,6 @@ import { ITask } from "../../../interfaces/task";
 import { Link, useParams } from "react-router-dom";
 import { AXIOS, baseAppURL } from "../../../config/axios.config";
 import { useDispatch, useSelector } from "react-redux";
-import { addTask } from "../../../features/update/updateSlice";
 import { selectUser } from "../../../features/auth/authSlice";
 import { IComment } from "../../../interfaces/comments";
 import Comments from "./Comments";
@@ -23,6 +21,7 @@ import { task_comments, tasks } from "../../../constants/url";
 import { toast } from "react-toastify";
 import { selectBoard, updateTask } from "../../../features/board/boardSlice";
 import Select from "../../Common/Form/Select";
+import EmojiPicker from "emoji-picker-react";
 
 const portals = document.getElementById("portals") as Element;
 
@@ -55,7 +54,7 @@ const TaskInfoModal: React.FC<IProps> = ({
   const [commentText, setCommentText] = useState<string>("");
   const [commentList, setCommentList] = useState<IComment[]>([]);
   const [isShow, setIsShow] = useState<boolean>(false);
-
+  const [showEmoji, setShowEmoji] = useState<boolean>(false);
   const { weekday, year, day, month } = dateConvert(values.deadline);
   const [hasUpdated, setHasUpdateed] = useState(false);
   const params = useParams();
@@ -361,6 +360,30 @@ const TaskInfoModal: React.FC<IProps> = ({
                           } bg-brand-primary  text-white text-xs rounded-md absolute bottom-5 py-1.5 px-3  left-5 font-extrabold`}
                         />
                       }
+                      {showEmoji ? (
+                        <EmojiPicker
+                          onEmojiClick={(e) => {
+                            setCommentText((prev) => prev + e.emoji);
+                            setShowEmoji(false);
+                          }}
+                          width={250}
+                          height={250}
+                          searchDisabled
+                        />
+                      ) : (
+                        <div
+                          className={`flex gap-2 absolute right-4 bottom-6 ${
+                            !isShow
+                              ? "opacity-0 cursor-text "
+                              : "opacity-100 cursor-pointer "
+                          }`}
+                        >
+                          <Icon icon="emoji" color="#C9CBDA" />
+                          <Icon icon="paper" color="#C9CBDA" />
+                          <Icon icon="attach" color="#C9CBDA" />
+                          <Icon icon="email" color="#C9CBDA" />
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>

@@ -20,7 +20,6 @@ import Input from "../../Common/Form/Input";
 import { validate, required } from "../../../utils/validator";
 import { addNewTask, selectBoard } from "../../../features/board/boardSlice";
 import { useSelector } from "react-redux";
-import { addTask } from "../../../features/update/updateSlice";
 
 const rules = {
   board_id: [required],
@@ -118,8 +117,7 @@ const TaskModal: React.FC<IProps> = ({
         if (res?.status === 201) {
           toast.success("تسک جدید با موفقیت ثبت شد.");
           setModal(!modal);
-          dispatch(addNewTask({ id: pid || params.pid, response: res.data }));
-          dispatch(addTask());
+          dispatch(addNewTask({ id: bId, response: res.data }));
         }
       } catch (error) {
         console.log(error);

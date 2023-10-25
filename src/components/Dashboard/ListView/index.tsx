@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import Icon from "../../Common/Icon";
 import TaskList from "./TaskList";
 import Button from "../../Common/Form/Button";
 import TaskModal from "../TaskModal";
@@ -9,8 +8,8 @@ import { selectBoard } from "../../../features/board/boardSlice";
 import { useSearchParams } from "react-router-dom";
 
 const ListShow: React.FC = (): JSX.Element => {
-  const boards = useSelector(selectBoard).boards;
-  const [listTasks, setListTaks] = useState<IBoard[]>(boards);
+  const state = useSelector(selectBoard);
+  const [boards, setBoards] = useState<IBoard[]>();
   const [isShown, setIsShown] = useState<boolean>(true);
   const [taskModal, setTaskModal] = useState<boolean>(false);
   const [searchParams] = useSearchParams();
@@ -19,7 +18,9 @@ const ListShow: React.FC = (): JSX.Element => {
     setTaskModal(!taskModal);
   };
 
-  useEffect(() => {}, [boards]);
+  useEffect(() => {
+    setBoards(state.boards);
+  }, [state]);
 
   return (
     <div style={{ direction: "rtl" }} className={`pr-S`}>
@@ -40,7 +41,7 @@ const ListShow: React.FC = (): JSX.Element => {
           !isShown ? "opacity-0 -z-10" : "opacity-100 z-10"
         } relative flex flex-col items-end gap-XL mr-6 ml-12 transition-all duration-300 h-80 lg:h-[500px] xl:h-[750px]  `}
       >
-        {listTasks?.map((item) => {
+        {boards?.map((item) => {
           return <TaskList key={item.id} {...item} />;
         })}
       </div>

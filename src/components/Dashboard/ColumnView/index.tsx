@@ -2,7 +2,6 @@ import { useRef, useState, useEffect } from "react";
 import ColumnContainer from "./ColumnContainer";
 import style from "./style.module.css";
 import Button from "../../Common/Form/Button";
-import Icon from "../../Common/Icon";
 import TaskModal from "../TaskModal";
 import React from "react";
 import NewBoardModal from "./NewBoardModal";
@@ -13,7 +12,7 @@ import { useSelector } from "react-redux";
 
 const ColumnView: React.FC = (): JSX.Element => {
   const state = useSelector(selectBoard);
-  const [boardTasks, setBoardTasks] = useState<IBoard[]>(state.boards || []);
+  const [boardTasks, setBoardTasks] = useState<IBoard[]>();
   const [newBoardModal, setNewBoardModal] = useState<boolean>(false);
   const [taskModal, setTaskModal] = useState<boolean>(false);
 

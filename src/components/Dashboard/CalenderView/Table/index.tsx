@@ -7,16 +7,17 @@ import { createPortal } from "react-dom";
 import Input from "../../../Common/Form/Input";
 import Button from "../../../Common/Form/Button";
 import { ITask } from "../../../../interfaces/task";
-import { selectBoard } from "../../../../features/board/boardSlice";
+import { addNewTask, selectBoard } from "../../../../features/board/boardSlice";
 import { useSelector } from "react-redux";
 import Select from "../../../Common/Form/Select";
 import useAxios from "../../../../hooks/useAxios";
 import { tasks } from "../../../../constants/url";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import { addTask } from "../../../../features/update/updateSlice";
 import { useDispatch } from "react-redux";
-import { selectTask } from "../../../../features/task/taskSlice";
+import TaskInfoModal from "../../TaskInfoModal";
+import { IBoard } from "../../../../interfaces/board";
+import { store } from "../../../../app/store";
 
 const portals = document.getElementById("portals") as Element;
 
@@ -37,7 +38,7 @@ interface IProps {
   currentMonth: number;
   onMouseEnter: (x: string, y: string) => void;
   onMouseLeave: (x: string, y: string) => void;
-  onclick: ({ }) => void;
+  onclick: ({}) => void;
 }
 
 const Table: React.FC<IProps> = ({
@@ -52,12 +53,18 @@ const Table: React.FC<IProps> = ({
 }): JSX.Element => {
   const [modal, setModal] = useState<boolean>(false);
   const [currentDay, setCurrentDay] = useState<number>(today);
-  const boards = useSelector(selectBoard).boards;
+  const state = useSelector(selectBoard);
+  const [boards, setBoards] = useState<IBoard[]>(state.boards);
   const [response, error, loading, fetcher] = useAxios();
   const [bId, setBid] = useState();
   const params = useParams();
   const dispatch = useDispatch();
-  const allTasks = useSelector(selectTask).tasks
+  const [showTaskModal, setShowTaskModal] = useState<boolean>(false);
+  const [taskModalValues, setTaskModalValues] = useState({
+    boardId: 0,
+    taskId: 0,
+    boardTitle: "",
+  });
   const [values, setVlaues] = useState({
     priority: 1,
     name: "",
@@ -69,6 +76,15 @@ const Table: React.FC<IProps> = ({
   const handleShowModal = (date) => {
     setCurrentDay(date.day);
     setModal(!modal);
+  };
+
+  const handleShowTaskInfo = (board, task) => {
+    setTaskModalValues({
+      boardId: board.id,
+      taskId: task.id,
+      boardTitle: board.name,
+    });
+    setShowTaskModal(!showTaskModal);
   };
 
   const handleClick = (date, day) => {
@@ -106,10 +122,13 @@ const Table: React.FC<IProps> = ({
   useEffect(() => {
     if (response) {
       setModal(false);
-      dispatch(addTask(response));
+      dispatch(addNewTask({id: bId, response}));
       toast.success("تسک با موفقیت ثبت شد.");
+      console.log(store.getState().boards.boards)
+      // setBoards(state.boards);
     }
-  }, [response]);
+    console.log(state.boards)
+  }, [response, state.boards]);
 
   return (
     <div
@@ -123,10 +142,11 @@ const Table: React.FC<IProps> = ({
             onMouseEnter={() => onMouseEnter(date.key, "show")}
             onMouseLeave={() => onMouseLeave(date.key, "hide")}
             key={date.key}
-            className={`dark:bg-[#3b3b3b] flex items-center justify-center border min-h-max ${today === Number(date.day) && currentMonth === 0
+            className={`dark:bg-[#3b3b3b] flex items-center justify-center border min-h-max ${
+              today === Number(date.day) && currentMonth === 0
                 ? "border-brand-primary"
                 : "border-lightgray_300"
-              } relative`}
+            } relative`}
           >
             {index <= 6 ? (
               <span className="dark:text-white absolute top-1 right-2">
@@ -134,13 +154,22 @@ const Table: React.FC<IProps> = ({
               </span>
             ) : null}
             <div className="flex flex-wrap">
-              {allTasks.map((task) => {
-                if (new Date(task.deadline).getTime() === new Date(date.value).getTime()) {
-                  return (
-                    <span key={task.id} className="w-4 h-4 bg-darkred rounded-md m-[1px]">
-                    </span>
-                  )
-                }
+              {boards?.map((board) => {
+                return board.tasks.map((task) => {
+                  if (
+                    new Date(task.deadline).getTime() ===
+                    new Date(date.value).getTime()
+                  ) {
+                    return (
+                      <span
+                        onClick={() => handleShowTaskInfo(board, task)}
+                        style={{ backgroundColor: board.color }}
+                        key={task.id}
+                        className="w-4 h-4 rounded-md m-[1px] cursor-pointer"
+                      ></span>
+                    );
+                  }
+                });
               })}
             </div>
             {date.showBtn && (
@@ -153,10 +182,11 @@ const Table: React.FC<IProps> = ({
               </span>
             )}
             <span
-              className={`absolute bottom-1 left-2 ${date.disable === true
+              className={`absolute bottom-1 left-2 ${
+                date.disable === true
                   ? "text-black"
                   : "text-lightgray font-bold"
-                }`}
+              }`}
             >
               {date.day}
             </span>
@@ -181,7 +211,7 @@ const Table: React.FC<IProps> = ({
                 onChange={(e) => {
                   handleSelect(e);
                 }}
-                items={boards}
+                items={boards || []}
                 className="w-full"
                 searchPlaceholder="جستجو"
               />
@@ -214,6 +244,15 @@ const Table: React.FC<IProps> = ({
           </div>
         </Modal>,
         portals
+      )}
+      {showTaskModal && (
+        <TaskInfoModal
+          modal={showTaskModal}
+          setModal={setShowTaskModal}
+          boardTitle={taskModalValues.boardTitle}
+          boardId={taskModalValues.boardId}
+          taskId={taskModalValues.taskId}
+        />
       )}
     </div>
   );

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ListHeader from "./ListHeader";
 import ListItem from "./ListItem";
 import { IBoard } from "../../../../interfaces/board";
@@ -11,10 +11,15 @@ const TaskList: React.FC<IBoard> = ({
   color,
 }): JSX.Element => {
   const [isShown, setIsShown] = useState<boolean>(true);
+  const [height, setHeight] = useState("")
   const handleShow = () => {
     setIsShown(!isShown);
   };
-  const height = `${65 * tasks_count - 40}px`;
+  
+  useEffect(()=> {
+    setHeight(`${65 * tasks_count - 40}px`)
+  }, [])
+  
   return (
     <div
       className={` flex w-full flex-col items-start gap-5 `}

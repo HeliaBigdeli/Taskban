@@ -8,13 +8,11 @@ import ShareModal from "../../../Dashboard/ShareModal";
 import { selectView } from "../../../../features/view/viewSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { chengeView } from "../../../../features/view/viewSlice";
-import { selectTask } from "../../../../features/task/taskSlice";
-import { ITask } from "../../../../interfaces/task";
 import Button from "../../../Common/Form/Button";
 import TaskInfoModal from "../../../Dashboard/TaskInfoModal";
 import { selectBoard } from "../../../../features/board/boardSlice";
 import { IBoard } from "../../../../interfaces/board";
-import TaskModal from "../../../Dashboard/TaskModal";
+import { selectSetting } from "../../../../features/setting/settingSlice";
 
 const Header: React.FC = (): JSX.Element => {
   const params = useParams();
@@ -28,6 +26,8 @@ const Header: React.FC = (): JSX.Element => {
   const [query, setQuery] = useState<string>("");
   const boards = useSelector(selectBoard).boards;
   const [showTaskModal, setShowTaskModal] = useState<boolean>(false);
+  const appSetting = useSelector(selectSetting);
+
   const [values, setValues] = useState({
     boardId: 0,
     taskId: 0,
@@ -76,7 +76,7 @@ const Header: React.FC = (): JSX.Element => {
             تقویم
             <Icon
               icon="calender_full"
-              color={`${view === "calender" ? "#208d8e" : "#323232"}`}
+              color={`${view === "calender" ? appSetting.theme : "#323232"}`}
             />
           </p>
           <p
@@ -88,7 +88,7 @@ const Header: React.FC = (): JSX.Element => {
             نمایش ستونی
             <Icon
               icon="grid"
-              color={`${view === "column" ? "#208d8e" : "#323232"}`}
+              color={`${view === "column" ? appSetting.theme : "#323232"}`}
             />
           </p>
           <p
@@ -100,7 +100,7 @@ const Header: React.FC = (): JSX.Element => {
             نمایش لیستی
             <Icon
               icon="list"
-              color={`${view === "list" ? "#208d8e" : "#323232"}`}
+              color={`${view === "list" ? appSetting.theme : "#323232"}`}
             />
           </p>
           <span className="font-bold pl-S justify-end text-xl">

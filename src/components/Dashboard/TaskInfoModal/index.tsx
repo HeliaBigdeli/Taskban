@@ -308,9 +308,7 @@ const TaskInfoModal: React.FC<IProps> = ({
                   <Select
                     selected={boardId}
                     name="board_id"
-                    onChange={(e) => {
-                      handleSelect(e);
-                    }}
+                    onChange={() => {}}
                     items={boards}
                     className="w-[125px] bg-brand-primary text-white"
                     searchPlaceholder="جستجو"

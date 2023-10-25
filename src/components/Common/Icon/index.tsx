@@ -15,7 +15,7 @@ interface IProps {
 
 const Icon = React.forwardRef(
   (props: IProps, ref: React.LegacyRef<HTMLSpanElement> | undefined) => {
-    const { isDarkTheme, toggleTheme } = useContext(ThemeContext);
+    const { isDarkTheme } = useContext(ThemeContext);
 
     return (
       <span

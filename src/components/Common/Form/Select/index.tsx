@@ -4,6 +4,7 @@ import Selectlist from "./SelectList";
 import Button from "../Button";
 
 interface IProps {
+  disabled?: boolean,
   selected?: number;
   items: any[];
   name: string;
@@ -14,6 +15,7 @@ interface IProps {
 }
 
 const Select: React.FC<IProps> = ({
+  disabled = false,
   selected = 0,
   onChange,
   name,
@@ -68,11 +70,11 @@ const Select: React.FC<IProps> = ({
 
   return (
     <Button
-      disabled={!items?.length}
+      disabled={!items?.length || disabled}
       data-name="selectBtn"
       type="button"
       style={{ backgroundColor: !items?.length ? "#eee" : "" }}
-      className={`border border-solid border-lightgray_300 rounded-md relative text-right p-XS ${className}`}
+      className={`border border-solid border-lightgray_300 rounded-md relative text-right p-XS bg-white text-[#000] ${className}`}
       onClick={toggleOpen}
       ref={selectBtn}
     >

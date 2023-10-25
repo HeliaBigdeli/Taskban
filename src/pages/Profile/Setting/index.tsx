@@ -3,25 +3,20 @@ import ColorPicker from "../../../components/Common/ColorPicker";
 import Button from "../../../components/Common/Form/Button";
 import Switcher from "../../../components/Theme/Switcher";
 import { useDispatch } from "react-redux";
-import { errorToaster } from "../../../utils/toaster";
 import { setting } from "../../../constants/url";
 import { AXIOS } from "../../../config/axios.config";
 import { toast } from "react-toastify";
-import { selectSetting, updateSetting } from "../../../features/setting/settingSlice";
+import { useSelector } from "react-redux"
+import {selectSetting, updateSetting } from "../../../features/setting/settingSlice";
 
 const Setting: React.FC = (): JSX.Element => {
-  const [color,setColor]=useState("")
-  //const theme = useSelector(selectSetting);
-  //const dispatch = useDispatch();
-  // const getTheme=async()=>{
-  //   const url=setting.get()
-  //   const res=await AXIOS.get(url)
-  //   setColor(res.data[0].theme)
-  // }
-  // useEffect(() => {
-  //   getTheme()
-  // }, []);
-
+  const appSetting=useSelector(selectSetting)
+  const [color,setColor]=useState(appSetting.theme)
+ const dispatch = useDispatch();
+ const root = document.documentElement;
+ useEffect(() => {
+  root.style.setProperty("--color-primary", color);
+ },[appSetting.theme])
   const handleClick = async() => {
     
       const url=setting.post()
@@ -29,13 +24,14 @@ const Setting: React.FC = (): JSX.Element => {
         const res=await AXIOS.post(url,{theme:color});
          if (res?.status === 201) {
             toast.success('تغییرات به درستی انجام شد');
-           // localStorage.setItem("color", JSON.stringify(color));
-             //dispatch(updateSetting(res.data[0].theme))
-           //return `--color-primary: ${res.data[0].theme}`
+            dispatch(updateSetting(res.data))
+            console.log(res.data.theme)
+            setColor(res.data.theme)
          }
        }catch(error){
         console.log(error)
        }
+      
     
   };
 
@@ -54,10 +50,7 @@ const Setting: React.FC = (): JSX.Element => {
                 selected={color}
               />
               </div>
-          {/* <ColorPicker
-            onClick={(e) => onClick()}
-            hasDisableIcon={false}
-          ></ColorPicker>  */}
+        
         </div>
         <div className="my-M flex flex-row-reverse">
           <Switcher />
@@ -75,7 +68,5 @@ const Setting: React.FC = (): JSX.Element => {
 };
 
 export default Setting;
-function useSelector(selectUser: any) {
-  throw new Error("Function not implemented.");
-}
+
 

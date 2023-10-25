@@ -189,6 +189,23 @@ const TaskInfoModal: React.FC<IProps> = ({
     }
     setIsShow(false);
   };
+  const handleRemoveComment = async (id: number) => {
+    try {
+      await AXIOS.delete(
+        task_comments.delete({
+          wid: params.wid,
+          pid: params.pid,
+          bid: boardId,
+          tid: taskId,
+          cid: id,
+        })
+      );
+      toast.success("حذف کامنت با موفقیت انجام شد.");
+      getTaskComments();
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handleDropDown = (id, title) => {
     setValues({
@@ -310,6 +327,7 @@ const TaskInfoModal: React.FC<IProps> = ({
                         return (
                           <Comments
                             {...item}
+                            remove={handleRemoveComment}
                             key={item.id}
                             first_name={user.first_name}
                             last_name={user.last_name}

@@ -9,18 +9,12 @@ interface IProps extends React.PropsWithChildren {}
 
 const ThemeProvider: React.FC<IProps> = ({ children }) => {
   const [isDarkTheme, setDarkTheme] = useState(
-    localStorage.getItem("theme")
-      ? JSON.parse(localStorage.getItem("theme")!)
-      : false
+    localStorage.getItem("theme") === "dark" ? true : false
   );
 
   const toggleTheme = () => {
     setDarkTheme(!isDarkTheme);
   };
-
-  /*useEffect(() => {
-    document.body.classList.add(`${isDarkTheme === false ? "dark" : ""}`);
-  }, [isDarkTheme]);*/
 
   return (
     <ThemeContext.Provider value={{ isDarkTheme, toggleTheme }}>

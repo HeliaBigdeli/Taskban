@@ -1,12 +1,6 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Icon from "../../../../../Common/Icon";
 import TaskInfoModal from "../../../../TaskInfoModal";
-import { useParams } from "react-router-dom";
-import useAxios from "../../../../../../hooks/useAxios";
-import { tasks } from "../../../../../../constants/url";
-import { taskUpdate } from "../../../../../../features/update/updateSlice";
-import { useSelector } from "react-redux";
-
 interface IMoreProps {
   isShown: boolean;
   taskId: number;
@@ -20,25 +14,6 @@ const More: React.FC<IMoreProps> = ({
   boardTitle,
 }): JSX.Element => {
   const [showTaskModal, setShowTaskModal] = useState<boolean>(false);
-  const [taskInfo, taskInfoError, taskinfoLoading, getTaskInfo] = useAxios();
-  const params = useParams();
-  const tasksList = useSelector(taskUpdate);
-
-  const handleshowTaskModal = async () => {
-    getTaskInfo(
-      "get",
-      tasks.get({
-        wid: params.wid,
-        pid: params.pid,
-        bid: boardId,
-        tid: taskId,
-      })
-    );
-  };
-
-  useEffect(() => {
-    handleshowTaskModal();
-  }, [tasksList]);
 
   return (
     <div
@@ -58,17 +33,15 @@ const More: React.FC<IMoreProps> = ({
           <Icon size={20} icon="check_circle" />
         </div>
       </section>
-      {showTaskModal &&
-        taskInfo &&
-        (document.body.style.overflow = "hidden") && (
-          <TaskInfoModal
-            modal={showTaskModal}
-            setModal={setShowTaskModal}
-            taskInfo={taskInfo}
-            boardTitle={boardTitle}
-            boardId={boardId}
-          />
-        )}
+      {showTaskModal && (document.body.style.overflow = "hidden") && (
+        <TaskInfoModal
+          modal={showTaskModal}
+          setModal={setShowTaskModal}
+          boardTitle={boardTitle}
+          boardId={boardId}
+          taskId={taskId}
+        />
+      )}
     </div>
   );
 };

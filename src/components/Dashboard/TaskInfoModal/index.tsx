@@ -26,9 +26,9 @@ import { updateTask } from "../../../features/board/boardSlice";
 const portals = document.getElementById("portals") as Element;
 
 interface IProps {
-  taskInfo: ITask;
   boardTitle: string;
   boardId: number;
+  taskId: number;
   modal: boolean;
   setModal: (value: boolean | ((prevVar: boolean) => boolean)) => void;
 }
@@ -36,12 +36,21 @@ interface IProps {
 const TaskInfoModal: React.FC<IProps> = ({
   modal,
   setModal,
-  taskInfo,
   boardTitle,
   boardId,
+  taskId,
 }): JSX.Element => {
   const [datePickerModal, setDatePickerModal] = useState<boolean>(false);
-  const [values, setValues] = useState<ITask>(taskInfo);
+  const [values, setValues] = useState<ITask>({
+    id: 0,
+    name: "",
+    description: "",
+    created_at: "",
+    deadline: "",
+    priority: 0,
+    attachment: "",
+    thumbnail: "",
+  });
   const [commentText, setCommentText] = useState<string>("");
   const [commentList, setCommentList] = useState<IComment[]>([]);
   const [isShow, setIsShow] = useState<boolean>(false);
@@ -50,16 +59,29 @@ const TaskInfoModal: React.FC<IProps> = ({
   const params = useParams();
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
-
-  const getTaskInfo = async () => {
-    setHasUpdateed(false);
+  const getTask = async () => {
+    try {
+      const res = await AXIOS.get(
+        tasks.get({
+          wid: params.wid,
+          pid: params.pid,
+          bid: boardId,
+          tid: taskId,
+        })
+      );
+      setValues(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const getTaskComments = async () => {
     try {
       const res = await AXIOS.get(
         task_comments.gets({
           wid: params.wid,
           pid: params.pid,
           bid: boardId,
-          tid: taskInfo.id,
+          tid: taskId,
         })
       );
       setCommentList(res.data);
@@ -73,6 +95,7 @@ const TaskInfoModal: React.FC<IProps> = ({
   };
 
   const handleShowModal = async () => {
+    setModal(!modal);
     let data = {};
     if (hasUpdated) {
       data = {
@@ -83,6 +106,8 @@ const TaskInfoModal: React.FC<IProps> = ({
 
       if (values.attachment && typeof values.attachment !== "string") {
         data["attachment"] = values.attachment;
+      } else if (values.attachment === "") {
+        data["attachment"] = "";
       }
     }
 
@@ -93,22 +118,18 @@ const TaskInfoModal: React.FC<IProps> = ({
             wid: params.wid,
             pid: params.pid,
             bid: boardId,
-            tid: taskInfo.id,
+            tid: taskId,
           }),
           data,
           { headers: { "Content-Type": "multipart/form-data" } }
         );
 
         if (response.status === 200) {
-          setModal(!modal);
           toast.success("تسک با موفقیت ویرایش شد.");
           dispatch(updateTask(response.data));
         }
-      } catch (error) {
-        setModal(!modal);
-      }
+      } catch (error) {}
     } else {
-      setModal(!modal);
     }
   };
 
@@ -126,14 +147,14 @@ const TaskInfoModal: React.FC<IProps> = ({
   };
 
   const handleSubmit = async () => {
-    if (!commentText) return;
+    if (!commentText || !isShow) return;
     try {
       await AXIOS.post(
         task_comments.post({
           wid: params.wid,
           pid: params.pid,
           bid: boardId,
-          tid: taskInfo.id,
+          tid: taskId,
         }),
         {
           attachment: null,
@@ -141,7 +162,7 @@ const TaskInfoModal: React.FC<IProps> = ({
           text: commentText,
         }
       );
-      getTaskInfo();
+      getTaskComments();
     } catch (error) {
       console.log(error);
     }
@@ -153,12 +174,14 @@ const TaskInfoModal: React.FC<IProps> = ({
       ...values,
       priority: id,
     });
+    setHasUpdateed(true);
   };
 
   useEffect(() => {
-    getTaskInfo();
+    getTask();
+    getTaskComments();
   }, []);
-
+  console.log(values.description);
   return (
     <>
       {createPortal(
@@ -258,7 +281,7 @@ const TaskInfoModal: React.FC<IProps> = ({
             </div>
             <div>
               <div className="flex flex-row justify-between divide-x divide-lightgray_300">
-                <div className="flex flex-col  h-[80vh] lg:h-[60vh] xl:h-[40vh]  w-[50%] relative">
+                <div className="flex flex-col   h-[80vh] lg:h-[65vh] xl:h-[40vh]  w-[50%] relative">
                   {!isShow && (
                     <div className="h-3/4 overflow-auto flex flex-col items-end ">
                       {commentList?.map((item) => {
@@ -299,7 +322,6 @@ const TaskInfoModal: React.FC<IProps> = ({
                         } lg:${isShow && "  h-44"} xl:${
                           isShow && "  h-52"
                         } rounded-lg transition-all outline-none border-none   `}
-                        // style={{ height: isShow ? "200px" : "40px" }}
                       />
                       {
                         <Button
@@ -307,8 +329,10 @@ const TaskInfoModal: React.FC<IProps> = ({
                           onClick={handleSubmit}
                           type="button"
                           className={`${
-                            isShow ? "z-20" : "-z-20"
-                          } bg-brand-primary text-white text-xs rounded-md absolute bottom-5 py-1.5 px-3  left-5 font-extrabold`}
+                            !isShow
+                              ? "opacity-0 cursor-text "
+                              : "opacity-100 cursor-pointer "
+                          } bg-brand-primary  text-white text-xs rounded-md absolute bottom-5 py-1.5 px-3  left-5 font-extrabold`}
                         />
                       }
                     </div>
@@ -324,16 +348,18 @@ const TaskInfoModal: React.FC<IProps> = ({
                     <h4 className="dark:text-[#bac4c8] text-right mt-2 text-black text-2xl font-extrabold">
                       {values.name}
                     </h4>
-                    <Textarea
-                      className="my-S dark:text-black"
-                      rows={6}
-                      inputValue={values.description}
-                      name="description"
-                      id="description"
-                      onChange={(name, value) => {
-                        handleChange(name, value);
-                      }}
-                    />
+                    {values.id && (
+                      <Textarea
+                        className="my-S dark:text-black"
+                        rows={6}
+                        inputValue={values.description}
+                        name="description"
+                        id="description"
+                        onChange={(name, value) => {
+                          handleChange(name, value);
+                        }}
+                      />
+                    )}
                     {!values.attachment ? (
                       <File
                         inputValue={values.attachment || ""}

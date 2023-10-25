@@ -38,7 +38,7 @@ const ListShow: React.FC = (): JSX.Element => {
       <div
         className={`${
           !isShown ? "opacity-0 -z-10" : "opacity-100 z-10"
-        } relative flex flex-col items-end gap-XL mr-6 ml-12 transition-all duration-300 h-80 lg:h-[500px] xl:h-[750px] overflow-y-auto `}
+        } relative flex flex-col items-end gap-XL mr-6 ml-12 transition-all duration-300 h-80 lg:h-[500px] xl:h-[750px]  `}
       >
         {listTasks?.map((item) => {
           return <TaskList key={item.id} {...item} />;

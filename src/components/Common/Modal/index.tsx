@@ -34,6 +34,7 @@ interface IProps extends React.PropsWithChildren {
   style?: {};
   contentTopGap?: string;
   backgroundStyle?: string;
+  fontSize?: string;
 }
 
 const Modal: React.FC<IProps> = ({
@@ -51,6 +52,7 @@ const Modal: React.FC<IProps> = ({
   coloredSquare,
   contentTopGap = " gap-XL",
   backgroundStyle,
+  fontSize,
 }): JSX.Element => {
   const handleClick = (e: React.SyntheticEvent<EventTarget>) => {
     if (e.target === e.currentTarget) handleClose();

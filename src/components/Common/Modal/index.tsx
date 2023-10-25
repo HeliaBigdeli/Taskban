@@ -33,6 +33,7 @@ interface IProps extends React.PropsWithChildren {
   style?: {};
   contentTopGap?: string;
   backgroundStyle?:string;
+  fontSize?:string
 }
 
 const Modal: React.FC<IProps> = ({
@@ -49,7 +50,8 @@ const Modal: React.FC<IProps> = ({
   hasColor,
   coloredSquare,
   contentTopGap = " gap-XL",
-  backgroundStyle
+  backgroundStyle,
+  fontSize
 }): JSX.Element => {
   const handleClick = (e: React.SyntheticEvent<EventTarget>) => {
     if (e.target === e.currentTarget) handleClose();
@@ -106,7 +108,7 @@ const Modal: React.FC<IProps> = ({
               </button>
               <h2
                 style={{ order: header.order }}
-                className={`dark:text-[#bac4c8] flex items-center gap-[13px] font-extrabold text-xl text-black order-$ ${
+                className={`flex items-center gap-[13px] font-extrabold ${fontSize? fontSize : "text-xl"} text-black order-$ ${
                   hasHeader ? "" : "invisible"
                 }
                 `}

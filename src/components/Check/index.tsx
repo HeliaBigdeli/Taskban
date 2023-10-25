@@ -6,6 +6,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { refresh } from "../../features/auth/authSlice";
 import { workSpaceEvent } from "../../features/update/updateSlice";
+import { store } from "../../app/store";
 
 interface IProps extends React.PropsWithChildren { }
 
@@ -39,6 +40,7 @@ const AuthCheck: React.FC<IProps> = ({ children }): JSX.Element => {
         if (response.status === 200) {
           dispatch(refresh(response.data));
           if (pathname === '/' || pathname === '/login' || pathname === '/register' || pathname === '/forgot') {
+            store.dispatch(refresh(response.data.access));
             navigate('workspaces');
           } else {
             navigate(pathname + search);

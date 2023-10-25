@@ -10,6 +10,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { chengeView } from "../../../../features/view/viewSlice";
 import { selectTask } from "../../../../features/task/taskSlice";
 import { ITask } from "../../../../interfaces/task";
+import TaskInfoModal from "../../../Dashboard/TaskInfoModal";
+import { selectBoard } from "../../../../features/board/boardSlice";
+import { IBoard } from "../../../../interfaces/board";
+import TaskModal from "../../../Dashboard/TaskModal";
 
 const Header: React.FC = (): JSX.Element => {
   const params = useParams();
@@ -19,14 +23,19 @@ const Header: React.FC = (): JSX.Element => {
   const view = useSelector(selectView);
   const dispatch = useDispatch();
   const projectName: string = searchParams.get("project_name") || "";
-  const [data, setData] = useState<ITask[]>([]);
+  const [data, setData] = useState<IBoard[]>([]);
   const [query, setQuery] = useState<string>("");
-  const tasks = useSelector(selectTask).tasks;
+  const boards = useSelector(selectBoard).boards;
+  const [showTaskModal, setShowTaskModal] = useState<boolean>(false);
+  const [values, setValues] = useState({ boardId: 0, taskId: 0, boardTitle: "" });
 
   const handleSearch = (name: string, value: string) => {
     setQuery(value);
-    const data = tasks.filter((item) => {
-      return item.name.includes(value);
+    const data = boards.filter((item) => {
+      return (
+        item.name.includes(value) ||
+        item.tasks.find((x) => x.name.includes(value))
+      );
     });
 
     setData(data);
@@ -44,15 +53,19 @@ const Header: React.FC = (): JSX.Element => {
     dispatch(chengeView({ type }));
   };
 
+  const handleShowTaskInfo = (board, task) => {
+    setValues({boardId: board.id, taskId: task.id, boardTitle: board.name})
+    setShowTaskModal(!showTaskModal)
+    setQuery("")
+  }
   return (
     <div className="mt-XL mr-S">
       <div className="flex flex-between flex-row-reverse border-b-2 border-lightgray_300 py-S gap-S">
         <div className="flex divide-x divide-lightgray_300 font-bold">
           <p
             onClick={() => handleView("calender")}
-            className={`px-S flex justify-center text-base items-center cursor-pointer ${
-              view === "calender" ? "text-brand-primary" : ""
-            }`}
+            className={`px-S flex justify-center text-base items-center cursor-pointer ${view === "calender" ? "text-brand-primary" : ""
+              }`}
           >
             تقویم
             <Icon
@@ -62,9 +75,8 @@ const Header: React.FC = (): JSX.Element => {
           </p>
           <p
             onClick={() => handleView("column")}
-            className={`px-S flex justify-center text-base items-center cursor-pointer ${
-              view === "column" ? "text-brand-primary" : ""
-            }`}
+            className={`px-S flex justify-center text-base items-center cursor-pointer ${view === "column" ? "text-brand-primary" : ""
+              }`}
           >
             نمایش ستونی
             <Icon
@@ -74,9 +86,8 @@ const Header: React.FC = (): JSX.Element => {
           </p>
           <p
             onClick={() => handleView("list")}
-            className={`px-S flex justify-center text-base items-center cursor-pointer ${
-              view === "list" ? "text-brand-primary" : ""
-            }`}
+            className={`px-S flex justify-center text-base items-center cursor-pointer ${view === "list" ? "text-brand-primary" : ""
+              }`}
           >
             نمایش لیستی
             <Icon
@@ -117,7 +128,7 @@ const Header: React.FC = (): JSX.Element => {
           </div>
         )}
         <Input
-          className="dark:ml-4 outline-none pr-L border-none w-[200px] bg-white text-xs"
+          className="dark:ml-4 outline-none pr-L border-none w-[260px] bg-white text-xs"
           placeholder="جستجو بین تسک‌ها"
           name="search"
           id="task_search"
@@ -132,18 +143,24 @@ const Header: React.FC = (): JSX.Element => {
           }}
         >
           {query && (
-            <div className="absolute left-0 bg-white w-full rounded-sm top-[24px] p-2 shadow-select z-30 max-h-[240px] overflow-y-auto overflow-x-hidden">
+            <div className="absolute left-0 bg-white w-full rounded-sm top-[30px] p-2 shadow-select z-30 max-h-[200px] overflow-y-auto overflow-x-hidden">
               {data.length ? (
-                data?.map((item) => {
+                data?.map((board) => {
                   return (
-                    <div className="flex flex-col" key={item.id}>
-                      <div
-                        key={item.id}
-                        className="cursor-pointer hover:bg-lightgray_200 p-1 rounded-sm"
-                      >
-                        {item.name}
-                      </div>
-                    </div>
+                    board.tasks.map((task) => {
+                      if (task.name.includes(query)) {
+                        return (
+                          <p
+                            onClick={() => handleShowTaskInfo(board, task)}
+                            key={task.id}
+                            className="flex flex-row-reverse items-center cursor-pointer hover:bg-lightgray_200 p-1 rounded-sm text-sm"
+                          >
+                            <Icon icon="chevron_left" />
+                            {task.name}
+                          </p>
+                        );
+                      }
+                    })
                   );
                 })
               ) : (
@@ -164,6 +181,15 @@ const Header: React.FC = (): JSX.Element => {
       )}
       {filterModal && (
         <FilterModal modal={filterModal} setModal={handleFilterModal} />
+      )}
+      {showTaskModal && (
+        <TaskInfoModal
+          modal={showTaskModal}
+          setModal={setShowTaskModal}
+          boardTitle={values.boardTitle}
+          boardId={values.boardId}
+          taskId={values.taskId}
+        />
       )}
     </div>
   );

@@ -18,7 +18,6 @@ export const settingSlice = createSlice({
   name: "setting",
   initialState,
   reducers: {
-     
     updateSetting: (state, action: PayloadAction<Setting>) => {
       state.color= action.payload?.color;
       localStorage.setItem("color", JSON.stringify(state));

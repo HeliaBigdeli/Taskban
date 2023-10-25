@@ -43,7 +43,7 @@ const ProfileImage: React.FC<IProps> = ({
   return (
     <div className="flex flex-row-reverse items-center">
       <div
-        className="rounded-full p-1 flex justify-center items-center"
+        className="rounded-full p-1 flex justify-center items-center bg-cover"
         style={{
           backgroundImage: `url(${img})`,
           zIndex: 10,

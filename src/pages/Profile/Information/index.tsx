@@ -26,22 +26,21 @@ type Values = {
 const Information: React.FC = (): JSX.Element => {
   const user = useSelector(selectUser);
   const [userResponse, userError, userLoading, userfetcher] = useAxios();
-  const [thumbnial, setThumbnail] = useAxios();
+  const [userhasUpdate, setUserHasUpdate] = useState(false)
   const dispatch = useDispatch();
   const [values, setValues] = useState<Values>({
     first_name: "",
     last_name: "",
     phone_number: "",
-    thumbnail: "",
-    email: "",
-    username: "",
+    thumbnail: ""
   });
 
-  const handleChange = (name: string, value: string) => {   
+  const handleChange = (name: string, value: string) => {
     setValues({ ...values, [name]: value });
   };
 
   const handleClick = async () => {
+    setUserHasUpdate(false)
     const resultErrors = validate(values, rules);
     if (resultErrors.length) {
       errorToaster(resultErrors);
@@ -53,6 +52,7 @@ const Information: React.FC = (): JSX.Element => {
           values,
           { headers: { "Content-Type": "multipart/form-data" } });
         if (res?.status === 200) {
+          setUserHasUpdate(true)
           toast.success('تغییرات با موفقیت ثبت شد.');
           setValues(res.data)
           dispatch(updateAccount(res.data))
@@ -65,11 +65,12 @@ const Information: React.FC = (): JSX.Element => {
   };
 
   useEffect(() => {
-    if (!userResponse) {
+    if (!userResponse || userhasUpdate) {
       userfetcher("get", `${API_URL.Register}${user.user_id}/`);
-    }   
+      setUserHasUpdate(false)
+    }
     setValues(userResponse)
-  }, [userResponse]);
+  }, [userResponse, userhasUpdate]);
 
   return (
     <div className="flex flex-row-reverse">
@@ -81,12 +82,12 @@ const Information: React.FC = (): JSX.Element => {
               size={100}
               firstName={values?.first_name}
               lastName={values?.last_name}
-              img={values?.thumbnail || thumbnial}
+              img={values?.thumbnail}
             />
           </span>
           <div className="py-[6px] flex flex-col">
             <File
-              inputValue={values?.thumbnail}
+              inputValue={values?.thumbnail || ""}
               onChangeFile={(name, value) => {
                 handleChange(name, value);
               }}
@@ -104,7 +105,7 @@ const Information: React.FC = (): JSX.Element => {
         </div>
         <form className="flex flex-col gap-S w-full mt-L">
           <Input
-            inputValue={values?.first_name}
+            inputValue={values?.first_name || ""}
             name="first_name"
             id="first_name"
             type="text"
@@ -114,7 +115,7 @@ const Information: React.FC = (): JSX.Element => {
             onChange={(name, value) => handleChange(name, value)}
           />
           <Input
-            inputValue={values?.last_name}
+            inputValue={values?.last_name || ""}
             name="last_name"
             id="last_name"
             type="text"
@@ -123,9 +124,8 @@ const Information: React.FC = (): JSX.Element => {
             className="h-XL"
             onChange={(name, value) => handleChange(name, value)}
           />
-
           <Input
-            inputValue={values?.phone_number}
+            inputValue={values?.phone_number || ""}
             name="phone_number"
             id="phone_number"
             type="tel"

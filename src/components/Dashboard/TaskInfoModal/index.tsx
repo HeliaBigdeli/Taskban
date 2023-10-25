@@ -299,7 +299,7 @@ const TaskInfoModal: React.FC<IProps> = ({
                       handleSelect(e);
                     }}
                     items={boards}
-                    className="w-[200px]"
+                    className="w-[125px] bg-brand-primary text-white"
                     searchPlaceholder="جستجو"
                   />
                 </div>

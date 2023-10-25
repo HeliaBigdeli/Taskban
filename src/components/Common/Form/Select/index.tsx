@@ -76,7 +76,7 @@ const Select: React.FC<IProps> = ({
       onClick={toggleOpen}
       ref={selectBtn}
     >
-      <div className="flex items-center justify-between flex-row-reverse">
+      <div className="flex items-center flex-row-reverse justify-between flex-auto">
         <span
           className={`text-sm ${value ? "black" : "text-lightgray"} font-b`}
         >

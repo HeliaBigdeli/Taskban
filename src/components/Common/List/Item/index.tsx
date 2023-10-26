@@ -112,7 +112,7 @@ const ListItem: React.FC<IProps> = ({
   return (
     <li>
       <div
-        className="flex justify-between items-center flex-row-reverse p-1 h-[36px] mt-S rounded-md hover:bg-[#f4f4f4] mb-4"
+        className="flex justify-between items-center flex-row-reverse p-1 h-[36px] mt-S rounded-md hover:bg-[#f4f4f4] hover:dark:text-[#323232] mb-4"
         style={{
           backgroundColor: id === Number(params.wid) ? "#f4f4f4" : "",
           color:

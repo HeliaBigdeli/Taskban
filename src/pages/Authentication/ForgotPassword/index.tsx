@@ -13,7 +13,7 @@ const rules = {
 };
 
 type Values = {
-  email: string
+  email: string;
 };
 
 const ForgotPassword: React.FC = (): JSX.Element => {
@@ -43,8 +43,8 @@ const ForgotPassword: React.FC = (): JSX.Element => {
   useEffect(() => {
     if (response) {
       setIsSent(!isSent);
-    }   
-  }, [response])
+    }
+  }, [response]);
 
   return (
     <Card page={"forgot"} errors={errors}>
@@ -70,9 +70,8 @@ const ForgotPassword: React.FC = (): JSX.Element => {
           />
         </form>
       ) : (
-        <p className="text-black text-sm font-normal leading-normal">
-          .لینک بازیابی رمز عبور برای شما ایمیل شد. لطفا ایمیل خود را بررسی
-          کنید
+        <p className="dark:text-[#bac4c8] text-black text-sm font-normal leading-normal">
+          .لینک بازیابی رمز عبور برای شما ایمیل شد. لطفا ایمیل خود را بررسی کنید
         </p>
       )}
     </Card>

@@ -8,7 +8,7 @@ type Setting = {
 
 const initialState: Setting = localStorage.getItem("setting")
   ? JSON.parse(localStorage.getItem("setting") || "{}")
-  : {theme:""};
+  : {theme:"#208D8E"};
 
 export const settingSlice = createSlice({
   name: "setting",

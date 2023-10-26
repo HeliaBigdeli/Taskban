@@ -315,8 +315,8 @@ const TaskInfoModal: React.FC<IProps> = ({
                       setAlertModal(true);
                     }}
                   >
-                    <Icon icon="trash" size={28} color="#FA5252" />
                   </div>
+                  <Icon icon="trash" size={28} color="#FA5252" />
                 </div>
               </div>
             </div>

@@ -34,7 +34,6 @@ export const boardSlice = createSlice({
       });
     },
     addNewTask: (state, action) => {
-      console.log(action.payload)
       state.boards.forEach((item) => {
         if (item.id === action.payload.id) {
           item.tasks.push(action.payload.response);

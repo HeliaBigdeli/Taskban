@@ -124,10 +124,8 @@ const Table: React.FC<IProps> = ({
       setModal(false);
       dispatch(addNewTask({id: bId, response}));
       toast.success("تسک با موفقیت ثبت شد.");
-      console.log(store.getState().boards.boards)
       // setBoards(state.boards);
     }
-    console.log(state.boards)
   }, [response, state.boards]);
 
   return (

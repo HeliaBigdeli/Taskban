@@ -8,6 +8,14 @@ import { refresh } from "../../features/auth/authSlice";
 import { setting } from "../../constants/url";
 import { selectSetting } from "../../features/setting/settingSlice";
 import { useSelector } from "react-redux";
+import {
+  header1,
+  header2,
+  bg1,
+  bg2,
+  addHexColor,
+  subHexColor,
+} from "../../utils/gradientMaker";
 
 interface IProps extends React.PropsWithChildren {}
 
@@ -18,36 +26,6 @@ const AuthCheck: React.FC<IProps> = ({ children }): JSX.Element => {
   const { pathname, search } = useLocation();
   const appSetting = useSelector(selectSetting);
   const [color, setColor] = useState(appSetting.theme);
-  //heading color
-  const color2 = "#0F010E";
-  const color3 = "#2A2A4A";
-  //background color
-  const color4 = "#1A091F";
-  const color5 = "#34315A";
-
-  const subHexColor = (c1, c2) => {
-    var hexStr = (
-      parseInt(c1.substring(1, 7), 16) - parseInt(c2.substring(1, 7), 16)
-    )
-      .toString(16)
-      .padStart(6, "0");
-    if (hexStr.includes("-")) {
-      return c1;
-    }
-    return `#${hexStr}`;
-  };
-  const addHexColor = (c1, c2) => {
-    var hexStr = (
-      parseInt(c1.substring(1, 7), 16) + parseInt(c2.substring(1, 7), 16)
-    )
-      .toString(16)
-      .padStart(6, "0");
-    if (hexStr.length > 6) {
-      return c1;
-    }
-    return `#${hexStr}`;
-  };
-  //background color
 
   const getTheme = async () => {
     const url = setting.get();
@@ -56,12 +34,6 @@ const AuthCheck: React.FC<IProps> = ({ children }): JSX.Element => {
       setColor(res.data[0].theme);
     }
   };
-  const root = document.documentElement;
-  root.style.setProperty("--color-primary", color);
-  root.style.setProperty("--color-header1", subHexColor(color, color2));
-  root.style.setProperty("--color-header2", addHexColor(color, color3));
-  root.style.setProperty("--color-bg1", subHexColor(color, color4));
-  root.style.setProperty("--color-bg2", addHexColor(color, color5));
 
   useEffect(() => {
     const controller = new AbortController();
@@ -107,6 +79,15 @@ const AuthCheck: React.FC<IProps> = ({ children }): JSX.Element => {
       .finally(() => {
         setLoading(false);
       });
+
+    // set gradient logo and background color
+    const root = document.documentElement;
+    root.style.setProperty("--color-primary", color);
+    root.style.setProperty("--color-header1", subHexColor(color, header1));
+    root.style.setProperty("--color-header2", addHexColor(color, header2));
+    root.style.setProperty("--color-bg1", subHexColor(color, bg1));
+    root.style.setProperty("--color-bg2", addHexColor(color, bg2));
+
     return () => {
       controller.abort();
     };

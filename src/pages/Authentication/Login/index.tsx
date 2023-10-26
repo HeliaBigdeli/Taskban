@@ -53,6 +53,7 @@ const Login: React.FC = (): JSX.Element => {
       <form className="flex flex-col gap-L self-stretch">
         <div className="flex flex-col gap-M self-stretch">
           <Input
+            autoComplete="on"
             inputValue={values.username}
             name="username"
             id="username"
@@ -63,6 +64,7 @@ const Login: React.FC = (): JSX.Element => {
             onChange={(name, value) => handleChange(name, value)}
           />
           <Input
+          autoComplete="on"
             inputValue={values.password}
             name="password"
             id="password"

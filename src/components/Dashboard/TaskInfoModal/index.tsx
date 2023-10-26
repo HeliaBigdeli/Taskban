@@ -19,10 +19,12 @@ import Dropdown from "../../Common/Dropdown";
 import DropdownItem from "../../Common/Dropdown/DropdownItem";
 import { task_comments, tasks } from "../../../constants/url";
 import { toast } from "react-toastify";
-import { selectBoard, updateTask } from "../../../features/board/boardSlice";
-import Select from "../../Common/Form/Select";
-
-const portals = document.getElementById("portals") as Element;
+import {
+  removeTask,
+  selectBoard,
+  updateTask,
+} from "../../../features/board/boardSlice";
+import AlertModal from "../../Common/List/Item/modals/AlertModal";
 
 interface IProps {
   boardTitle: string;
@@ -51,6 +53,7 @@ const TaskInfoModal: React.FC<IProps> = ({
   });
   const [commentText, setCommentText] = useState<string>("");
   const [commentList, setCommentList] = useState<IComment[]>([]);
+  const [alertModal, setAlertModal] = useState<boolean>(false);
   const [isShow, setIsShow] = useState<boolean>(false);
   const { weekday, year, day, month } = dateConvert(values.deadline);
   const [hasUpdated, setHasUpdateed] = useState(false);
@@ -90,11 +93,7 @@ const TaskInfoModal: React.FC<IProps> = ({
     }
   };
 
-  const handleSelect = async (e) => {
-    const valueId = Number(e.currentTarget.dataset.value);
-    if (valueId === boardId) return;
-
-    setModal(!modal);
+  const handleRemoveTask = async () => {
     try {
       await AXIOS.delete(
         tasks.delete({
@@ -104,12 +103,10 @@ const TaskInfoModal: React.FC<IProps> = ({
           tid: taskId,
         })
       );
-      await AXIOS.post(
-        tasks.post({ wid: params.wid, pid: params.pid, bid: valueId }),
-        { ...values, attachment: "", thumbnail: "" },
-        { headers: { "Content-Type": "multipart/form-data" } }
-      );
-      toast.success("برد تسک با موفقیت ویرایش شد.");
+
+      dispatch(removeTask({ bid: boardId, tid: taskId }));
+      toast.success(" تسک با موفقیت حذف شد.");
+      setModal(!modal);
     } catch (error) {
       console.log(error);
     }
@@ -220,7 +217,7 @@ const TaskInfoModal: React.FC<IProps> = ({
   }, []);
   return (
     <>
-      {createPortal(
+      {
         <Modal
           contentTopGap="gap-0"
           modal={modal}
@@ -232,7 +229,7 @@ const TaskInfoModal: React.FC<IProps> = ({
           hasCloseIcon={true}
           closeIcon={{ order: 1 }}
         >
-          <div className="flex flex-col gap-M divide-y divide-lightgray_300 w-[1100px]">
+          <div className="flex flex-col gap-M divide-y cursor-default divide-lightgray_300 w-[1100px]">
             <div className="flex flex-row justify-between divide-x divide-lightgray_300">
               <div className="flex w-[50%] justify-end px-S grow gap-L">
                 <div className="flex flex-col">
@@ -305,14 +302,21 @@ const TaskInfoModal: React.FC<IProps> = ({
                   </div>
 
                   <MembersThumb members={values.members} hasAddIcon={true} />
-                  <Select
-                    selected={boardId}
-                    name="board_id"
-                    onChange={() => {}}
-                    items={boards}
-                    className="w-[125px] bg-brand-primary text-white"
-                    searchPlaceholder="جستجو"
+                  <Button
+                    type="button"
+                    name="status"
+                    onClick={() => {}}
+                    text={boardTitle}
+                    className={` p-1 bg-brand-primary cursor-default rounded-md text-white w-[120px] h-[30px]`}
                   />
+                  <div
+                    className="ml-2 cursor-pointer"
+                    onClick={() => {
+                      setAlertModal(true);
+                    }}
+                  >
+                    <Icon icon="trash" size={28} color="#FA5252" />
+                  </div>
                 </div>
               </div>
             </div>
@@ -449,9 +453,14 @@ const TaskInfoModal: React.FC<IProps> = ({
               </div>
             </div>
           </div>
-        </Modal>,
-        portals
-      )}
+        </Modal>
+      }
+      <AlertModal
+        isAlertOpen={alertModal}
+        setIsAlertOpen={setAlertModal}
+        alertText="آیا از حذف این تسک مطمئن هستید؟"
+        handleYes={handleRemoveTask}
+      />
     </>
   );
 };

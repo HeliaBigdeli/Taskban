@@ -1,8 +1,12 @@
+import { selectSetting } from "../../../../features/setting/settingSlice";
 import styles from "./style.module.css";
 import { Link, useLocation } from "react-router-dom";
+import {useSelector} from "react-redux"
+import { useEffect, useState } from "react";
 
 const Header: React.FC = (): JSX.Element => {
   const { pathname } = useLocation();
+  
 
   return (
     <nav className="fixed w-full z-10">
@@ -30,7 +34,7 @@ const Header: React.FC = (): JSX.Element => {
             </>
           )}
         </div>
-        <Link className={styles.navbarTitle} to="/login">
+        <Link className={`${styles.navbarTitle} bg-gradient-to-r from-header-color1 to-header-color2  `} to="/login">
           کوئرا تسک منیجر
         </Link>
       </div>

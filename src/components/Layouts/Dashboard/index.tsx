@@ -51,7 +51,7 @@ const DashboardLayout: React.FC = (): JSX.Element => {
         <Outlet />
       </div>
       <SideBar>
-        <h2 className={`${styles.navbarTitle} mb-[27px] mt-XL`}>
+        <h2 className={`${styles.navbarTitle} bg-gradient-to-r from-header-color1 to-header-color2 mb-[27px] mt-XL`}>
           <Link to="/workspaces">کوئرا تسک منیجر</Link>
         </h2>
         <div className="flex justify-between">

@@ -13,6 +13,8 @@ import TaskInfoModal from "../../../Dashboard/TaskInfoModal";
 import { selectBoard } from "../../../../features/board/boardSlice";
 import { IBoard } from "../../../../interfaces/board";
 import { selectSetting } from "../../../../features/setting/settingSlice";
+import { useContext } from "react";
+import { ThemeContext } from "../../../../context/ThemeContext";
 
 const Header: React.FC = (): JSX.Element => {
   const params = useParams();
@@ -33,6 +35,8 @@ const Header: React.FC = (): JSX.Element => {
     taskId: 0,
     boardTitle: "",
   });
+
+  const { isDarkTheme, toggleTheme } = useContext(ThemeContext);
 
   const handleSearch = (name: string, value: string) => {
     setQuery(value);
@@ -76,7 +80,13 @@ const Header: React.FC = (): JSX.Element => {
             تقویم
             <Icon
               icon="calender_full"
-              color={`${view === "calender" ? appSetting.theme : "#323232"}`}
+              color={`${
+                view === "calender"
+                  ? appSetting.theme
+                  : isDarkTheme === true
+                  ? "#bac4c8"
+                  : "#323232"
+              }`}
             />
           </p>
           <p
@@ -88,7 +98,13 @@ const Header: React.FC = (): JSX.Element => {
             نمایش ستونی
             <Icon
               icon="grid"
-              color={`${view === "column" ? appSetting.theme : "#323232"}`}
+              color={`${
+                view === "column"
+                  ? appSetting.theme
+                  : isDarkTheme === true
+                  ? "#bac4c8"
+                  : "#323232"
+              }`}
             />
           </p>
           <p
@@ -100,7 +116,13 @@ const Header: React.FC = (): JSX.Element => {
             نمایش لیستی
             <Icon
               icon="list"
-              color={`${view === "list" ? appSetting.theme : "#323232"}`}
+              color={`${
+                view === "list"
+                  ? appSetting.theme
+                  : isDarkTheme === true
+                  ? "#bac4c8"
+                  : "#323232"
+              }`}
             />
           </p>
           <span className="font-bold pl-S justify-end text-xl">

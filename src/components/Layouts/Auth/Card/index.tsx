@@ -20,8 +20,8 @@ const Card: React.FC<ICardProps> = ({
 
   return (
     <>
-      <div className="flex w-[640px] p-M flex-col items-center gap-L rounded-[20px] bg-white shadow-authCard">
-        <h2 className="text-black text-[32px] font-extrabold text-center">
+      <div className="dark:bg-[#3a3a3a] flex w-[640px] p-M flex-col items-center gap-L rounded-[20px] bg-white shadow-authCard">
+        <h2 className="dark:text-[#bac4c8] text-black text-[32px] font-extrabold text-center">
           {page === "login"
             ? "(: به کوئرا تسک منیجر خوش برگشتی"
             : page === "register"

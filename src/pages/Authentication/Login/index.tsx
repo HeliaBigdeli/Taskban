@@ -94,7 +94,7 @@ const Login: React.FC = (): JSX.Element => {
             >
               ثبت‌نام
             </Link>
-            <span className="text-black text-base font-medium">
+            <span className="dark:text-[#bac4c8] text-black text-base font-medium">
               ثبت‌نام نکرده‌ای؟
             </span>
           </div>

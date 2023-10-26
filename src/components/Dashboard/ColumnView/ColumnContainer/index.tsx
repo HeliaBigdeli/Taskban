@@ -44,7 +44,6 @@ const ColumnContainer: React.FC<IColumnContainerProps> = ({
               boardTitle={name}
               {...item}
               key={item.id}
-              index={index}
             />
           );
         })}

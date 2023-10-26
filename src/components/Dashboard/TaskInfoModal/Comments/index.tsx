@@ -4,6 +4,7 @@ import ProfileImage from "../../../Common/ProfileImage";
 interface ICommentProps extends IComment {
   first_name: string;
   last_name: string;
+  img: string;
   remove: (id: number) => {};
 }
 const Comments: React.FC<ICommentProps> = ({
@@ -11,13 +12,14 @@ const Comments: React.FC<ICommentProps> = ({
   text,
   last_name,
   first_name,
+  img,
   remove,
   id,
 }): JSX.Element => {
   return (
     <section className="flex w-full flex-row-reverse  shrink-0  gap-2 p-3">
       <div>
-        <ProfileImage firstName={first_name} lastName={last_name} />
+        <ProfileImage firstName={first_name} lastName={last_name} img={img} />
       </div>
       <div className="p-3  w-full flex flex-col items-end gap-XS rounded-xl border border-[#5250503f]">
         <div className="flex w-full justify-between items-center ">

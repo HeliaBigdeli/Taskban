@@ -11,7 +11,6 @@ import { dateConvert } from "../../../../../utils/dateConvert";
 import { flagColor } from "../../../../../utils/flagColor";
 
 interface ITaskCardProps extends ITask {
-  index: number;
   boardId: number;
   boardTitle: string;
 }
@@ -20,7 +19,6 @@ const TaskCard: React.FC<ITaskCardProps> = ({
   thumbnail,
   name,
   id,
-  index,
   boardId,
   priority,
   boardTitle,

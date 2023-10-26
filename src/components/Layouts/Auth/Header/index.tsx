@@ -34,7 +34,7 @@ const Header: React.FC = (): JSX.Element => {
             </>
           )}
         </div>
-        <Link className={`${styles.navbarTitle} bg-gradient-to-r from-header-color1 to-header-color2  `} to="/login">
+        <Link className={`${styles.navbarTitle} bg-gradient-to-r from-header-color1 to-header-color2`} to="/login">
           کوئرا تسک منیجر
         </Link>
       </div>

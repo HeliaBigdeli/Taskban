@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import colors from "../ColorPicker/colors";
 import { selectSetting } from "../../../features/setting/settingSlice";
 import {useSelector} from "react-redux"
+import { baseAppURL } from "../../../config/axios.config";
+
 interface IProps {
   img?: string;
   firstName: string;
@@ -67,7 +69,7 @@ const ProfileImage: React.FC<IProps> = ({
       <div
         className="rounded-full p-1 flex justify-center items-center bg-cover"
         style={{
-          backgroundImage: `url(${img})`,
+          backgroundImage: `url(${baseAppURL}${img})`,
           zIndex: 10,
           backgroundColor: nameColor ? paleColor : color,
           width: size + "px",

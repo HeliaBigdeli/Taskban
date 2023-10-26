@@ -2,7 +2,6 @@ import Item from "./Item";
 import { useSelector } from "react-redux";
 import { selectWorkspace } from "../../../features/workspace/workspaceSlice";
 import { IWorkspace } from "../../../interfaces/workspace";
-
 import useWorkspace from "../../../hooks/workspace";
 
 const List: React.FC = (): JSX.Element => {

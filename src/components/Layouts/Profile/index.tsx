@@ -15,7 +15,7 @@ const ProfileLayout: React.FC = (): JSX.Element => {
       </div>
       <SideBar>
         <Link to="/workspaces">
-          <h2 className={`${styles.navbarTitle} mb-[45px] mt-XL`}>
+          <h2 className={`${styles.navbarTitle} bg-gradient-to-r from-header-color1 to-header-color2 mb-[45px] mt-XL`}>
             کوئرا تسک منیجر
           </h2>
         </Link>

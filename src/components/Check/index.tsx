@@ -59,7 +59,6 @@ const AuthCheck: React.FC<IProps> = ({ children }): JSX.Element => {
             pathname === "/register" ||
             pathname === "/forgot"
           ) {
-            store.dispatch(refresh(response.data.access));
             navigate("workspaces");
           } else {
             navigate(pathname + search);

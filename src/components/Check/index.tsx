@@ -55,8 +55,8 @@ const addHexColor=(c1, c2) =>{
   root.style.setProperty("--color-primary", color);
   root.style.setProperty("--color-header1", subHexColor(color,color2));
   root.style.setProperty("--color-header2", addHexColor(color,color3));
-  root.style.setProperty("--color-bg1", subHexColor(color,color4));
-  root.style.setProperty("--color-bg2", addHexColor(color,color5));
+   root.style.setProperty("--color-bg1", subHexColor(color,color4));
+   root.style.setProperty("--color-bg2", addHexColor(color,color5));
 
   useEffect(() => {
     const controller = new AbortController();

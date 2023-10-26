@@ -3,7 +3,7 @@
     font-size: 32px;
     font-weight: 800;
     line-height: normal;
-    background: linear-gradient(90deg, #118C80 0%, #4AB7D8 120%);
+    /* background: linear-gradient(90deg, #118C80 0%, #4AB7D8 120%); */
     background-clip: text;
     -webkit-text-fill-color: transparent;
 }

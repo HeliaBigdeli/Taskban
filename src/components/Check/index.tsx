@@ -19,6 +19,30 @@ const AuthCheck: React.FC<IProps> = ({ children }): JSX.Element => {
   const { pathname, search } = useLocation();
   const appSetting = useSelector(selectSetting);
   const [color, setColor] = useState(appSetting.theme);
+//heading color
+const color2="#0F010E"
+const color3="#2A2A4A"
+//background color
+const color4="#1A091F"
+const color5="#34315A"
+
+const subHexColor=(c1, c2) =>{
+  var hexStr = (parseInt(c1.substring(1,7), 16) - parseInt(c2.substring(1,7), 16)).toString(16).padStart(6, '0');
+  if(hexStr.includes("-")){
+    return c1
+}
+  return `#${hexStr}`;
+}
+const addHexColor=(c1, c2) =>{
+  console.log(c2)
+  console.log(parseInt(c2.substring(1,7), 16))
+  var hexStr = (parseInt(c1.substring(1,7), 16) + parseInt(c2.substring(1,7), 16)).toString(16).padStart(6, '0');
+  if(hexStr.length>6){
+    return c1
+  }
+  return `#${hexStr}`;
+}
+//background color
 
   const getTheme = async () => {
     const url = setting.get();
@@ -29,6 +53,10 @@ const AuthCheck: React.FC<IProps> = ({ children }): JSX.Element => {
   };
   const root = document.documentElement;
   root.style.setProperty("--color-primary", color);
+  root.style.setProperty("--color-header1", subHexColor(color,color2));
+  root.style.setProperty("--color-header2", addHexColor(color,color3));
+  root.style.setProperty("--color-bg1", subHexColor(color,color4));
+  root.style.setProperty("--color-bg2", addHexColor(color,color5));
 
   useEffect(() => {
     const controller = new AbortController();

@@ -12,7 +12,11 @@ module.exports = {
       "2xl": "1536px",
     },
     colors: {
-      "brand-primary":'var(--color-primary, #208D8E)',
+      "brand-primary":'var(--color-primary)',
+      "bg-color1":'var(--color-bg1)',
+      "bg-color2":'var(--color-bg2)',
+      "header-color1":'var(--color-header1)',
+      "header-color2":'var(--color-header2)',
       "brand-secondary": "#E3FDFB",
       "red-primary": "#FA5252",
       "blue-primary": "#228BE6",

@@ -59,6 +59,7 @@ const Login: React.FC = (): JSX.Element => {
             id="username"
             type="text"
             label="نام کاربری"
+            autoComplete="on"
             hasLabel={true}
             className="h-XL"
             onChange={(name, value) => handleChange(name, value)}

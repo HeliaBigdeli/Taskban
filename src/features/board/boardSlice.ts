@@ -40,16 +40,15 @@ export const boardSlice = createSlice({
         }
       });
     },
-    updateTask: (state, action) => {
-      
-    },
+    updateTask: (state, action) => {},
     removeTask: (state, action) => {
-     
+      state.boards.forEach((item) => {
+        if (item.id === action.payload.bid) {
+          item.tasks=item.tasks.filter((task) => task.id !== action.payload.tid);
+        }
+      });
     },
-    archiveTask: (state, action) => {
-     
-    },
-  
+    archiveTask: (state, action) => {},
   },
 });
 
@@ -62,7 +61,7 @@ export const {
   removeTask,
   archiveTask,
   clearState,
-  updateTask
+  updateTask,
 } = boardSlice.actions;
 export const selectBoard = (state: RootState) => state.boards;
 export default boardSlice.reducer;

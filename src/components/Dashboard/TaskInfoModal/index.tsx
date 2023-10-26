@@ -325,6 +325,7 @@ const TaskInfoModal: React.FC<IProps> = ({
                         return (
                           <Comments
                             {...item}
+                            img={user.thumbnail}
                             remove={handleRemoveComment}
                             key={item.id}
                             first_name={user.first_name}

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import colors from "../ColorPicker/colors";
+import { baseAppURL } from "../../../config/axios.config";
 
 interface IProps {
   img?: string;
@@ -45,7 +46,7 @@ const ProfileImage: React.FC<IProps> = ({
       <div
         className="rounded-full p-1 flex justify-center items-center bg-cover"
         style={{
-          backgroundImage: `url(${img})`,
+          backgroundImage: `url(${baseAppURL}${img})`,
           zIndex: 10,
           backgroundColor: randomColor().paleColor,
           width: size + "px",

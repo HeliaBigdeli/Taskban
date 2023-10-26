@@ -1636,7 +1636,7 @@ const icons: ListType = {
         />
         <path
           d="M13.4829 6.48779L19.5199 12.4998L13.4829 18.5118"
-          stroke="white"
+          stroke={color}
           strokeWidth="1.5"
           strokeLinecap="round"
           strokeLinejoin="round"

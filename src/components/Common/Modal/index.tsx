@@ -61,18 +61,9 @@ const Modal: React.FC<IProps> = ({
   const handleClose = () => {
     if (closeIcon.resetInputValue) closeIcon.resetInputValue();
     setModal(false);
-    document.body.style.overflow = "unset";
   };
 
   const { isDarkTheme, toggleTheme } = useContext(ThemeContext);
-
-  useEffect(() => {
-    if (modal) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "unset";
-    }
-  }, [modal]);
 
   return (
     <>

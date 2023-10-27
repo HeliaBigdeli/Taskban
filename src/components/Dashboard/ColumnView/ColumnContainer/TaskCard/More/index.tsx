@@ -33,7 +33,7 @@ const More: React.FC<IMoreProps> = ({
           <Icon size={20} icon="check_circle" />
         </div>
       </section>
-      {showTaskModal && (document.body.style.overflow = "hidden") && (
+      {showTaskModal && (
         <TaskInfoModal
           modal={showTaskModal}
           setModal={setShowTaskModal}

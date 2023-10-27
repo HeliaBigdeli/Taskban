@@ -54,7 +54,7 @@ const Table: React.FC<IProps> = ({
   const [modal, setModal] = useState<boolean>(false);
   const [currentDay, setCurrentDay] = useState<number>(today);
   const state = useSelector(selectBoard);
-  const [boards, setBoards] = useState<IBoard[]>(state.boards);
+  const [boards, setBoards] = useState<IBoard[]>();
   const [response, error, loading, fetcher] = useAxios();
   const [bId, setBid] = useState();
   const params = useParams();
@@ -120,13 +120,13 @@ const Table: React.FC<IProps> = ({
   };
 
   useEffect(() => {
-    if (response) {
+    if (response && modal) {
       setModal(false);
       dispatch(addNewTask({id: bId, response}));
-      toast.success("تسک با موفقیت ثبت شد.");
-      // setBoards(state.boards);
+      toast.success("تسک با موفقیت ثبت شد.");     
     }
-  }, [response, state.boards]);
+    setBoards(state.boards);
+  }, [response, state]);
 
   return (
     <div

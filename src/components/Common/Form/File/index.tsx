@@ -47,7 +47,7 @@ const File: React.FC<IProps> = ({
       {!inputValue ? (
         <label className={`dark:text-[#bac4c8] ${styles}`}>
           {text}
-          {hasIcon && <Icon icon={icon} color="#208d8e" />}
+          {hasIcon && <Icon icon={icon} />}
           <input
             value={inputValue}
             type="file"

@@ -29,6 +29,7 @@ const ColumnView: React.FC = (): JSX.Element => {
   };
 
   useEffect(() => {
+    console.log(2)
     setBoardTasks(state.boards);
   }, [state]);
 

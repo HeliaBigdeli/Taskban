@@ -80,8 +80,8 @@ const Information: React.FC = (): JSX.Element => {
           <span className="ml-S">
             <ProfileImage
               size={100}
-              firstName={user.first_name}
-              lastName={user.last_name}
+              firstName={values?.first_name}
+              lastName={values?.last_name}
               img={values?.thumbnail}
               nameColor={true}
             />

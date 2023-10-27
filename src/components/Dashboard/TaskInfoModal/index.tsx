@@ -1,4 +1,3 @@
-import { createPortal } from "react-dom";
 import Modal from "../../Common/Modal";
 import Button from "../../Common/Form/Button";
 import Icon from "../../Common/Icon";
@@ -229,7 +228,10 @@ const TaskInfoModal: React.FC<IProps> = ({
           hasCloseIcon={true}
           closeIcon={{ order: 1 }}
         >
-          <div className="flex flex-col gap-M divide-y cursor-default divide-lightgray_300 w-[1100px]">
+          <div
+            className="flex flex-col gap-M divide-y cursor-default divide-lightgray_300 w-[1000px] "
+            style={{ direction: "ltr" }}
+          >
             <div className="flex flex-row justify-between divide-x divide-lightgray_300">
               <div className="flex w-[50%] justify-end px-S grow gap-L">
                 <div className="flex flex-col">
@@ -310,21 +312,21 @@ const TaskInfoModal: React.FC<IProps> = ({
                     className={` p-1 bg-brand-primary cursor-default rounded-md text-white w-[120px] h-[30px]`}
                   />
                   <div
-                    className="ml-2 cursor-pointer"
+                    className="flex items-center ml-2 cursor-pointer"
                     onClick={() => {
                       setAlertModal(true);
                     }}
                   >
+                    <Icon icon="trash" size={28} color="#FA5252" />
                   </div>
-                  <Icon icon="trash" size={28} color="#FA5252" />
                 </div>
               </div>
             </div>
             <div>
               <div className="flex flex-row justify-between divide-x divide-lightgray_300">
-                <div className="flex flex-col   h-[80vh] lg:h-[65vh] xl:h-[40vh]  w-[50%] relative">
+                <div className="flex flex-col w-[50%] relative">
                   {!isShow && (
-                    <div className="h-3/4 overflow-auto flex flex-col items-end ">
+                    <div className="h-3/4 overflow-auto flex flex-col items-end h-[80vh] lg:h-[65vh] xl:h-[40vh]">
                       {commentList?.map((item) => {
                         return (
                           <Comments
@@ -339,7 +341,7 @@ const TaskInfoModal: React.FC<IProps> = ({
                       })}
                     </div>
                   )}
-                  <div className="relative  w-full shadow-comment rounded mt-auto flex  justify-end ">
+                  <div className="relative w-full shadow-comment rounded mt-auto flex justify-end ">
                     <div className="  absolute left-4 top-2 z-10">
                       <Icon icon="comment" color="#AEAEAE" />
                     </div>
@@ -360,38 +362,32 @@ const TaskInfoModal: React.FC<IProps> = ({
                         onChange={(name, value) => {
                           setCommentText(value);
                         }}
-                        className={`dark:mr-4 dark:text-black w-full block  pt-2 pl-9 ${
-                          isShow ? " pb-20 h-32" : "pb-2 h-10"
-                        } lg:${isShow && "  h-44"} xl:${
-                          isShow && "  h-52"
-                        } rounded-lg transition-all outline-none border-none   `}
+                        className={`dark:mr-4 dark:text-black w-full block pt-2 b-10 pl-9 ${
+                          isShow ? "h-40" : "h-10"
+                        } rounded-lg transition-all outline-none border-none`}
                       />
-                      {
-                        <Button
-                          text="ثبت کامنت"
-                          onClick={handleSubmit}
-                          type="button"
-                          className={`${
-                            !isShow
-                              ? "opacity-0 cursor-text  "
-                              : "opacity-100 cursor-pointer bottom-4 left-5 "
-                          } bg-brand-primary  text-white text-xs rounded-md absolute  py-1.5 px-3   font-extrabold`}
-                        />
-                      }
-                      {
-                        <div
-                          className={`flex gap-2 absolute  ${
-                            !isShow
-                              ? "opacity-0 cursor-text "
-                              : "opacity-100 cursor-pointer right-4 bottom-6 "
-                          }`}
-                        >
-                          <Icon icon="emoji" color="#C9CBDA" />
-                          <Icon icon="paper" color="#C9CBDA" />
-                          <Icon icon="attach" color="#C9CBDA" />
-                          <Icon icon="email" color="#C9CBDA" />
-                        </div>
-                      }
+                      <Button
+                        text="ثبت کامنت"
+                        onClick={handleSubmit}
+                        type="button"
+                        className={`${
+                          !isShow
+                            ? "opacity-0 cursor-text"
+                            : "opacity-100 cursor-pointer bottom-4 left-5 "
+                        } bg-brand-primary text-white text-xs rounded-md absolute py-1.5 px-3 font-extrabold`}
+                      />
+                      <div
+                        className={`flex gap-2 absolute  ${
+                          !isShow
+                            ? "opacity-0 cursor-text "
+                            : "opacity-100 cursor-pointer right-8 bottom-5"
+                        }`}
+                      >
+                        <Icon icon="emoji" color="#C9CBDA" />
+                        <Icon icon="paper" color="#C9CBDA" />
+                        <Icon icon="attach" color="#C9CBDA" />
+                        <Icon icon="email" color="#C9CBDA" />
+                      </div>
                     </div>
                   </div>
                 </div>

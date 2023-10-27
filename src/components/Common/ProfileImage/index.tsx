@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
-import colors from "../ColorPicker/colors";
 import { selectSetting } from "../../../features/setting/settingSlice";
 import {useSelector} from "react-redux"
-import { baseAppURL } from "../../../config/axios.config";
 
 interface IProps {
   img?: string;
@@ -25,18 +23,6 @@ const ProfileImage: React.FC<IProps> = ({
   const appSetting = useSelector(selectSetting);
   const [color, setColor] = useState(appSetting.theme);
   const [paleColor,setPale]=useState("")
-  // const randomColor = () => {
-  //   const max = 12;
-  //   const min = 0;
-  //   const randomColor =
-  //     colors[Math.floor(Math.random() * (max - min + 1) + min)].code;
-  //   const colorDetails = {
-  //     mainColor: randomColor,
-  //     paleColor: randomColor,
-  //   };
-
-  //   return colorDetails;
-  // };
 
     const newShade = (hexColor, magnitude) => {
       hexColor = hexColor.replace(`#`, ``);
@@ -61,15 +47,14 @@ const ProfileImage: React.FC<IProps> = ({
       firstName?.charAt(0).toUpperCase() + lastName?.charAt(0).toUpperCase()
     );
     newShade(color,90);
-   console.log("color:"+ paleColor)
   }, []);
 
   return (
     <div className="flex flex-row-reverse items-center">
       <div
-        className="rounded-full p-1 flex justify-center items-center bg-cover"
+        className="rounded-full p-1 flex justify-center items-center bg-cover bg-center"
         style={{
-          backgroundImage: `url(${baseAppURL}${img})`,
+          backgroundImage: `url(${img})`,
           zIndex: 10,
           backgroundColor: nameColor ? paleColor : color,
           width: size + "px",

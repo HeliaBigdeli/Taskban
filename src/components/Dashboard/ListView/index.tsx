@@ -24,6 +24,9 @@ const ListShow: React.FC = (): JSX.Element => {
 
   return (
     <div style={{ direction: "rtl" }} className={`pr-S`}>
+      {boards?.map((item) => {
+          return <TaskList key={item.id} {...item} />;
+        })}
       <div className="flex items-center gap-XS my-L">
         <Button
           hasIcon={true}
@@ -41,9 +44,7 @@ const ListShow: React.FC = (): JSX.Element => {
           !isShown ? "opacity-0 -z-10" : "opacity-100 z-10"
         } relative flex flex-col items-end gap-XL mr-6 ml-12 transition-all duration-300 h-80 lg:h-[500px] xl:h-[750px]  `}
       >
-        {boards?.map((item) => {
-          return <TaskList key={item.id} {...item} />;
-        })}
+        
       </div>
       <Button
         text="تسک جدید"

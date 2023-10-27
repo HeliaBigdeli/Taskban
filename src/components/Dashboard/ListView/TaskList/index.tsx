@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import ListHeader from "./ListHeader";
 import ListItem from "./ListItem";
 import { IBoard } from "../../../../interfaces/board";
-
 const TaskList: React.FC<IBoard> = ({
   name,
   tasks_count,
@@ -32,7 +31,7 @@ const TaskList: React.FC<IBoard> = ({
       />
       <div
         className={`flex overflow-hidden w-full flex-col transition-all duration-300 items-start gap-5 `}
-        style={{ height: `${!isShown ? "0px" : ""}` }}
+        // style={{ height: `${!isShown ? "0px" : ""}` }}
       >
         {tasks?.map((item) => {
           return (

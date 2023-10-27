@@ -11,13 +11,13 @@ const TaskList: React.FC<IBoard> = ({
   color,
 }): JSX.Element => {
   const [isShown, setIsShown] = useState<boolean>(true);
-  const [height, setHeight] = useState("")
+  // const [height, setHeight] = useState("")
   const handleShow = () => {
     setIsShown(!isShown);
   };
   
   useEffect(()=> {
-    setHeight(`${65 * tasks_count - 40}px`)
+    // setHeight(`${65 * tasks_count - 40}px`)
   }, [])
   
   return (
@@ -31,8 +31,8 @@ const TaskList: React.FC<IBoard> = ({
         tasks_count={tasks_count}
       />
       <div
-        className={`flex  overflow-hidden w-full flex-col transition-all duration-300 items-start gap-5 `}
-        style={{ height: `${!isShown ? "0px" : height}` }}
+        className={`flex overflow-hidden w-full flex-col transition-all duration-300 items-start gap-5 `}
+        style={{ height: `${!isShown ? "0px" : ""}` }}
       >
         {tasks?.map((item) => {
           return (

@@ -180,6 +180,7 @@ const TaskInfoModal: React.FC<IProps> = ({
         }
       );
       getTaskComments();
+      setCommentText("")
     } catch (error) {
       console.log(error);
     }
@@ -326,7 +327,7 @@ const TaskInfoModal: React.FC<IProps> = ({
               <div className="flex flex-row justify-between divide-x divide-lightgray_300">
                 <div className="flex flex-col w-[50%] relative">
                   {!isShow && (
-                    <div className="h-3/4 overflow-auto flex flex-col items-end h-[80vh] lg:h-[65vh] xl:h-[40vh]">
+                    <div className="h-3/4 overflow-auto flex flex-col items-end lg:h-[65vh] xl:h-[40vh]">
                       {commentList?.map((item) => {
                         return (
                           <Comments

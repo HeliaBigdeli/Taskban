@@ -46,7 +46,7 @@ const ListItem: React.FC<IProps> = ({
   const [listToggle, setListToggle] = useState(false);
   const [responseDelete, errorDel, loadingDel, fetcherDel] = useAxios();
   const params = useParams();
-  const [deleteEvent, setDeleteEvent] = useState("")
+  const [deleteEvent, setDeleteEvent] = useState("");
   const [state, stateDispatch] = useReducer(detailsReducer, {
     projectModal: false,
     workspaceNameEdit: false,
@@ -85,12 +85,12 @@ const ListItem: React.FC<IProps> = ({
   };
 
   const handleWorkspaceRemove = () => {
-    setDeleteEvent("workspace")
+    setDeleteEvent("workspace");
     fetcherDel("delete", workspaces.delete({ wid: id ? id : workspace.id }));
   };
 
   const handleProjectRemove = () => {
-    setDeleteEvent("project")
+    setDeleteEvent("project");
     fetcherDel(
       "delete",
       projects.delete({ wid: id, pid: params.pid ? params.pid : project.id })
@@ -105,10 +105,10 @@ const ListItem: React.FC<IProps> = ({
       } else {
         dispatch(removeProject({ wid: id, pid: project.id }));
         state.projectAlert = false;
-      }      
+      }
       toast.success("آیتم مورد نظر با موفقیت حذف شد.");
       navigate("workspaces");
-      setDeleteEvent("")
+      setDeleteEvent("");
     }
   }, [responseDelete, project.id, workspace.id, projectsData]);
 
